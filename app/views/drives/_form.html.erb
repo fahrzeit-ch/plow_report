@@ -1,0 +1,52 @@
+<%= form_with(model: drive, local: true) do |form| %>
+  <% if drive.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(drive.errors.count, "error") %> prohibited this drive from being saved:</h2>
+
+      <ul>
+      <% drive.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :start %>
+    <%= form.datetime_select :start, id: :drive_start %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end %>
+    <%= form.datetime_select :end, id: :drive_end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distance_km %>
+    <%= form.text_field :distance_km, id: :drive_distance_km %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salt_refilled %>
+    <%= form.check_box :salt_refilled, id: :drive_salt_refilled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salt_amount_tonns %>
+    <%= form.text_field :salt_amount_tonns, id: :drive_salt_amount_tonns %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salted %>
+    <%= form.check_box :salted, id: :drive_salted %>
+  </div>
+
+  <div class="field">
+    <%= form.label :plowed %>
+    <%= form.check_box :plowed, id: :drive_plowed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

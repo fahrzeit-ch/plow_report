@@ -1,0 +1,48 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+//    Font Family
+
+$primary-font	: 'Poppins', sans-serif;
+
+/*--------------------------- Color variations ----------------------*/
+
+$primary-color	: #00A383;
+$secondary-color: #0F4DA8;
+$title-color	: #228D00;
+$text-color		: #777777;
+
+$white			: #fff;
+$black			: #000;
+
+
+$navbar-brand-height: 5rem;
+
+$border-radius:               0;
+$border-radius-lg:            .3rem;
+$border-radius-sm:            .2rem;
+
+$theme-colors: (
+        "primary": $primary-color,
+        "secondary": $secondary-color,
+        "danger": #ff4136
+);
+
+@import "bootstrap";
+
+
+.bg-image-plow {
+  background: url(http://larlhamlandscape.com/communities/2/000/002/028/102//images/13270853_980x390.jpg) center;
+  background-size: cover;
+}

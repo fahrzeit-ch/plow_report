@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+<h1>Wochen</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>KW</th>
+    <th>Start</th>
+    <th>Anzahl Tage</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @standby_weeks.each do |standby_date| %>
+    <tr>
+      <td><%= standby_date.week_nr %></td>
+      <td><%= l standby_date.start_date, format: "%a %d.%m.%Y" %></td>
+      <td><%= standby_date.day_count %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h1>Tage</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @standby_dates.each do |standby_date| %>
+      <tr>
+        <td><%= l standby_date.day %></td>
+        <td><%= link_to 'Show', standby_date %></td>
+        <td><%= link_to 'Edit', edit_standby_date_path(standby_date) %></td>
+        <td><%= link_to 'Destroy', standby_date, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Standby Date', new_standby_date_path %>

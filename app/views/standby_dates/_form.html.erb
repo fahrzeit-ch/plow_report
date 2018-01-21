@@ -1,0 +1,22 @@
+<%= form_with(model: standby_date, local: true) do |form| %>
+  <% if standby_date.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(standby_date.errors.count, "error") %> prohibited this standby_date from being saved:</h2>
+
+      <ul>
+      <% standby_date.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :day %>
+    <%= form.date_select :day, id: :standby_date_day %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

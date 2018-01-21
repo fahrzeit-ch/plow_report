@@ -1,0 +1,40 @@
+<div class="card text-dark bg-light mt-3 mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= t 'dashboard.cards.new_drive.title' %></h5>
+    <%= form_with(model: Drive.new, local: true) do |form| %>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <%= form.label :start %>
+          <%= form.text_field :start, type: 'time', step: '60', required: true, id: :drive_start, class: 'form-control' %>
+        </div>
+
+        <div class="form-group col-md-3">
+          <%= form.label :end  %>
+          <%= form.text_field :end, type: 'time', step: '60', required: true, id: :drive_end, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-2">
+          <%= form.label :distance_km %>
+          <%= form.text_field :distance_km, type: 'number', required: true, min: '0', id: :drive_distance_km, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Art</label>
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <%= form.check_box :plowed, id: :drive_plowed, class: 'form-check-input' %>
+              <%= form.label :plowed, class: 'form-check-label' %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= form.check_box :salted, id: :drive_salted, class: 'form-check-input' %>
+              <%= form.label :salted, class: 'form-check-label' %>
+            </div>
+          </div>
+        </div>
+        <%= form.button type: :submit, class: 'btn btn-primary' do %>
+          OK
+        <% end %>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

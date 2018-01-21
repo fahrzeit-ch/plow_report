@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= t 'dashboard.cards.standby_dates.title' %></h5>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>KW</th>
+        <th>Start</th>
+        <th>Anzahl Tage</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @standby_weeks.each do |standby_date| %>
+        <tr>
+          <td><%= standby_date.week_nr %></td>
+          <td><%= l standby_date.start_date, format: "%a %d.%m.%Y" %></td>
+          <td><%= standby_date.day_count %></td>
+        </tr>
+      <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
+          <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

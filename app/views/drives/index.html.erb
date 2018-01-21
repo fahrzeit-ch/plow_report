@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Fahrten</h1>
+<%= link_to 'Neue Fahrt erfassen', new_drife_path, class: 'btn btn-primary' %>
+
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>KW</th>
+      <th>Wochentag</th>
+      <th>Datum</th>
+      <th>Was</th>
+      <th>Abfahrtszeit</th>
+      <th>Ankunftszeit</th>
+      <th>Dauer</th>
+      <th>Salz (t)</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @drives.each do |drive| %>
+      <tr>
+        <td><%= drive.week_nr %></td>
+        <td><%= drive.day_of_week %></td>
+        <td><%= drive.start.strftime('%d.%m.%Y') %></td>
+        <td><%= drive.tasks.join(',') %></td>
+        <td><%= drive.start.strftime('%H:%M') %></td>
+        <td><%= drive.end.strftime('%H:%M') %></td>
+        <td><%= drive.duration.strftime('%H:%M') %></td>
+        <td><%= number_to_human drive.salt_amount_tonns %></td>
+        <td><%= link_to 'Ändern', edit_drife_path(drive) %></td>
+        <td><%= link_to 'Löschen', drive, method: :delete, data: { confirm: 'Sind Sie sicher dass dieser Eintrag gelöscht werden soll?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

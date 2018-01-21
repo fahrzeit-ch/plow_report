@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Day:</strong>
+  <%= I18n.l @standby_date.day %>
+</p>
+
+<%= link_to 'Edit', edit_standby_date_path(@standby_date) %> |
+<%= link_to 'Back', standby_dates_path %>
