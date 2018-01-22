@@ -1,10 +1,12 @@
 class Drive < ApplicationRecord
 
+  after_initialize :defaults
+
   validate :start_end_dates
 
   def defaults
-    @start ||= DateTime.now
-    @end ||= DateTime.now
+    self.start ||= DateTime.now
+    self.end ||= DateTime.now
   end
 
   def week_nr
@@ -12,14 +14,14 @@ class Drive < ApplicationRecord
   end
 
   def day_of_week
-    self.start.strftime("%A")
+    I18n.l self.start, format: '%A'
   end
 
   def tasks
     tasks = []
-    tasks << I18n.t('active_record.attributes.drive.task.plow') if plowed
-    tasks << I18n.t('active_record.attributes.drive.task.salt') if salted
-    tasks << I18n.t('active_record.attributes.drive.task.refill_salt') if salt_refilled
+    tasks << Drive.human_attribute_name(:plowed) if plowed
+    tasks << Drive.human_attribute_name(:salted) if salted
+    tasks << Drive.human_attribute_name(:salt_refilled) if salt_refilled
     tasks
   end
 

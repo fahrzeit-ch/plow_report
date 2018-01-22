@@ -29,7 +29,7 @@ class DrivesController < ApplicationController
     respond_to do |format|
       if @drive.save
         format.html { redirect_to @drive, notice: 'Drive was successfully created.' }
-        format.json { render :show, status: :created, location: @drive }
+        format.json { render :show, status: :created, location: :index }
       else
         format.html { render :new }
         format.json { render json: @drive.errors, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class DrivesController < ApplicationController
     respond_to do |format|
       if @drive.update(drive_params)
         format.html { redirect_to @drive, notice: 'Drive was successfully updated.' }
-        format.json { render :show, status: :ok, location: @drive }
+        format.json { render :show, status: :ok, location: :index }
       else
         format.html { render :edit }
         format.json { render json: @drive.errors, status: :unprocessable_entity }

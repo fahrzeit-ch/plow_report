@@ -1,20 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Fahrten</h1>
-<%= link_to 'Neue Fahrt erfassen', new_drife_path, class: 'btn btn-primary' %>
 
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Fahrten <span class="d-print-inline d-none">Urs Ulrich</span></h1>
+  </div>
+  <div class="col-sm-6">
+    <%= link_to 'Neue Fahrt erfassen', new_drife_path, class: 'btn btn-primary d-print-none float-right' %>
+    <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><%= t('actions.print') %></a>
+  </div>
+</div>
 <table class="table table-responsive">
   <thead>
     <tr>
-      <th>KW</th>
-      <th>Wochentag</th>
-      <th>Datum</th>
-      <th>Was</th>
-      <th>Abfahrtszeit</th>
-      <th>Ankunftszeit</th>
-      <th>Dauer</th>
-      <th>Salz (t)</th>
-      <th colspan="2"></th>
+      <th><%= Drive.human_attribute_name(:week_nr) %></th>
+      <th><%= Drive.human_attribute_name(:day_of_week) %></th>
+      <th><%= Drive.human_attribute_name(:date) %></th>
+      <th><%= Drive.human_attribute_name(:type) %></th>
+      <th><%= Drive.human_attribute_name(:start) %></th>
+      <th><%= Drive.human_attribute_name(:end) %></th>
+      <th><%= Drive.human_attribute_name(:duration) %></th>
+      <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
+      <th colspan="2" class="d-print-none"></th>
     </tr>
   </thead>
 
@@ -23,14 +30,14 @@
       <tr>
         <td><%= drive.week_nr %></td>
         <td><%= drive.day_of_week %></td>
-        <td><%= drive.start.strftime('%d.%m.%Y') %></td>
+        <td><%= l drive.start.to_date %></td>
         <td><%= drive.tasks.join(',') %></td>
         <td><%= drive.start.strftime('%H:%M') %></td>
         <td><%= drive.end.strftime('%H:%M') %></td>
         <td><%= drive.duration.strftime('%H:%M') %></td>
         <td><%= number_to_human drive.salt_amount_tonns %></td>
-        <td><%= link_to 'Ändern', edit_drife_path(drive) %></td>
-        <td><%= link_to 'Löschen', drive, method: :delete, data: { confirm: 'Sind Sie sicher dass dieser Eintrag gelöscht werden soll?' } %></td>
+        <td class="d-print-none"><%= link_to 'Ändern', edit_drife_path(drive) %></td>
+        <td class="d-print-none"><%= link_to 'Löschen', drive, method: :delete, data: { confirm: 'Sind Sie sicher dass dieser Eintrag gelöscht werden soll?' } %></td>
       </tr>
     <% end %>
   </tbody>

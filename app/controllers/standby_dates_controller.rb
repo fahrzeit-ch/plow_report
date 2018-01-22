@@ -29,7 +29,7 @@ class StandbyDatesController < ApplicationController
 
     respond_to do |format|
       if @standby_date.save
-        format.html { redirect_to @standby_date, notice: 'Standby date was successfully created.' }
+        format.html { redirect_to standby_dates_path, notice: 'Standby date was successfully created.' }
         format.json { render :show, status: :created, location: @standby_date }
       else
         format.html { render :new }

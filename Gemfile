@@ -23,7 +23,7 @@ gem 'jquery-rails'
 gem 'bootstrap_form',
     git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git',
     branch: 'master'
-
+gem 'simple_calendar', '~> 2.0'
 gem 'rails-i18n'
 
 # Use CoffeeScript for .coffee assets and views

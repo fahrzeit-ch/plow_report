@@ -15,6 +15,26 @@ class WeekView
 
 end
 
+class StandbyDateRange
+  include ActiveModel::Model
+  include ActiveModel::AttributeAssignment
+
+  attr_accessor :start_date
+  attr_accessor :end_date
+
+  def initialize(attributes={})
+    @start_date = Date.today
+    @end_date = Date.today
+    assign_attributes attributes
+  end
+
+  def save
+    if valid?
+      StandbyDate.from_range start_date, end_date
+    end
+  end
+end
+
 class StandbyDate < ApplicationRecord
   def self.by_season(season)
     where('day > ? AND day < ?', season.start_date, season.end_date)
@@ -29,5 +49,9 @@ class StandbyDate < ApplicationRecord
   def self.weeks
     res = group("DATE_TRUNC('week', day)").order('date_trunc_week_day DESC').count
     res.map { |key, val| WeekView.new key.to_date, val }
+  end
+
+  def start_time
+    day
   end
 end

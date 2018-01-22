@@ -36,9 +36,21 @@ de:
       dashboard: "Übersicht"
       standby_dates: "Pikett"
       drives: "Fahrten"
-  active_record:
+  activerecord:
     attributes:
       drive:
+        date: "Datum"
+        week_nr: "KW"
+        day_of_week: "Wochentag"
+        duration: "Dauer"
+        type: "Was"
+        start: "Start Zeit"
+        end: "End Zeit"
+        salt_amount_tonns: "Salz (t)"
+        distance_km: "Distanz (km)"
+        plowed: "Räumen"
+        salted: "Salzen"
+        salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
           plow: "Räumen"
@@ -51,5 +63,9 @@ de:
         title: "Fahrt Erfassen"
       last_drives:
         title: "Letzte Fahrten"
+        show_all: "Alle anzeigen"
   standby_dates:
     summary_row: "Total Pikett Tage"
+  actions:
+    back: "Zurück"
+    print: "Drucken"

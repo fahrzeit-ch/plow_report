@@ -1,52 +1,52 @@
-<%= form_with(model: drive, local: true) do |form| %>
-  <% if drive.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(drive.errors.count, "error") %> prohibited this drive from being saved:</h2>
+<div class="row">
+  <div class="col-md-6">
+    <%= form_with(model: drive, local: true) do |form| %>
+      <% if drive.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(drive.errors.count, "error") %> prohibited this drive from being saved:</h2>
 
-      <ul>
-      <% drive.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+            <% drive.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="form-group">
+        <%= form.label :start %>
+        <%= form.text_field :start, value: form.object.start.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :end  %>
+        <%= form.text_field :end, value: form.object.end.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_end, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :distance_km %>
+        <%= form.text_field :distance_km, type: 'number', required: true, min: '0', id: :drive_distance_km, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <%= form.check_box :plowed, id: :drive_plowed, class: 'form-check-input' %>
+          <%= form.label :plowed, class: 'form-check-label' %>
+        </div>
+        <div class="form-check">
+          <%= form.check_box :salted, id: :drive_salted, class: 'form-check-input' %>
+          <%= form.label :salted, class: 'form-check-label' %>
+        </div>
+      </div>
+      <div class="form-check">
+        <%= form.check_box :salt_refilled, id: :drive_salt_refilled, class: 'form-check-input' %>
+        <%= form.label :salt_refilled, class: 'form-check-label' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :salt_amount_tonns %>
+        <%= form.text_field :salt_amount_tonns, type: 'number', required: true, min: '0', id: :drive_distance_km, class: 'form-control' %>
+      </div>
+      <%= form.button type: :submit, class: 'btn btn-primary' do %>
+        OK
+      <% end %>
+      <%= link_to t('actions.back'), drives_path, class: 'btn btn-default' %>
+    <% end %>
 
-  <div class="field">
-    <%= form.label :start %>
-    <%= form.datetime_select :start, id: :drive_start %>
   </div>
-
-  <div class="field">
-    <%= form.label :end %>
-    <%= form.datetime_select :end, id: :drive_end %>
-  </div>
-
-  <div class="field">
-    <%= form.label :distance_km %>
-    <%= form.text_field :distance_km, id: :drive_distance_km %>
-  </div>
-
-  <div class="field">
-    <%= form.label :salt_refilled %>
-    <%= form.check_box :salt_refilled, id: :drive_salt_refilled %>
-  </div>
-
-  <div class="field">
-    <%= form.label :salt_amount_tonns %>
-    <%= form.text_field :salt_amount_tonns, id: :drive_salt_amount_tonns %>
-  </div>
-
-  <div class="field">
-    <%= form.label :salted %>
-    <%= form.check_box :salted, id: :drive_salted %>
-  </div>
-
-  <div class="field">
-    <%= form.label :plowed %>
-    <%= form.check_box :plowed, id: :drive_plowed %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
