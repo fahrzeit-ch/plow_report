@@ -4,8 +4,8 @@ class StandbyDatesController < ApplicationController
   # GET /standby_dates
   # GET /standby_dates.json
   def index
-    @standby_weeks = StandbyDate.weeks
-    @standby_dates = StandbyDate.all
+    @standby_weeks = StandbyDate.by_season(selected_season).weeks
+    @standby_dates = StandbyDate.by_season(selected_season).all
   end
 
   # GET /standby_dates/1

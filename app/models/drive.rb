@@ -1,8 +1,10 @@
 class Drive < ApplicationRecord
 
+  validate :start_end_dates
+
   def defaults
     @start ||= DateTime.now
-    @end ||= DateTim.now
+    @end ||= DateTime.now
   end
 
   def week_nr
@@ -23,5 +25,14 @@ class Drive < ApplicationRecord
 
   def duration
     Time.at(self.end - self.start).utc
+  end
+
+  def self.by_season(season)
+    where('start > ? AND start < ?', season.start_date, season.end_date)
+  end
+
+  private
+  def start_end_dates
+    errors[:end] << 'not_before_start' if self.end < self.start
   end
 end

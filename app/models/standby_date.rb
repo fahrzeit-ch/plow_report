@@ -16,6 +16,10 @@ class WeekView
 end
 
 class StandbyDate < ApplicationRecord
+  def self.by_season(season)
+    where('day > ? AND day < ?', season.start_date, season.end_date)
+  end
+
   def self.from_range(start_day, end_day)
     (start_day.to_date..end_day.to_date).each do |date|
       StandbyDate.create day: date

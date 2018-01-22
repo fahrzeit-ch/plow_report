@@ -4,7 +4,7 @@ class DrivesController < ApplicationController
   # GET /drives
   # GET /drives.json
   def index
-    @drives = Drive.all
+    @drives = Drive.by_season(selected_season).all
   end
 
   # GET /drives/1

@@ -1,0 +1,10 @@
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= selected_season.to_s %>
+  </button>
+  <div class="dropdown-menu">
+    <% Season.last(5).each do |s| %>
+      <%= link_to s.to_s, current_path(season: s.to_param), class: 'dropdown-item' %>
+    <% end %>
+  </div>
+</div>
