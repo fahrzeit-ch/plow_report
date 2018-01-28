@@ -12,10 +12,17 @@
   </head>
 
   <body>
-    <%= render 'shared/navbar' %>
-    <div class="container-fluid">
-      <%= yield %>
-    </div>
+    <% if user_signed_in? %>
+      <%= render 'shared/navbar' %>
+      <div class="container-fluid">
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= render 'shared/navbar_signed_out' %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    <% end %>
 
   </body>
 </html>

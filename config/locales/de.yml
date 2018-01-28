@@ -36,6 +36,9 @@ de:
       dashboard: "Übersicht"
       standby_dates: "Pikett"
       drives: "Fahrten"
+      sign_in: "Anmelden"
+      sign_up: "Registrieren"
+      signout: "Abmelden"
   activerecord:
     attributes:
       drive:

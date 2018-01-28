@@ -23,7 +23,10 @@
       </li>
     </ul>
   </div>
-  <div class="navbar-nav mr-auto float-right">
+  <ul class="navbar-nav mr-auto float-right">
     <%= render 'shared/season_selector' %>
-  </div>
+    <li class="nav-item">
+      <%= link_to t('navbar.main.signout'), destroy_user_session_path, method: :delete, class: 'nav-link' %>
+    </li>
+  </ul>
 </nav>

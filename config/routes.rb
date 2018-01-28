@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :drives
   resources :standby_dates
   resources :standby_date_ranges, only: :create

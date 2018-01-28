@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_season
   helper_method :selected_season
 
+  before_action :authenticate_user!
+
   def current_season
     @current_season ||= Season.new
   end
