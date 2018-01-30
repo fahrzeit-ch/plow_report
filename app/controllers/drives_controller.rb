@@ -28,7 +28,7 @@ class DrivesController < ApplicationController
 
     respond_to do |format|
       if @drive.save
-        format.html { redirect_to @drive, notice: 'Drive was successfully created.' }
+        format.html { redirect_to drives_path, notice: 'Fahrt erfolgreich erfasst' }
         format.json { render :show, status: :created, location: :index }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class DrivesController < ApplicationController
   def update
     respond_to do |format|
       if @drive.update(drive_params)
-        format.html { redirect_to @drive, notice: 'Drive was successfully updated.' }
+        format.html { redirect_to drives_path, notice: 'Drive was successfully updated.' }
         format.json { render :show, status: :ok, location: :index }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class DrivesController < ApplicationController
   def destroy
     @drive.destroy
     respond_to do |format|
-      format.html { redirect_to drives_url, notice: 'Drive was successfully destroyed.' }
+      format.html { redirect_to drives_path, notice: 'Drive was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
