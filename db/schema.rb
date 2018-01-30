@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123170327) do
+ActiveRecord::Schema.define(version: 20180130170054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "driver_logins", force: :cascade do |t|
+    t.bigint "driver_id"
+    t.bigint "user_id"
+    t.index ["driver_id", "user_id"], name: "index_driver_logins_on_driver_id_and_user_id", unique: true
+    t.index ["driver_id"], name: "index_driver_logins_on_driver_id"
+    t.index ["user_id"], name: "index_driver_logins_on_user_id"
+  end
+
+  create_table "drivers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "drives", force: :cascade do |t|
     t.datetime "start", null: false
@@ -25,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180123170327) do
     t.boolean "plowed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "driver_id", null: false
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
   end
 
@@ -32,6 +47,7 @@ ActiveRecord::Schema.define(version: 20180123170327) do
     t.date "day", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "driver_id", null: false
     t.index ["day"], name: "index_standby_dates_on_day"
   end
 
@@ -48,8 +64,14 @@ ActiveRecord::Schema.define(version: 20180123170327) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: "", null: false
+    t.integer "driver_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "driver_logins", "drivers"
+  add_foreign_key "driver_logins", "users"
+  add_foreign_key "drives", "drivers", name: "fk_drives_driver"
+  add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
 end

@@ -3,11 +3,17 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_season
   helper_method :selected_season
+  helper_method :current_driver
 
   before_action :authenticate_user!
 
   def current_season
     @current_season ||= Season.new
+  end
+
+  def current_driver
+    return nil unless user_signed_in?
+    current_user.drivers.last
   end
 
   def selected_season

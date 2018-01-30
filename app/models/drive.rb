@@ -3,6 +3,7 @@ class Drive < ApplicationRecord
   after_initialize :defaults
 
   validate :start_end_dates
+  belongs_to :driver
 
   def defaults
     self.start ||= DateTime.now

@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <h1>Fahrten <span class="d-print-inline d-none">Urs Ulrich</span></h1>
+    <h1>Fahrten <span class="d-print-inline d-none"><%= current_driver.name %></span></h1>
   </div>
   <div class="col-sm-6">
     <%= link_to 'Neue Fahrt erfassen', new_drife_path, class: 'btn btn-primary d-print-none float-right' %>

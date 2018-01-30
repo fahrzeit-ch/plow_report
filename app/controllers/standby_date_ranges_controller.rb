@@ -3,7 +3,7 @@ class StandbyDateRangesController < ApplicationController
   # POST /standby_dates
   # POST /standby_dates.json
   def create
-    @standby_date = StandbyDateRange.new(standby_date_params)
+    @standby_date = StandbyDateRange.new({driver_id: current_driver.id}.merge(standby_date_params))
 
     respond_to do |format|
       if @standby_date.save

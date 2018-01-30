@@ -21,6 +21,7 @@ class StandbyDateRange
 
   attr_accessor :start_date
   attr_accessor :end_date
+  attr_accessor :driver_id
 
   def initialize(attributes={})
     @start_date = Date.today
@@ -30,19 +31,21 @@ class StandbyDateRange
 
   def save
     if valid?
-      StandbyDate.from_range start_date, end_date
+      StandbyDate.from_range start_date, end_date, driver_id
     end
   end
 end
 
 class StandbyDate < ApplicationRecord
+  belongs_to :driver
+
   def self.by_season(season)
     where('day > ? AND day < ?', season.start_date, season.end_date)
   end
 
-  def self.from_range(start_day, end_day)
+  def self.from_range(start_day, end_day, driver_id)
     (start_day.to_date..end_day.to_date).each do |date|
-      StandbyDate.create day: date
+      StandbyDate.create day: date, driver_id: driver_id
     end
   end
 

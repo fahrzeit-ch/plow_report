@@ -4,8 +4,8 @@ class StandbyDatesController < ApplicationController
   # GET /standby_dates
   # GET /standby_dates.json
   def index
-    @standby_weeks = StandbyDate.by_season(selected_season).weeks
-    @standby_dates = StandbyDate.by_season(selected_season).all
+    @standby_weeks = StandbyDate.where(driver: current_driver).by_season(selected_season).weeks
+    @standby_dates = StandbyDate.where(driver: current_driver).by_season(selected_season).all
   end
 
   # GET /standby_dates/1
@@ -25,7 +25,7 @@ class StandbyDatesController < ApplicationController
   # POST /standby_dates
   # POST /standby_dates.json
   def create
-    @standby_date = StandbyDate.new(standby_date_params)
+    @standby_date = StandbyDate.new({driver_id: current_driver.id}.merge(standby_date_params))
 
     respond_to do |format|
       if @standby_date.save

@@ -4,7 +4,7 @@ class DrivesController < ApplicationController
   # GET /drives
   # GET /drives.json
   def index
-    @drives = Drive.by_season(selected_season).all
+    @drives = Drive.where(driver: current_driver).by_season(selected_season).all
   end
 
   # GET /drives/1
@@ -24,7 +24,7 @@ class DrivesController < ApplicationController
   # POST /drives
   # POST /drives.json
   def create
-    @drive = Drive.new(drive_params)
+    @drive = Drive.new({driver_id: current_driver.id}.merge(drive_params))
 
     respond_to do |format|
       if @drive.save

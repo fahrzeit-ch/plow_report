@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+      registrations: 'user/registrations'
+  }
   resources :drives
   resources :standby_dates
   resources :standby_date_ranges, only: :create
