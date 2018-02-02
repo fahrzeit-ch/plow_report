@@ -12,7 +12,7 @@ RSpec.describe Season, type: :model do
       end
 
       it 'should be within current date range' do
-        expect(subject.start < Date.today < subject.end).to be_truthy
+        expect(subject.start_date < Date.today && Date.today < subject.end_date).to be_truthy
       end
 
     end
