@@ -28,6 +28,7 @@ gem 'rails-i18n'
 
 gem 'devise'
 gem 'devise-bootstrap-views'
+gem 'rollbar'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
