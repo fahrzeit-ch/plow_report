@@ -39,7 +39,32 @@ de:
       sign_in: "Anmelden"
       sign_up: "Registrieren"
       signout: "Abmelden"
+  activemodel:
+    models:
+      standby_date_range:
+        one: "Pikett Tage"
+        other: "Pikett Tage"
+      season:
+        one: "Saison"
+        other: "Saison"
+    attributes:
+      standby_date_range:
+        start_date: "Start Datum"
+        end_date: "End Datum"
   activerecord:
+    models:
+      drive:
+        one: "Fahrt"
+        other: "Fahrten"
+      standby_date:
+        one: "Pikett Tag"
+        other: "Pikett Tage"
+      user:
+        one: "Benutzer"
+        other: "Benutzer"
+      driver:
+        one: "Fahrer"
+        other: "Fahrer"
     attributes:
       drive:
         date: "Datum"
