@@ -72,3 +72,14 @@ de:
   actions:
     back: "Zurück"
     print: "Drucken"
+  flash:
+    standby_dates:
+      created: "Pikett Tag erfolgreich gespeichert"
+      updated: "Pikett Tag erfolgreich aktuallisiert"
+      destroyed: "Pikett Tag erfolgreich entfernt"
+    standby_date_ranges:
+      created: "Pikett Tage erfolgreich gespeichert"
+    drives:
+      updated: "Eintrag erfolgreich aktuallisiert"
+      destroyed: "Fahrt erfolgreich entfernt"
+      created: "Fahrt erfolgreich erfasst"
