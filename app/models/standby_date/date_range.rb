@@ -33,7 +33,7 @@ class StandbyDate
 
     private
     def end_date_gt_start_date
-      errors.add(:end_date, 'must_be_greater_than_start') if end_date < start_date
+      errors.add(:end_date, :must_be_greater_than_start) if end_date < start_date
     end
   end
 end

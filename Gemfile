@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'bootstrap_form',
-    git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git',
+    git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
     branch: 'master'
 gem 'simple_calendar', '~> 2.0'
 gem 'rails-i18n'

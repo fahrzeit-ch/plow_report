@@ -36,6 +36,6 @@ class Drive < ApplicationRecord
 
   private
   def start_end_dates
-    errors[:end] << 'not_before_start' if self.end < self.start
+    errors.add(:end, :not_before_start) if self.end < self.start
   end
 end

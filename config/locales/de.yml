@@ -19,6 +19,12 @@ de:
       standby_date/date_range:
         start_date: "Start Datum"
         end_date: "End Datum"
+  errors:
+    attributes:
+      end:
+        not_before_start: "darf nicht vor der Start Zeit liegen"
+      end_date:
+        must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
   activerecord:
     models:
       drive:
@@ -76,3 +82,5 @@ de:
       updated: "Eintrag erfolgreich aktuallisiert"
       destroyed: "Fahrt erfolgreich entfernt"
       created: "Fahrt erfolgreich erfasst"
+  common:
+    ok: "OK"
