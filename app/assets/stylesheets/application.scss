@@ -13,7 +13,7 @@
  */
 
 //    Font Family
-
+//
 $primary-font	: 'Poppins', sans-serif;
 
 /*--------------------------- Color variations ----------------------*/
@@ -38,7 +38,7 @@ $theme-colors: (
         "secondary": $secondary-color,
         "danger": #ff4136
 );
-
+@import "variables";
 @import "bootstrap";
 @import "simple_calendar";
 @import "devise_bootstrap_views";
@@ -53,3 +53,4 @@ $theme-colors: (
 .devise-bs {
   margin-top: 50px;
 }
+

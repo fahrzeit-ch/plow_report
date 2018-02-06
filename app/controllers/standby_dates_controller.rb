@@ -31,7 +31,7 @@ class StandbyDatesController < ApplicationController
       if @standby_date.save
         format.html { redirect_to standby_dates_path, notice: t('flash.standby_dates.created') }
         format.json { render :show, status: :created, location: @standby_date }
-      elseg
+      else
         format.html { render :new }
         format.json { render json: @standby_date.errors, status: :unprocessable_entity }
       end
