@@ -18,10 +18,13 @@ $primary-font	: 'Poppins', sans-serif;
 
 /*--------------------------- Color variations ----------------------*/
 
-$primary-color	: #00A383;
-$secondary-color: #0F4DA8;
-$title-color	: #228D00;
-$text-color		: #777777;
+//$secondary-color	: #00A383;
+//$primary-color: #ff7319;
+
+$primary-color	: #00AEFF;
+$secondary-color: #ff7319;
+$title-color	: #076510;
+$text-color		: #5f5f5f;
 
 $white			: #fff;
 $black			: #000;
@@ -54,3 +57,6 @@ $theme-colors: (
   margin-top: 50px;
 }
 
+.navbar-brand > img {
+  height: 30px;
+}
