@@ -86,3 +86,11 @@ de:
       created: "Firma erfolgreich Erfasst"
   common:
     ok: "OK"
+    create: "Erstellen"
+    back: "Zurück"
+  views:
+    companies:
+      new:
+        title: "Firmen Konto erstellen"
+      edit:
+        title: "Bearbeiten"

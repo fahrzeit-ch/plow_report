@@ -1,0 +1,10 @@
+<%= form_with(model: @resource, local: true, builder: BootstrapFormBuilder) do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+  <%= link_to t('common.back'), root_path, class: 'btn btn-default' %>
+  <%= form.button type: :submit, class: 'btn btn-primary' do %>
+    <i class="fa fa-check"></i> <%= t 'common.create' %>
+  <% end %>
+<% end %>
