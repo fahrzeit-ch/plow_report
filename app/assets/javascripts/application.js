@@ -18,3 +18,4 @@
 //= require toastr
 //= require toastr_config
 //= require form_validations
+//= require drives

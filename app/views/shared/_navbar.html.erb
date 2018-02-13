@@ -25,7 +25,9 @@
     <ul class="navbar-nav">
       <%= render 'shared/season_selector' %>
       <li class="nav-item">
-        <%= link_to t('navbar.main.signout'), destroy_user_session_path, method: :delete, class: 'nav-link' %>
+        <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+          <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
+        <% end %>
       </li>
     </ul>
   </div>

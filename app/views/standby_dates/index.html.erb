@@ -1,6 +1,6 @@
-<div class="row">
-  <div class="col-md-6">
-    <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><%= t('actions.print') %></a>
+<div class="row mt-5">
+  <div class="col-lg-6">
+    <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
     <h1>Wochen</h1>
     <table class="table">
       <thead>
@@ -27,10 +27,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6 d-print-none">
+  <div class="col-lg-6 d-print-none">
     <h1>Kalender</h1>
     <%= month_calendar events: @standby_dates do |date, stand_by| %>
-      <%= l date, format: :short %>
+      <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
+      <span class="d-sm-none"><%= l date, format: '%d' %></span>
 
       <% stand_by.each do |s| %>
         <div class="bg-primary">
@@ -40,7 +41,9 @@
       <% if stand_by.empty? %>
         <%= form_with(model: StandbyDate.new(day: date), local: true) do |form| %>
           <%= form.hidden_field :day, id: :standby_date_day %>
-          <%= form.submit 'Neu', class: 'btn' %>
+          <%= form.button class: 'btn', type: :submit do %>
+            <i class="fa fa-plus"></i>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

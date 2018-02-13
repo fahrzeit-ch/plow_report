@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'font-awesome-rails'
 gem 'bootstrap_form',
     git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
     branch: 'master'
