@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :driver_logins, dependent: :destroy
   has_many :drivers, through: :driver_logins
 
+  has_many :company_members, dependent: :destroy
+
   after_create :create_driver
 
 

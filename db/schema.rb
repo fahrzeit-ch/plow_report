@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202200723) do
+ActiveRecord::Schema.define(version: 20180213170946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name", null: false
+    t.json "options", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_companies_on_name", unique: true
+  end
+
+  create_table "company_members", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "company_id"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_members_on_company_id"
+    t.index ["user_id"], name: "index_company_members_on_user_id"
+  end
 
   create_table "driver_logins", force: :cascade do |t|
     t.bigint "driver_id"

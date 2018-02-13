@@ -82,5 +82,7 @@ de:
       updated: "Eintrag erfolgreich aktuallisiert"
       destroyed: "Fahrt erfolgreich entfernt"
       created: "Fahrt erfolgreich erfasst"
+    company:
+      created: "Firma erfolgreich Erfasst"
   common:
     ok: "OK"
