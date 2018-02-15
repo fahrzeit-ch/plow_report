@@ -1,10 +1,18 @@
 <div class="container mt-3">
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title"><%= t 'views.companies.edit.title' %></h4>
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#"><i class="fa fa-cog"></i> <%= t'views.companies.nav.edit.title' %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa fa-user"></i> <%= t 'views.companies.nav.users.title' %></a>
+        </li>
+      </ul>
     </div>
 
     <div class="card-body">
+      <h4 class="card-title"><%= t 'views.companies.edit.title' %></h4>
       <%= render 'form' %>
     </div>
   </div>

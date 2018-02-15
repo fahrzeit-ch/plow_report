@@ -15,14 +15,14 @@ RSpec.describe CompaniesController, type: :controller do
   describe "POST #create" do
     it "returns http success" do
       post :create, params: {company: valid_attributes}
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to root_path
     end
   end
 
   describe "GET #edit" do
     let(:company) { create(:company) }
     before {
-      company.add_member(user, 'owner')
+      company.add_member(user, CompanyMember::OWNER)
     }
     it "returns http success" do
       get :edit, params: { id: company.id }
@@ -33,7 +33,7 @@ RSpec.describe CompaniesController, type: :controller do
   describe "PUT #update" do
     let(:company) { create(:company) }
     before {
-      company.add_member(user, 'owner')
+      company.add_member(user, CompanyMember::OWNER)
     }
 
     it "returns http success" do
@@ -45,7 +45,7 @@ RSpec.describe CompaniesController, type: :controller do
   describe "GET #destroy" do
     let(:company) { create(:company) }
     before {
-      company.add_member(user, 'owner')
+      company.add_member(user, CompanyMember::OWNER)
     }
 
     it "returns http success" do

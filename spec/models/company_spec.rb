@@ -13,6 +13,11 @@ RSpec.describe Company, type: :model do
         expect(subject).to be_valid
       end
 
+      it 'should not be valid without an email address' do
+        subject.contact_email = ''
+        expect(subject).not_to be_valid
+      end
+
       it 'should not be valid with blank name' do
         subject.name = ''
         expect(subject).not_to be_valid
@@ -23,9 +28,9 @@ RSpec.describe Company, type: :model do
         expect(subject).not_to be_valid
       end
 
-      it 'should not be valid without options hash' do
+      it 'should be valid when options are set to nil' do
         subject.options = nil
-        expect(subject).not_to be_valid
+        expect(subject).to be_valid
       end
 
     end

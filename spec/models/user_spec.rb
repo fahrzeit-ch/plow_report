@@ -32,5 +32,29 @@ RSpec.describe User, type: :model do
 
   end
 
+  describe '#owns_company' do
+    let(:company) { create(:company) }
+    subject { create(:user) }
+
+    it 'should return true if its owner of a company' do
+      CompanyMember.create(user: subject, company: company, role: CompanyMember::OWNER)
+      expect(subject.owens_company).to be_truthy
+    end
+
+    it 'should return false if administrates company' do
+      CompanyMember.create(user: subject, company: company, role: CompanyMember::ADMINISTRATOR)
+      expect(subject.owens_company).to be_falsey
+    end
+
+    it 'should return false if no company' do
+      expect(subject.owens_company).to be_falsey
+    end
+
+    it 'should return false if it is just a driver' do
+
+    end
+
+  end
+
 
 end

@@ -7,6 +7,8 @@ de:
       sign_in: "Anmelden"
       sign_up: "Registrieren"
       signout: "Abmelden"
+      new_company: "Firma Registrieren"
+      company_settings: "Einstellungen"
   activemodel:
     models:
       standby_date/date_range:
@@ -27,6 +29,9 @@ de:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
   activerecord:
     models:
+      company:
+        one: "Firma"
+        other: "Firmen"
       drive:
         one: "Fahrt"
         other: "Fahrten"
@@ -40,6 +45,9 @@ de:
         one: "Fahrer"
         other: "Fahrer"
     attributes:
+      company:
+        name: "Firmen Name"
+        contact_email: "Kontakt Email"
       drive:
         date: "Datum"
         week_nr: "KW"
@@ -84,13 +92,22 @@ de:
       created: "Fahrt erfolgreich erfasst"
     company:
       created: "Firma erfolgreich Erfasst"
+      updated: "Firma erfolgreich aktuallisiert"
   common:
     ok: "OK"
     create: "Erstellen"
     back: "Zurück"
+    update: "Speichern"
   views:
     companies:
       new:
         title: "Firmen Konto erstellen"
       edit:
-        title: "Bearbeiten"
+        title: "Firmen Einstellungen"
+      users:
+        title: "Benutzer & Zugriff"
+      nav:
+        users:
+          title: "Benutzer & Zugriff"
+        edit:
+          title: "Einstellungen"

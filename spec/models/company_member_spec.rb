@@ -6,7 +6,7 @@ RSpec.describe CompanyMember, type: :model do
 
   describe 'create' do
     it 'should be possible to create a membership' do
-      membership = CompanyMember.create user: user, company: company, role: 'owner'
+      membership = CompanyMember.create user: user, company: company, role: CompanyMember::OWNER
       expect(membership).to be_persisted
     end
 

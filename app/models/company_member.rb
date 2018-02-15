@@ -1,5 +1,8 @@
 class CompanyMember < ApplicationRecord
-  ROLES = %w(owner administrator driver)
+  OWNER = 'owner'
+  ADMINISTRATOR = 'administrator'
+  DRIVER = 'driver'
+  ROLES = [OWNER, ADMINISTRATOR, DRIVER]
 
   belongs_to :user
   belongs_to :company
