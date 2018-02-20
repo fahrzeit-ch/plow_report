@@ -26,4 +26,36 @@ RSpec.describe CompanyMember, type: :model do
     end
   end
 
+  describe 'assign user email' do
+    context 'existing user' do
+
+      subject { CompanyMember.new user_email: user.email, company: company, role: CompanyMember::OWNER }
+
+      it 'should be valid' do
+        expect(subject).to be_valid
+      end
+
+      it 'should assign the user when save succeeds' do
+        subject.save
+        expect(subject.user).to eq user
+      end
+
+      it 'should not assign same user twice' do
+        CompanyMember.create(user: user, company: company, role: CompanyMember::OWNER)
+        expect(subject).not_to be_valid
+      end
+
+    end
+
+    context 'non existing user' do
+      subject { CompanyMember.new user_email: 'other email', company: company, role: CompanyMember::OWNER }
+
+      it 'should give validation error' do
+        expect(subject).not_to be_valid
+      end
+
+    end
+
+  end
+
 end

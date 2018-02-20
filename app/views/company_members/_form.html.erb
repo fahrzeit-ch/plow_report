@@ -1,0 +1,16 @@
+<div id="company-member-form">
+  <h5><%= t 'views.companies.users.add_new' %></h5>
+  <%= form_with(model: company_member, remote: true, builder: BootstrapFormBuilder, class: 'form-inline') do |f| %>
+    <%= f.email_field :user_email, class: 'col-sm-6', placeholder: t('formscompany_member.placeholders.user_email') %>
+    <%= f.select :role, company_member_role_select_options, {}, { class: 'custom-select col-sm-4' }%> <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary' do %><i class="fa fa-check"></i><% end %>
+  <% end %>
+  <% if company_member.errors.added?(:user, :taken) %>
+    <div class="form-row">
+      <div class="col-12 alert alert-danger">
+        <% company_member.errors[:user].each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -28,6 +28,14 @@ de:
       end_date:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
   activerecord:
+    errors:
+      models:
+        company_member:
+          attributes:
+            user_email:
+              user_not_found: "Benutzer konnte nicht gefunden werden."
+            user:
+              taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
     models:
       company:
         one: "Firma"
@@ -45,6 +53,13 @@ de:
         one: "Fahrer"
         other: "Fahrer"
     attributes:
+      company_member:
+        role: "Rolle"
+        roles:
+          owner: "Besitzer"
+          employee: "Mitarbeiter"
+          driver: "Fahrer"
+        user_email: "hans.muster@beispielfirma.ch"
       company:
         name: "Firmen Name"
         contact_email: "Kontakt Email"
@@ -93,6 +108,11 @@ de:
     company:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
+    company_member:
+      created: "Benutzer erfolgreich zur Firma hinzugefügt."
+      updated: "Benutzer erfolgreich aktuallisiert."
+      destroyed: "Benutzer erfolgreich entfernt."
+      could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -106,8 +126,12 @@ de:
         title: "Firmen Einstellungen"
       users:
         title: "Benutzer & Zugriff"
+        add_new: "Neuen Benutzer hinzufügen"
       nav:
         users:
           title: "Benutzer & Zugriff"
         edit:
           title: "Einstellungen"
+  formscompany_member:
+    placeholders:
+      user_email: "hans.muster@meinefirma.ch"

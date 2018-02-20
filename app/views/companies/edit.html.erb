@@ -1,14 +1,7 @@
 <div class="container mt-3">
   <div class="card">
     <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" href="#"><i class="fa fa-cog"></i> <%= t'views.companies.nav.edit.title' %></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-user"></i> <%= t 'views.companies.nav.users.title' %></a>
-        </li>
-      </ul>
+      <%= render 'shared/company_edit_nav' %>
     </div>
 
     <div class="card-body">
