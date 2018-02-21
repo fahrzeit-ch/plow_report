@@ -1,23 +1,23 @@
 class CompanyMembersController < ApplicationController
 
   def index
-    @members = CompanyMember.where(company: current_company)
+    @company_members = CompanyMember.where(company: current_company)
   end
 
   def create
-    @member = CompanyMember.new(create_params)
-    @member.company = current_company
-    if @member.save
+    @company_member = CompanyMember.new(create_params)
+    @company_member.company = current_company
+    if @company_member.save
       flash[:success] = t 'flash.company_member.created'
-      render :show
+      render :create
     else
       render :new
     end
   end
 
   def update
-    @member = CompanyMember.where(company: current_company).find(params[:id])
-    if @member.update update_params
+    @company_member = CompanyMember.where(company: current_company).find(params[:id])
+    if @company_member.update update_params
       flash[:success] = t 'flash.company_member.updated'
       render :show
     else
@@ -26,8 +26,8 @@ class CompanyMembersController < ApplicationController
   end
 
   def destroy
-    @member = CompanyMember.new(update_params)
-    if @member.destroy
+    @company_member = CompanyMember.where(company: current_company).find(params[:id])
+    if @company_member.destroy
       flash[:success] = t 'flash.company_member.destroyed'
       render :destroy
     else

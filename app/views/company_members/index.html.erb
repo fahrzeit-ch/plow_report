@@ -8,11 +8,7 @@
       <h4 class="card-title"><%= t 'views.companies.users.title' %></h4>
     </div>
     <ul class="list-group list-group-flush">
-      <% @members.each do |member| %>
-        <li class="list-group-item">
-          <%= member.user.name %> <span class="badge badge-primary float-right"><%= t("activerecord.attributes.company_member.roles.#{member.role}") %></span>
-        </li>
-      <% end %>
+      <%= render @company_members %>
       <li class="list-group-item" id="company-member-form-container" >
         <%= render 'form' %>
       </li>
