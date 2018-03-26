@@ -1,6 +1,6 @@
 class Season
-  @@winter_season_start_day = { day: 31, month: 10, hash: 1031 }
-  @@winter_season_end_day = { day: 30, month: 3, hash: 330 }
+  @@winter_season_start_day = { day: 1, month: 7, hash: 1031 }
+  @@winter_season_end_day = { day: 30, month: 6, hash: 330 }
 
   class << self
 
