@@ -18,6 +18,10 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def show
+    @resource = current_company
+  end
+
   def edit
     @resource = Company.with_member(current_user.id).find(params[:id])
   end

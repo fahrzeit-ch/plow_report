@@ -30,6 +30,13 @@ RSpec.describe User, type: :model do
       expect(u.drivers.last.name).to eq u.name
     end
 
+    it 'should not be possible to assign two drivers with the same company_id' do
+      u = User.create valid_attributes
+      expect {
+        u.drivers << create(:driver)
+      }.not_to raise_error
+    end
+
   end
 
   describe '#owns_company' do
@@ -48,10 +55,6 @@ RSpec.describe User, type: :model do
 
     it 'should return false if no company' do
       expect(subject.owens_company).to be_falsey
-    end
-
-    it 'should return false if it is just a driver' do
-
     end
 
   end

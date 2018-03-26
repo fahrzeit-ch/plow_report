@@ -5,7 +5,13 @@ Rails.application.routes.draw do
   resources :drives
   resources :standby_dates, only: [:create, :destroy, :index]
   resources :standby_date_ranges, only: :create
-  resources :companies
+
+  resources :companies do
+    scope module: 'company' do
+      resources :drives, only: [:show, :index, :destroy]
+      resources :standby_dates, only: [:show, :destroy]
+    end
+  end
   resources :company_members, only: [:create, :index, :destroy, :update]
 
   root to: 'dashboard#index'

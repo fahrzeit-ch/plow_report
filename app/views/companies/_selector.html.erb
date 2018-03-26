@@ -1,7 +1,7 @@
 <% if current_user.owens_company %>
 <li class="nav-item">
-  <%= link_to edit_company_path(current_company), class: 'nav-link' do %>
-    <i class="fa fa-cog"></i> <%= t 'navbar.main.company_settings' %>
+  <%= link_to company_path(current_company), class: 'nav-link' do %>
+    <i class="fa fa-building"></i> <%= t 'navbar.main.company_show' %>
   <% end %>
 </li>
 <% else %>

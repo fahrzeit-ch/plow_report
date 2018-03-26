@@ -14,6 +14,16 @@ RSpec.describe Drive, type: :model do
 
   end
 
+  describe '#company' do
+    let(:company) { create(:company) }
+
+    before { driver1.update_attribute(:company, company) }
+
+    it 'should return the company of the driver' do
+      expect(subject.company).to eq(company)
+    end
+  end
+
   describe 'season scope' do
     let(:this_season) { Drive.create(start: DateTime.parse('2018-01-20 12:30'), end: DateTime.parse('2018-01-20 13:50'), driver: driver1 ) }
     let(:last_season) { Drive.create(start: DateTime.parse('2017-01-20 12:30'), end: DateTime.parse('2017-01-20 13:50'), driver: driver1 ) }
@@ -23,5 +33,7 @@ RSpec.describe Drive, type: :model do
       expect(Drive.by_season(Season.current)).not_to include last_season
     end
   end
+
+
 
 end

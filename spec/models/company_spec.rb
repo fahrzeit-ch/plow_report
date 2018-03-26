@@ -37,6 +37,33 @@ RSpec.describe Company, type: :model do
 
   end
 
+  describe '#drivers' do
+    subject { create(:company) }
+    let(:driver) { create(:driver) }
+    it 'should be possible to associate a driver' do
+      expect {
+        subject.drivers << driver
+      }.to change(driver, :company)
+    end
+  end
+
+  describe '#drives' do
+    subject { create(:company) }
+    # create driver associated to the company
+    let(:company_driver) { create(:driver, company: subject) }
+    let(:other_driver) { create(:driver, company: create(:company)) }
+    let(:private_driver) { create(:driver) }
+
+    let(:company_drive) { create(:drive, driver: company_driver) }
+    let(:other_drive) { create(:drive, driver: other_driver) }
+    let(:private_drive) { create(:drive, driver: private_driver) }
+
+    it 'should include only drives of drivers associated to the company' do
+      expect(subject.drives).to include(company_drive)
+      expect(subject.drives).not_to include(other_drive, private_drive)
+    end
+  end
+
   describe 'options' do
     subject { described_class.new valid_attributes }
 

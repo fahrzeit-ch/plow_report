@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220214435) do
+ActiveRecord::Schema.define(version: 20180326183704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180220214435) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "company_id"
   end
 
   create_table "drives", force: :cascade do |t|
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 20180220214435) do
 
   add_foreign_key "driver_logins", "drivers"
   add_foreign_key "driver_logins", "users"
+  add_foreign_key "drivers", "companies"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
 end

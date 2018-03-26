@@ -5,9 +5,13 @@ class Drive < ApplicationRecord
   validate :start_end_dates
   belongs_to :driver
 
-  def defaults
-    self.start ||= DateTime.now
-    self.end ||= DateTime.now
+
+  # Returns the +Company+ for this drive or nil if the
+  # +driver+ is not associated with a company.
+  #
+  # @return [Company | NullClass] The company of the associated driver
+  def company
+    driver.company
   end
 
   def week_nr
@@ -38,4 +42,10 @@ class Drive < ApplicationRecord
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start
   end
+
+  def defaults
+    self.start ||= DateTime.now
+    self.end ||= DateTime.now
+  end
+
 end

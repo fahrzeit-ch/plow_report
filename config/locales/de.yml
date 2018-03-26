@@ -9,6 +9,7 @@ de:
       signout: "Abmelden"
       new_company: "Firma Registrieren"
       company_settings: "Einstellungen"
+      company_show: "Meine Firma"
   activemodel:
     models:
       standby_date/date_range:
@@ -132,6 +133,8 @@ de:
           title: "Benutzer & Zugriff"
         edit:
           title: "Einstellungen"
+        show:
+          title: "Meine Firma"
   formscompany_member:
     placeholders:
       user_email: "hans.muster@meinefirma.ch"

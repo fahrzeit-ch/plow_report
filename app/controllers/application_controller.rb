@@ -17,9 +17,19 @@ class ApplicationController < ActionController::Base
     current_user.drivers.last
   end
 
+  # @return [Company]
   def current_company
     return nil unless user_signed_in?
-    current_user.companies.last
+    # Currently only 1 company is supported
+    @current_company ||= current_user.companies.last
+  end
+
+  # @param [Company | NilClass] company
+  def current_company=(company)
+    raise 'must be a company' unless company.nil? || company.is_a?(Company)
+    raise 'company must be persisted' unless company.nil? || company.persisted?
+
+    @current_company = company
   end
 
   def selected_season

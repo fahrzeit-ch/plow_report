@@ -4,6 +4,8 @@ class Company < ApplicationRecord
   validates :contact_email, presence: true
 
   has_many :company_members, dependent: :destroy
+  has_many :drivers, dependent: :nullify
+  has_many :drives, through: :drivers
 
   before_validation :default_values
 

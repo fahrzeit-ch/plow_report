@@ -13,7 +13,11 @@
 
   <body>
     <% if user_signed_in? %>
-      <%= render 'shared/navbar' %>
+      <% if company_view? %>
+        <%= render 'shared/navbar_company_view' %>
+      <% else %>
+        <%= render 'shared/navbar' %>
+      <% end %>
       <div class="container-fluid">
         <%= yield %>
       </div>
