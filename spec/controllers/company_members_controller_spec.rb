@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe CompanyMembersController, type: :controller do
+RSpec.describe Company::CompanyMembersController, type: :controller do
 
 end

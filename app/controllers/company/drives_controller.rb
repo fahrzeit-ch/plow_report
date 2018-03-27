@@ -17,7 +17,8 @@ class Company::DrivesController < ApplicationController
   end
 
   def apply_scopes(drives)
-    drives = drives.by_season(current_season)
+    drives = drives.by_season(current_season).includes(:driver)
     drives.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
+    drives
   end
 end

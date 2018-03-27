@@ -10,6 +10,10 @@ de:
       new_company: "Firma Registrieren"
       company_settings: "Einstellungen"
       company_show: "Meine Firma"
+      my_dashboard: "Meine Daten"
+    companies:
+      drives: "Fahrten"
+      settings: "Einstellungen"
   activemodel:
     models:
       standby_date/date_range:
@@ -65,6 +69,7 @@ de:
         name: "Firmen Name"
         contact_email: "Kontakt Email"
       drive:
+        driver: "Fahrer"
         date: "Datum"
         week_nr: "KW"
         day_of_week: "Wochentag"
@@ -109,6 +114,7 @@ de:
     company:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
+      already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden"
     company_member:
       created: "Benutzer erfolgreich zur Firma hinzugefügt."
       updated: "Benutzer erfolgreich aktuallisiert."

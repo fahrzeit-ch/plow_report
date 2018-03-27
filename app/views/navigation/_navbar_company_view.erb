@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+  <%= render 'shared/brand' %>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to company_drives_path(company_id: current_company.id), class: 'nav-link' do %>
+          <%= t 'navbar.companies.drives' %>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to edit_company_path(current_company), class: 'nav-link' do %>
+          <%= t 'navbar.companies.settings' %>
+        <% end %>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <%= render 'shared/season_selector' %>
+      <li class="nav-item">
+        <%= link_to root_path, class: 'nav-link' do %>
+          <i class="fa fa-dashboard"></i> <%= t('navbar.main.my_dashboard') %>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+          <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

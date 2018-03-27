@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     scope module: 'company' do
       resources :drives, only: [:show, :index, :destroy]
       resources :standby_dates, only: [:show, :destroy]
+      resources :company_members, only: [:create, :index, :destroy, :update]
     end
   end
-  resources :company_members, only: [:create, :index, :destroy, :update]
 
   root to: 'dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

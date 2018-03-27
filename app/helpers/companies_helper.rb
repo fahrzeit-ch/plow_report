@@ -1,7 +1,11 @@
 module CompaniesHelper
 
   def company_view?
-    true # find out whether or not current user is using company scoped view
+    company_controller?
+  end
+
+  def company_controller?
+    /^company\// =~ params[:controller] || params[:controller] == 'companies'
   end
 
 end

@@ -1,5 +1,7 @@
 class CompaniesController < ApplicationController
 
+  before_action :check_company_assigned, only: [:new, :create]
+
   def new
     @resource = Company.new
   end
@@ -46,4 +48,13 @@ class CompaniesController < ApplicationController
   def company_attributes
     params.require(:company).permit(:name, :contact_email)
   end
+
+  def check_company_assigned
+    if current_user.companies.any?
+      flash[:error] = I18n.t('flash.company.already_assigned')
+      redirect_back fallback_location: root_path
+      false
+    end
+  end
+
 end

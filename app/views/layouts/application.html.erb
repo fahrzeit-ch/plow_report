@@ -14,15 +14,15 @@
   <body>
     <% if user_signed_in? %>
       <% if company_view? %>
-        <%= render 'shared/navbar_company_view' %>
+        <%= render 'navigation/navbar_company_view' %>
       <% else %>
-        <%= render 'shared/navbar' %>
+        <%= render 'navigation/navbar_main' %>
       <% end %>
       <div class="container-fluid">
         <%= yield %>
       </div>
     <% else %>
-      <%= render 'shared/navbar_signed_out' %>
+      <%= render 'navigation/navbar_signed_out' %>
       <div class="container">
         <%= yield %>
       </div>
