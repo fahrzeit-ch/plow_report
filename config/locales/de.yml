@@ -32,6 +32,8 @@ de:
         not_before_start: "darf nicht vor der Start Zeit liegen"
       end_date:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
+    drivers:
+      already_assigned: "Der Benutzer ist bereits als Fahrer für diese Firma erfasst."
   activerecord:
     errors:
       models:
@@ -138,9 +140,14 @@ de:
         users:
           title: "Benutzer & Zugriff"
         edit:
-          title: "Einstellungen"
+          title: "Allgemeine Einstellungen"
         show:
           title: "Meine Firma"
+        drivers:
+          title: "Fahrer"
+      drivers:
+        title: "Fahrer"
+        add_new: "Neuen Fahrer hinzufügen"
   formscompany_member:
     placeholders:
       user_email: "hans.muster@meinefirma.ch"

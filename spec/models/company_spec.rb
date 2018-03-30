@@ -45,6 +45,9 @@ RSpec.describe Company, type: :model do
         subject.drivers << driver
       }.to change(driver, :company)
     end
+
+
+
   end
 
   describe '#drives' do

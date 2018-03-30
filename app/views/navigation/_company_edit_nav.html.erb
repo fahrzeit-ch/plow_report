@@ -1,12 +1,17 @@
 <ul class="nav nav-tabs card-header-tabs">
   <li class="nav-item">
+    <%= link_to edit_company_path(current_company), class: "nav-link #{(controller_name == 'companies' && action_name == 'edit') ? 'active' : ''}" do %>
+      <i class="fa fa-cog"></i> <%= t'views.companies.nav.edit.title' %>
+    <% end %>
+  </li>
+  <li class="nav-item">
     <%= link_to company_company_members_path(company_id: current_company.id), class: "nav-link #{(controller_name == 'company_members') ? 'active' : ''}" do %>
       <i class="fa fa-users"></i> <%= t'views.companies.nav.users.title' %>
     <% end %>
   </li>
   <li class="nav-item">
-    <%= link_to edit_company_path(current_company), class: "nav-link #{(controller_name == 'companies' && action_name == 'edit') ? 'active' : ''}" do %>
-      <i class="fa fa-cog"></i> <%= t'views.companies.nav.edit.title' %>
+    <%= link_to company_drivers_path(current_company), class: "nav-link #{(controller_name == 'drivers') ? 'active' : ''}" do %>
+      <i class="fa fa-truck"></i> <%= t'views.companies.nav.drivers.title' %>
     <% end %>
   </li>
 </ul>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :drives, only: [:show, :index, :destroy]
       resources :standby_dates, only: [:show, :destroy]
       resources :company_members, only: [:create, :index, :destroy, :update]
+      resources :drivers, only: [:index, :create, :destroy]
     end
   end
 
