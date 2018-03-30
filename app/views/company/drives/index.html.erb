@@ -1,9 +1,16 @@
 
 <div class="row mt-3">
   <div class="col-sm-6">
-    <h1>Fahrten</h1>
+    <h1><%= t 'views.company_drives.title' %></h1>
   </div>
-  <div class="col-sm-6">
+</div>
+<div class="row toolbar border-top bg-light">
+  <div class="col-2">
+    <%= form_tag company_drives_path, method: :get do |f| %>
+      <%= select_tag "driver_id", options_for_select(driver_selection_options, params[:driver_id]), class: 'custom-select autosubmit'  %>
+    <% end %>
+  </div>
+  <div class="col-10">
     <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>

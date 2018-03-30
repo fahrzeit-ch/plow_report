@@ -132,6 +132,7 @@ de:
     create: "Erstellen"
     back: "Zurück"
     update: "Speichern"
+    all: "Alle"
   views:
     companies:
       new:
@@ -153,6 +154,8 @@ de:
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
+    company_drives:
+      title: "Fahrten"
   forms:
     placeholders:
       driver:

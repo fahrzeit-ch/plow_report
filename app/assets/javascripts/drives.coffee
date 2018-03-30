@@ -7,3 +7,6 @@ $(document).on 'turbolinks:load', ->
     setTimeout () ->
       el.select()
     , 50
+
+  $('.autosubmit').on 'change', () ->
+    $(this).closest('form').submit()
