@@ -29,5 +29,7 @@ module PlowReport
     config.generators.system_tests = nil
     config.i18n.available_locales = [:de, :en]
     config.i18n.default_locale = :de
+
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

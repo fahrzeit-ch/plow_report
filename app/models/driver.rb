@@ -21,7 +21,7 @@ class Driver < ApplicationRecord
   # for a specific company
   belongs_to :company, optional: true
 
-  has_many :drives, class_name: 'Drive'
+  has_many :drives, class_name: 'Drive', dependent: :destroy
 
   validates :name, presence: true
 end

@@ -1,3 +1,6 @@
 <li class="list-group-item" id="company-member-<%= driver.id %>">
-  <%= driver.name %>
+  <%= driver.name %> <span class="text-muted"><%= driver.user.email if driver.user %></span>
+  <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, remote: true, class: 'btn btn-danger float-right' do %>
+    <i class="fa fa-trash"></i>
+  <% end %>
 </li>

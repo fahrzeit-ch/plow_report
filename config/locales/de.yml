@@ -122,6 +122,11 @@ de:
       updated: "Benutzer erfolgreich aktuallisiert."
       destroyed: "Benutzer erfolgreich entfernt."
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
+    drivers:
+      destroyed: "Fahrer wurde erfolgreich gelöscht"
+      not_destroyed: "Fahrer konnte nicht gelöscht werden"
+      created: "Fahrer wurde erfolgreich hinzugefügt"
+      driver_not_created: "Fahrer konnte nicht hinzugefügt werden"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -148,6 +153,9 @@ de:
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
-  formscompany_member:
+  forms:
     placeholders:
-      user_email: "hans.muster@meinefirma.ch"
+      driver:
+        name: "Name"
+      company_member:
+        user_email: "hans.muster@meinefirma.ch"

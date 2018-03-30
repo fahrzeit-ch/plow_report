@@ -38,4 +38,18 @@ RSpec.describe Driver, type: :model do
     end
 
   end
+
+  describe '#destroy' do
+    subject { described_class.create(valid_attributes) }
+
+    before { create_list(:drive, 2, driver: subject) }
+
+    it 'should delete all drives' do
+      expect{
+        subject.destroy!
+      }.to change(Drive, :count).by -2
+    end
+
+  end
+
 end
