@@ -49,4 +49,10 @@ class ApplicationController < ActionController::Base
     end
     @season
   end
+
+  protected
+
+  def set_company_from_param
+    self.current_company = Company.find(params[:company_id])
+  end
 end

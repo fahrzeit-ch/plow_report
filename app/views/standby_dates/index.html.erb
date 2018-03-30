@@ -20,6 +20,12 @@
         </tr>
       <% end %>
       </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
+          <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
+        </tr>
+      </tfoot>
     </table>
     <div class="card bg-light d-print-none">
       <div class="card-body">

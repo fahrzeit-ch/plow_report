@@ -162,3 +162,6 @@ de:
         name: "Name"
       company_member:
         user_email: "hans.muster@meinefirma.ch"
+  confirm:
+    company:
+      delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"

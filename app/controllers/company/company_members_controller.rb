@@ -1,4 +1,5 @@
 class Company::CompanyMembersController < ApplicationController
+  before_action :set_company_from_param
 
   def index
     @company_members = CompanyMember.where(company: current_company)
@@ -37,10 +38,6 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   private
-
-  def set_company
-    self.current_company = Company.find(params[:company_id])
-  end
 
   def create_params
     params.require(:company_member).permit(:user_email, :role)

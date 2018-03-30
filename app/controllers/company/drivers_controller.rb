@@ -1,5 +1,7 @@
 class Company::DriversController < ApplicationController
 
+  before_action :set_company_from_param
+
   def index
     @drivers = current_company.drivers
   end
@@ -33,9 +35,6 @@ class Company::DriversController < ApplicationController
   end
 
   private
-    def set_company
-      self.current_company = Company.find(params[:company_id])
-    end
 
     def driver_params
       params.require(:driver).permit(:name)

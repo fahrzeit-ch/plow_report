@@ -7,7 +7,7 @@
     <%= form.label :contact_email %>
     <%= form.text_field :contact_email, required: true %>
   </div>
-  <%= link_to t('common.back'), root_path, class: 'btn btn-default' %>
+  <%= link_to t('common.back'), company_drives_path(current_company), class: 'btn btn-default' %>
   <%= form.button type: :submit, class: 'btn btn-primary' do %>
     <i class="fa fa-check"></i> <%= t 'common.update' %>
   <% end %>
