@@ -1,3 +1,11 @@
 // Place all the styles related to the standby_dates controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.simple-calendar .day {
+  height: 120px;
+}
+
+.simple-calendar .prev-month {
+  background-color: $light;
+}

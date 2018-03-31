@@ -23,7 +23,9 @@
 
       <% stand_by.each do |s| %>
         <div class="" style="background-color: <%= driver_color(s.driver) %>">
-          <%= link_to 'x', company_standby_date_path(current_company, s), method: :delete, class: 'text-dark mr-3 float-right' %> <%= s.driver.name %>
+          <%= link_to 'x', company_standby_date_path(current_company, s), method: :delete, class: 'text-dark mr-3 float-right' %>
+          <span class="d-none d-sm-inline"><%= s.driver.name %></span>
+          <span class="d-inline d-sm-none"><%= s.driver.name[0..1] %>.</span>
         </div>
       <% end %>
       <% if stand_by.empty? %>
