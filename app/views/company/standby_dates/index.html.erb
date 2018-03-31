@@ -1,0 +1,25 @@
+<div class="row mt-3">
+  <div class="col-lg-6">
+    <h1><%= t 'views.company.standby_dates.calendar.title' %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 d-print-none">
+    <%= month_calendar events: @standby_dates do |date, stand_by| %>
+      <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
+      <span class="d-sm-none"><%= l date, format: '%d' %></span>
+
+      <% stand_by.each do |s| %>
+        <div class="" style="background-color: <%= driver_color(s.driver) %>">
+          <%= link_to 'x', company_standby_date_path(current_company, s), method: :delete, class: 'text-dark mr-3 float-right' %> <%= s.driver.name %>
+        </div>
+      <% end %>
+      <% if stand_by.empty? %>
+        <%= form_with(model: [current_company, StandbyDate.new(day: date)], local: true) do |form| %>
+          <%= form.hidden_field :day, id: :standby_date_day %>
+          <%= form.select :driver_id, driver_selection_options(t('forms.standby_dates.driver_dropdown')), {}, class: 'custom-select autosubmit' %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

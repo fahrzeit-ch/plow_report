@@ -14,6 +14,7 @@ de:
     companies:
       drives: "Fahrten"
       settings: "Einstellungen"
+      stand_by_dates: "Pikett Kalender"
   activemodel:
     models:
       standby_date/date_range:
@@ -107,6 +108,7 @@ de:
       created: "Pikett Tag erfolgreich gespeichert"
       updated: "Pikett Tag erfolgreich aktuallisiert"
       destroyed: "Pikett Tag erfolgreich entfernt"
+      not_created: "Pikket Tag konnte nicht erfasst werden."
     standby_date_ranges:
       created: "%{num} Pikett Tage erfolgreich gespeichert"
     drives:
@@ -156,12 +158,18 @@ de:
         add_new: "Neuen Fahrer hinzufügen"
     company_drives:
       title: "Fahrten"
+    company:
+      standby_dates:
+        calendar:
+          title: "Pikett Kalender"
   forms:
     placeholders:
       driver:
         name: "Name"
       company_member:
         user_email: "hans.muster@meinefirma.ch"
+    standby_dates:
+      driver_dropdown: "+"
   confirm:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"

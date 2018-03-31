@@ -14,10 +14,10 @@ module Company::DriversHelper
     end
   end
 
-  def driver_selection_options
+  def driver_selection_options(blank_value = I18n.t('common.all'))
     drivers = current_company.drivers.map do |u|
         [u.name, u.id]
     end
-    [[I18n.t('common.all'), nil]] + drivers
+    [[blank_value, nil]] + drivers
   end
 end
