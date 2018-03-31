@@ -29,7 +29,7 @@ class StandbyDatesController < ApplicationController
 
     respond_to do |format|
       if @standby_date.save
-        format.html { redirect_to standby_dates_path, notice: t('flash.standby_dates.created') }
+        format.html { redirect_back fallback_location: standby_dates_path, notice: t('flash.standby_dates.created') }
         format.json { render :show, status: :created, location: @standby_date }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class StandbyDatesController < ApplicationController
   def update
     respond_to do |format|
       if @standby_date.update(standby_date_params)
-        format.html { redirect_to @standby_date, notice: t('flash.standby_dates.updated') }
+        format.html { redirect_back fallback_location: @standby_date, notice: t('flash.standby_dates.updated') }
         format.json { render :show, status: :ok, location: @standby_date }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class StandbyDatesController < ApplicationController
   def destroy
     @standby_date.destroy
     respond_to do |format|
-      format.html { redirect_to standby_dates_url, notice: t('flash.standby_dates.destroyed') }
+      format.html { redirect_back fallback_location: standby_dates_path, notice: t('flash.standby_dates.destroyed') }
       format.json { head :no_content }
     end
   end

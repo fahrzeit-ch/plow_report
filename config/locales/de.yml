@@ -103,6 +103,7 @@ de:
   actions:
     back: "Zurück"
     print: "Drucken"
+    delete: "Löschen"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
@@ -115,6 +116,7 @@ de:
       updated: "Eintrag erfolgreich aktuallisiert"
       destroyed: "Fahrt erfolgreich entfernt"
       created: "Fahrt erfolgreich erfasst"
+      not_destroyed: "Fehler beim löschen der Fahrt."
     company:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
@@ -174,3 +176,4 @@ de:
   confirm:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
+      delete_drive: "Möchten Sie diese fahrt wirklich löschen?"

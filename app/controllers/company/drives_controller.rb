@@ -6,10 +6,14 @@ class Company::DrivesController < ApplicationController
     @drives = apply_scopes(current_company.drives)
   end
 
-  def show
-  end
-
   def destroy
+    @drive = current_company.drives.find(params[:id])
+    if @drive.destroy
+      flash[:success] = I18n.t 'flash.drives.destroyed'
+    else
+      flash[:error] = I18n.t 'flash.drives.not_destroyed'
+    end
+    redirect_to company_drives_path current_company
   end
 
   private

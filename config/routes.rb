@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     scope module: 'company' do
-      resources :drives, only: [:show, :index, :destroy]
+      resources :drives, only: [:index, :destroy]
       resources :standby_dates, only: [:index, :destroy, :create] do
         collection do
           get :weeks

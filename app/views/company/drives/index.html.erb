@@ -47,7 +47,7 @@
           <td><%= drive.end.strftime('%H:%M') %></td>
           <td><%= drive.duration.strftime('%H:%M') %></td>
           <td><%= number_to_human drive.salt_amount_tonns %></td>
-          <td class="d-print-none"><%= link_to 'Löschen', drive, method: :delete, data: { confirm: 'Sind Sie sicher dass dieser Eintrag gelöscht werden soll?' } %></td>
+          <td class="d-print-none"><%= link_to t('actions.delete'), drive, method: :delete, data: { confirm: t('confirm.company.delete_drive') } %></td>
         </tr>
       <% end %>
       </tbody>
