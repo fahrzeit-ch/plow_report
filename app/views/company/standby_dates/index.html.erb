@@ -3,6 +3,18 @@
     <h1><%= t 'views.company.standby_dates.calendar.title' %></h1>
   </div>
 </div>
+<div class="row bg-light border-top">
+  <div class="btn-toolbar col-10" role="toolbar">
+    <div class="btn-group mr-2" role="group">
+      <%= link_to company_standby_dates_path, class: "btn btn-secondary #{current_page?(action: :index) ? 'active' : ''}" do %>
+        <i class="fa fa-calendar"></i> Kalender
+      <% end %>
+      <%= link_to weeks_company_standby_dates_path, class: "btn btn-secondary  #{current_page?(action: :weeks) ? 'active' : ''}" do %>
+        <i class="fa fa-list"></i> Liste
+      <% end %>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-lg-12 d-print-none">
     <%= month_calendar events: @standby_dates do |date, stand_by| %>

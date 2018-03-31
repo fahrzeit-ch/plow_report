@@ -14,7 +14,7 @@ de:
     companies:
       drives: "Fahrten"
       settings: "Einstellungen"
-      stand_by_dates: "Pikett Kalender"
+      stand_by_dates: "Pikett"
   activemodel:
     models:
       standby_date/date_range:
@@ -162,6 +162,7 @@ de:
       standby_dates:
         calendar:
           title: "Pikett Kalender"
+        title: "Pikett Dienst"
   forms:
     placeholders:
       driver:

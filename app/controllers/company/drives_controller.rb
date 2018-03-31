@@ -1,5 +1,6 @@
 class Company::DrivesController < ApplicationController
   before_action :set_company_from_param
+  helper_method :selected_driver
 
   def index
     @drives = apply_scopes(current_company.drives)
