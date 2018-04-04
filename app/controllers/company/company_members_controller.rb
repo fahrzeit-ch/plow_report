@@ -16,16 +16,6 @@ class Company::CompanyMembersController < ApplicationController
     end
   end
 
-  def update
-    @company_member = CompanyMember.where(company: current_company).find(params[:id])
-    if @company_member.update update_params
-      flash[:success] = t 'flash.company_member.updated'
-      render :show
-    else
-      render :edit
-    end
-  end
-
   def destroy
     @company_member = CompanyMember.where(company: current_company).find(params[:id])
     if @company_member.destroy

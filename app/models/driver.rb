@@ -22,6 +22,7 @@ class Driver < ApplicationRecord
   belongs_to :company, optional: true
 
   has_many :drives, class_name: 'Drive', dependent: :destroy
+  has_many :standby_dates, dependent: :destroy
 
   validates :name, presence: true
 end

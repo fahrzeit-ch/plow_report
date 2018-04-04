@@ -103,6 +103,11 @@ de:
       last_drives:
         title: "Letzte Fahrten"
         show_all: "Alle anzeigen"
+      driver_info:
+        title: "Fahren als"
+        private: "Privater Account"
+        no_company: "Sie sind keiner Firma zugeordnet."
+        link_with_company: "Mit meiner Firma verknüpfen"
   standby_dates:
     summary_row: "Total Pikett Tage"
   actions:
