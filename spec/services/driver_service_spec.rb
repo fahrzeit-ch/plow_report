@@ -34,9 +34,9 @@ RSpec.describe DriverService do
     let(:user) { create(:user) }
 
     context 'with transfer default' do
-      subject { described_class.new(nil).add_driver(company, user, true) }
+      subject { described_class.new(nil).add_driver(company, user, true)[:driver] }
 
-      it 'should return the driver' do
+      it 'should return the result hash' do
         expect(subject).to be_a Driver
       end
 
