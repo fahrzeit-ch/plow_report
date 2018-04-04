@@ -14,7 +14,7 @@ class CompanyRegistrationService
     result.registration = registration
     company = Company.new(name: registration.name, contact_email: registration.contact_email)
 
-    Company.transaction do |t|
+    Company.transaction do
       # Create company
       result.company = company
 
@@ -48,7 +48,9 @@ class CompanyRegistrationService
   # @return [Company::RegistrationResult]
   def process_driver_setup(registration, company, result)
     if registration.add_owner_as_driver
-      driver_result = @driver_service.add_driver(company, registration.owner, registration.transfer_private_drives)
+      driver_result = @driver_service.add_driver(company,
+                                                 registration.owner,
+                                                 registration.transfer_private_drives)
       result.driver_created = driver_result[:action] == :created
       result.drives_transferred = driver_result[:action] == :transferred
     end

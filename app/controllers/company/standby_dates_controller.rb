@@ -4,7 +4,7 @@ class Company::StandbyDatesController < ApplicationController
   helper_method :selected_driver
 
   def index
-    @standby_dates = StandbyDate.includes(:driver).by_season(selected_season).all
+    @standby_dates = StandbyDate.where(driver: current_company.drivers).includes(:driver).by_season(selected_season).all
   end
 
   def weeks

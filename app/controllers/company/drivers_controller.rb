@@ -15,8 +15,8 @@ class Company::DriversController < ApplicationController
       driver_service.create_company_driver current_company, driver_params
     else
       user = User.find(params[:driver][:user_id])
-      driver = driver_service.add_driver current_company, user, params[:driver][:transfer_private]
-      if driver.persisted?
+      result = driver_service.add_driver current_company, user, params[:driver][:transfer_private]
+      if result[:driver].persisted?
         flash[:success] = I18n.t 'flash.drivers.created'
       else
         flash[:error] = I18n.t 'flash.drivers.driver_not_created'
