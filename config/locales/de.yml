@@ -24,6 +24,11 @@ de:
         one: "Saison"
         other: "Saison"
     attributes:
+      company/registration:
+        name: "Firmen Name"
+        contact_email: "Kontakt Email"
+        add_as_driver: "Mich als Fahrer in dieser Firma hinzufügen"
+        transfer_private_drives: "Fahrten die als Privat erfasst wurden an die Firma übertragen."
       standby_date/date_range:
         start_date: "Start Datum"
         end_date: "End Datum"
@@ -140,7 +145,7 @@ de:
   views:
     companies:
       new:
-        title: "Firmen Konto erstellen"
+        title: "Firmen Konto registrieren"
       edit:
         title: "Firmen Einstellungen"
       users:

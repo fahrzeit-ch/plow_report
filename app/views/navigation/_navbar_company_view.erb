@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
   <%= render 'shared/brand' %>
 
+  <% if current_company %>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <%= (controller_name == 'standby_dates') ? 'active' : '' %>">
@@ -36,4 +37,5 @@
       </li>
     </ul>
   </div>
+  <% end %>
 </nav>

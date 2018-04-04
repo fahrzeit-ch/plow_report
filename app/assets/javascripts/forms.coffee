@@ -1,5 +1,5 @@
 # Fetch all the forms we want to apply custom Bootstrap validation styles to
-$(document).on 'ready page:load', ->
+$(document).on 'turbolinks:load', ->
   forms = document.getElementsByClassName('needs-validation');
   # Loop over them and prevent submission
   validation = Array.prototype.filter.call forms, (form) ->
@@ -9,3 +9,7 @@ $(document).on 'ready page:load', ->
         event.stopPropagation()
 
       form.classList.add('was-validated')
+
+  $("[data-collapse-on-change]").on 'change', ->
+    target = $(this).data('collapse-on-change')
+    $("#" + target).collapse('toggle')

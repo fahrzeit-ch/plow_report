@@ -17,5 +17,5 @@
 //= require bootstrap-sprockets
 //= require toastr
 //= require toastr_config
-//= require form_validations
+//= require forms.coffee
 //= require drives

@@ -25,6 +25,7 @@ class DriverService
   # @param [User] user
   # @param [Boolean] transfer_private
   # @raise [AssignmentError] Raises error if the user already has a driver assigned to the company
+  # @return [Hash] Result hash with :driver and :action, where :action is a symbol can be one of :new, :transferred
   def add_driver(company, user, transfer_private = false)
     if user.drivers.where(company_id: company.id).exists?
       raise AssignmentError.new I18n.t('errors.drivers.already_assigned')
@@ -33,11 +34,12 @@ class DriverService
 
       if driver && transfer_private
         driver.update_attribute(:company_id, company.id)
+        { driver: driver, action: :transferred }
       else
         driver = Driver.create(name: user.name, company_id: company.id)
         user.drivers << driver
+        { driver: driver, action: :created }
       end
-      driver
     end
   end
 
