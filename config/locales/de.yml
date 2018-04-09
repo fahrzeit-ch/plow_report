@@ -175,6 +175,10 @@ de:
         calendar:
           title: "Pikett Kalender"
         title: "Pikett Dienst"
+    static_pages:
+      home:
+        welcome_title: "FAHRZEIT.ch"
+        welcome_subtitle: "Die einfache Art Ihren Winterdienst im Griff zu haben."
   forms:
     placeholders:
       driver:
