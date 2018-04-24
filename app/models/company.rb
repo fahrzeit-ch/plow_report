@@ -19,6 +19,16 @@ class Company < ApplicationRecord
     joins(:company_members).where(company_members: {user_id: user_id})
   end
 
+  def statistics(season)
+    scope = drives
+    if season
+      scope = scope.by_season(season)
+    end
+
+    scope.select('COALESC(SUM(drives.end - drives.start), 0) as duration, SUM(drives.salt_amount_tonns) as salt, SUM(distance_km) as distance')[0]
+
+  end
+
   private
   def default_values
     self.options ||= {}

@@ -4,6 +4,12 @@
   <% if current_company %>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item <%= (controller_name == 'dashboard') ? 'active' : '' %>">
+        <%= link_to company_dashboard_path(current_company), class: 'nav-link' do %>
+          <i class="fa fa-tachometer"></i>
+          <%= t 'navbar.companies.dashboard' %>
+        <% end %>
+      </li>
       <li class="nav-item <%= (controller_name == 'standby_dates') ? 'active' : '' %>">
         <%= link_to company_standby_dates_path(current_company), class: 'nav-link' do %>
           <i class="fa fa-calendar"></i>

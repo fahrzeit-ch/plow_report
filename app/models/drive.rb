@@ -22,6 +22,10 @@ class Drive < ApplicationRecord
     I18n.l self.start, format: '%A'
   end
 
+  def self.total_hrs
+    sum('drives.end - drives.start')
+  end
+
   def tasks
     tasks = []
     tasks << Drive.human_attribute_name(:plowed) if plowed
@@ -31,7 +35,11 @@ class Drive < ApplicationRecord
   end
 
   def duration
-    Time.at(self.end - self.start).utc
+    if has_attribute? :duration
+      read_attribute(:duration)
+    else
+      Time.at(self.end - self.start).utc
+    end
   end
 
   def self.by_season(season)
@@ -44,8 +52,8 @@ class Drive < ApplicationRecord
   end
 
   def defaults
-    self.start ||= DateTime.now
-    self.end ||= DateTime.now
+    self.start ||= DateTime.now if self.has_attribute? :start
+    self.end ||= DateTime.now if self.has_attribute? :end
   end
 
 end

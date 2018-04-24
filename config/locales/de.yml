@@ -15,6 +15,7 @@ de:
       drives: "Fahrten"
       settings: "Einstellungen"
       stand_by_dates: "Pikett"
+      dashboard: "Übersicht"
   activemodel:
     models:
       standby_date/date_range:
@@ -108,6 +109,12 @@ de:
         private: "Privater Account"
         no_company: "Sie sind keiner Firma zugeordnet."
         link_with_company: "Mit meiner Firma verknüpfen"
+      total_km:
+        title: "Total km"
+      total_hrs:
+        title: "Stunden gefahren"
+      total_salt:
+        title: "Tonnen Salz gestreut"
   standby_dates:
     summary_row: "Total Pikett Tage"
   actions:
@@ -168,6 +175,8 @@ de:
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
+      dashboard:
+        title: "Übersicht"
     company_drives:
       title: "Fahrten"
     company:

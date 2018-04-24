@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <%= link_to t('dashboard.cards.last_drives.show_all'), company_drives_path(current_company), class: 'float-right' %>
+    <h5 class="card-title"><%= t 'dashboard.cards.last_drives.title' %></h5>
+    <table class="table">
+      <tbody>
+      <% @last_drives.each do |drive| %>
+        <tr>
+          <td><%= drive.driver.name %></td>
+          <td><%= l drive.start, format: "%a %d.%m.%Y" %></td>
+          <td><%= l drive.duration, format: '%H:%M' %>h</td>
+          <td><strong><%= number_to_human drive.distance_km %>km</strong></td>
+          <td><%= drive.tasks.join(', ') %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
