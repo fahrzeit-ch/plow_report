@@ -188,6 +188,9 @@ de:
       home:
         welcome_title: "FAHRZEIT.ch"
         welcome_subtitle: "Die einfache Art Ihren Winterdienst im Griff zu haben."
+    common:
+      info:
+        no_data_available: "Keine Daten verfügbar"
   forms:
     placeholders:
       driver:

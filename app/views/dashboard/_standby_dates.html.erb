@@ -25,6 +25,11 @@
           <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
         </tr>
       </tfoot>
+      <% if @standby_weeks.empty? %>
+        <div>
+          <%= t 'views.common.info.no_data_available' %>
+        </div>
+      <% end %>
     </table>
   </div>
 </div>

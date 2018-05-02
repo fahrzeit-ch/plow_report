@@ -15,5 +15,10 @@
       <% end %>
       </tbody>
     </table>
+    <% if @last_drives.empty? %>
+      <div>
+        <%= t 'views.common.info.no_data_available' %>
+      </div>
+    <% end %>
   </div>
 </div>

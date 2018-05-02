@@ -52,6 +52,11 @@
       <% end %>
       </tbody>
     </table>
+    <% if @drives.empty? %>
+      <div>
+        <%= t 'views.common.info.no_data_available' %>
+      </div>
+    <% end %>
   </div>
 
 </div>

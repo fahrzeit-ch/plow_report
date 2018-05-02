@@ -27,6 +27,11 @@
         </tr>
       </tfoot>
     </table>
+    <% if @standby_weeks.empty? %>
+      <div>
+        <%= t 'views.common.info.no_data_available' %>
+      </div>
+    <% end %>
     <div class="card bg-light d-print-none">
       <div class="card-body">
         <%= render 'standby_date_ranges/form', record: @range || StandbyDate::DateRange.new %>
