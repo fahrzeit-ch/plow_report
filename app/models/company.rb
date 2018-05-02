@@ -25,8 +25,9 @@ class Company < ApplicationRecord
       scope = scope.by_season(season)
     end
 
-    scope.select('COALESC(SUM(drives.end - drives.start), 0) as duration, SUM(drives.salt_amount_tonns) as salt, SUM(distance_km) as distance')[0]
-
+    scope.select("COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval) as duration,
+COALESCE(SUM(drives.salt_amount_tonns), cast('0' as double precision)) as salt,
+COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
