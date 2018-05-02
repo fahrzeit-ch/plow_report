@@ -31,6 +31,17 @@ module PlowReport
     config.i18n.available_locales = [:de, :en]
     config.i18n.default_locale = :de
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        address:              'smtp.sendgrid.net',
+        port:                 587,
+        domain:               'fahrzeit.ch',
+        user_name:            'apikey',
+        password:             ENV['MAIL_PW'],
+        authentication:       'plain',
+        enable_starttls_auto: true
+    }
+
     config.autoload_paths << Rails.root.join('lib')
   end
 end
