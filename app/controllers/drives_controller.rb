@@ -10,6 +10,7 @@ class DrivesController < ApplicationController
   # GET /drives/suggested_values?[salted=true]&[plowed=true]&[salt_refilled=true]
   def suggested_values
     opts = params.permit(:plowed, :salted, :salt_refilled)
+    opts.each { |k,v| opts[k] = ActiveModel::Type::Boolean.new.cast(v) }
     @suggested_values = Drive.suggested_values(current_driver, opts)
 
     respond_to do |format|

@@ -19,3 +19,4 @@
 //= require toastr_config
 //= require forms.coffee
 //= require drives
+//= require suggestion_value_loader
