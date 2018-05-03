@@ -9,7 +9,7 @@ class Drive < ApplicationRecord
   # Returns the +Company+ for this drive or nil if the
   # +driver+ is not associated with a company.
   #
-  # @return [Company | NullClass] The company of the associated driver
+  # @return [Company | NilClass] The company of the associated driver
   def company
     driver.company
   end
@@ -22,10 +22,7 @@ class Drive < ApplicationRecord
     I18n.l self.start, format: '%A'
   end
 
-  def self.total_hrs
-    sum('drives.end - drives.start')
-  end
-
+  # Get the tasks (drive options) as an Array with translated option names
   def tasks
     tasks = []
     tasks << Drive.human_attribute_name(:plowed) if plowed
@@ -34,6 +31,9 @@ class Drive < ApplicationRecord
     tasks
   end
 
+  # The duration is loaded from attribute (in case it was calculated in the sql query). If
+  # the attribute is not defined, it is calculated on the fly.
+  # @return [Time] the duration of the drive
   def duration
     if has_attribute? :duration
       read_attribute(:duration)
@@ -42,11 +42,69 @@ class Drive < ApplicationRecord
     end
   end
 
-  def self.by_season(season)
-    where('start > ? AND start < ?', season.start_date, season.end_date)
+
+
+  # Class Methods
+  class << self
+
+    # Scope the drives by the given season
+    def by_season(season)
+      where('start > ? AND start < ?', season.start_date, season.end_date)
+    end
+
+    # sum the hours of all drives in the current scope
+    def total_hrs
+      sum('drives.end - drives.start')
+    end
+
+    # Returns the last recorded distance and salt amount (if any) of the given driver depending on the drive options.
+    # There are three cases:
+    #
+    # * salt_refilled and not plowed or salted
+    # * salt_refilled and plowed or salted
+    # * salt_not_refilled
+    #
+    # @param [Driver] driver The driver to get the sugestion for
+    # @param [Hash] drive_opts Drive options to match similar drives
+    # @return [Float] Suggested distance for the given drive options
+    def suggested_values(driver, drive_opts)
+      similar_drives = select(:distance_km, :salt_amount_tonns).where( driver: driver).similar(drive_opts)
+
+      # get newest similar drive
+      last_drive = similar_drives.order(end: :desc).first
+      if last_drive
+        last_drive.attributes.with_indifferent_access.slice(:salt_amount_tonns, :distance_km)
+      else
+        { salt_amount_tonns: 0.0, distance_km: 0.0 }
+      end
+    end
+
+    # The similar method returns drives that have similar tasks and
+    # therefore could probably have the same distance.
+    # Similarity is checked in three groups:
+    #
+    # * salt refilled and not plowed or salted
+    # * salt refilled and plowed or salted
+    # * salt not refilled
+    #
+    # The drive_opts param can contain the following keys:
+    #
+    # * salt_refilled
+    # * plowed
+    # * salted
+    #
+    # @param [Hash] drive_opts
+    # @return [ActiveRecord::Relation<Driver>] Driver relation that have similar characteristics on the options
+    def similar(drive_opts)
+      salt_refilled = drive_opts.fetch(:salt_refilled, false)
+      pos = drive_opts.fetch(:salted, false) || drive_opts.fetch(:plowed, false)
+      pos_query = "#{pos ? '' : 'NOT '}(drives.plowed OR drives.salted)"
+      where(salt_refilled: salt_refilled).where(pos_query)
+    end
   end
 
   private
+
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start
   end

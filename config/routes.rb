@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
       registrations: 'user/registrations'
   }
-  resources :drives
+  resources :drives do
+    collection do
+      get :suggested_values
+    end
+  end
   resources :standby_dates, only: [:create, :destroy, :index]
   resources :standby_date_ranges, only: :create
 

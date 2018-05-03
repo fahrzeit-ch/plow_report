@@ -34,6 +34,66 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe '#suggested_values' do
+    let(:driver) { create(:driver) }
+    let(:opts) { {salt_refilled: true, plowed: false, salted: false} }
 
+    before {
+      create(:drive, driver: driver, start: '2018-02-01 12:00', end: '2018-02-01 12:30', distance_km: 1, salt_refilled: true, plowed: false, salted: false)
+      create(:drive, driver: driver, start: '2018-02-02 12:00', end: '2018-02-02 12:30', distance_km: 2, salt_refilled: true, plowed: true, salted: false)
+      create(:drive, driver: driver, start: '2018-02-03 12:00', end: '2018-02-03 12:30', distance_km: 3, salt_refilled: true, plowed: false, salted: true)
+      create(:drive, driver: driver, start: '2018-02-04 12:00', end: '2018-02-04 12:30', distance_km: 4, salt_refilled: false, plowed: false, salted: true)
+      create(:drive, driver: driver, start: '2018-02-05 12:00', end: '2018-02-05 12:30', distance_km: 5, salt_refilled: false, plowed: true, salted: true)
+    }
+
+    subject { described_class.suggested_values(driver, opts)[:distance_km] }
+
+    context 'salt refill only' do
+
+      it 'should return the correct km' do
+        expect(subject).to eq 1
+      end
+
+    end
+
+    context 'salt refill and plowed' do
+      let(:opts) { {salt_refilled: true, plowed: true, salted: false} }
+
+      it 'should return the correct km' do
+        expect(subject).to eq 3
+      end
+    end
+
+    context 'salt refill and salted' do
+      let(:opts) { {salt_refilled: true, plowed: false, salted: true} }
+      it 'should return the correct km' do
+        expect(subject).to eq 3
+      end
+    end
+
+    context 'salt refill, salted and plowed' do
+      let(:opts) { {salt_refilled: true, plowed: true, salted: true} }
+
+      it 'should return the correct km' do
+        expect(subject).to eq 3
+      end
+    end
+
+    context 'plowed or salted only' do
+      let(:opts) { {salt_refilled: false, plowed: true, salted: true} }
+
+      it 'should return the correct km' do
+        expect(subject).to eq 5
+      end
+    end
+
+    context 'no opts given' do
+      let(:opts) { {} }
+
+      it 'should return the correct km' do
+        expect(subject).to eq 0.0
+      end
+    end
+  end
 
 end

@@ -25,6 +25,24 @@ RSpec.describe DrivesController, type: :controller do
     end
   end
 
+  describe 'GET #suggested_km' do
+    subject { response }
+    context 'signed in' do
+      before do
+        sign_in user
+        create(:drive, driver: user.drivers.first, salt_refilled: true, salt_amount_tonns: 10.0)
+      end
+
+      context 'no similar drives' do
+        it 'be successful' do
+          get :suggested_values, params: { salted: true, format: :json }
+          expect(subject).to be_success
+        end
+      end
+    end
+
+  end
+
   describe 'POST #create' do
     let(:valid_params) { attributes_for(:drive) }
 

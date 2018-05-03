@@ -7,6 +7,17 @@ class DrivesController < ApplicationController
     @drives = Drive.where(driver: current_driver).by_season(selected_season).order(start: :desc).all
   end
 
+  # GET /drives/suggested_values?[salted=true]&[plowed=true]&[salt_refilled=true]
+  def suggested_values
+    opts = params.permit(:plowed, :salted, :salt_refilled)
+    @suggested_values = Drive.suggested_values(current_driver, opts)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: @suggested_values.as_json, status: :ok }
+    end
+  end
+
   # GET /drives/1
   # GET /drives/1.json
   def show
