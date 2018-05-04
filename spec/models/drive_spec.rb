@@ -34,6 +34,43 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe 'salt_amount_tonns' do
+
+    context 'salt_refilled is false and amount has value > 0' do
+
+      before {
+        subject.salt_amount_tonns = 20
+        subject.salt_refilled = false
+      }
+
+      it 'should be valid' do
+        expect(subject).to be_valid
+      end
+
+      it 'should set salt amount to 0 when salt_refilled set to false' do
+        subject.validate
+        expect(subject.salt_amount_tonns).to eq 0
+      end
+    end
+
+    context 'sqalt_refilled is true and salt_amount is 0' do
+      before {
+        subject.salt_refilled = true
+        subject.salt_amount_tonns = 0
+      }
+
+      it 'should not be valid' do
+        expect(subject).not_to be_valid
+      end
+
+      it 'should have error on salt_amount_tonns' do
+        subject.validate
+        expect(subject.errors).to have_key(:salt_amount_tonns)
+      end
+    end
+
+  end
+
   describe '#suggested_values' do
     let(:driver) { create(:driver) }
     let(:opts) { {salt_refilled: true, plowed: false, salted: false} }

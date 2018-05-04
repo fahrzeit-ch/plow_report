@@ -1,7 +1,9 @@
 class Drive < ApplicationRecord
 
   after_initialize :defaults
+  before_validation :check_salt_amount
 
+  validates :salt_amount_tonns, numericality: { greater_than: 0 }, if: :salt_refilled
   validate :start_end_dates
   belongs_to :driver
 
@@ -101,6 +103,11 @@ class Drive < ApplicationRecord
       pos_query = "#{pos ? '' : 'NOT '}(drives.plowed OR drives.salted)"
       where(salt_refilled: salt_refilled).where(pos_query)
     end
+  end
+
+  private
+  def check_salt_amount
+    self.salt_amount_tonns = 0 unless salt_refilled
   end
 
   private
