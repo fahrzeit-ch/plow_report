@@ -101,6 +101,10 @@ de:
         title: "Pikett Dienst"
       new_drive:
         title: "Fahrt Erfassen"
+        recording_since: "Unterwegs seit..."
+        finish_recording: "Fahrt beenden"
+        start_recording: "Jetzt losfahren"
+        create: "Fahrt erstellen"
       last_drives:
         title: "Letzte Fahrten"
         show_all: "Alle anzeigen"

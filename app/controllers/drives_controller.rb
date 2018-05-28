@@ -40,6 +40,7 @@ class DrivesController < ApplicationController
 
     respond_to do |format|
       if @drive.save
+        current_driver.finish_recording if current_driver.recording?
         format.html { redirect_to drives_path, notice: t('flash.drives.created') }
         format.json { render :show, status: :created, location: :index }
       else

@@ -20,6 +20,7 @@
         <th><%= Drive.human_attribute_name(:start) %></th>
         <th><%= Drive.human_attribute_name(:end) %></th>
         <th><%= Drive.human_attribute_name(:duration) %></th>
+        <th><%= Drive.human_attribute_name(:distance_km) %></th>
         <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
         <th colspan="2" class="d-print-none"></th>
       </tr>
@@ -35,6 +36,7 @@
           <td><%= drive.start.strftime('%H:%M') %></td>
           <td><%= drive.end.strftime('%H:%M') %></td>
           <td><%= drive.duration.strftime('%H:%M') %></td>
+          <td><%= drive.distance_km %></td>
           <td><%= number_to_human drive.salt_amount_tonns %></td>
           <td class="d-print-none"><%= link_to 'Ändern', edit_drife_path(drive) %></td>
           <td class="d-print-none"><%= link_to 'Löschen', drive, method: :delete, data: { confirm: 'Sind Sie sicher dass dieser Eintrag gelöscht werden soll?' } %></td>

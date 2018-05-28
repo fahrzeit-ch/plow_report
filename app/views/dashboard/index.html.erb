@@ -1,5 +1,9 @@
 <div class="row bg-image-plow justify-content-center">
-  <%= render 'new_drive' %>
+  <% if current_driver.recording? %>
+    <%= render 'drive_recording' %>
+  <% else %>
+    <%= render 'new_drive' %>
+  <% end %>
 </div>
 <div class="row mt-5">
   <div class="col-sm-6 col-lg-4">

@@ -9,10 +9,7 @@ RSpec.describe Driver, type: :model do
       expect(Driver.new valid_attributes).to be_valid
     end
 
-    it 'should not be valid without a name' do
-      attrs = valid_attributes.except(:name)
-      expect(Driver.new(attrs)).not_to be_valid
-    end
+    it { is_expected.to validate_presence_of(:name) }
   end
 
   describe 'driver_logins' do
@@ -50,6 +47,41 @@ RSpec.describe Driver, type: :model do
       }.to change(Drive, :count).by -2
     end
 
+  end
+
+  describe '#start_recording' do
+
+    it 'should create a recording record' do
+      expect {
+        subject.start_recording
+      }.to change(Recording, :count).by 1
+    end
+
+    it 'should raise error when trin to start recording twice' do
+      subject.start_recording
+      expect {
+        subject.start_recording
+      }.to raise_error
+    end
+
+    it 'should save current time as start for recording' do
+      subject.start_recording
+      expect(subject.recording.start_time).to be_between(1.seconds.ago, 1.second.from_now)
+    end
+
+  end
+
+  describe '#finish recording' do
+    before { subject.start_recording }
+
+    it 'should return start time of the recording' do
+      expect(subject.finish_recording).to be_a Time
+    end
+
+    it 'should not be recording anymore' do
+      subject.finish_recording
+      expect(subject).not_to be_recording
+    end
   end
 
 end

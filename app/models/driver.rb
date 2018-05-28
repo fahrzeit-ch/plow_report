@@ -17,6 +17,9 @@ class Driver < ApplicationRecord
   has_one :driver_login, dependent: :destroy
   has_one :user, through: :driver_login
 
+  # A driver can only have one recording at a time.
+  has_one :recording
+
   # Company can be null, as users can track drives privately without driving
   # for a specific company
   belongs_to :company, optional: true
@@ -25,4 +28,22 @@ class Driver < ApplicationRecord
   has_many :standby_dates, dependent: :destroy
 
   validates :name, presence: true
+
+  # Start recording a drive
+  def start_recording
+    raise 'Already recording' if recording?
+    create_recording(start_time: Time.now)
+  end
+
+  # Finishes current recording and returns the start time
+  def finish_recording
+    recording.destroy!
+    recording.start_time
+  end
+
+  # Checks whether the driver is currently recording a drive
+  def recording?
+    !(recording.nil? || recording.destroyed?)
+  end
+
 end

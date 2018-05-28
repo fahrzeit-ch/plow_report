@@ -31,6 +31,9 @@ module PlowReport
     config.i18n.available_locales = [:de, :en]
     config.i18n.default_locale = :de
 
+    config.time_zone = 'Bern'
+    config.active_record.default_timezone = :local
+
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         address:              'smtp.sendgrid.net',
