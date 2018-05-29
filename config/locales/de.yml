@@ -67,6 +67,10 @@ de:
         one: "Fahrer"
         other: "Fahrer"
     attributes:
+      standby_date:
+        week_nr: "KW"
+        start_date: "Datum"
+        day_count: "Tage"
       company_member:
         role: "Rolle"
         roles:
@@ -99,6 +103,7 @@ de:
     cards:
       standby_dates:
         title: "Pikett Dienst"
+        show_all: "Alle Anzeigen"
       new_drive:
         title: "Fahrt Erfassen"
         recording_since: "Unterwegs seit..."
@@ -207,3 +212,5 @@ de:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
+  confirmation:
+    delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"

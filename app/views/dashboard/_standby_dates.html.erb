@@ -1,12 +1,13 @@
 <div class="card">
   <div class="card-body">
+    <%= link_to t('dashboard.cards.standby_dates.show_all'), standby_dates_path, class: 'float-right' %>
     <h5 class="card-title"><%= t 'dashboard.cards.standby_dates.title' %></h5>
     <table class="table">
       <thead>
       <tr>
-        <th>KW</th>
-        <th>Start</th>
-        <th>Anzahl Tage</th>
+        <th><%= StandbyDate.human_attribute_name(:week_nr) %></th>
+        <th><%= StandbyDate.human_attribute_name(:start_date) %></th>
+        <th><%= StandbyDate.human_attribute_name(:day_count) %></th>
       </tr>
       </thead>
 

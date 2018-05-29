@@ -46,7 +46,7 @@
           <td><%= drive.start.strftime('%H:%M') %></td>
           <td><%= drive.end.strftime('%H:%M') %></td>
           <td><%= drive.duration.strftime('%H:%M') %></td>
-          <td><%= number_to_human drive.salt_amount_tonns %></td>
+          <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
           <td class="d-print-none"><%= link_to t('actions.delete'), drive, method: :delete, data: { confirm: t('confirm.company.delete_drive') } %></td>
         </tr>
       <% end %>
