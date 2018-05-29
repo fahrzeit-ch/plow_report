@@ -26,7 +26,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :recordings, only: [:create]
+  resource :recordings, only: [:create, :destroy] do
+    put :finish
+  end
 
   authenticated :user do
     root 'dashboard#index', as: :authenticated_root

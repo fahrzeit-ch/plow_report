@@ -41,6 +41,12 @@ class Driver < ApplicationRecord
     recording.start_time
   end
 
+  # cancels a recording. This will not raise an error if driver
+  # is not actually recording
+  def cancel_recording
+    recording.destroy! unless recording.nil?
+  end
+
   # Checks whether the driver is currently recording a drive
   def recording?
     !(recording.nil? || recording.destroyed?)

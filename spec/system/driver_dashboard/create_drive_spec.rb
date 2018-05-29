@@ -15,19 +15,8 @@ feature 'creating a drive on dashboard' do
     it 'should redirect to drives and show new drives' do
       visit '/'
       # fill in start and end time
-      fill_in 'drive[start]', with: 1.hour.ago.strftime('%H:%M')
-      fill_in 'drive[end]', with: 0.5.hour.ago.strftime('%H:%M')
-
-      # fill kms
-      fill_in 'drive[distance_km]', with: 15.1
-
-      # fill check all drive options
-      check 'drive[plowed]'
-      check 'drive[salted]'
-      check 'drive[salt_refilled]'
-
-      # fill salt
-      fill_in 'drive[salt_amount_tonns]', with: 3.41
+      attrs = { start: 1.hour.ago, end: 0.5.hour.ago, distance_km: 15.1, plowed: true, salted: true, salt_refilled: true, salt_amount_tonns: 3.41 }
+      fill_form 'drive', attrs
 
       # create drive
       click_button I18n.t('dashboard.cards.new_drive.create')

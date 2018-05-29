@@ -1,7 +1,7 @@
 <div class="card text-dark bg-light col-12">
   <div class="card-body">
     <h5 class="card-title"><i class="fa fa-clock-o"></i> <%= t'dashboard.cards.new_drive.recording_since' %> <%= current_driver.recording.start_time.strftime('%H:%M') %></h5>
-    <%= form_with(model: Drive.new(start: current_driver.recording.start_time), local: true) do |form| %>
+    <%= form_with(model: Drive.new(start: current_driver.recording.start_time), url: finish_recordings_path, method: :put, local: true) do |form| %>
       <div class="form-row">
         <div class="form-group col-md-2">
           <%= form.label :start %>
@@ -18,6 +18,7 @@
           <%= form.button type: :submit, class: 'btn btn-primary' do %>
             <%= t'dashboard.cards.new_drive.finish_recording' %>
           <% end %>
+          <%= link_to t('dashboard.cards.new_drive.cancel_recording'), recordings_path, method: :delete, class: 'btn btn-default' %>
         </div>
       </div>
 

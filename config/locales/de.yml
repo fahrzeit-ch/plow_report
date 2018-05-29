@@ -110,6 +110,7 @@ de:
         finish_recording: "Fahrt beenden"
         start_recording: "Jetzt losfahren"
         create: "Fahrt erstellen"
+        cancel_recording: "Aufzeichnung abbrechen"
       last_drives:
         title: "Letzte Fahrten"
         show_all: "Alle anzeigen"
@@ -214,3 +215,6 @@ de:
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
+  devise:
+    sign_in: "Anmelden"
+    sign_up: "Registrieren"

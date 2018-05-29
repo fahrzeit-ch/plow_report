@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :drive, class: 'Drive' do
-    start '2018-02-02'
-    add_attribute(:end) { '2018-02-02' }
+    start 1.hour.ago
+    add_attribute(:end) { Time.now }
     plowed false
     salted false
     salt_refilled false
