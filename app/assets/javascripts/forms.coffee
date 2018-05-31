@@ -12,15 +12,18 @@ $(document).on 'turbolinks:load', ->
 
   # Auto update timefield until focus
   cancel_tic = false
+  skip_on_change = false
   auto_set_time = $("[data-tic-time]")
-  auto_set_time.on 'keydown', () ->
-    cancel_tic = true
+  auto_set_time.on 'change', () ->
+    unless skip_on_change
+      cancel_tic = true
 
   tic = ()->
     time = new Date()
-    # TODO: This is not working yet. The format is not correct (it results in 3:3 instead of 03:03
     formatted_time = formatTime(time)
+    skip_on_change = true
     auto_set_time.val(formatted_time)
+    skip_on_change = false
     unless cancel_tic
       setTimeout(tic, 2000)
 
