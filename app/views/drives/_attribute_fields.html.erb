@@ -2,15 +2,15 @@
   <label>Art</label>
   <div class="form-group">
     <div class="form-check form-check-inline">
-      <%= form.check_box :plowed, id: :drive_plowed, class: 'form-check-input' %>
+      <%= form.check_box :plowed, id: :drive_plowed, class: 'form-check-input', data: { suggest: true } %>
       <%= form.label :plowed, class: 'form-check-label' %>
     </div>
     <div class="form-check form-check-inline">
-      <%= form.check_box :salted, id: :drive_salted, class: 'form-check-input' %>
+      <%= form.check_box :salted, id: :drive_salted, class: 'form-check-input', data: { suggest: true } %>
       <%= form.label :salted, class: 'form-check-label' %>
     </div>
     <div class="form-check form-check-inline">
-      <%= form.check_box :salt_refilled, id: :drive_salt_refilled, class: 'form-check-input', data: { collapse_on_change: 'salt-amount' } %>
+      <%= form.check_box :salt_refilled, id: :drive_salt_refilled, class: 'form-check-input', data: { collapse_on_change: 'salt-amount', suggest: true } %>
       <%= form.label :salt_refilled, class: 'form-check-label' %>
     </div>
   </div>

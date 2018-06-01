@@ -8,9 +8,9 @@ $(document).on 'turbolinks:load', ->
   $('#drive_salt_amount_tonns').on 'keydown', ->
     salt_amount_locked = true
 
-  refill_chk = $('#drive_salt_refilled')
-  plowed_chk = $('#drive_plowed')
-  salted_chk = $('#drive_salted')
+  refill_chk = $('#drive_salt_refilled[data-suggest]')
+  plowed_chk = $('#drive_plowed[data-suggest]')
+  salted_chk = $('#drive_salted[data-suggest]')
 
   refill_chk.on "change", ->
     load_suggestion(getOpts())
