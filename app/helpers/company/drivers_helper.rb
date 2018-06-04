@@ -14,8 +14,12 @@ module Company::DriversHelper
     end
   end
 
-  def driver_selection_options(blank_value = I18n.t('common.all'))
-    drivers = current_company.drivers.map do |u|
+  def available_drivers_for(standby_list)
+    @available_drivers ||= current_company.drivers - standby_list.map(&:driver)
+  end
+
+  def driver_selection_options(standby_list, blank_value = I18n.t('common.all'))
+    drivers = available_drivers_for(standby_list).map do |u|
         [u.name, u.id]
     end
     [[blank_value, nil]] + drivers

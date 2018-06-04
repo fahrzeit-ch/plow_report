@@ -28,10 +28,10 @@
           <span class="d-inline d-sm-none"><%= s.driver.name[0..1] %>.</span>
         </div>
       <% end %>
-      <% if stand_by.empty? %>
+      <% if stand_by.length != available_drivers_for(stand_by).length %>
         <%= form_with(model: [current_company, StandbyDate.new(day: date)], local: true) do |form| %>
           <%= form.hidden_field :day, id: :standby_date_day %>
-          <%= form.select :driver_id, driver_selection_options(t('forms.standby_dates.driver_dropdown')), {}, class: 'custom-select autosubmit' %>
+          <%= form.select :driver_id, driver_selection_options(stand_by, t('forms.standby_dates.driver_dropdown')), {}, class: 'custom-select autosubmit' %>
         <% end %>
       <% end %>
     <% end %>
