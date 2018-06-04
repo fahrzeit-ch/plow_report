@@ -1,26 +1,39 @@
-<div class="card text-dark bg-light col-12">
+<div class="card text-dark bg-green-light col-12">
   <div class="card-body">
     <h5 class="card-title"><i class="fa fa-clock-o"></i> <%= t'dashboard.cards.new_drive.recording_since' %> <%= current_driver.recording.start_time.strftime('%H:%M') %></h5>
     <%= form_with(model: Drive.new(start: current_driver.recording.start_time), url: finish_recordings_path, method: :put, local: true) do |form| %>
-      <div class="form-row">
-        <div class="form-group col-md-2">
-          <%= form.label :start %>
-          <%= form.hidden_field :start, value: form.object.start.strftime('%H:%M') %>
-          <%= form.text_field :start, value: form.object.start.strftime('%H:%M'), type: 'time', step: '60', required: true, id: :drive_start, class: 'form-control', disabled: true %>
+      <div id="finish-drive-form" class="carousel slide" data-interval="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="form-row">
+              <%= form.hidden_field :start, value: form.object.start.strftime('%H:%M') %>
+
+              <div class="form-group col-md-2">
+                <%= form.label :end  %>
+                <%= form.text_field :end, value: form.object.end.strftime('%H:%M'), type: 'time', step: '60', required: true, id: :drive_end, class: 'form-control', data: { tic_time: true}, autofocus: true %>
+              </div>
+              <div class="col-12">
+                <%= link_to t('dashboard.cards.new_drive.finish_recording'), '#finish-drive-form', class: 'btn btn-primary', data: { slide: 'next'} %>
+                <%= link_to t('dashboard.cards.new_drive.cancel_recording'), recordings_path, method: :delete, class: 'btn btn-default' %>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="form-row">
+              <%= render 'drives/attribute_fields', form: form %>
+              <div class="col-12">
+                <%= link_to t('dashboard.cards.new_drive.back'), '#finish-drive-form', class: 'btn btn-primary', data: { slide: 'prev'} %>
+                <%= form.button type: :submit, class: 'btn btn-primary' do %>
+                  <%= t'dashboard.cards.new_drive.finish_recording' %>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="form-group col-md-2">
-          <%= form.label :end  %>
-          <%= form.text_field :end, value: form.object.end.strftime('%H:%M'), type: 'time', step: '60', required: true, id: :drive_end, class: 'form-control', data: { tic_time: true}, autofocus: true %>
-        </div>
-        <%= render 'drives/attribute_fields', form: form %>
-        <div class="col-12">
-          <%= form.button type: :submit, class: 'btn btn-primary' do %>
-            <%= t'dashboard.cards.new_drive.finish_recording' %>
-          <% end %>
-          <%= link_to t('dashboard.cards.new_drive.cancel_recording'), recordings_path, method: :delete, class: 'btn btn-default' %>
-        </div>
       </div>
+
 
     <% end %>
 

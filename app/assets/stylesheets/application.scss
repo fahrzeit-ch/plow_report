@@ -21,8 +21,8 @@ $primary-font	: 'Poppins', sans-serif;
 //$secondary-color	: #00A383;
 //$primary-color: #ff7319;
 
-$primary-color	: #00AEFF;
-$secondary-color: #ff7319;
+$primary	: #00AEFF;
+$secondary: #ff7319;
 $title-color	: #076510;
 $text-color		: #5f5f5f;
 
@@ -36,11 +36,13 @@ $border-radius:               0;
 $border-radius-lg:            .3rem;
 $border-radius-sm:            .2rem;
 
-$theme-colors: (
-        "primary": $primary-color,
-        "secondary": $secondary-color,
-        "danger": #ff4136
-);
+//$theme-colors: (
+//        "primary": $primary-color,
+//        "secondary": $secondary-color,
+//        "danger": #ff4136,
+//        "green-light": $green-light
+//);
+
 @import "variables";
 @import "bootstrap";
 @import "simple_calendar";
@@ -48,6 +50,10 @@ $theme-colors: (
 @import "toastr.min";
 @import "font-awesome";
 @import "standby_dates";
+
+$colors: map-merge((
+        'green-light': $green-light
+), $colors);
 
 .bg-image-plow {
   background-size: cover;
@@ -80,4 +86,10 @@ $theme-colors: (
   text-align: center;
   border-radius: 100%;
   background: #1e88e5;
+}
+
+@each $color-name, $color in $colors {
+  .bg-#{$color-name} {
+    background-color: $color;
+  }
 }

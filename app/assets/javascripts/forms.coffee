@@ -14,18 +14,18 @@ $(document).on 'turbolinks:load', ->
   cancel_tic = false
   skip_on_change = false
   auto_set_time = $("[data-tic-time]")
-  auto_set_time.on 'change', () ->
+  auto_set_time.on 'change keydown', () ->
     unless skip_on_change
       cancel_tic = true
 
   tic = ()->
+    return if cancel_tic
     time = new Date()
     formatted_time = formatTime(time)
     skip_on_change = true
     auto_set_time.val(formatted_time)
     skip_on_change = false
-    unless cancel_tic
-      setTimeout(tic, 2000)
+    setTimeout(tic, 1000)
 
   if auto_set_time.length >= 0
     tic()

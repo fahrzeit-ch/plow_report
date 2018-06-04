@@ -111,6 +111,7 @@ de:
         start_recording: "Jetzt losfahren"
         create: "Fahrt erstellen"
         cancel_recording: "Aufzeichnung abbrechen"
+        back: "Zurück"
       last_drives:
         title: "Letzte Fahrten"
         show_all: "Alle anzeigen"
