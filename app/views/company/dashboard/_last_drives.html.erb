@@ -5,13 +5,7 @@
     <table class="table">
       <tbody>
       <% @last_drives.each do |drive| %>
-        <tr>
-          <td><%= drive.driver.name %></td>
-          <td><%= l drive.start, format: "%a %d.%m.%Y" %></td>
-          <td><%= l drive.duration, format: '%H:%M' %>h</td>
-          <td><strong><%= number_to_human drive.distance_km %>km</strong></td>
-          <td><%= drive.tasks.join(', ') %></td>
-        </tr>
+        <%= render 'company/drives/drive_tr', drive: drive, tools: false %>
       <% end %>
       </tbody>
     </table>

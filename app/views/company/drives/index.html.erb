@@ -37,18 +37,7 @@
 
       <tbody>
       <% @drives.each do |drive| %>
-        <tr>
-          <td><%= drive.driver.name %></td>
-          <td><%= drive.week_nr %></td>
-          <td><%= drive.day_of_week %></td>
-          <td><%= l drive.start.to_date %></td>
-          <td><%= drive.tasks.join(',') %></td>
-          <td><%= drive.start.strftime('%H:%M') %></td>
-          <td><%= drive.end.strftime('%H:%M') %></td>
-          <td><%= drive.duration.strftime('%H:%M') %></td>
-          <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
-          <td class="d-print-none"><%= link_to t('actions.delete'), drive, method: :delete, data: { confirm: t('confirm.company.delete_drive') } %></td>
-        </tr>
+        <%= render 'drive_tr', drive: drive %>
       <% end %>
       </tbody>
     </table>
