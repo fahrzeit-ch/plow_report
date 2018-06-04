@@ -112,6 +112,7 @@ de:
         create: "Fahrt erstellen"
         cancel_recording: "Aufzeichnung abbrechen"
         back: "Zurück"
+        recording_next: "Weiter"
       last_drives:
         title: "Letzte Fahrten"
         show_all: "Alle anzeigen"
