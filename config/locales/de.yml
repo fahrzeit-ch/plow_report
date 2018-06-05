@@ -122,9 +122,9 @@ de:
         no_company: "Sie sind keiner Firma zugeordnet."
         link_with_company: "Mit meiner Firma verknüpfen"
       total_km:
-        title: "Total km"
+        title: "km gefahren"
       total_hrs:
-        title: "Stunden gefahren"
+        title: "gefahren"
       total_salt:
         title: "Tonnen Salz gestreut"
   standby_dates:

@@ -54,7 +54,7 @@ class Drive < ApplicationRecord
     seconds = duration.to_i
     minutes = (seconds / 60).round #ignore seconds
     hours = (minutes / 60) # do not round here as we will display minutes
-    "#{hours}:#{minutes % 60}"
+    "#{hours.to_s.rjust(2, '0')}h #{(minutes % 60).to_s.rjust(2, '0')}min"
   end
 
   # Class Methods

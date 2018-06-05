@@ -35,7 +35,7 @@
           <td><%= drive.tasks.join(', ') %></td>
           <td><%= drive.start.strftime('%H:%M') %></td>
           <td><%= drive.end.strftime('%H:%M') %></td>
-          <td><%= drive.duration.strftime('%H:%M') %></td>
+          <td><%= drive.duration_as_string %></td>
           <td><%= number_to_human drive.distance_km %></td>
           <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
           <td class="d-print-none">
