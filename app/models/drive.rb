@@ -35,16 +35,27 @@ class Drive < ApplicationRecord
 
   # The duration is loaded from attribute (in case it was calculated in the sql query). If
   # the attribute is not defined, it is calculated on the fly.
+  #
   # @return [Time] the duration of the drive
   def duration
     if has_attribute? :duration
-      read_attribute(:duration)
+      Time.at(read_attribute(:duration)).utc
     else
       Time.at(self.end - self.start).utc
     end
   end
 
-
+  # Returns the duration in as string in the form HH:MM.
+  # Seconds will be rounded.
+  # Can show hours > 24
+  #
+  # @return [String] duration as text
+  def duration_as_string
+    seconds = duration.to_i
+    minutes = (seconds / 60).round #ignore seconds
+    hours = (minutes / 60) # do not round here as we will display minutes
+    "#{hours}:#{minutes % 60}"
+  end
 
   # Class Methods
   class << self
@@ -109,8 +120,6 @@ class Drive < ApplicationRecord
   def check_salt_amount
     self.salt_amount_tonns = 0 unless salt_refilled
   end
-
-  private
 
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start
