@@ -15,7 +15,8 @@ module Company::DriversHelper
   end
 
   def available_drivers_for(standby_list)
-    @available_drivers ||= current_company.drivers - standby_list.map(&:driver)
+    @available_drivers ||= current_company.drivers.to_a
+    @available_drivers - standby_list.map(&:driver)
   end
 
   def driver_selection_options(standby_list, blank_value = I18n.t('common.all'))

@@ -37,7 +37,7 @@
 
       <tbody>
       <% @drives.each do |drive| %>
-        <%= render 'drive_tr', drive: drive %>
+        <%= render 'drive_tr', drive: drive, tools: true %>
       <% end %>
       </tbody>
     </table>
