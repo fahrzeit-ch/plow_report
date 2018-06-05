@@ -31,7 +31,7 @@ feature 'creating a drive on dashboard' do
 
       expect(page).to have_content '3,41' # salt amount tonns
       expect(page).to have_content '15,1' # distance in km
-      expect(page).to have_content '00:30'
+      expect(page).to have_content '00h 30min'
     end
   end
 
