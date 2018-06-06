@@ -1,6 +1,6 @@
 module CompanyMembersHelper
   def company_member
-    @member || CompanyMember.new
+    @company_member || CompanyMember.new
   end
 
   def company_member_role_select_options

@@ -28,6 +28,7 @@ gem 'simple_calendar', '~> 2.0'
 gem 'rails-i18n'
 
 gem 'devise'
+gem 'devise_invitable', '~> 1.7.0'
 gem 'devise-bootstrap-views'
 gem 'rollbar'
 
@@ -59,6 +60,7 @@ group :development, :test do
   gem 'capybara-screenshot'
   gem 'selenium-webdriver'
   gem 'simplecov'
+  gem 'rails-controller-testing'
 end
 
 group :development do

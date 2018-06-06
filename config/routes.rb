@@ -21,7 +21,11 @@ Rails.application.routes.draw do
           get :weeks
         end
       end
-      resources :company_members, only: [:create, :index, :destroy, :update]
+      resources :company_members, only: [:create, :index, :destroy, :update] do
+        collection do
+          post :invite
+        end
+      end
       resources :drivers, only: [:index, :create, :destroy]
     end
   end

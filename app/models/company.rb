@@ -36,6 +36,8 @@ class Company < ApplicationRecord
         { driver: driver, action: :transferred }
       else
         driver = Driver.create(name: user.name, company_id: self.id)
+        raise AssignmentError.new I18n.t('errors.drivers.could_not_create', error: driver.errors.full_messages.join(', ')) unless driver.errors.empty?
+
         user.drivers << driver
         { driver: driver, action: :created }
       end

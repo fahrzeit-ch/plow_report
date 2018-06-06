@@ -1,0 +1,55 @@
+require 'rails_helper'
+RSpec.describe Company::CompanyMembersController, type: :controller do
+
+  let(:company) { create(:company) }
+  let(:company_admin) { create(:user) }
+
+  before { company.add_member company_admin, CompanyMember::OWNER }
+
+  before { sign_in(company_admin) }
+
+  describe 'POST #create' do
+
+    context 'existing user email' do
+      let(:member) { create(:user, email: 'sample@example.com') }
+      let(:params) { { company_member: { user_email: member.email, role: CompanyMember::ADMINISTRATOR }, company_id: company.id, format: :js } }
+
+      it 'should add the user to the company' do
+        post :create, params: params
+        expect(response).to be_successful
+      end
+
+      it 'add the user to the company' do
+        post :create, params: params
+        expect(company.users).to include( member )
+      end
+
+      it 'should create a driver when role is set to driver' do
+        params[:company_member][:role] = CompanyMember::DRIVER
+        expect {
+          post :create, params: params
+        }.to change(member.drivers, :count).by(1)
+      end
+
+    end
+
+    context 'non existing user' do
+      let(:params) { { company_member: { user_email: 'not@existing.com', role: CompanyMember::ADMINISTRATOR }, company_id: company.id, format: :js } }
+      subject { post :create, params: params }
+      it 'should render "new" view' do
+        expect(subject).to render_template(:new_member_invitation)
+      end
+    end
+
+    context 'already assigned' do
+
+      let(:params) { { company_member: { user_email: company_admin.email, role: CompanyMember::ADMINISTRATOR }, company_id: company.id, format: :js } }
+      subject { post :create, params: params }
+      it 'should render "new" view' do
+        expect(subject).to render_template(:new)
+      end
+    end
+
+  end
+
+end

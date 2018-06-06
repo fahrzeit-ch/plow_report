@@ -6,13 +6,28 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   def create
-    @company_member = CompanyMember.new(create_params)
-    @company_member.company = current_company
-    if @company_member.save
+    build_member
+    @company_member.save
+
+    if @company_member.new_user?
+      render :new_member_invitation
+    elsif !@company_member.errors.empty?
+      render :new
+    else
       flash[:success] = t 'flash.company_member.created'
       render :create
-    else
+    end
+  end
+
+  def invite
+    build_member
+    @company_member.save_and_invite!(current_user)
+    if !@company_member.errors.empty?
       render :new
+    else
+      #TODO: Show flash on javascript requests
+      flash[:success] = t 'flash.company_member.invited'
+      render :create
     end
   end
 
@@ -28,6 +43,11 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   private
+
+  def build_member
+    @company_member = CompanyMember.new create_params
+    @company_member.company = current_company
+  end
 
   def create_params
     params.require(:company_member).permit(:user_email, :role)

@@ -1,0 +1,12 @@
+<div id="company-member-form">
+  <h5><%= t 'views.companies.users.add_new' %></h5>
+  <%= form_with(model: company_member, url: invite_company_company_members_path(current_company), remote: true, builder: BootstrapFormBuilder) do |f| %>
+    <%= f.hidden_field :user_email %>
+    <%= f.email_field :user_email, class: 'col-sm-6', disabled: true %>
+    <%= f.hidden_field :role %>
+
+    <%= t 'views.companies.users.invite_description' %>
+
+    <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary' do %><i class="fa fa-check"></i><% end %>
+  <% end %>
+</div>

@@ -41,6 +41,7 @@ de:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
     drivers:
       already_assigned: "Der Benutzer ist bereits als Fahrer für diese Firma erfasst."
+      could_not_create: "Fahrer konnte nicht erstellt werden: %{error}"
   activerecord:
     errors:
       models:
@@ -155,6 +156,7 @@ de:
       updated: "Benutzer erfolgreich aktuallisiert."
       destroyed: "Benutzer erfolgreich entfernt."
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
+      invited: "Der benutzer wurde erfolgreich eingeladen"
     drivers:
       destroyed: "Fahrer wurde erfolgreich gelöscht"
       not_destroyed: "Fahrer konnte nicht gelöscht werden"
@@ -175,6 +177,8 @@ de:
       users:
         title: "Benutzer & Zugriff"
         add_new: "Neuen Benutzer hinzufügen"
+        invite_description: "Die email addresse ist noch nicht in unserem system registriert. Möchten sie den Benutzer jetzt einladen?"
+        pending_invite: "Pendente Einladung"
       nav:
         users:
           title: "Benutzer & Zugriff"
