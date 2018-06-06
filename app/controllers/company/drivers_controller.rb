@@ -9,13 +9,12 @@ class Company::DriversController < ApplicationController
   # Creates a new driver for this company
   # assigned to the user
   def create
-    driver_service = DriverService.new current_user
     if params[:driver][:user_id].blank?
       # create a new driver without user assignement
-      driver_service.create_company_driver current_company, driver_params
+      current_company.create_driver driver_params
     else
       user = User.find(params[:driver][:user_id])
-      result = driver_service.add_driver current_company, user, params[:driver][:transfer_private]
+      result = current_company.add_driver user, params[:driver][:transfer_private]
       if result[:driver].persisted?
         flash[:success] = I18n.t 'flash.drivers.created'
       else

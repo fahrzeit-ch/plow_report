@@ -37,16 +37,61 @@ RSpec.describe Company, type: :model do
 
   end
 
-  describe '#drivers' do
+  describe 'drivers' do
+
     subject { create(:company) }
+
     let(:driver) { create(:driver) }
+
     it 'should be possible to associate a driver' do
       expect {
         subject.drivers << driver
       }.to change(driver, :company)
     end
 
+    describe '#add_driver' do
+      let(:company) { create(:company) }
+      let(:user) { create(:user) }
 
+      context 'with transfer default' do
+        subject { company.add_driver(user, true)[:driver] }
+
+        it 'should return the result hash' do
+          expect(subject).to be_a Driver
+        end
+
+        it 'should not create a new driver' do
+          subject
+          expect(user.drivers.count).to eq 1
+        end
+
+        it 'should assign the driver to the company' do
+          expect(subject.company).to eq company
+        end
+
+        context 'non existing default driver' do
+          before { user.drivers.first.update_attribute(:company_id, create(:company).id) }
+
+          it 'should create a new driver' do
+            expect {
+              subject
+            }.to change(user.drivers, :count).by 1
+          end
+        end
+
+      end
+
+      context 'without transfer_default' do
+        subject { company.add_driver(user, false) }
+
+        it 'should create a new driver' do
+          expect {
+            subject
+          }.to change(user.drivers, :count).by 1
+        end
+
+      end
+    end
 
   end
 

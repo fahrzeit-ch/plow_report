@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
   def create
     @resource = Company::Registration.new(registration_attributes)
     @resource.owner = current_user
-    result = registration_service.create(@resource)
+    result = @resource.create
 
     respond_to do |format|
       if result.has_errors
@@ -52,14 +52,6 @@ class CompaniesController < ApplicationController
 
   def registration_attributes
     params.require(:company_registration).permit(:name, :contact_email, :add_owner_as_driver, :transfer_private_drives)
-  end
-
-  def driver_service
-    @driver_service ||= DriverService.new current_user
-  end
-
-  def registration_service
-    @registration_service = CompanyRegistrationService.new(driver_service)
   end
 
   def check_company_assigned
