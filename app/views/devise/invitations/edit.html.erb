@@ -1,0 +1,27 @@
+<div class="card card-default devise-bs">
+  <div class="card-header">
+    <h4 class="card-title"><%= t 'devise.invitations.edit.header' %></h4>
+  </div>
+  <div class="card-body">
+    <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), builder: BootstrapFormBuilder, :html => { :method => :put, role: 'form' } do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.hidden_field :invitation_token, readonly: true %>
+
+      <% if f.object.class.require_password_on_accepting %>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation %>
+        </div>
+      <% end %>
+
+      <p><%= f.submit t('devise.invitations.edit.submit_button'), class: 'btn btn-primary' %></p>
+    <% end %>
+
+  </div>
+</div>

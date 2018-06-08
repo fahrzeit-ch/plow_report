@@ -1,0 +1,31 @@
+de:
+  devise:
+    failure:
+      invited: "You have a pending invitation, accept it to finish creating your account."
+    invitations:
+      send_instructions: "An invitation email has been sent to %{email}."
+      invitation_token_invalid: "The invitation token provided is not valid!"
+      updated: "Your password was set successfully. You are now signed in."
+      updated_not_active: "Your password was set successfully."
+      no_invitations_remaining: "No invitations remaining"
+      invitation_removed: "Your invitation was removed."
+      new:
+        header: "Send invitation"
+        submit_button: "Send an invitation"
+      edit:
+        header: "Passwort setzen"
+        submit_button: "Passwort speichern und anmelden"
+    mailer:
+      invitation_instructions:
+        subject: "Invitation instructions"
+        hello: "Guten Tag %{name}"
+        someone_invited_you: "%{invited_by} hat Sie als %{role} auf %{url} eingeladen. Sie können diese einladung akzeptieren indem Sie auf den untenstehenden Link klicken."
+        accept: "Einladung annehmen"
+        accept_until: "Diese Einladung ist gültig bis %{due_date}."
+        ignore: "Wenn sie diese Einladung nicht akzeptieren, können sie diese Mail ignorieren."
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"
