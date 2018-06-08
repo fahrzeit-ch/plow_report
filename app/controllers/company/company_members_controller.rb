@@ -10,6 +10,8 @@ class Company::CompanyMembersController < ApplicationController
     @company_member.save
 
     if @company_member.new_user?
+      # lets reset errors on user fields
+      @company_member.errors.clear
       render :new_member_invitation
     elsif !@company_member.errors.empty?
       render :new
@@ -23,7 +25,7 @@ class Company::CompanyMembersController < ApplicationController
     build_member
     @company_member.save_and_invite!(current_user)
     if !@company_member.errors.empty?
-      render :new
+      render :new_member_invitation
     else
       #TODO: Show flash on javascript requests
       flash[:success] = t 'flash.company_member.invited'
@@ -50,7 +52,7 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   def create_params
-    params.require(:company_member).permit(:user_email, :role)
+    params.require(:company_member).permit(:user_email, :role, :user_name)
   end
 
   def update_params

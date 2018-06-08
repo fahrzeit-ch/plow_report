@@ -5,10 +5,13 @@ class CompanyMember < ApplicationRecord
   DRIVER = 'driver'
   ROLES = [OWNER, ADMINISTRATOR, DRIVER]
 
-  belongs_to :user
+  belongs_to :user, optional: true # set to true in order for to conditionally validate
+  validates_presence_of :user, unless: :new_user?
+
   belongs_to :company
 
   attribute :user_email
+  attribute :user_name
 
   attr_writer :warnings
 
@@ -21,6 +24,7 @@ class CompanyMember < ApplicationRecord
 
   validates :role, presence: true, inclusion: ROLES
   validates :user, uniqueness: { scope: :company }
+  validates :user_name, presence: true, if: :new_user?
 
   def new_user?
     @new_user
@@ -31,11 +35,11 @@ class CompanyMember < ApplicationRecord
   end
 
   def save_and_invite!(current_user)
+    return unless valid?
     transaction do
-      self.user = User.invite!({ email: user_email, skip_invitation: true }, current_user)
-      if self.save
-        self.user.deliver_invitation
-      end
+      self.user = User.invite!({ email: user_email, name: user_name, skip_invitation: true }, current_user)
+      self.save
+      self.user.deliver_invitation
     end
   end
 
@@ -52,7 +56,6 @@ class CompanyMember < ApplicationRecord
 
     self.user = User.find_by(email: user_email)
     unless self.user
-      self.errors.add(:user_email, :user_not_found)
       @new_user = true
     end
   end

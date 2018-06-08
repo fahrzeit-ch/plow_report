@@ -5,9 +5,16 @@ RSpec.describe CompanyMember, type: :model do
   let(:user) { create(:user) }
 
   describe 'create' do
+    let(:valid_params) {{ user: user, company: company, role: CompanyMember::OWNER }}
+    subject { CompanyMember.create valid_params }
+
     it 'should be possible to create a membership' do
-      membership = CompanyMember.create user: user, company: company, role: CompanyMember::OWNER
-      expect(membership).to be_persisted
+      expect(subject).to be_persisted
+    end
+
+    it 'should not be valid without user' do
+      valid_params[:user] = nil
+      expect( subject ).not_to be_valid
     end
 
   end
@@ -48,10 +55,17 @@ RSpec.describe CompanyMember, type: :model do
     end
 
     context 'non existing user' do
-      subject { CompanyMember.new user_email: 'other email', company: company, role: CompanyMember::OWNER }
 
-      it 'should give validation error' do
-        expect(subject).not_to be_valid
+      let(:valid_params) {{ user_email: 'other email', user_name: 'name', company: company, role: CompanyMember::OWNER  }}
+      subject { CompanyMember.new valid_params }
+
+      context 'without user name' do
+
+        it 'should give validation error' do
+          valid_params[:user_name] = ''
+          expect(subject).not_to be_valid
+        end
+
       end
 
     end

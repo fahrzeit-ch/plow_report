@@ -78,7 +78,8 @@ de:
           owner: "Besitzer"
           employee: "Mitarbeiter"
           driver: "Fahrer"
-        user_email: "hans.muster@beispielfirma.ch"
+        user_email: "Email"
+        user_name: "Name"
       company:
         name: "Firmen Name"
         contact_email: "Kontakt Email"
@@ -177,8 +178,9 @@ de:
       users:
         title: "Benutzer & Zugriff"
         add_new: "Neuen Benutzer hinzufügen"
-        invite_description: "Die email addresse ist noch nicht in unserem system registriert. Möchten sie den Benutzer jetzt einladen?"
+        invite_description: "Die Email Addresse ist noch nicht in unserem System registriert. Möchten sie den Benutzer jetzt einladen?"
         pending_invite: "Pendente Einladung"
+        invite_new: "Benutzer einladen und hinzufügen"
       nav:
         users:
           title: "Benutzer & Zugriff"

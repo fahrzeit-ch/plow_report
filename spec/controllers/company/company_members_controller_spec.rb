@@ -52,4 +52,45 @@ RSpec.describe Company::CompanyMembersController, type: :controller do
 
   end
 
+  describe 'post #invite' do
+    let(:email) { 'new@user.com' }
+    let(:name) { 'New user' }
+    let(:params) { { company_member: { user_email: email, user_name: name, role: CompanyMember::ADMINISTRATOR }, company_id: company.id, format: :js } }
+
+    subject { post :invite, params: params }
+
+    it 'should create the user' do
+      expect { subject }.to change(User, :count)
+    end
+
+    it 'should set the name of the new user' do
+      subject
+      expect(User.last.name).to eq(name)
+    end
+
+    it 'should create the member' do
+      expect { subject }.to change(company.company_members, :count)
+    end
+
+    it 'should send email' do
+      expect { subject }.to change(ActionMailer::Base.deliveries, :count)
+    end
+
+    it 'should not create the user without a name' do
+      params[:company_member][:user_name] = ''
+      expect { subject }.not_to change(CompanyMember, :count)
+    end
+
+    context 'driver' do
+
+      before { params[:company_member][:role] = CompanyMember::DRIVER }
+
+      it 'should create the driver' do
+        expect { subject }.to change(Driver, :count)
+      end
+
+    end
+
+  end
+
 end
