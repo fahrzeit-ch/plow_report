@@ -1,3 +1,4 @@
 $("<%= j render @company_member %>'").insertAfter('#company-member-form-container');
 <% @company_member = nil %>
 $('#company-member-form').replaceWith($("<%= j render 'form' %>"));
+<%= js_flash %>
