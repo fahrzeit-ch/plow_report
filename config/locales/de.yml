@@ -170,6 +170,10 @@ de:
     update: "Speichern"
     all: "Alle"
   views:
+    setup:
+      instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
+      create_driver: "Als privater Fahrer anmelden"
+      create_company: "Firmen Konto einrichten"
     companies:
       new:
         title: "Firmen Konto registrieren"

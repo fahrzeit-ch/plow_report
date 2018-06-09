@@ -28,6 +28,10 @@ class User < ApplicationRecord
     end
   end
 
+  def has_driver?
+    drivers.any?
+  end
+
   def owens_company
     !owned_companies.empty?
   end

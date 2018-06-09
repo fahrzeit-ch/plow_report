@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ConstraintRouter
+
   protect_from_forgery with: :exception
 
   helper_method :current_season
@@ -6,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_driver
   helper_method :current_company
 
+  before_action :check_account!
   before_action :authenticate_user!
 
   def current_season

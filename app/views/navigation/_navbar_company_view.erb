@@ -31,11 +31,13 @@
           <%= t 'navbar.companies.settings' %>
         <% end %>
       </li>
+      <% if current_user.has_driver? %>
       <li class="nav-item">
         <%= link_to root_path, class: 'nav-link' do %>
           <i class="fa fa-dashboard"></i> <%= t('navbar.main.my_dashboard') %>
         <% end %>
       </li>
+      <% end %>
       <li class="nav-item">
         <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
           <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>

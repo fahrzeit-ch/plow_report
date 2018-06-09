@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     root 'dashboard#index', as: :authenticated_root
   end
 
+  get '/setup', to: 'static_pages#setup', as: :setup
+
   root 'static_pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
