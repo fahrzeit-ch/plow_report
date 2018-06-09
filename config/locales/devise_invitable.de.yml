@@ -1,14 +1,14 @@
 de:
   devise:
     failure:
-      invited: "You have a pending invitation, accept it to finish creating your account."
+      invited: "Sie haben eine pendente Einladung. Akzeptieren Sie diese um sich anmelden zu können"
     invitations:
       send_instructions: "An invitation email has been sent to %{email}."
-      invitation_token_invalid: "The invitation token provided is not valid!"
+      invitation_token_invalid: "Der verwendete Einladungslink ist nicht gültig"
       updated: "Your password was set successfully. You are now signed in."
-      updated_not_active: "Your password was set successfully."
+      updated_not_active: "Ihr passwort wurde erfolgreich gesetzt."
       no_invitations_remaining: "No invitations remaining"
-      invitation_removed: "Your invitation was removed."
+      invitation_removed: "Ihre Einladung wurde entfernt."
       new:
         header: "Send invitation"
         submit_button: "Send an invitation"
@@ -17,7 +17,7 @@ de:
         submit_button: "Passwort speichern und anmelden"
     mailer:
       invitation_instructions:
-        subject: "Invitation instructions"
+        subject: "Sie wurden auf Fahrzeit.ch eingeladen"
         hello: "Guten Tag %{name}"
         someone_invited_you: "%{invited_by} hat Sie als %{role} auf %{url} eingeladen. Sie können diese einladung akzeptieren indem Sie auf den untenstehenden Link klicken."
         accept: "Einladung annehmen"
