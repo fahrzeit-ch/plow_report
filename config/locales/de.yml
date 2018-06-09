@@ -157,7 +157,7 @@ de:
       updated: "Benutzer erfolgreich aktuallisiert."
       destroyed: "Benutzer erfolgreich entfernt."
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
-      invited: "Der benutzer wurde erfolgreich eingeladen"
+      invited: "Der Benutzer wurde erfolgreich eingeladen"
     drivers:
       destroyed: "Fahrer wurde erfolgreich gelöscht"
       not_destroyed: "Fahrer konnte nicht gelöscht werden"
