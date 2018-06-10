@@ -15,7 +15,6 @@ class CompaniesController < ApplicationController
       if result.has_errors
         format.html { render :new }
       else
-        # create the membership
         format.html { redirect_to company_drives_path(result.company), notice: t('flash.company.created') }
       end
     end

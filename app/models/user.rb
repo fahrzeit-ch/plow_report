@@ -28,8 +28,16 @@ class User < ApplicationRecord
     end
   end
 
+  def personal_driver
+    drivers.personal.first
+  end
+
   def has_driver?
     drivers.any?
+  end
+
+  def drives_for?(company)
+    drivers.where(company: company).exists?
   end
 
   def owens_company
@@ -37,6 +45,7 @@ class User < ApplicationRecord
   end
 
   private
+
   def create_driver
     drivers.create(name: self.name)
   end

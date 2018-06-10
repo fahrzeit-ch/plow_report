@@ -125,7 +125,7 @@ Trestle.configure do |config|
 
   # Specify the Trestle admin for managing administrator users.
   #
-  config.auth.user_admin = -> { :"auth/administrators" }
+  config.auth.user_admin = -> { :'auth/administrators' }
 
   # Specify the parameter (along with a password) to be used to
   # authenticate an administrator. Defaults to :email.

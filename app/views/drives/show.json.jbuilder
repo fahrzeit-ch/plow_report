@@ -1,1 +1,1 @@
-json.partial! "drives/drive", drive: @drive
+json.partial! 'drives/drive', drive: @drive

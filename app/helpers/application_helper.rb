@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 module ApplicationHelper
-
+  MESSAGE_TYPE_MAP = { 'notice' => 'success', 'alert' => 'error' }
   def current_path(params_overwrite)
     p = params.clone
     p.merge!(params_overwrite)
@@ -12,14 +13,8 @@ module ApplicationHelper
   end
 
   def js_flash
-    flash_messages = []
-    flash.each do |type, message|
-      type = 'success' if type == 'notice'
-      type = 'error'   if type == 'alert'
-      text = "toastr.#{type}('#{message}');"
-      flash_messages << text.html_safe if message
-    end
-    flash_messages.join("\n").html_safe
+    flash.map do |type, message|
+      message.blank? ? '' : "toastr.#{MESSAGE_TYPE_MAP[type]}('#{message}');".html_safe
+    end.join("\n").html_safe
   end
-
 end

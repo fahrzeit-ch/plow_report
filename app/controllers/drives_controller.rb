@@ -74,13 +74,14 @@ class DrivesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_drive
-      @drive = Drive.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def drive_params
-      params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :salt_amount_tonns, :salted, :plowed)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_drive
+    @drive = Drive.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def drive_params
+    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :salt_amount_tonns, :salted, :plowed)
+  end
 end

@@ -26,21 +26,14 @@ class Company < ApplicationRecord
   # @raise [AssignmentError] Raises error if the user already has a driver assigned to the company
   # @return [Hash] Result hash with :driver and :action, where :action is a symbol can be one of :new, :transferred
   def add_driver(user, transfer_private = false)
-    if user.drivers.where(company_id: self.id).exists?
-      raise AssignmentError.new I18n.t('errors.drivers.already_assigned')
+    raise AssignmentError, I18n.t('errors.drivers.already_assigned') if user.drives_for?(self)
+
+    if transfer_private && ( transfer_driver = user.personal_driver )
+      transfer_driver.update_attribute(:company_id, self.id)
+      { driver: transfer_driver, action: :transferred }
     else
-      driver = user.drivers.where(company_id: nil).first
-
-      if driver && transfer_private
-        driver.update_attribute(:company_id, self.id)
-        { driver: driver, action: :transferred }
-      else
-        driver = Driver.create(name: user.name, company_id: self.id)
-        raise AssignmentError.new I18n.t('errors.drivers.could_not_create', error: driver.errors.full_messages.join(', ')) unless driver.errors.empty?
-
-        user.drivers << driver
-        { driver: driver, action: :created }
-      end
+      new_driver = drivers.create!(name: user.name, user: user)
+      { driver: new_driver, action: :created }
     end
   end
 

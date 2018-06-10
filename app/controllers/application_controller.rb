@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :check_account!
   before_action :authenticate_user!
 
+  # Returns the Season that represents the actual season at point in time.
   def current_season
     @current_season ||= Season.new
   end
@@ -38,19 +39,9 @@ class ApplicationController < ActionController::Base
   def selected_season
     return @season if @season
 
-    # load from params and update session
-    unless params[:season].blank?
-      @season = Season.from_sym params[:season]
-      session[:season] = params[:season]
-    end
-
-    # load from session or use default
-    if session[:season]
-      @season = Season.from_sym session[:season]
-    else
-      @season = current_season
-    end
-    @season
+    # update session
+    session[:season] = params[:season] unless params[:season].blank?
+    @season = session[:season] ? Season.from_sym(session[:season]) : current_season
   end
 
   protected

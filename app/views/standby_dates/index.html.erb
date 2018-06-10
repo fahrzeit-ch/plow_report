@@ -15,7 +15,7 @@
       <% @standby_weeks.each do |standby_date| %>
         <tr>
           <td><%= standby_date.week_nr %></td>
-          <td><%= l standby_date.start_date, format: "%a %d.%m.%Y" %></td>
+          <td><%= l standby_date.start_date, format: '%a %d.%m.%Y' %></td>
           <td><%= standby_date.day_count %></td>
         </tr>
       <% end %>

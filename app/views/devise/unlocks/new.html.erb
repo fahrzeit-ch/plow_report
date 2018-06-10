@@ -4,7 +4,7 @@
     <h4><%= t('.resend_unlock_instructions', default: 'Resend unlock instructions') %></h4>
   </div>
   <div class="card-body">
-    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), builder: BootstrapFormBuilder, html: { method: :post, html: { role: "form" } }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), builder: BootstrapFormBuilder, html: { method: :post, html: { role: 'form'} }) do |f| %>
       <div class="form-group">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true %>

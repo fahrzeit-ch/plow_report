@@ -8,10 +8,8 @@ class StandbyDateRangesController < ApplicationController
     respond_to do |format|
       if created_dates = @standby_date_range.save
         format.html { redirect_to standby_dates_path, notice: t('flash.standby_date_ranges.created', num: created_dates.length ) }
-        format.json { render :show, status: :created, location: standby_dates_path }
       else
         format.html { render :new }
-        format.json { render json: @standby_date_range.errors, status: :unprocessable_entity }
       end
     end
   end

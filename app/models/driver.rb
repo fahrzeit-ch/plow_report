@@ -23,6 +23,7 @@ class Driver < ApplicationRecord
   # Company can be null, as users can track drives privately without driving
   # for a specific company
   belongs_to :company, optional: true
+  scope :personal, -> { where(company_id: nil) }
 
   has_many :drives, class_name: 'Drive', dependent: :destroy
   has_many :standby_dates, dependent: :destroy
