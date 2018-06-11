@@ -14,7 +14,8 @@ module ApplicationHelper
 
   def js_flash
     flash.map do |type, message|
-      message.blank? ? '' : "toastr.#{MESSAGE_TYPE_MAP[type]}('#{message}');".html_safe
+      toastr_method = MESSAGE_TYPE_MAP[type] || type
+      message.blank? ? '' : "toastr.#{toastr_method}('#{message}');".html_safe
     end.join("\n").html_safe
   end
 end
