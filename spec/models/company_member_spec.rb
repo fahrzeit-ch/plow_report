@@ -72,4 +72,34 @@ RSpec.describe CompanyMember, type: :model do
 
   end
 
+  describe 'save_and_invite' do
+    let(:inviting_user) { create(:user) }
+    let(:valid_params) {{ user_email: 'other email', user_name: 'name', company: company, role: CompanyMember::OWNER  }}
+    let(:member) { CompanyMember.new valid_params }
+
+    before {
+      inviting_user # force create the inviting user before executing subject
+    }
+
+    subject { member.save_and_invite! inviting_user }
+
+    it 'should create a user instance' do
+      expect { subject }.to change(User, :count).by(1)
+    end
+
+    it 'should send invitation' do
+      expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(1)
+    end
+
+    describe 'create driver' do
+      it 'should create a driver if role is set to DRIVER' do
+        valid_params[:role] = CompanyMember::DRIVER
+        expect { subject }.to change(Driver, :count).by(1)
+      end
+
+      it 'should not create a driver for other roles' do
+        expect { subject }.not_to change(Driver, :count)
+      end
+    end
+  end
 end

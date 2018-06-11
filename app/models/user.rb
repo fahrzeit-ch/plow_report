@@ -6,8 +6,11 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  # drivers
   has_many :driver_logins, dependent: :destroy
   has_many :drivers, through: :driver_logins
+  attribute :skip_create_driver, :boolean, default: false
+  after_create :create_driver, unless: :skip_create_driver
 
   has_many :company_members, dependent: :destroy
   has_many :companies, through: :company_members
@@ -15,8 +18,6 @@ class User < ApplicationRecord
            through: :company_members,
            class_name: 'Company',
            source: :company
-
-  after_create :create_driver
 
   # this is useful when a user is invited but has not
   # set a name yet

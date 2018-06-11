@@ -25,6 +25,12 @@ RSpec.describe User, type: :model do
       }.to change(Driver, :count).by 1
     end
 
+    it 'should skip create_driver when option set' do
+      expect {
+        User.create(valid_attributes.merge(skip_create_driver: true))
+      }.not_to change(Driver, :count)
+    end
+
     it 'should copy name of user to driver' do
       u = User.create valid_attributes
       expect(u.drivers.last.name).to eq u.name

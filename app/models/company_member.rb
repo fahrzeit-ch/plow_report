@@ -37,7 +37,7 @@ class CompanyMember < ApplicationRecord
   def save_and_invite!(current_user)
     return unless valid?
     transaction do
-      self.user = User.invite!({ email: user_email, name: user_name, skip_invitation: true }, current_user)
+      self.user = User.invite!({ email: user_email, name: user_name, skip_invitation: true, skip_create_driver: true }, current_user)
       self.save
       self.user.deliver_invitation
     end

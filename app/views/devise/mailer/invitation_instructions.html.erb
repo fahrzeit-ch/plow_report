@@ -1,8 +1,7 @@
 <p><%= t('devise.mailer.invitation_instructions.hello', name: @resource.name, ) %></p>
 
 <p><%= t('devise.mailer.invitation_instructions.someone_invited_you', url: root_url,
-         invited_by: @resource.invited_by.name,
-         role: t('activerecord.attributes.company_member.roles.' + @resource.company_members.first.role)) %></p>
+         invited_by: @resource.invited_by.name) %></p>
 
 <p><%= link_to t('devise.mailer.invitation_instructions.accept'), accept_invitation_url(@resource, :invitation_token => @token) %></p>
 
