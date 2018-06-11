@@ -5,12 +5,14 @@ RSpec.describe Company::Registration do
   let(:user) { create(:user) }
 
   describe '#create' do
-
-    subject { Company::Registration.new(name: 'Test',
-                                                   contact_email: 'test@test.com',
-                                                   add_owner_as_driver: true,
-                                                   owner: user,
-                                                   transfer_private_drives: false ) }
+    let(:valid_attributes) do
+      {name: 'Test',
+       contact_email: 'test@test.com',
+       add_owner_as_driver: true,
+       owner: user,
+       transfer_private_drives: false}
+    end
+    subject { Company::Registration.new(valid_attributes ) }
 
     it 'should return a registration result' do
       expect(subject.create).to be_a Company::RegistrationResult
@@ -24,6 +26,28 @@ RSpec.describe Company::Registration do
     it 'should add owner as company owner' do
       res = subject.create
       expect(res.company.users).to include(user)
+    end
+
+    context 'invalid company' do
+      before { valid_attributes[:name] = '' }
+      it 'should return registration result' do
+        expect(subject.create).to be_a Company::RegistrationResult
+      end
+
+      it 'should have errors' do
+        expect(subject.create.has_errors).to be_truthy
+      end
+
+      it 'shold set errors on company_name' do
+        expect(subject.create.registration.errors[:name]).not_to be_empty
+      end
+
+      it 'should not create an additional driver' do
+        subject.add_owner_as_driver = true
+        expect {
+          subject.create
+        }.not_to change(Driver, :count)
+      end
     end
 
     context 'without add_as_driver' do

@@ -15,7 +15,7 @@ class Company::Registration
     Company.transaction do
       create_company(result)
       result.company = self.company
-      return if result.has_errors
+      return result if result.has_errors
       add_owner(result)
     end
     process_driver_setup(result)
