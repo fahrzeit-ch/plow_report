@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-
+  skip_before_action :check_account!, only: [:new, :create]
   before_action :check_company_assigned, only: [:new, :create]
 
   def new
@@ -15,7 +15,7 @@ class CompaniesController < ApplicationController
       if result.has_errors
         format.html { render :new }
       else
-        format.html { redirect_to company_drives_path(result.company), notice: t('flash.company.created') }
+        format.html { redirect_to company_dashboard_path(result.company), notice: t('flash.company.created') }
       end
     end
   end

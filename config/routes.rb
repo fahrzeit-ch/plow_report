@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :driver, only: :create
   resource :recordings, only: [:create, :destroy] do
     put :finish
   end

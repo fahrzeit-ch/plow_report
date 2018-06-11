@@ -1,8 +1,11 @@
-<div class="row">
-  <div class="col-12">
-    <div class="">
-      <p><%= t 'views.setup.instructions' %></p>
-      <%= link_to t('views.setup.create_company'), new_company_path, class: 'btn btn-primary btn-lg' %>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="alert alert-warning">
+        <p><%= t 'views.setup.instructions' %></p>
+        <%= link_to t('views.setup.create_company'), new_company_path, class: 'btn btn-primary btn-lg' %>
+        <%= link_to t('views.setup.create_driver'), driver_path, method: :post, class: 'btn btn-primary btn-lg' %>
+      </div>
     </div>
   </div>
 </div>

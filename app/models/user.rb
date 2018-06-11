@@ -41,6 +41,10 @@ class User < ApplicationRecord
     drivers.where(company: company).exists?
   end
 
+  def create_personal_driver
+    create_driver
+  end
+
   def owens_company
     !owned_companies.empty?
   end
@@ -48,6 +52,7 @@ class User < ApplicationRecord
   private
 
   def create_driver
+    raise "Personal driver already exists for user #{self.id}" unless personal_driver.nil?
     drivers.create(name: self.name)
   end
 end

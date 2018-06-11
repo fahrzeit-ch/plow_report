@@ -15,7 +15,7 @@ RSpec.describe CompaniesController, type: :controller do
   describe 'POST #create' do
     it 'returns http success' do
       post :create, params: {company_registration: valid_attributes}
-      expect(response).to redirect_to company_drives_path(Company.last)
+      expect(response).to redirect_to company_dashboard_path(Company.last)
     end
   end
 

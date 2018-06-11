@@ -163,6 +163,7 @@ de:
       not_destroyed: "Fahrer konnte nicht gelöscht werden"
       created: "Fahrer wurde erfolgreich hinzugefügt"
       driver_not_created: "Fahrer konnte nicht hinzugefügt werden"
+      user_already_has_driver: "Sie sind bereits als Fahrer registriert."
   common:
     ok: "OK"
     create: "Erstellen"

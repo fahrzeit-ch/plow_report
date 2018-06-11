@@ -18,6 +18,20 @@ feature 'after sign in paths' do
       expect(page).to have_content(I18n.t('views.setup.instructions'))
     end
 
+    it 'should be possible to create company from here' do
+      sign_in_with(user.email, user.password)
+      click_link(I18n.t('views.setup.create_company'))
+      fill_form 'company_registration', attributes_for(:company)
+      click_button(I18n.t('common.create'))
+      expect(page).to have_current_path company_dashboard_path(Company.last)
+    end
+
+    it 'should be possible to crete personal driver' do
+      sign_in_with(user.email, user.password)
+      click_link(I18n.t('views.setup.create_driver'))
+      expect(page).to have_current_path root_path
+    end
+
     context 'with company membership' do
       let(:company) { create(:company) }
       before { company.add_member(user, CompanyMember::OWNER)}
