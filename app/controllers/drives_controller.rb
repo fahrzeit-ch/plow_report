@@ -1,4 +1,5 @@
 class DrivesController < ApplicationController
+  before_action :check_driver!
   before_action :set_drive, only: [:show, :edit, :update, :destroy]
 
   # GET /drives

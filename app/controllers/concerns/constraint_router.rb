@@ -11,6 +11,15 @@ module ConstraintRouter
     redirect_to setup_path unless controller_name == 'static_pages'
   end
 
+  # Redirect to company path if user has no driver.
+  # This filter should be called *after* check account, otherwise
+  # it may raise an error if user has no company.
+  def check_driver!
+    return unless current_user
+    return if current_user.has_driver?
+    redirect_to company_dashboard_path(current_user.companies.first)
+  end
+
   def after_sign_in_path_for(resource)
     stored_location_for(resource) ||
         if resource.is_a?(User) && resource.has_driver?

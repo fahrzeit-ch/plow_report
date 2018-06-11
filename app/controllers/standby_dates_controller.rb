@@ -1,4 +1,5 @@
 class StandbyDatesController < ApplicationController
+  before_action :check_driver!
   before_action :set_standby_date, only: [:show, :edit, :update, :destroy]
 
   # GET /standby_dates
