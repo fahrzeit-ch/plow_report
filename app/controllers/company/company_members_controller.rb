@@ -27,7 +27,6 @@ class Company::CompanyMembersController < ApplicationController
     if !@company_member.errors.empty?
       render :new_member_invitation
     else
-      #TODO: Show flash on javascript requests
       flash[:success] = t 'flash.company_member.invited'
       render :create
     end
@@ -36,8 +35,7 @@ class Company::CompanyMembersController < ApplicationController
   def destroy
     @company_member = CompanyMember.where(company: current_company).find(params[:id])
     if @company_member.destroy
-      flash[:success] = t 'flash.company_member.destroyed'
-      render :destroy
+      response_for_destroy(@company_member)
     else
       flash[:error] = t 'flash.company_member.could_not_destroy'
       head 404
@@ -45,6 +43,17 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   private
+
+  def response_for_destroy(member)
+    if member.user == current_user
+      flash[:success] = t 'flash.company_member.destroyed_me'
+      render js: "window.location = '#{root_path}'"
+    else
+      flash[:success] = t 'flash.company_member.destroyed'
+      render :destroy
+    end
+
+  end
 
   def build_member
     @company_member = CompanyMember.new create_params

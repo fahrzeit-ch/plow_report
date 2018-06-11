@@ -158,6 +158,7 @@ de:
       destroyed: "Benutzer erfolgreich entfernt."
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
       invited: "Der Benutzer wurde erfolgreich eingeladen"
+      destroyed_me: "Sie wurden erfolgreich aus dem Firmenaccount entfernt."
     drivers:
       destroyed: "Fahrer wurde erfolgreich gelöscht"
       not_destroyed: "Fahrer konnte nicht gelöscht werden"
