@@ -21,6 +21,7 @@ class CompanyMember < ApplicationRecord
 
   before_validation :assign_user_by_email
   after_create :add_driver, if: :is_driver?
+  after_destroy :remove_driver_login, if: :has_driver?
 
   validates :role, presence: true, inclusion: ROLES
   validates :user, uniqueness: { scope: :company }
@@ -32,6 +33,18 @@ class CompanyMember < ApplicationRecord
 
   def is_driver?
     role == DRIVER
+  end
+
+  def has_driver?
+    !!driver
+  end
+
+  def driver
+    user.drivers.find_by(company_id: company.id)
+  end
+
+  def remove_driver_login
+    driver.driver_login.destroy
   end
 
   def save_and_invite!(current_user)

@@ -66,10 +66,16 @@ class Company::CompanyMembersController < ApplicationController
   def response_for_destroy(member)
     if member.user == current_user
       flash[:success] = t 'flash.company_member.destroyed_me'
-      render js: "window.location = '#{root_path}'"
+      respond_to do |format|
+        format.js { render js: "window.location = '#{root_path}'" }
+        format.html { redirect_to root_path }
+      end
     else
       flash[:success] = t 'flash.company_member.destroyed'
-      render :destroy
+      respond_to do |format|
+        format.js { render :destroy }
+        format.html { redirect_back fallback_location: company_company_members_path(current_company) }
+      end
     end
 
   end

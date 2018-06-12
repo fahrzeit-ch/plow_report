@@ -1,6 +1,15 @@
 <li class="list-group-item" id="company-member-<%= driver.id %>">
-  <%= driver.name %> <span class="text-muted"><%= driver.user.email if driver.user %></span>
-  <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, data: { confirm: t('confirm.company.delete_driver') }, remote: true, class: 'btn btn-danger float-right' do %>
-    <i class="fa fa-trash"></i>
+  <% if driver.user %>
+    <span class="text-muted">
+      <i class="fa fa-user" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_linked' %>"></i>
+    </span>
+  <% else %>
+    <span class="text-muted">
+      <i class="fa fa-chain-broken" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_unlinked' %>"></i>
+    </span>
+    <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, data: { confirm: t('confirm.company.delete_driver') }, remote: true, class: 'btn btn-danger float-right' do %>
+      <i class="fa fa-trash"></i>
+    <% end %>
   <% end %>
+  <%= driver.name %>
 </li>

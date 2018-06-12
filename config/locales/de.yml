@@ -202,6 +202,8 @@ de:
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
+        status_linked: "Dieser Fahrer ist mit einem Benutzer Login verknüpft."
+        status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
       dashboard:
         title: "Übersicht"
     company_drives:
