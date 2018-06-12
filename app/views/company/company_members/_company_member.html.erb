@@ -6,5 +6,5 @@
     <%= t("activerecord.attributes.company_member.roles.#{company_member.role}") %>
   </span>
   <%= company_member.user.name_or_email %>
-  <%= render 'invitation_status', user: company_member.user %>
+  <%= render 'invitation_status', member: company_member %>
 </li>

@@ -32,8 +32,23 @@ class Company::CompanyMembersController < ApplicationController
     end
   end
 
+  def resend_invitation
+    user = member_resource.user
+    begin
+      user.invite!
+      flash[:success] = t 'flash.company_member.invitation_resent'
+    rescue Exception => e
+      Rails.logger.error(e)
+      flash[:error] = t 'flash.company_member.invitation_failed'
+    end
+    respond_to do |format|
+      format.js { render :resend_invitation }
+      format.html { redirect_back(fallback_location: company_company_members_path(current_company)) }
+    end
+  end
+
   def destroy
-    @company_member = CompanyMember.where(company: current_company).find(params[:id])
+    @company_member = member_resource
     if @company_member.destroy
       response_for_destroy(@company_member)
     else
@@ -43,6 +58,10 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   private
+
+  def member_resource
+    CompanyMember.where(company: current_company).find(params[:id])
+  end
 
   def response_for_destroy(member)
     if member.user == current_user

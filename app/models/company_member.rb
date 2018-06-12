@@ -41,6 +41,7 @@ class CompanyMember < ApplicationRecord
       self.save
       self.user.deliver_invitation
     end
+    self
   end
 
   private

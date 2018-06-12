@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :company_members, only: [:create, :index, :destroy, :update] do
         collection do
           post :invite
+          post :resend_invitation
         end
       end
       resources :drivers, only: [:index, :create, :destroy]

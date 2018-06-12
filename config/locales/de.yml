@@ -159,6 +159,8 @@ de:
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
       invited: "Der Benutzer wurde erfolgreich eingeladen"
       destroyed_me: "Sie wurden erfolgreich aus dem Firmenaccount entfernt."
+      invitation_resent: "Die einladung wurde versendet."
+      invitation_failed: "Fehler beim versenden der Einladung"
     drivers:
       destroyed: "Fahrer wurde erfolgreich gelöscht"
       not_destroyed: "Fahrer konnte nicht gelöscht werden"
@@ -187,6 +189,7 @@ de:
         invite_description: "Die Email Addresse ist noch nicht in unserem System registriert. Möchten sie den Benutzer jetzt einladen?"
         pending_invite: "Pendente Einladung"
         invite_new: "Benutzer einladen und hinzufügen"
+        resend_invite: "Einladung erneut senden"
       nav:
         users:
           title: "Benutzer & Zugriff"
