@@ -10,7 +10,7 @@
       <hr class="mb-5 mt-5">
       <h4><%= t('views.companies.edit.destroy_company') %></h4>
       <p><%= t('views.companies.edit.destroy_company_description') %></p>
-      <%= link_to t('views.companies.edit.destroy_company'), company_path(current_company), method: :delete, class: 'text-danger', confirm: t('confirm.company.delete_company') %>
+      <%= link_to t('views.companies.edit.destroy_company'), company_path(current_company), method: :delete, class: 'text-danger', data: { confirm: t('confirm.company.delete_company') }%>
     </div>
   </div>
 </div>
