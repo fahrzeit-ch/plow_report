@@ -42,15 +42,21 @@ RSpec.describe CompaniesController, type: :controller do
     end
   end
 
-  describe 'GET #destroy' do
+  describe 'DELETE #destroy' do
     let(:company) { create(:company) }
     before {
       company.add_member(user, CompanyMember::OWNER)
+      delete :destroy, params: { id: company.id }
     }
 
     it 'returns http success' do
-      delete :destroy, params: { id: company.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'removes the company from the database' do
+      expect {
+        company.reload
+      }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 

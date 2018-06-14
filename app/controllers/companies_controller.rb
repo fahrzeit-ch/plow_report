@@ -42,6 +42,13 @@ class CompaniesController < ApplicationController
 
   def destroy
     @resource = Company.with_member(current_user.id).find(params[:id]).destroy
+    if @resource.destroyed?
+      flash[:success] = t 'flash.company.destroyed'
+      redirect_to root_path
+    else
+      flash[:error] = t 'flash.company.not_destroyed'
+      render :edit
+    end
   end
 
   private

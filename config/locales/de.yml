@@ -152,6 +152,8 @@ de:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
       already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden"
+      destroyed: "Die Firma und alle dazugehörigen daten wurden erfolgreich gelöscht."
+      not_destroyed: "Fehler beim löschen der Firma"
     company_member:
       created: "Benutzer erfolgreich zur Firma hinzugefügt."
       updated: "Benutzer erfolgreich aktuallisiert."
@@ -183,6 +185,8 @@ de:
         title: "Firmen Konto registrieren"
       edit:
         title: "Firmen Einstellungen"
+        destroy_company: "Firma Löschen"
+        destroy_company_description: "Sie mächten unseren Service nicht mehr weiter verwenden und alle Daten löschen? Bitte beachten Sie dass die Logins bestehen bleiben."
       users:
         title: "Benutzer & Zugriff"
         add_new: "Neuen Benutzer hinzufügen"
@@ -232,6 +236,7 @@ de:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
+      delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:

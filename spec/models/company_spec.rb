@@ -130,6 +130,8 @@ RSpec.describe Company, type: :model do
     let(:company2) { create(:company) }
     let(:company3) { create(:company) }
 
+    subject { Company.with_member(user.id) }
+
     before do
       # create memeberships
       create(:company_member, user: user, company: company1)
@@ -137,8 +139,23 @@ RSpec.describe Company, type: :model do
       create(:company_member, company: company3)
     end
 
-    it 'should scope to all companies containing a membership for the given user id' do
-      expect(Company.with_member(user.id)).to include(company1, company2)
+    it 'scopes to all companies containing a membership for the given user id' do
+      expect(subject).to include(company1, company2)
+    end
+
+    it 'does not include companies the user is not a member of' do
+      expect(subject).not_to include(company3)
+    end
+  end
+
+  describe 'destroy' do
+
+    subject { create(:company) }
+
+    before { create_list(:driver, 2, company: subject) }
+
+    it 'destroys all drivers' do
+      expect{ subject.destroy }.to change(Driver, :count).by(-2)
     end
   end
 end

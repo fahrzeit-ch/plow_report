@@ -8,7 +8,7 @@ class Company < ApplicationRecord
 
   has_many :company_members, dependent: :destroy
   has_many :users, through: :company_members
-  has_many :drivers, dependent: :nullify
+  has_many :drivers, dependent: :destroy
   has_many :drives, through: :drivers
 
   before_validation :default_values
