@@ -21,7 +21,19 @@ class Company::Registration
     process_driver_setup(result)
   end
 
+  def add_owner_as_driver=(val)
+    @add_owner_as_driver = cast_boolean(val)
+  end
+
+  def transfer_private_drives=(val)
+    @transfer_private_drives = cast_boolean(val)
+  end
+
   private
+
+  def cast_boolean(val)
+    ActiveModel::Type::Boolean.new.cast(val)
+  end
 
   def add_owner(result)
     member = company.add_member owner, CompanyMember::OWNER

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CompaniesController, type: :controller do
   let(:user) { create(:user) }
-  let(:valid_attributes) { attributes_for(:company) }
+  let(:valid_attributes) { attributes_for(:company_registration) }
   before { sign_in user }
 
   describe 'GET #new' do
@@ -16,6 +16,17 @@ RSpec.describe CompaniesController, type: :controller do
     it 'returns http success' do
       post :create, params: {company_registration: valid_attributes}
       expect(response).to redirect_to company_dashboard_path(Company.last)
+    end
+
+    it 'does not create driver by default' do
+      expect {
+        post :create, params: {company_registration: valid_attributes}
+      }.not_to change(Driver, :count)
+    end
+
+    it 'does not transfer driver by default' do
+      post :create, params: {company_registration: valid_attributes}
+      expect(user.drivers.last.company).to be_nil
     end
   end
 

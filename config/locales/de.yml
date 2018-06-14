@@ -152,8 +152,8 @@ de:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
       already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden"
-      destroyed: "Die Firma und alle dazugehörigen daten wurden erfolgreich gelöscht."
-      not_destroyed: "Fehler beim löschen der Firma"
+      destroyed: "Die Firma und alle dazugehörigen Daten wurden erfolgreich gelöscht."
+      not_destroyed: "Fehler beim Löschen der Firma"
     company_member:
       created: "Benutzer erfolgreich zur Firma hinzugefügt."
       updated: "Benutzer erfolgreich aktuallisiert."
