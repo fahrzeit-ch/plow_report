@@ -6,6 +6,7 @@ class Drive < ApplicationRecord
   validates :salt_amount_tonns, numericality: { greater_than: 0 }, if: :salt_refilled
   validate :start_end_dates
   belongs_to :driver
+  audited associated_with: :driver
 
 
   # Returns the +Company+ for this drive or nil if the

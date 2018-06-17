@@ -1,5 +1,6 @@
 class StandbyDate < ApplicationRecord
   belongs_to :driver
+  audited associated_with: :driver
 
   validates :day, uniqueness: { scope: :driver }
 

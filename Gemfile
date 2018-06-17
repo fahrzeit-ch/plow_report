@@ -31,6 +31,7 @@ gem 'devise'
 gem 'devise_invitable', '~> 1.7.0'
 gem 'devise-bootstrap-views'
 gem 'rollbar'
+gem 'audited', '~> 4.7'
 
 gem 'trestle'
 gem 'trestle-auth'

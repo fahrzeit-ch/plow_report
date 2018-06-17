@@ -50,6 +50,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     ast (2.4.0)
+    audited (4.7.1)
+      activerecord (>= 4.0, < 5.3)
     autoprefixer-rails (8.2.0)
       execjs
     bcrypt (3.1.11)
@@ -299,6 +301,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  audited (~> 4.7)
   bootstrap (~> 4.0.0)
   bootstrap_form!
   byebug
