@@ -1,0 +1,5 @@
+<%= form_for(StandbyDate::DateRange.new(start_date: start_date, end_date: end_date), local: true, url: company_standby_dates_path(current_company)) do |form| %>
+  <%= form.hidden_field :start_date, id: :standby_date_date_range_start_date %>
+  <%= form.hidden_field :end_date, id: :standby_date_date_range_end_date %>
+  <%= form.select :driver_id, all_drivers_selection_options(t('forms.standby_dates.driver_dropdown')), {}, class: 'custom-select autosubmit' %>
+<% end %>

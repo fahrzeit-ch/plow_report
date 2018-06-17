@@ -9,3 +9,17 @@
 .simple-calendar .prev-month {
   background-color: $light;
 }
+
+.simple-calendar .with-week-nr td {
+  width: 13%;
+}
+
+.simple-calendar th.week-nr {
+  border-right: 2px $primary solid;
+}
+
+.simple-calendar td.week-nr {
+  width: 10%;
+  background-color: $light;
+  border-right: 2px $primary solid;
+}
