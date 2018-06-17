@@ -12,7 +12,7 @@ class Company::StandbyDatesController < ApplicationController
   end
 
   def create
-    @standby_date = StandbyDate.new(standby_date_params)
+    @standby_date = build_resource
 
     respond_to do |format|
       if @standby_date.save
@@ -43,6 +43,24 @@ class Company::StandbyDatesController < ApplicationController
   end
 
   private
+
+  def build_resource
+    resource_class.new self.send(resource_type.to_s + '_params')
+  end
+
+  def resource_class
+    return StandbyDate if resource_type == :standby_date
+    return StandbyDate::DateRange if resource_type == :standby_date_date_range
+    raise Error, "Unknown resource type #{resource_type}"
+  end
+
+  def resource_type
+    params.has_key?(:standby_date) ? :standby_date : :standby_date_date_range
+  end
+
+  def standby_date_date_range_params
+    params.require(:standby_date_date_range).permit(:driver_id, :start_date, :end_date)
+  end
 
   def standby_date_params
     params.require(:standby_date).permit(:driver_id, :day)
