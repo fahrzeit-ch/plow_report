@@ -30,9 +30,8 @@ RSpec.describe CompanyPolicy do
   context 'company administrator' do
     before { company.add_member(user, CompanyMember::ADMINISTRATOR) }
 
-    it { is_expected.to forbid_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy) }
-    it { is_expected.to permit_action(:show) }
+    it { is_expected.to forbid_actions([:destroy, :update]) }
+    it { is_expected.to permit_actions([:show, :edit]) }
     it { is_expected.to permit_new_and_create_actions }
   end
 

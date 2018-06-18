@@ -1,7 +1,11 @@
 class CompanyPolicy < ApplicationPolicy
 
   def show?
-    user.companies.exists?(id: record.id)
+    company_member? record
+  end
+
+  def edit?
+    company_admin_or_owner? record
   end
 
   def update?

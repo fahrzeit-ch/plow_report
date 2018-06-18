@@ -10,7 +10,17 @@
       <hr class="mb-5 mt-5">
       <h4><%= t('views.companies.edit.destroy_company') %></h4>
       <p><%= t('views.companies.edit.destroy_company_description') %></p>
-      <%= link_to t('views.companies.edit.destroy_company'), company_path(current_company), method: :delete, class: 'text-danger', data: { confirm: t('confirm.company.delete_company') }%>
+      <% if policy(@resource).destroy? %>
+        <%= link_to t('views.companies.edit.destroy_company'),
+                    company_path(current_company),
+                    method: :delete,
+                    class: 'text-danger',
+                    data: { confirm: t('confirm.company.delete_company') }%>
+      <% else %>
+        <p class="text-warning">
+          <%= t'views.companies.edit.not_permitted_to_destroy' %>
+        </p>
+      <% end %>
     </div>
   </div>
 </div>
