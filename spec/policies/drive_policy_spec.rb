@@ -29,6 +29,15 @@ RSpec.describe DrivePolicy do
     let(:other_driver) { create(:driver, company: company) }
     let(:drive) { build(:drive, driver: other_driver) }
 
+    context 'driver of other company' do
+      let(:other_company) { create(:company) }
+      let(:other_driver) { create(:driver, company: other_company) }
+      let(:drive) { build(:drive, driver: other_driver) }
+
+      it { is_expected.to forbid_edit_and_update_actions }
+      it { is_expected.to forbid_actions([:destroy, :show, :finish, :create]) }
+    end
+
     context 'non company member' do
       it { is_expected.to permit_action(:index) } # index is always allowed as it is not bound to single record
       it { is_expected.to forbid_edit_and_update_actions }
@@ -36,7 +45,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to forbid_action(:show) }
       it { is_expected.to forbid_action(:finish) }
       it { is_expected.to permit_action(:new) }
-      it { is_expected.to forbid_action(:edit) }
+      it { is_expected.to forbid_action(:create) }
     end
 
     context 'company owner' do

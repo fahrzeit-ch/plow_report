@@ -49,10 +49,10 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to forbid_action(:show) }
 
     it { is_expected.to forbid_edit_and_update_actions }
+    it { is_expected.to forbid_new_and_create_actions }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:invite) }
     it { is_expected.to forbid_action(:resend_invitation) }
-    it { is_expected.to forbid_new_and_create_actions }
   end
 
   context 'as other company administrator' do

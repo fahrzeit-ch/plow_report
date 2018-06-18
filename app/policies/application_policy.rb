@@ -62,6 +62,7 @@ class ApplicationPolicy
   end
 
   def company_member?(company)
+    return false if company.nil?
     user.companies.exists? company.id
   end
 end
