@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include ConstraintRouter
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protect_from_forgery with: :exception
 
@@ -45,6 +47,11 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def user_not_authorized
+    flash[:alert] = t('pundit.default')
+    redirect_back(fallback_location: root_path)
+  end
 
   def set_company_from_param
     self.current_company = Company.find(params[:company_id])

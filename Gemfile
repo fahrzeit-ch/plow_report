@@ -32,6 +32,7 @@ gem 'devise_invitable', '~> 1.7.0'
 gem 'devise-bootstrap-views'
 gem 'rollbar'
 gem 'audited', '~> 4.7'
+gem 'pundit', '~> 1.1.0'
 
 gem 'trestle'
 gem 'trestle-auth'
@@ -63,6 +64,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'rails-controller-testing'
+  gem 'pundit-matchers', '~> 1.6.0'
 end
 
 group :development do

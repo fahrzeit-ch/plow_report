@@ -14,10 +14,19 @@ class User < ApplicationRecord
 
   has_many :company_members, dependent: :destroy
   has_many :companies, through: :company_members
-  has_many :owned_companies, -> { where(company_members: { role: CompanyMember::OWNER }) },
-           through: :company_members,
-           class_name: 'Company',
-           source: :company
+
+  def owned_companies
+    self.companies_for_role CompanyMember::OWNER
+  end
+
+  def administrated_companies
+    self.companies_for_role CompanyMember::ADMINISTRATOR
+  end
+
+  def companies_for_role(role)
+    self.companies.where(company_members: { role: role } )
+  end
+
 
   # this is useful when a user is invited but has not
   # set a name yet
