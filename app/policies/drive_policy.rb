@@ -24,6 +24,9 @@ class DrivePolicy < ApplicationPolicy
     own_record? || company_admin_or_owner?(record.driver.company)
   end
 
+  def finish?
+    own_record?
+  end
 
 
   class Scope < Scope

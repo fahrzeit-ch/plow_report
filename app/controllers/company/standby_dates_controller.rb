@@ -25,9 +25,10 @@ class Company::StandbyDatesController < ApplicationController
   end
 
   def destroy
-    StandbyDate.joins(:driver)
-        .where(drivers: {company_id: current_company.id})
-        .delete(params[:id])
+    driver = StandbyDate.joins(:driver)
+        .where(drivers: {company_id: current_company.id}).find(params[:id])
+    authorize driver
+    driver.destroy
 
     respond_to do |format|
       format.html { redirect_back fallback_location: company_standby_dates_path(current_company), notice: t('flash.standby_dates.destroyed') }
@@ -45,7 +46,9 @@ class Company::StandbyDatesController < ApplicationController
   private
 
   def build_resource
-    resource_class.new self.send(resource_type.to_s + '_params')
+    resource = resource_class.new self.send(resource_type.to_s + '_params')
+    authorize resource
+    resource
   end
 
   def resource_class

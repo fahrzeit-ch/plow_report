@@ -17,6 +17,7 @@ class StandbyDatesController < ApplicationController
   # GET /standby_dates/new
   def new
     @standby_date = StandbyDate.new
+    authorize @standby_date
   end
 
   # GET /standby_dates/1/edit
@@ -27,7 +28,7 @@ class StandbyDatesController < ApplicationController
   # POST /standby_dates.json
   def create
     @standby_date = StandbyDate.new({driver_id: current_driver.id}.merge(standby_date_params))
-
+    authorize @standby_date
     respond_to do |format|
       if @standby_date.save
         format.html { redirect_back fallback_location: standby_dates_path, notice: t('flash.standby_dates.created') }
@@ -67,6 +68,7 @@ class StandbyDatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_standby_date
       @standby_date = StandbyDate.find(params[:id])
+      authorize @standby_date
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

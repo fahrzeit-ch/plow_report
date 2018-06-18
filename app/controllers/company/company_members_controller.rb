@@ -33,10 +33,11 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   def resend_invitation
-    user = member_resource.user
     begin
-      user.invite!
+      member_resource.resend_invitation!
       flash[:success] = t 'flash.company_member.invitation_resent'
+    rescue Pundit::NotAuthorizedError => e
+      raise e
     rescue Exception => e
       Rails.logger.error(e)
       flash[:error] = t 'flash.company_member.invitation_failed'
@@ -60,7 +61,9 @@ class Company::CompanyMembersController < ApplicationController
   private
 
   def member_resource
-    CompanyMember.where(company: current_company).find(params[:id])
+    resource = CompanyMember.where(company: current_company).find(params[:id])
+    authorize resource
+    resource
   end
 
   def response_for_destroy(member)
@@ -83,6 +86,7 @@ class Company::CompanyMembersController < ApplicationController
   def build_member
     @company_member = CompanyMember.new create_params
     @company_member.company = current_company
+    authorize @company_member
   end
 
   def create_params

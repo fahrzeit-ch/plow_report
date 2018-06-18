@@ -38,7 +38,7 @@ class DrivesController < ApplicationController
   # POST /drives.json
   def create
     @drive = Drive.new({driver_id: current_driver.id}.merge(drive_params))
-
+    authorize @drive
     respond_to do |format|
       if @drive.save
         format.html { redirect_to drives_path, notice: t('flash.drives.created') }
@@ -79,6 +79,7 @@ class DrivesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_drive
     @drive = Drive.find(params[:id])
+    authorize @drive
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

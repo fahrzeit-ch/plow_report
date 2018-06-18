@@ -4,7 +4,7 @@ class StandbyDateRangesController < ApplicationController
   # POST /standby_dates.json
   def create
     @standby_date_range = StandbyDate::DateRange.new({driver_id: current_driver.id}.merge(standby_date_params))
-
+    authorize @standby_date_range
     respond_to do |format|
       if created_dates = @standby_date_range.save
         format.html { redirect_to standby_dates_path, notice: t('flash.standby_date_ranges.created', num: created_dates.length ) }

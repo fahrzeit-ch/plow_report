@@ -1,0 +1,13 @@
+class StandbyDate
+  class DateRangePolicy < ApplicationPolicy
+    def create?
+      own_record? || company_admin_or_owner?(Driver.find(record.driver_id).company)
+    end
+
+    private
+
+    def own_record?
+      user.drivers.exists? record.driver_id
+    end
+  end
+end

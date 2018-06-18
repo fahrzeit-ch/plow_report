@@ -19,6 +19,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to permit_edit_and_update_actions }
       it { is_expected.to permit_action(:destroy) }
       it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:finish) }
       it { is_expected.to permit_new_and_create_actions }
     end
 
@@ -33,6 +34,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to forbid_edit_and_update_actions }
       it { is_expected.to forbid_action(:destroy) }
       it { is_expected.to forbid_action(:show) }
+      it { is_expected.to forbid_action(:finish) }
       it { is_expected.to permit_action(:new) }
       it { is_expected.to forbid_action(:edit) }
     end
@@ -44,6 +46,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to permit_action(:destroy) }
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_new_and_create_actions }
+      it { is_expected.to forbid_action(:finish) }
     end
 
     context 'company administrator' do
@@ -53,6 +56,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to permit_action(:destroy) }
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_new_and_create_actions }
+      it { is_expected.to forbid_action(:finish) }
     end
 
     context 'company driver' do
@@ -63,6 +67,7 @@ RSpec.describe DrivePolicy do
       it { is_expected.to permit_action(:show) }
       it { is_expected.to forbid_action(:create) }
       it { is_expected.to permit_action(:new) }
+      it { is_expected.to forbid_action(:finish) }
     end
 
   end

@@ -4,11 +4,13 @@ class CompaniesController < ApplicationController
 
   def new
     @resource = Company::Registration.new
+    authorize @resource
   end
 
   def create
     @resource = Company::Registration.new(registration_attributes)
     @resource.owner = current_user
+    authorize @resource
     result = @resource.create
 
     respond_to do |format|
@@ -22,14 +24,17 @@ class CompaniesController < ApplicationController
 
   def show
     @resource = current_company
+    authorize @resource
   end
 
   def edit
     @resource = Company.with_member(current_user.id).find(params[:id])
+    authorize @resource
   end
 
   def update
     @resource = Company.with_member(current_user.id).find(params[:id])
+    authorize @resource
 
     respond_to do |format|
       if @resource.save
@@ -41,7 +46,9 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    @resource = Company.with_member(current_user.id).find(params[:id]).destroy
+    @resource = Company.with_member(current_user.id).find(params[:id])
+    authorize @resource
+    @resource.destroy
     if @resource.destroyed?
       flash[:success] = t 'flash.company.destroyed'
       redirect_to root_path

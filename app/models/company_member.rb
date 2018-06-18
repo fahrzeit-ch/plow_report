@@ -57,6 +57,10 @@ class CompanyMember < ApplicationRecord
     self
   end
 
+  def resend_invitation!
+    user.invite!
+  end
+
   private
   def add_driver
     company.add_driver user

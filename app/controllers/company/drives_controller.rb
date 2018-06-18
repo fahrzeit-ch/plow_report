@@ -1,5 +1,6 @@
 class Company::DrivesController < ApplicationController
   before_action :set_company_from_param
+  before_action :set_drive, only: :destroy
   helper_method :selected_driver
 
   def index
@@ -7,7 +8,6 @@ class Company::DrivesController < ApplicationController
   end
 
   def destroy
-    @drive = current_company.drives.find(params[:id])
     if @drive.destroy
       flash[:success] = I18n.t 'flash.drives.destroyed'
     else
@@ -22,5 +22,10 @@ class Company::DrivesController < ApplicationController
     drives = drives.by_season(selected_season).includes(:driver)
     drives = drives.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
     drives.order(start: :desc)
+  end
+
+  def set_drive
+    @drive = current_company.drives.find(params[:id])
+    authorize @drive
   end
 end
