@@ -1,0 +1,15 @@
+<div class="row mt-3">
+  <div class="col-sm-6">
+    <h1><%= t 'views.company_drives.edit' %></h1>
+  </div>
+</div>
+<div class="row toolbar border-top bg-light d-print-none">
+  <div class="col-12">
+    <h4><%= Drive.model_name.human %> #<%= @drive.id %></h4>
+  </div>
+</div>
+<div class="row mt-3">
+  <div class="col-12">
+    <%= render 'drives/form', back_path: company_drives_path(current_company), drive: @drive %>
+  </div>
+</div>

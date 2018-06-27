@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :companies do
     scope module: 'company' do
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
-      resources :drives, only: [:index, :destroy]
+      resources :drives, only: [:index, :destroy, :edit, :update]
       resources :standby_dates, only: [:index, :destroy, :create] do
         collection do
           get :weeks

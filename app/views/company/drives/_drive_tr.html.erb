@@ -8,9 +8,12 @@
   <td><%= drive.end.strftime('%H:%M') %></td>
   <td><%= drive.duration_as_string %></td>
   <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
-  <% if local_assigns[:tools] %>
+  <% if local_assigns[:tools] && policy(drive).edit? %>
     <td class="d-print-none">
-      <%= link_to drive, method: :delete, class: 'btn btn-default', data: { confirm: t('confirm.company.delete_drive') } do %>
+      <%= link_to edit_company_drife_path(current_company, drive), class: 'btn btn-default' do %>
+        <i class="fa fa-edit"></i>
+      <% end %>
+      <%= link_to company_drife_path(current_company, drive), method: :delete, class: 'btn btn-default', data: { confirm: t('confirm.company.delete_drive') } do %>
         <i class="fa fa-trash"></i>
       <% end %>
     </td>

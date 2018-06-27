@@ -213,6 +213,7 @@ de:
         title: "Übersicht"
     company_drives:
       title: "Fahrten"
+      edit: "Fahrt Bearbeiten"
     company:
       standby_dates:
         calendar:

@@ -60,4 +60,19 @@ RSpec.describe Company::DrivesController, type: :controller do
 
   end
 
+  describe '#PUT update' do
+    let(:drive) { drives.last }
+    let(:new_attrs) { attributes_for(:drive, distance_km: 500) }
+
+    context 'as admin' do
+      before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
+
+      it 'updates the drive' do
+        put :update, params: { id: drive.id, company_id: company.id, drive: new_attrs }
+        drive.reload
+        expect(drive.distance_km).to eq 500
+      end
+    end
+  end
+
 end
