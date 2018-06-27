@@ -20,6 +20,15 @@ RSpec.describe Company::DrivesController, type: :controller do
     it 'accepts driver id scope' do
       get :index, params: { company_id: company.id, driver_id: 12 }
     end
+
+    context 'as non company member' do
+      let(:other_company) { create(:company) }
+
+      it 'redirects to root page' do
+        get :index, params: { company_id: other_company.id }
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'GET #destroy' do

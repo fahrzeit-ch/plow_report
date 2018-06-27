@@ -4,10 +4,12 @@ class Company::StandbyDatesController < ApplicationController
   helper_method :selected_driver
 
   def index
+    authorize current_company, :index_standby_dates?
     @standby_dates = StandbyDate.where(driver: current_company.drivers).includes(:driver).by_season(selected_season).all
   end
 
   def weeks
+    authorize current_company, :index_standby_dates?
     @standby_weeks = StandbyDate.where(driver: selected_driver).by_season(selected_season).weeks
   end
 

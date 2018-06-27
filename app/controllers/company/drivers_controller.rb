@@ -35,6 +35,7 @@ class Company::DriversController < ApplicationController
   end
 
   def authorize_create_action
+    # Just create a dummy driver to authorize against
     authorize Driver.new(user: user_to_assign, company: current_company)
   end
 

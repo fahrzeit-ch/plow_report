@@ -16,6 +16,14 @@ class CompanyPolicy < ApplicationPolicy
     update?
   end
 
+  def index_drives?
+    company_member? record
+  end
+
+  def index_standby_dates?
+    company_member? record
+  end
+
   def create?
     true
   end

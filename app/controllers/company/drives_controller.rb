@@ -4,6 +4,7 @@ class Company::DrivesController < ApplicationController
   helper_method :selected_driver
 
   def index
+    authorize current_company, :index_drives?
     @drives = apply_scopes(current_company.drives)
   end
 
