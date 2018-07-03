@@ -4,7 +4,15 @@
 class Company::Registration
   include ActiveModel::Model
 
-  attr_accessor(:name, :contact_email, :owner, :add_owner_as_driver, :transfer_private_drives, :company)
+  attr_accessor :name,
+                :contact_email,
+                :address,
+                :zip_code,
+                :city,
+                :owner,
+                :add_owner_as_driver,
+                :transfer_private_drives,
+                :company
 
   # Takes a Company::Registration object and creates
   # the company. It returns a Company::RegistrationResult providing
@@ -45,7 +53,9 @@ class Company::Registration
   end
 
   def create_company(result)
-    self.company = Company.new(name: name, contact_email: contact_email)
+    self.company = Company.new(name: name, contact_email: contact_email, address: address,
+                               zip_code: zip_code,
+                               city: city)
     return if company.save
 
     # copy validation errors to registration model and return

@@ -5,6 +5,9 @@ class Company < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :options, presence: true, allow_blank: true
   validates :contact_email, presence: true
+  validates :address, presence: true
+  validates :zip_code, presence: true
+  validates :city, presence: true
 
   has_many :company_members, dependent: :destroy
   has_many :users, through: :company_members

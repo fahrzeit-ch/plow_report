@@ -1,12 +1,5 @@
 <%= form_with(model: @resource, local: true, builder: BootstrapFormBuilder, url: companies_path) do |form| %>
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true %>
-  </div>
-  <div class="form-group">
-    <%= form.label :contact_email %>
-    <%= form.text_field :contact_email, required: true %>
-  </div>
+  <%= render 'fields', form: form %>
   <div class="form-group">
     <div class="form-check">
       <%= form.check_box :add_owner_as_driver, id: :company_registration_add_as_driver, class: 'form-check-input', data: { collapse_on_change: 'transfer-private-drives' }%>
