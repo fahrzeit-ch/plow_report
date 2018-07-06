@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   end
   resources :standby_dates, only: [:create, :destroy, :index]
   resources :standby_date_ranges, only: :create
+  resource :driver, only: :create
+  resource :recordings, only: [:create, :destroy] do
+    put :finish
+  end
 
   resources :companies do
     scope module: 'company' do
@@ -29,11 +33,6 @@ Rails.application.routes.draw do
       end
       resources :drivers, only: [:index, :create, :destroy]
     end
-  end
-
-  resource :driver, only: :create
-  resource :recordings, only: [:create, :destroy] do
-    put :finish
   end
 
   authenticated :user do

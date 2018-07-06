@@ -175,6 +175,9 @@ de:
     back: "Zurück"
     update: "Speichern"
     all: "Alle"
+    required: "*"
+    read: "Lesen"
+    terms_and_policies: "AGB und Datenschutz"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"

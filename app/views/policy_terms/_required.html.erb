@@ -1,0 +1,4 @@
+<h3><%= t 'common.terms_and_policies' %></h3>
+<% PolicyTerm.required.each do |t| %>
+  <%= render 'policy_terms/policy_term', policy_term: t %>
+<% end %>

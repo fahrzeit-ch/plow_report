@@ -21,6 +21,7 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
       </div>
+      <%= render 'policy_terms/required' %>
       <%= f.submit t('.sign_up', default: 'Sign up'), class: 'btn btn-primary' %>
     <% end %>
   </div>
