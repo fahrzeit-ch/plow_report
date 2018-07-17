@@ -1,6 +1,7 @@
 class TermAcceptance < ApplicationRecord
   belongs_to :user
   belongs_to :policy_term
+  before_create :set_term_version
   after_create :invalidate_previous
 
   default_scope { where(invalidated_at: nil) }
@@ -16,6 +17,10 @@ class TermAcceptance < ApplicationRecord
   end
 
   private
+  def set_term_version
+    self.term_version = policy_term.revisions.last.version
+  end
+
   def invalidate_previous
     self.class.where(policy_term_id: self.policy_term_id, user_id: self.user_id).where.not(id: self.id)
       .update_all(invalidated_at: Time.now.utc)
