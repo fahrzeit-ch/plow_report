@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get 'static_pages/home'
 
+  scope path: '/users' do
+    resource :term_acceptances, only: [:edit, :update]
+  end
+
   devise_for :users, controllers: {
       registrations: 'user/registrations'
   }

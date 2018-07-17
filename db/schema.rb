@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180703161736) do
+ActiveRecord::Schema.define(version: 20180717212623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20180703161736) do
     t.integer "term_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "invalidated_at"
     t.index ["policy_term_id"], name: "index_term_acceptances_on_policy_term_id"
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
   end

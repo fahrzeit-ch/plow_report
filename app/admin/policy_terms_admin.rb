@@ -13,14 +13,18 @@ Trestle.resource(:policy_terms) do
 
   # Customize the form fields shown on the new/edit views.
   #
-  # form do |policy_term|
-  #   text_field :name
-  #
-  #   row do
-  #     col(xs: 6) { datetime_field :updated_at }
-  #     col(xs: 6) { datetime_field :created_at }
-  #   end
-  # end
+  form do |policy_term|
+    text_field :name
+    check_box :required
+    text_field :short_description
+    text_area :description
+    text_field :key
+
+    row do
+      # col(xs: 6) { datetime_field :updated_at }
+      # col(xs: 6) { datetime_field :created_at }
+    end
+  end
 
   # By default, all parameters passed to the update and create actions will be
   # permitted. If you do not have full trust in your users, you should explicitly

@@ -38,7 +38,10 @@ module AcceptsTerms
   # Returns all Terms that were not accepted by the user yet
   def unchecked_terms
     if persisted?
-      PolicyTerm.joins("LEFT JOIN term_acceptances as ta ON terms.id = ta.term_id AND ta.user_id = '#{self.id}'").where('ta.term_id is null')
+      PolicyTerm.joins("LEFT JOIN term_acceptances as ta
+                        ON policy_terms.id = ta.policy_term_id
+                        AND ta.user_id = '#{self.id}'
+                        AND ta.invalidated_at is NULL").where('ta.policy_term_id is null')
     else
       PolicyTerm.all
     end
