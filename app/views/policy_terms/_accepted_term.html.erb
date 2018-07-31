@@ -1,0 +1,14 @@
+<div class="panel">
+  <div class="panel-body">
+    <% if acceptance.needs_update %>
+      <h4 class="text-danger"><i class="text-warning fa fa-exclamation"></i> <%= t(acceptance.term.key) %></h4>
+    <% else %>
+    <% end %>
+    <p><%= acceptance.term.description.html_safe %></p>
+    <% if acceptance.needs_update %>
+      <%= link_to t('ok'), term_acceptance_path(acceptance), class: 'btn btn-default', method: :put %>
+    <% else %>
+      <i class="fa fa-check"></i> <small><%= acceptance.accepted_at.to_s(:short) %></small>
+    <% end %>
+  </div>
+</div>

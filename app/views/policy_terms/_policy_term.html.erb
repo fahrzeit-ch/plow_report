@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-body">
+    <h4><%= t(policy_term.name) %> <%= t('common.required') if policy_term.required %></h4>
+    <div class="checkbox">
+      <label>
+        <%= check_box_tag("user[terms][#{policy_term.key}]") %> <%= policy_term.short_description.html_safe %>
+        <a href="#" data-toggle="modal" data-target="#modal-<%= policy_term.key %>"><%= t 'common.read' %></a>
+      </label>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal', id: "modal-#{policy_term.key}", header: policy_term.name do %>
+  <p><%= policy_term.description.html_safe %></p>
+<% end %>

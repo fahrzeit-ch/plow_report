@@ -25,12 +25,13 @@ RSpec.describe Drive, type: :model do
   end
 
   describe 'season scope' do
-    let(:this_season) { Drive.create(start: DateTime.parse('2018-01-20 12:30'), end: DateTime.parse('2018-01-20 13:50'), driver: driver1 ) }
-    let(:last_season) { Drive.create(start: DateTime.parse('2017-01-20 12:30'), end: DateTime.parse('2017-01-20 13:50'), driver: driver1 ) }
+    let(:this_season) { Drive.create!(start: DateTime.parse('2018-01-20 12:30'), end: DateTime.parse('2018-01-20 13:50'), driver: driver1 ) }
+    let(:last_season) { Drive.create!(start: DateTime.parse('2017-01-20 12:30'), end: DateTime.parse('2017-01-20 13:50'), driver: driver1 ) }
 
     it 'should scope to only the current season' do
-      expect(Drive.by_season(Season.current)).to include this_season
-      expect(Drive.by_season(Season.current)).not_to include last_season
+      season = Season.from_date(Date.parse('2018-01-20'))
+      expect(Drive.by_season(season)).to include this_season
+      expect(Drive.by_season(season)).not_to include last_season
     end
   end
 

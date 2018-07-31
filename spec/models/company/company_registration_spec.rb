@@ -8,9 +8,9 @@ RSpec.describe Company::Registration do
     let(:valid_attributes) do
       {name: 'Test',
        contact_email: 'test@test.com',
-       address: '',
-       zip_code: '',
-       city: '',
+       address: 'street 1',
+       zip_code: '8810',
+       city: 'Horgen',
        add_owner_as_driver: true,
        owner: user,
        transfer_private_drives: false}

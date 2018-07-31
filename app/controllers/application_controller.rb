@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include ConstraintRouter
   include Pundit
+  include ConsentVerifier
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protect_from_forgery with: :exception
@@ -10,8 +12,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_driver
   helper_method :current_company
 
-  before_action :check_account!
   before_action :authenticate_user!
+  before_action :check_account!
+  before_action :check_consents
+
 
   # Returns the Season that represents the actual season at point in time.
   def current_season

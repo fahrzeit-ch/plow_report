@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627153725) do
+ActiveRecord::Schema.define(version: 20180717212623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,16 @@ ActiveRecord::Schema.define(version: 20180627153725) do
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
   end
 
+  create_table "policy_terms", force: :cascade do |t|
+    t.string "key"
+    t.boolean "required"
+    t.text "short_description"
+    t.text "description"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "recordings", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.bigint "driver_id"
@@ -113,6 +123,17 @@ ActiveRecord::Schema.define(version: 20180627153725) do
     t.datetime "updated_at", null: false
     t.integer "driver_id", null: false
     t.index ["day"], name: "index_standby_dates_on_day"
+  end
+
+  create_table "term_acceptances", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "policy_term_id"
+    t.integer "term_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "invalidated_at"
+    t.index ["policy_term_id"], name: "index_term_acceptances_on_policy_term_id"
+    t.index ["user_id"], name: "index_term_acceptances_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -150,4 +171,6 @@ ActiveRecord::Schema.define(version: 20180627153725) do
   add_foreign_key "drivers", "companies"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
+  add_foreign_key "term_acceptances", "policy_terms"
+  add_foreign_key "term_acceptances", "users"
 end

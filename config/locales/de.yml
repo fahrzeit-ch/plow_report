@@ -175,6 +175,10 @@ de:
     back: "Zurück"
     update: "Speichern"
     all: "Alle"
+    required: "*"
+    read: "Lesen"
+    terms_and_policies: "AGB und Datenschutz"
+    continue: "Weiter"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -226,6 +230,8 @@ de:
     common:
       info:
         no_data_available: "Keine Daten verfügbar"
+    policies_and_terms:
+      require_new_concent: "Unsere Bestimmungen haben sich geändert"
   forms:
     placeholders:
       driver:
