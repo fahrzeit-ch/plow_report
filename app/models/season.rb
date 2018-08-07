@@ -13,7 +13,7 @@ class Season
     end
 
     def current
-      from_date Date.today
+      from_date Date.current
     end
 
     def from_sym(symbol)
@@ -62,7 +62,7 @@ class Season
   attr_accessor :start_date
   attr_accessor :end_date
 
-  def initialize(date = Date.today)
+  def initialize(date = Date.current)
     self.start_date = Date.new Season.season_start_year_for_date(date), Season.start_day[:month], Season.start_day[:day]
     self.end_date = Date.new Season.season_end_year_for_date(date), Season.end_day[:month], Season.end_day[:day]
   end

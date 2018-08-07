@@ -10,8 +10,8 @@ class StandbyDate
     validate :end_date_gt_start_date
 
     def initialize(attributes={})
-      @start_date = Date.today
-      @end_date = Date.today
+      @start_date = Date.current
+      @end_date = Date.current
       assign_attributes attributes
     end
 

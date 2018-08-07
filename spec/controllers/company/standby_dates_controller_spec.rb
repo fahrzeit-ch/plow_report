@@ -47,7 +47,10 @@ RSpec.describe Company::StandbyDatesController, type: :controller do
     end
 
     context 'date range' do
-      let(:standby_params) { {standby_date_date_range: {driver_id: driver.id, start_date: Date.yesterday, end_date: Date.today}} }
+      # Be aware to use Date.current in order to respect time zones.
+      # This should fix the error when running this spec in codeship whith an other
+      # timezone than configured.
+      let(:standby_params) { {standby_date_date_range: {driver_id: driver.id, start_date: Date.yesterday, end_date: Date.current}} }
       it 'redirects back to standby dates' do
         expect(subject).to redirect_to(company_standby_dates_path(company))
       end
