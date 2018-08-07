@@ -271,7 +271,6 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    timecop (0.9.1)
     trestle (0.8.7)
       activemodel (>= 4.2.0)
       autoprefixer-rails (>= 7.1.2)
@@ -338,7 +337,6 @@ DEPENDENCIES
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
-  timecop
   trestle
   trestle-auth
   turbolinks (~> 5)
