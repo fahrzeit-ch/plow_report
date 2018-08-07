@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :check_account!
   before_action :check_consents
 
+  layout :determine_layout
 
   # Returns the Season that represents the actual season at point in time.
   def current_season
@@ -59,5 +60,10 @@ class ApplicationController < ActionController::Base
 
   def set_company_from_param
     self.current_company = Company.find(params[:company_id])
+  end
+
+  private
+  def determine_layout
+    user_signed_in? ? 'application' : 'public'
   end
 end

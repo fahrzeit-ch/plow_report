@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de">
+<%= render 'layouts/head' %>
+<body class="bg-image-fullscreen" style="background-image: url(<%= image_path("background.jpg").html_safe %>)">
+  <%= render 'navigation/navbar_signed_out' %>
+
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-6">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

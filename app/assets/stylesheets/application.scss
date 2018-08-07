@@ -55,7 +55,11 @@ $colors: map-merge((
         'green-light': $green-light
 ), $colors);
 
-.bg-image-plow {
+.bg-image-fullscreen {
+  background: no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
 }
 

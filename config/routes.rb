@@ -45,6 +45,9 @@ Rails.application.routes.draw do
 
   get '/setup', to: 'static_pages#setup', as: :setup
 
-  root 'static_pages#home'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_scope :user do
+    get "/", :to => "devise/sessions#new"
+  end
+
+  root :to => "devise/sessions#new"
 end
