@@ -32,7 +32,7 @@ module PlowReport
     config.i18n.default_locale = :de
 
     config.time_zone = 'Bern'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
