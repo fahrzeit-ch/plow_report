@@ -30,11 +30,12 @@
           <i class="fa fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userProfileLinks">
-          <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
-            <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
-          <% end %>
           <%= link_to edit_user_registration_path, class: 'dropdown-item' do %>
             <i class="fa fa-cog"></i> <%= t('navbar.main.edit_registration') %>
+          <% end %>
+          <div class="dropdown-divider"></div>
+          <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+            <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
           <% end %>
         </div>
       </li>
