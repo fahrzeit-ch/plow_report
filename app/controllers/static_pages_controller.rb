@@ -6,4 +6,7 @@ class StaticPagesController < ApplicationController
   def setup
   end
 
+  def welcome
+  end
+
 end

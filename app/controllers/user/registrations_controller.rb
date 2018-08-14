@@ -4,6 +4,10 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def after_sign_up_path_for(resource)
+    welcome_path
+  end
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up) do |user|
       user.permit(:email, :password, :password_confirmation, :name, terms: PolicyTerm.pluck(:key))

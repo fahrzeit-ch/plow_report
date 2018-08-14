@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   end
 
   get '/setup', to: 'static_pages#setup', as: :setup
+  get '/welcome', to: 'static_pages#welcome', as: :welcome
 
   devise_scope :user do
     get "/", :to => "devise/sessions#new"

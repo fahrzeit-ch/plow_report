@@ -251,3 +251,8 @@ de:
   devise:
     sign_in: "Anmelden"
     sign_up: "Registrieren"
+  static_pages:
+    welcome:
+      start: "Jetzt loslegen"
+      wellcome: "Vielen Dank, dass Sie sich für fahrzeit.ch registriert haben."
+      title: "Herzlich Wilkommen %{name}"
