@@ -3,10 +3,9 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123891970-1"></script>
 <script>
     document.addEventListener('turbolinks:load', function (event) {
-        var url = event.data.url;
-        dataLayer.push({
-            'event': 'pageView',
-            'virtualUrl': url
+        gtag('config', 'UA-123891970-1', {
+            'page_title': document.title,
+            'page_path':  location.pathname
         });
     });
 
