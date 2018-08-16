@@ -27,7 +27,7 @@ Layout/SpaceAroundEqualsInParameterDefault:
 # when introducing an interpolation. Use single quotes only if their semantics
 # are needed.
 Style/StringLiterals:
-  EnforcedStyle: single_quote
+  EnforcedStyle: single_quotes
 
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:
