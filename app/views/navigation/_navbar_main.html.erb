@@ -23,8 +23,10 @@
       </li>
     </ul>
     <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <%= render 'companies/selector' %>
+      </li>
       <%= render 'shared/season_selector' %>
-      <%= render 'companies/selector' %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="userProfileLinks" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user"></i>

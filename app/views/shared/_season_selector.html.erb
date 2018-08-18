@@ -1,10 +1,8 @@
-<div class="btn-group d-none d-lg-block">
-  <button type="button" class="btn bg-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <%= selected_season.to_s %>
-  </button>
-  <div class="dropdown-menu">
-    <% Season.last(3).each do |s| %>
-      <%= link_to s.to_s, current_path(season: s.to_param), class: 'dropdown-item' %>
-    <% end %>
-  </div>
+<a href="#" role="button" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <i class="fa fa-snowflake-o" aria-hidden="true"></i> <%= selected_season.to_s unless selected_season == Season.current%>
+</a>
+<div class="dropdown-menu dropdown-menu-right">
+  <% Season.last(3).each do |s| %>
+    <%= link_to s.to_s, current_path(season: s.to_param), class: 'dropdown-item' %>
+  <% end %>
 </div>

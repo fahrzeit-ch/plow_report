@@ -75,4 +75,8 @@ class Season
     "Winter #{start_date.year}/#{end_date.year}"
   end
 
+  def ==(other)
+    self.start_date == other.start_date
+  end
+
 end

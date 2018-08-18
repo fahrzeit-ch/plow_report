@@ -24,7 +24,6 @@
       </li>
     </ul>
     <ul class="navbar-nav">
-      <%= render 'shared/season_selector' %>
       <% if policy(current_company).edit? %>
       <li class="nav-item">
         <%= link_to edit_company_path(current_company), class: 'nav-link' do %>
