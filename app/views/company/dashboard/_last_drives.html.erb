@@ -3,6 +3,20 @@
     <%= link_to t('dashboard.cards.last_drives.show_all'), company_drives_path(current_company), class: 'float-right' %>
     <h5 class="card-title"><%= t 'dashboard.cards.last_drives.title' %></h5>
     <table class="table">
+      <thead>
+      <tr>
+        <th><%= Drive.human_attribute_name(:driver) %></th>
+        <th><%= Drive.human_attribute_name(:week_nr) %></th>
+        <th><%= Drive.human_attribute_name(:day_of_week) %></th>
+        <th><%= Drive.human_attribute_name(:date) %></th>
+        <th><%= Drive.human_attribute_name(:type) %></th>
+        <th><%= Drive.human_attribute_name(:start) %></th>
+        <th><%= Drive.human_attribute_name(:end) %></th>
+        <th><%= Drive.human_attribute_name(:duration) %></th>
+        <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
+        <th class="d-print-none"></th>
+      </tr>
+      </thead>
       <tbody>
       <% @last_drives.each do |drive| %>
         <%= render 'company/drives/drive_tr', drive: drive, tools: false %>
