@@ -83,3 +83,11 @@ production:
   database: plow_report_production
   username: plow_report
   password: <%= ENV['PLOW_REPORT_DATABASE_PASSWORD'] %>
+
+# In order to keep backwards compatibilty on current stage server
+# we keep database name same as in production
+stage:
+  <<: *default
+  database: plow_report_production
+  username: plow_report
+  password: <%= ENV['PLOW_REPORT_DATABASE_PASSWORD'] %>

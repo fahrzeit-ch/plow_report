@@ -11,6 +11,7 @@ de:
       company_settings: "Einstellungen"
       company_show: "Meine Firma"
       my_dashboard: "Meine Daten"
+      edit_registration: "Benutzer Einstellungen"
     companies:
       drives: "Fahrten"
       settings: "Einstellungen"
@@ -250,3 +251,8 @@ de:
   devise:
     sign_in: "Anmelden"
     sign_up: "Registrieren"
+  static_pages:
+    welcome:
+      start: "Jetzt loslegen"
+      wellcome: "Vielen Dank, dass Sie sich für fahrzeit.ch registriert haben."
+      title: "Herzlich Wilkommen %{name}"
