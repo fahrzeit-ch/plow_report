@@ -36,6 +36,8 @@ de:
         end_date: "End Datum"
   errors:
     attributes:
+      base:
+        consent_required: "Bitte akzeptieren sie die mit * gekennzeichneten Bedingungen."
       end:
         not_before_start: "darf nicht vor der Start Zeit liegen"
       end_date:
