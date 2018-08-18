@@ -23,7 +23,7 @@ feature 'sign up as new user' do
     it 'forces the user to accept the policy' do
       fill_form('user', attributes_for(:user))
       click_button(I18n.t('devise.sign_up'))
-      expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.base.consent_required'))
+      expect(page).to have_content(I18n.t('errors.attributes.base.consent_required'))
       fill_form('user', attributes_for(:user))
       check('user[terms][agb]')
       click_button(I18n.t('devise.sign_up'))
