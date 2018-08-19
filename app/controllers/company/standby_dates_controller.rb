@@ -2,10 +2,17 @@ class Company::StandbyDatesController < ApplicationController
 
   before_action :set_company_from_param
   helper_method :selected_driver
+  helper_method :calendar_start_date
+
+  def calendar_start_date
+    ::CalendarStartdateEvaluator.resolve_start_date(params, selected_season)
+  end
 
   def index
     authorize current_company, :index_standby_dates?
-    @standby_dates = StandbyDate.where(driver: current_company.drivers).includes(:driver).by_season(selected_season).all
+    @standby_dates = StandbyDate.where(driver: current_company.drivers)
+                         .includes(:driver)
+                         .by_calendar_month(calendar_start_date)
   end
 
   def weeks

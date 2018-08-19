@@ -3,6 +3,6 @@
 </a>
 <div class="dropdown-menu dropdown-menu-right">
   <% Season.last(3).each do |s| %>
-    <%= link_to s.to_s, current_path(season: s.to_param), class: 'dropdown-item' %>
+    <%= link_to s.to_s, current_path({season: s.to_param}, true), class: 'dropdown-item' %>
   <% end %>
 </div>

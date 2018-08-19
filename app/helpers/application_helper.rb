@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 module ApplicationHelper
   MESSAGE_TYPE_MAP = { 'notice' => 'success', 'alert' => 'error' }
-  def current_path(params_overwrite)
-    p = params.clone
+
+  def current_path(params_overwrite, clear_params = false)
+    p = clear_params ? ActionController::Parameters.new : params.clone
     p.merge!(params_overwrite)
     p.permit!
     url_for(p)

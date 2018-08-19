@@ -2,11 +2,18 @@ class StandbyDatesController < ApplicationController
   before_action :check_driver!
   before_action :set_standby_date, only: [:show, :edit, :update, :destroy]
 
+  helper_method :calendar_start_date
+
+  def calendar_start_date
+    ::CalendarStartdateEvaluator.resolve_start_date(params, selected_season)
+  end
+
+
   # GET /standby_dates
   # GET /standby_dates.json
   def index
     @standby_weeks = StandbyDate.where(driver: current_driver).by_season(selected_season).weeks
-    @standby_dates = StandbyDate.where(driver: current_driver).by_season(selected_season).all
+    @standby_dates = StandbyDate.where(driver: current_driver).by_calendar_month(calendar_start_date)
   end
 
   # GET /standby_dates/1

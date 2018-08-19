@@ -20,6 +20,19 @@ RSpec.describe StandbyDate, type: :model do
     end
 
   end
+
+  describe 'last_in_season' do
+    let(:season) { Season.last[0] }
+    let(:first_in_season) { create(:standby_date, day: season.start_date) }
+    let(:last_in_season) { create(:standby_date, day: season.start_date + 1.day) }
+    let(:other_season) { create(:standby_date, day: season.end_date + 1.day) }
+
+    before { first_in_season; last_in_season; other_season }
+
+    it 'should return last standby date of given season' do
+      expect(described_class.last_in_season(season)).to eq(last_in_season)
+    end
+  end
 end
 
 RSpec.describe StandbyDate::DateRange, type: :model do

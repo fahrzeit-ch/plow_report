@@ -39,8 +39,8 @@
     </div>
   </div>
   <div class="col-lg-6 d-print-none">
-    <h1>Kalender</h1>
-    <%= month_calendar events: @standby_dates do |date, stand_by| %>
+    <h1><%= t'.calendar' %></h1>
+    <%= month_calendar events: @standby_dates, start_date: calendar_start_date do |date, stand_by| %>
       <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
       <span class="d-sm-none"><%= l date, format: '%d' %></span>
 

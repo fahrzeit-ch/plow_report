@@ -134,6 +134,8 @@ de:
         title: "Tonnen Salz gestreut"
   standby_dates:
     summary_row: "Total Pikett Tage"
+    index:
+      calendar: "Kalender"
   actions:
     back: "Zurück"
     print: "Drucken"
