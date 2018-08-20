@@ -18,4 +18,16 @@ RSpec.describe Season, type: :model do
     end
   end
 
+  describe 'instance methods' do
+
+    describe 'equality' do
+      subject { described_class.from_date(Date.parse('2018-01-01')) }
+
+      it { is_expected.to eq(described_class.from_date(Date.parse('2017-11-11'))) }
+      it { is_expected.not_to eq(described_class.from_date(Date.parse('2016-01-01')))}
+
+    end
+
+  end
+
 end
