@@ -3,6 +3,7 @@
     <%= link_to raw(t('simple_calendar.previous', default: 'Previous')), calendar.url_for_previous_view, class: 'btn btn-default' %>
     <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
     <%= link_to raw(t('simple_calendar.next', default: 'Next')), calendar.url_for_next_view , class: 'btn btn-default' %>
+    <%= calendar_today_link %>
   </div>
 
   <table class="table">

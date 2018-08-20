@@ -261,3 +261,5 @@ de:
       start: "Jetzt loslegen"
       wellcome: "Vielen Dank, dass Sie sich für fahrzeit.ch registriert haben."
       title: "Herzlich Wilkommen %{name}"
+  simple_calendar:
+    jump_to_today: "Zu Heute springen"
