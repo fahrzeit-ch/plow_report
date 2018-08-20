@@ -22,7 +22,7 @@ RSpec.describe StandbyDate, type: :model do
   end
 
   describe 'last_in_season' do
-    let(:season) { Season.last[0] }
+    let(:season) { Season.last(2)[0] }
     let(:first_in_season) { create(:standby_date, day: season.start_date) }
     let(:last_in_season) { create(:standby_date, day: season.start_date + 1.day) }
     let(:other_season) { create(:standby_date, day: season.end_date + 1.day) }
@@ -33,6 +33,38 @@ RSpec.describe StandbyDate, type: :model do
       expect(described_class.last_in_season(season)).to eq(last_in_season)
     end
   end
+
+  describe 'scopes' do
+
+    describe 'calendar view' do
+      let(:date) { Date.parse('2018-02-14') }
+      let(:not_in_scope) { create(:standby_date, day: '2018-01-28') }
+      let(:in_scope1) { create(:standby_date, day: '2018-01-29') }
+      let(:in_scope2) { create(:standby_date, day: '2018-03-04') }
+
+      before { not_in_scope; in_scope1; in_scope2 }
+
+      subject { described_class.by_calendar_month(date) }
+
+      it { is_expected.to include(in_scope1, in_scope2) }
+      it { is_expected.not_to include(not_in_scope) }
+    end
+
+    describe 'by_season' do
+      let(:season) { Season.current }
+      let(:not_in_scope) { create(:standby_date, day: season.start_date - 1.day) }
+      let(:in_scope1) { create(:standby_date, day: season.start_date) }
+      let(:in_scope2) { create(:standby_date, day: season.end_date) }
+
+      before { not_in_scope; in_scope1; in_scope2 }
+
+      subject { described_class.by_season(season) }
+
+      it { is_expected.to include(in_scope1, in_scope2) }
+      it { is_expected.not_to include(not_in_scope) }
+    end
+  end
+
 end
 
 RSpec.describe StandbyDate::DateRange, type: :model do

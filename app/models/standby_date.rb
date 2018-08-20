@@ -4,6 +4,11 @@ class StandbyDate < ApplicationRecord
 
   validates :day, uniqueness: { scope: :driver }
 
+  # Scopes records to the month of the given date. Additionally events
+  # in the beginning of week and end of week of first/last week of the
+  # month are loaded.
+  #
+  # This scope corresponds to the way SimpleCalendar shows a month view.
   def self.by_calendar_month(date)
     start = date.beginning_of_month.beginning_of_week
     to = date.end_of_month.end_of_week
@@ -22,8 +27,9 @@ class StandbyDate < ApplicationRecord
     where arel_table["day"].lteq(date)
   end
 
+  # Scopes all standby dates within the given season
   def self.by_season(season)
-    where('day > ? AND day < ?', season.start_date, season.end_date)
+    from(season.start_date).until(season.end_date)
   end
 
   # Create a standby date for each day in the given range
