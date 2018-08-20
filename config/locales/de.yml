@@ -136,6 +136,7 @@ de:
     summary_row: "Total Pikett Tage"
     index:
       calendar: "Kalender"
+      standby_label: "Pikett"
   actions:
     back: "Zurück"
     print: "Drucken"
