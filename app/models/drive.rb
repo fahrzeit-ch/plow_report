@@ -64,6 +64,17 @@ class Drive < ApplicationRecord
     hours.to_s.rjust(2, '0')
   end
 
+  # Returns the type of rate that should apply for this drive
+  # Currently only none (0) and surcharge (1) is supported
+  def surcharge_rate_type
+    weekend? ? 1 : 0
+  end
+
+  # Returns true if start or end time is on a saturday or sunday
+  def weekend?
+    start.on_weekend? || read_attribute(:end).on_weekend?
+  end
+
   # Class Methods
   class << self
 

@@ -50,6 +50,7 @@ $border-radius-sm:            .2rem;
 @import "toastr.min";
 @import "font-awesome";
 @import "standby_dates";
+@import "drives";
 
 $colors: map-merge((
         'green-light': $green-light
@@ -96,4 +97,9 @@ $colors: map-merge((
   .bg-#{$color-name} {
     background-color: $color;
   }
+}
+
+.table td > .btn {
+  margin-top: -0.75rem;
+  margin-bottom: -0.75rem;
 }

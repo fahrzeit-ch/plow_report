@@ -35,6 +35,29 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe '#surcharge_rate_type' do
+    let(:start_time) { DateTime.parse('2018-08-21 12:30') }
+    let(:end_time) { DateTime.parse('2018-08-21 13:30') }
+    let(:drive) { create(:drive, start: start_time, end: end_time, driver: driver1) }
+
+    subject { drive.surcharge_rate_type }
+
+    context 'no rules apply' do
+      it 'should return 0' do
+        expect(subject).to eq(0)
+      end
+    end
+
+    context 'weekend' do
+      let(:start_time) { DateTime.parse('2018-08-19 23:59+02:00') }
+      let(:end_time) { DateTime.parse('2018-08-20 00:30+02:00') }
+
+      it 'should return default_rate' do
+        expect(subject).to eq(1)
+      end
+    end
+  end
+
   describe 'salt_amount_tonns' do
 
     context 'salt_refilled is false and amount has value > 0' do
