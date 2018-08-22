@@ -1,13 +1,12 @@
-<div class="row mt-3">
-  <div class="col-lg-6">
+<div class="row bg-white pt-3">
+  <div class="col-sm-6">
     <h1><%= t 'views.company.standby_dates.title' %></h1>
   </div>
   <div class="col-auto ml-auto">
     <%= render 'shared/season_selector' %>
   </div>
 </div>
-
-<div class="row bg-light border-top d-print-none">
+<div class="row toolbar border-top bg-light p-2 d-print-none">
   <div class="btn-toolbar col-10" role="toolbar">
     <div class="btn-group mr-2" role="group">
       <%= link_to company_standby_dates_path, class: "btn btn-secondary #{current_page?(action: :index) ? 'active' : ''}" do %>
@@ -24,40 +23,49 @@
 </div>
 
 <div class="row mt-3">
-  <div class="col-2 d-print-none">
-    <nav class="nav list-group">
-      <% current_company.drivers.each do |dr| %>
-        <%= link_to dr.name, weeks_company_standby_dates_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == selected_driver.id) ? 'active' : ''}" %>
-      <% end %>
-    </nav>
-  </div>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2 d-print-none">
+            <nav class="nav list-group">
+              <% current_company.drivers.each do |dr| %>
+                <%= link_to dr.name, weeks_company_standby_dates_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == selected_driver.id) ? 'active' : ''}" %>
+              <% end %>
+            </nav>
+          </div>
 
-  <div class="col-10 table-responsive">
-    <h5><%= selected_driver.name %></h5>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>KW</th>
-        <th>Start</th>
-        <th>Anzahl Tage</th>
-      </tr>
-      </thead>
+          <div class="col-10 table-responsive">
+            <h5><%= selected_driver.name %></h5>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>KW</th>
+                <th>Start</th>
+                <th>Anzahl Tage</th>
+              </tr>
+              </thead>
 
-      <tbody>
-      <% @standby_weeks.each do |standby_date| %>
-        <tr>
-          <td><%= standby_date.week_nr %></td>
-          <td><%= l standby_date.start_date, format: '%a %d.%m.%Y' %></td>
-          <td><%= standby_date.day_count %></td>
-        </tr>
-      <% end %>
-      </tbody>
-      <tfoot>
-      <tr>
-        <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
-        <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
-      </tr>
-      </tfoot>
-    </table>
+              <tbody>
+              <% @standby_weeks.each do |standby_date| %>
+                <tr>
+                  <td><%= standby_date.week_nr %></td>
+                  <td><%= l standby_date.start_date, format: '%a %d.%m.%Y' %></td>
+                  <td><%= standby_date.day_count %></td>
+                </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
+                <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

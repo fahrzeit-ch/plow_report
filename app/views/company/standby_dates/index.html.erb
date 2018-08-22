@@ -1,12 +1,12 @@
-<div class="row mt-3">
-  <div class="col-lg-6">
+<div class="row bg-white pt-3">
+  <div class="col-sm-6">
     <h1><%= t 'views.company.standby_dates.calendar.title' %></h1>
   </div>
   <div class="col-auto ml-auto">
     <%= render 'shared/season_selector' %>
   </div>
 </div>
-<div class="row bg-light border-top">
+<div class="row toolbar border-top bg-light p-2 d-print-none">
   <div class="btn-toolbar col-10" role="toolbar">
     <div class="btn-group mr-2" role="group">
       <%= link_to company_standby_dates_path, class: "btn btn-secondary #{current_page?(action: :index) ? 'active' : ''}" do %>
@@ -18,10 +18,14 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row mt-3">
   <div class="col-lg-12 d-print-none">
-    <%= month_calendar events: @standby_dates, start_date: calendar_start_date, partial: 'month_calendar_with_week' do |date, stand_by| %>
-      <%= render '_day', date: date, stand_by: stand_by %>
-    <% end %>
+    <div class="card">
+      <div class="card-body">
+        <%= month_calendar events: @standby_dates, start_date: calendar_start_date, partial: 'month_calendar_with_week' do |date, stand_by| %>
+          <%= render '_day', date: date, stand_by: stand_by %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

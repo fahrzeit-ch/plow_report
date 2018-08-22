@@ -12,29 +12,6 @@
  *
  */
 
-//    Font Family
-//
-$primary-font	: 'Poppins', sans-serif;
-
-/*--------------------------- Color variations ----------------------*/
-
-//$secondary-color	: #00A383;
-//$primary-color: #ff7319;
-
-$primary	: #00AEFF;
-$secondary: #ff7319;
-$title-color	: #076510;
-$text-color		: #5f5f5f;
-
-$white			: #fff;
-$black			: #000;
-
-
-$navbar-brand-height: 5rem;
-
-$border-radius:               0;
-$border-radius-lg:            .3rem;
-$border-radius-sm:            .2rem;
 
 //$theme-colors: (
 //        "primary": $primary-color,
@@ -64,12 +41,25 @@ $colors: map-merge((
   background-size: cover;
 }
 
+body {
+  background-color: #b5b6d447;
+  font-family: Lato Light, sans-serif;
+}
+
 .devise-bs {
   margin-top: 50px;
 }
 
 .navbar-brand > img {
   height: 30px;
+}
+
+.navbar-dark {
+  .navbar-nav {
+    .nav-link {
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
 }
 
 .round.round-info {
@@ -102,4 +92,12 @@ $colors: map-merge((
 .table td > .btn {
   margin-top: -0.75rem;
   margin-bottom: -0.75rem;
+}
+
+.card-header {
+  padding: 0.25rem 1.25rem;
+}
+
+.card-header-tabs {
+  margin-bottom: -0.25rem;
 }

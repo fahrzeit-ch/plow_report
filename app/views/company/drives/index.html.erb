@@ -1,4 +1,4 @@
-<div class="row mt-3">
+<div class="row bg-white pt-3">
   <div class="col-sm-6">
     <h1><%= t 'views.company_drives.title' %></h1>
   </div>
@@ -6,49 +6,60 @@
     <%= render 'shared/season_selector' %>
   </div>
 </div>
-<div class="row toolbar border-top bg-light d-print-none">
+<div class="row toolbar border-top bg-light p-2 d-print-none">
   <div class="col-12">
     <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
 <div class="row mt-3">
-  <div class="col-2 d-print-none">
-    <nav class="nav list-group">
-      <%= link_to t('common.all'), company_drives_path(current_company), class: "list-group-item list-group-item-action #{params[:driver_id].blank? ? 'active' : ''}" %>
-      <% current_company.drivers.each do |dr| %>
-        <%= link_to dr.name, company_drives_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == params[:driver_id].to_i) ? 'active' : ''}" %>
-      <% end %>
-    </nav>
-  </div>
+  <div class="col-12">
 
-  <div class="col-10 table-responsive">
-    <table class="table">
-      <thead>
-      <tr>
-        <th><%= Drive.human_attribute_name(:driver) %></th>
-        <th><%= Drive.human_attribute_name(:week_nr) %></th>
-        <th><%= Drive.human_attribute_name(:day_of_week) %></th>
-        <th><%= Drive.human_attribute_name(:date) %></th>
-        <th><%= Drive.human_attribute_name(:type) %></th>
-        <th><%= Drive.human_attribute_name(:start) %></th>
-        <th><%= Drive.human_attribute_name(:end) %></th>
-        <th><%= Drive.human_attribute_name(:duration) %></th>
-        <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
-        <th class="d-print-none"></th>
-      </tr>
-      </thead>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2 d-print-none">
+            <nav class="nav list-group">
+              <%= link_to t('common.all'), company_drives_path(current_company), class: "list-group-item list-group-item-action #{params[:driver_id].blank? ? 'active' : ''}" %>
+              <% current_company.drivers.each do |dr| %>
+                <%= link_to dr.name, company_drives_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == params[:driver_id].to_i) ? 'active' : ''}" %>
+              <% end %>
+            </nav>
+          </div>
 
-      <tbody>
-      <% @drives.each do |drive| %>
-        <%= render 'drive_tr', drive: drive, tools: true %>
-      <% end %>
-      </tbody>
-    </table>
-    <% if @drives.empty? %>
-      <div>
-        <%= t 'views.common.info.no_data_available' %>
+          <div class="col-10">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th><%= Drive.human_attribute_name(:driver) %></th>
+                  <th><%= Drive.human_attribute_name(:week_nr) %></th>
+                  <th><%= Drive.human_attribute_name(:day_of_week) %></th>
+                  <th><%= Drive.human_attribute_name(:date) %></th>
+                  <th><%= Drive.human_attribute_name(:type) %></th>
+                  <th><%= Drive.human_attribute_name(:start) %></th>
+                  <th><%= Drive.human_attribute_name(:end) %></th>
+                  <th><%= Drive.human_attribute_name(:duration) %></th>
+                  <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
+                  <th class="d-print-none"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <% @drives.each do |drive| %>
+                  <%= render 'drive_tr', drive: drive, tools: true %>
+                <% end %>
+                </tbody>
+              </table>
+              <% if @drives.empty? %>
+                <div>
+                  <%= t 'views.common.info.no_data_available' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
 
 </div>

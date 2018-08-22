@@ -31,6 +31,7 @@ $cyan:    #9954BB !default;
 $sienna: #8A4117 !default;
 $rust: #C36241 !default;
 $mocha:  #C36241 !default;
+$blue-dark: #1a6ba2 !default;
 
 
 $primary:       $blue !default;
@@ -40,7 +41,32 @@ $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$dark:          $blue-dark !default;
+
+$primary-font	: 'Lato', sans-serif;
+
+/*--------------------------- Color variations ----------------------*/
+
+//$secondary-color	: #00A383;
+//$primary-color: #ff7319;
+
+$primary	: #00AEFF;
+$secondary: #ff7319;
+$title-color	: #076510;
+$text-color		: #5f5f5f;
+
+$white			: #fff;
+$black			: #000;
+
+
+$navbar-brand-height: 5rem;
+
+$border-radius:               0;
+$border-radius-lg:            .3rem;
+$border-radius-sm:            .2rem;
+
+
+$border-width: 1px;
 
 // Options
 
@@ -49,6 +75,7 @@ $enable-rounded: false !default;
 // Body
 
 $body-color:    $gray-800 !default;
+$body-bg:       #e4e5e6 !default;
 
 // Fonts
 
@@ -71,3 +98,24 @@ $alert-border-width:                0 !default;
 // Progress bars
 
 $progress-height:               8px !default;
+
+// tabs:
+$nav-tabs-link-active-color:        $gray-700 !default;
+$nav-tabs-link-active-bg:           $white !default;
+
+// Cards
+
+$card-spacer-y:                     .75rem !default;
+$card-spacer-x:                     1.25rem !default;
+$card-border-width:                 $border-width !default;
+$card-border-radius:                $border-radius !default;
+$card-border-color:                 rgba($black, .125) !default;
+$card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width}) !default;
+$card-cap-bg:                       rgba($black, .03) !default;
+$card-bg:                           $white !default;
+
+$card-img-overlay-padding:          1.25rem !default;
+
+$card-columns-count:                3 !default;
+$card-columns-gap:                  1.25rem !default;
+$card-columns-margin:               $card-spacer-y !default;
