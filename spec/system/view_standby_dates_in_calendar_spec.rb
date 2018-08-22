@@ -16,6 +16,10 @@ feature 'view standby dates in calendar' do
     create(:standby_date, driver: driver, day: Date.new(2017, 11, 15))
   end
 
+  after do
+    travel_back
+  end
+
   it 'shows the calendar of the current month including existing standby date' do
     visit '/standby_dates'
     expect(page).to have_content('November 2018')

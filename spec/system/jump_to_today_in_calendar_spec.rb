@@ -12,6 +12,10 @@ feature 'jump to today in calendar' do
     travel_to Time.zone.local(2018, 11, 23, 12, 14)
   end
 
+  after do
+    travel_back
+  end
+
   it 'jumps to the current month' do
     visit '/standby_dates'
     expect(page).to have_content('November 2018')
