@@ -9,6 +9,11 @@ feature 'creating a drive on dashboard' do
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: attributes_for(:user)[:password]
     click_button 'Anmelden'
+    travel_to DateTime.new(2018, 8, 24, 12, 0)
+  end
+
+  after do
+    travel_back
   end
 
   describe 'by filling in drive form' do
