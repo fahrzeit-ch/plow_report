@@ -35,6 +35,8 @@ gem 'rollbar'
 gem 'audited', '~> 4.7'
 gem 'pundit', '~> 1.1.0'
 
+gem 'activerecord-import'
+
 gem 'trestle'
 gem 'trestle-auth'
 

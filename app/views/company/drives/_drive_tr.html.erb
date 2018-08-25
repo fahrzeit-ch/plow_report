@@ -1,5 +1,5 @@
 <tr style="border-left: 5px solid <%= driver_color(drive.driver) %>">
-  <td><%= drive.driver.name %></td>
+  <td><% unless drive.seen? %><i class="fa fa-circle new-label text-info" title="<%= t'common.new' %>"></i><% end %><%= drive.driver.name %></td>
   <td><%= drive.week_nr %></td>
   <td class="drive-rate-type-<%= drive.surcharge_rate_type %>-bg"><%= drive.day_of_week %></td>
   <td><%= l drive.start.to_date %></td>

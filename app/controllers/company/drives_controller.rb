@@ -5,7 +5,8 @@ class Company::DrivesController < ApplicationController
 
   def index
     authorize current_company, :index_drives?
-    @drives = apply_scopes(current_company.drives)
+    @drives = apply_scopes(current_company.drives.with_viewstate(current_user))
+    UserAction.track_list(current_user, @drives.reject(&:seen?))
   end
 
   def destroy
@@ -32,7 +33,7 @@ class Company::DrivesController < ApplicationController
   private
 
   def apply_scopes(drives)
-    drives = drives.by_season(selected_season).includes(:driver)
+      drives = drives.by_season(selected_season).includes(:driver)
     drives = drives.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
     drives.order(start: :desc)
   end

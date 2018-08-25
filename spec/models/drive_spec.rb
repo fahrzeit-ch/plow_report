@@ -157,4 +157,41 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe 'user action' do
+
+    it 'should have relation to user action' do
+      expect(subject.user_actions).to be_a ActiveRecord::Relation
+    end
+
+    context 'actions not loaded' do
+      it do
+        expect(subject.seen?).to be_falsey
+      end
+    end
+
+    context 'actions loaded and record seen by user' do
+      subject { described_class.with_viewstate(visitor).first }
+
+      let(:drive) { create(:drive) }
+      let(:user) { create(:user) }
+      let(:visitor) { user }
+
+      before do
+        UserAction.track_list(user, [drive])
+      end
+
+      it 'seen? should be true' do
+        expect(subject).to be_seen
+      end
+
+      context 'different user' do
+        let(:visitor) { create(:user) }
+
+        it 'should have set seen? to false' do
+          expect(subject).not_to be_seen
+        end
+      end
+    end
+
+  end
 end

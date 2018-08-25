@@ -8,6 +8,7 @@ class Drive < ApplicationRecord
   belongs_to :driver
   audited associated_with: :driver
 
+  include TrackedViews
 
   # Returns the +Company+ for this drive or nil if the
   # +driver+ is not associated with a company.
