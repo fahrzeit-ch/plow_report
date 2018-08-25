@@ -45,7 +45,7 @@
   </div>
   <div class="col-lg-6 d-print-none">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body p-0 p-md-4">
         <%= month_calendar events: @standby_dates, start_date: calendar_start_date do |date, stand_by| %>
           <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
           <span class="d-sm-none"><%= l date, format: '%d' %></span>

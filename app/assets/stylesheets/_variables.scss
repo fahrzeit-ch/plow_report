@@ -70,6 +70,26 @@ $border-width: 1px;
 
 // Options
 
+$grid-breakpoints: (
+  // Extra small screen / phone
+        xs: 0,
+  // Small screen / phone
+        sm: 576px,
+  // Medium screen / tablet
+        md: 768px,
+  // Large screen / desktop
+        lg: 992px,
+  // Extra large screen / wide desktop
+        xl: 1200px
+);
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px
+);
+
 $enable-rounded: false !default;
 
 // Body
@@ -82,7 +102,7 @@ $body-bg:       #e4e5e6 !default;
 $font-family-sans-serif: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial, sans-serif !default;
 
 $font-size-base: 0.9375rem !default;
-$font-weight-base: 100 !default;
+$font-weight-base: 200 !default;
 
 $headings-font-weight:   200 !default;
 
