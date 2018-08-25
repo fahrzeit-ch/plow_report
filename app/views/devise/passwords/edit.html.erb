@@ -1,7 +1,7 @@
 <%= bootstrap_devise_error_messages! %>
 <div class="card card-default devise-bs">
-  <div class="card-heading">
-    <h4 class="card-title"><%= t('.change_your_password', default: 'Change your password') %></h4>
+  <div class="card-header">
+    <%= t('.change_your_password', default: 'Change your password') %>
   </div>
   <div class="card-body">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), builder: BootstrapFormBuilder, html: { method: :put, role: 'form' }) do |f| %>

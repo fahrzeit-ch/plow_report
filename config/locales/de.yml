@@ -263,3 +263,6 @@ de:
       title: "Herzlich Wilkommen %{name}"
   simple_calendar:
     jump_to_today: "Zu Heute springen"
+  sidenav:
+    section:
+      user: "Benutzer"

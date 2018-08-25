@@ -30,7 +30,8 @@
 @import "drives";
 
 $colors: map-merge((
-        'green-light': $green-light
+        'green-light': $green-light,
+        'blue-dark': $blue-dark
 ), $colors);
 
 .bg-image-fullscreen {
@@ -95,9 +96,72 @@ body {
 }
 
 .card-header {
-  padding: 0.25rem 1.25rem;
+  //padding: 0.25rem 1.25rem;
 }
 
 .card-header-tabs {
-  margin-bottom: -0.25rem;
+  //margin-bottom: -0.25rem;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  color: #fff;
+  transition: all 0.3s;
+  margin-left: -250px;
+  visibility: hidden;
+
+  &.show {
+    margin-left: 0;
+    tab-index: 2;
+    visibility: inherit;
+  }
+
+  .nav-section {
+    margin-top: 5px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #5a5e61;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1rem;
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+
+.bg-dark {
+  .nav-item {
+    a {
+      &:hover {
+        color: $white;
+        background: darken($dark, 2)
+      }
+      color: $light;
+    }
+  }
+}
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+  width: 100%;
+  min-height: calc(100vh - 55px);
+  transition: all 0.3s;
 }

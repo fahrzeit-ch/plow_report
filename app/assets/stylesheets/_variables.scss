@@ -41,7 +41,7 @@ $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
-$dark:          $blue-dark !default;
+$dark:          #353c40 !default;
 
 $primary-font	: 'Lato', sans-serif;
 
@@ -82,8 +82,10 @@ $body-bg:       #e4e5e6 !default;
 $font-family-sans-serif: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial, sans-serif !default;
 
 $font-size-base: 0.9375rem !default;
+$font-weight-base: 100 !default;
 
-$headings-font-weight:   300 !default;
+$headings-font-weight:   200 !default;
+
 
 // Navbar
 
@@ -104,7 +106,7 @@ $nav-tabs-link-active-color:        $gray-700 !default;
 $nav-tabs-link-active-bg:           $white !default;
 
 // Cards
-
+$card-header-bg:  #f0f3f5 !default;
 $card-spacer-y:                     .75rem !default;
 $card-spacer-x:                     1.25rem !default;
 $card-border-width:                 $border-width !default;

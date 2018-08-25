@@ -1,0 +1,35 @@
+<ul class="nav flex-column mr-auto">
+  <li class="nav-item <%= current_page?(controller: '/dashboard') ? 'active' : false %>">
+    <%= link_to root_path, class: 'nav-link' do %>
+      <i class="fa fa-dashboard"></i>
+      <%= t 'navbar.main.dashboard' %>
+    <% end %>
+  </li>
+  <li class="nav-item <%= current_page?(controller: '/standby_dates') ? 'active' : false %>">
+    <%= link_to standby_dates_path, class: 'nav-link' do %>
+      <i class="fa fa-calendar"></i>
+      <%= t 'navbar.main.standby_dates' %>
+    <% end %>
+  </li>
+  <li class="nav-item <%= current_page?(controller: '/drives') ? 'active' : false %>">
+    <%= link_to drives_path, class: 'nav-link' do %>
+      <i class="fa fa-truck"></i>
+      <%= t 'navbar.main.drives' %>
+    <% end %>
+  </li>
+</ul>
+<ul class="nav flex-column">
+  <li class="nav-item dropdown">
+    <%= render 'companies/selector' %>
+  </li>
+  <%= render 'shared/season_selector' %>
+  <li class="nav-section"><%= t 'sidenav.section.user' %></li>
+  <li class="nav-item">
+    <%= link_to edit_user_registration_path, class: 'nav-link' do %>
+      <i class="fa fa-cog"></i> <%= t('navbar.main.edit_registration') %>
+    <% end %>
+    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+      <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
+    <% end %>
+  </li>
+</ul>
