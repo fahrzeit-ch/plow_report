@@ -1,62 +1,71 @@
 <div class="row mt-3">
   <div class="col-lg-6">
-    <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
-    <h1>Wochen</h1>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>KW</th>
-        <th>Start</th>
-        <th>Anzahl Tage</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @standby_weeks.each do |standby_date| %>
-        <tr>
-          <td><%= standby_date.week_nr %></td>
-          <td><%= l standby_date.start_date, format: '%a %d.%m.%Y' %></td>
-          <td><%= standby_date.day_count %></td>
-        </tr>
-      <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
-          <th><%= @standby_weeks.inject(0) { |sum, w| sum + w.day_count} %></th>
-        </tr>
-      </tfoot>
-    </table>
-    <% if @standby_weeks.empty? %>
-      <div>
-        <%= t 'views.common.info.no_data_available' %>
-      </div>
-    <% end %>
-    <div class="card bg-light d-print-none">
+    <div class="card">
       <div class="card-body">
-        <%= render 'standby_date_ranges/form', record: @range || StandbyDate::DateRange.new %>
+        <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %>
+        </a>
+        <h1>Wochen</h1>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>KW</th>
+            <th>Start</th>
+            <th>Anzahl Tage</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @standby_weeks.each do |standby_date| %>
+            <tr>
+              <td><%= standby_date.week_nr %></td>
+              <td><%= l standby_date.start_date, format: '%a %d.%m.%Y' %></td>
+              <td><%= standby_date.day_count %></td>
+            </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="2"><%= t 'standby_dates.summary_row' %></th>
+            <th><%= @standby_weeks.inject(0) {|sum, w| sum + w.day_count} %></th>
+          </tr>
+          </tfoot>
+        </table>
+        <% if @standby_weeks.empty? %>
+          <div>
+            <%= t 'views.common.info.no_data_available' %>
+          </div>
+        <% end %>
+        <div class="card bg-light d-print-none">
+          <div class="card-body">
+            <%= render 'standby_date_ranges/form', record: @range || StandbyDate::DateRange.new %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="col-lg-6 d-print-none">
-    <h1><%= t'.calendar' %></h1>
-    <%= month_calendar events: @standby_dates, start_date: calendar_start_date do |date, stand_by| %>
-      <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
-      <span class="d-sm-none"><%= l date, format: '%d' %></span>
+    <div class="card">
+      <div class="card-body">
+        <%= month_calendar events: @standby_dates, start_date: calendar_start_date do |date, stand_by| %>
+          <span class="d-none d-sm-inline"><%= l date, format: :short %></span>
+          <span class="d-sm-none"><%= l date, format: '%d' %></span>
 
-      <% stand_by.each do |s| %>
-        <div class="bg-primary">
-          <%= link_to 'x', standby_date_path(s), method: :delete, class: 'text-dark mr-3 float-right' %> <%= t 'standby_dates.index.standby_label' %>
-        </div>
-      <% end %>
-      <% if stand_by.empty? %>
-        <%= form_with(model: StandbyDate.new(day: date), local: true) do |form| %>
-          <%= form.hidden_field :day, id: :standby_date_day %>
-          <%= form.button class: 'btn', type: :submit do %>
-            <i class="fa fa-plus"></i>
+          <% stand_by.each do |s| %>
+            <div class="bg-primary">
+              <%= link_to 'x', standby_date_path(s), method: :delete, class: 'text-dark mr-3 float-right' %>
+              <i class="fa fa-truck"></i><span class="sr-only"><%= t 'standby_dates.index.standby_label' %></span>
+            </div>
+          <% end %>
+          <% if stand_by.empty? %>
+            <%= form_with(model: StandbyDate.new(day: date), local: true) do |form| %>
+              <%= form.hidden_field :day, id: :standby_date_day %>
+              <%= form.button class: 'btn', type: :submit do %>
+                <i class="fa fa-plus"></i>
+              <% end %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    <% end %>
+      </div>
+    </div>
   </div>
 </div>
