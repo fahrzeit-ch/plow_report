@@ -73,7 +73,7 @@ class Drive < ApplicationRecord
 
   # Returns true if start or end time is on a saturday or sunday
   def weekend?
-    start.on_weekend? || read_attribute(:end).on_weekend?
+      start.on_weekend? || read_attribute(:end).on_weekend?
   end
 
   # Class Methods

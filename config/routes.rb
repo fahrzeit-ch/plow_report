@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: {
-      registrations: 'user/registrations'
+      registrations: 'user/registrations',
+      invitations: 'user/invitations'
   }
   resources :drives do
     collection do
