@@ -29,6 +29,14 @@ class User < ApplicationRecord
     self.companies.where(company_members: { role: role } )
   end
 
+  def self.available_as_driver(company)
+    # Get users that are assigned as drivers on this company
+    user_ids = DriverLogin.select(:user_id).joins(:driver)
+                   .where(drivers: {company_id: company.id} )
+
+    company.users.where.not(id: user_ids)
+  end
+
 
   # this is useful when a user is invited but has not
   # set a name yet

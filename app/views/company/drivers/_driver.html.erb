@@ -1,15 +1,23 @@
-<li class="list-group-item" id="company-member-<%= driver.id %>">
+<li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= driver.id %>">
   <% if driver.user %>
-    <span class="text-muted">
+    <div class="text-muted p-2">
       <i class="fa fa-user" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_linked' %>"></i>
-    </span>
+    </div>
+    <div class="p-2 flex-grow-1 "><%= driver.name %></div>
   <% else %>
-    <span class="text-muted">
+    <div class="text-muted p-2">
       <i class="fa fa-chain-broken" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_unlinked' %>"></i>
-    </span>
-    <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, data: { confirm: t('confirm.company.delete_driver') }, remote: true, class: 'btn btn-danger float-right' do %>
-      <i class="fa fa-trash"></i>
+    </div>
+    <div class="p-2"><%= driver.name %></div>
+    <div class="ml-auto p-2">
+      <%= link_to edit_company_driver_path(company_id: current_company.id, id: driver), class: 'text-muted' do %>
+        <i class="fa fa-user-plus"></i> <%= t 'views.companies.drivers.edit' %>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, data: { confirm: t('confirm.company.delete_driver') }, remote: true, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash"></i>
     <% end %>
+    </div>
   <% end %>
-  <%= driver.name %>
 </li>

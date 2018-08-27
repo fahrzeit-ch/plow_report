@@ -175,6 +175,7 @@ de:
       created: "Fahrer wurde erfolgreich hinzugefügt"
       driver_not_created: "Fahrer konnte nicht hinzugefügt werden"
       user_already_has_driver: "Sie sind bereits als Fahrer registriert."
+      updated: "Fahrer wurde erfolgreich aktuallisiert"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -220,6 +221,7 @@ de:
         add_new: "Neuen Fahrer hinzufügen"
         status_linked: "Dieser Fahrer ist mit einem Benutzer Login verknüpft."
         status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
+        edit: "Benutzer zuweisen"
       dashboard:
         title: "Übersicht"
     company_drives:

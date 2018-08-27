@@ -36,7 +36,7 @@ Rails.application.routes.draw do
           post :resend_invitation
         end
       end
-      resources :drivers, only: [:index, :create, :destroy]
+      resources :drivers, only: [:index, :create, :destroy, :edit, :update]
     end
   end
 
