@@ -29,6 +29,18 @@ class User < ApplicationRecord
     self.companies.where(company_members: { role: role } )
   end
 
+  def company_admin_or_owner?(company)
+    return false if company.nil?
+    return @_company_admin_or_owner if @_company_admin_or_owner
+    @_company_admin_or_owner = companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).exists? company.id
+  end
+
+  def company_member?(company)
+    return false if company.nil?
+    return @_company_member if @_company_member
+    @_company_member = companies.exists? company.id
+  end
+
   def self.available_as_driver(company)
     # Get users that are assigned as drivers on this company
     user_ids = DriverLogin.select(:user_id).joins(:driver)

@@ -57,12 +57,10 @@ class ApplicationPolicy
   protected
 
   def company_admin_or_owner?(company)
-    return false if company.nil?
-    user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).exists? company.id
+    user.company_admin_or_owner?(company)
   end
 
   def company_member?(company)
-    return false if company.nil?
-    user.companies.exists? company.id
+    user.company_member?(company)
   end
 end
