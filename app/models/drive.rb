@@ -96,19 +96,24 @@ class Drive < ApplicationRecord
     # * salt_refilled and plowed or salted
     # * salt_not_refilled
     #
+    # salt_amount_tonns will allways return value of last refill, ignoring other options
+    #
     # @param [Driver] driver The driver to get the sugestion for
     # @param [Hash] drive_opts Drive options to match similar drives
     # @return [Float] Suggested distance for the given drive options
     def suggested_values(driver, drive_opts)
       similar_drives = select(:distance_km, :salt_amount_tonns).where( driver: driver).similar(drive_opts)
 
-      # get newest similar drive
-      last_drive = similar_drives.order(end: :desc).first
-      if last_drive
-        last_drive.attributes.with_indifferent_access.slice(:salt_amount_tonns, :distance_km)
-      else
-        { salt_amount_tonns: 0.0, distance_km: 0.0 }
-      end
+      latest_refill = select(:salt_amount_tonns)
+                          .where(driver: driver, salt_refilled: drive_opts.fetch(:salt_refilled, false))
+                          .order(end: :desc).first
+
+      last_match = similar_drives.order(end: :desc).first
+
+      salt_amount = latest_refill ? latest_refill.salt_amount_tonns : 0
+      distance = last_match ? last_match.distance_km : 0
+
+      { salt_amount_tonns: salt_amount, distance_km: distance }
     end
 
     # The similar method returns drives that have similar tasks and
