@@ -1,0 +1,6 @@
+$('#drives').append('<%= j render partial: 'drive_tr', collection: @drives, as: :drive, locals: { tools: true } %>');
+<% if @drives.next_page %>
+$('.pagination').replaceWith('<%= j will_paginate(@drives) %>');
+<% else %>
+$('.pagination').remove();
+<% end %>

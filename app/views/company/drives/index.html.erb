@@ -44,10 +44,9 @@
                 </tr>
                 </thead>
 
-                <tbody>
-                <% @drives.each do |drive| %>
-                  <%= render 'drive_tr', drive: drive, tools: true %>
-                <% end %>
+                <tbody id="drives">
+                  <%= render partial: 'drive_tr', collection: @drives, as: :drive, locals: { tools: true }%>
+
                 </tbody>
               </table>
               <% if @drives.empty? %>
@@ -56,6 +55,7 @@
                 </div>
               <% end %>
             </div>
+            <%= will_paginate @drives %>
           </div>
         </div>
       </div>

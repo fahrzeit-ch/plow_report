@@ -20,3 +20,4 @@
 //= require forms.coffee
 //= require drives
 //= require suggestion_value_loader
+//= require paginate
