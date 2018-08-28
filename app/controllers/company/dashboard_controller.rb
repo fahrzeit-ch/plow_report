@@ -3,7 +3,11 @@ class Company::DashboardController < ApplicationController
   def index
     @statistics = current_company.statistics(current_season)
     @last_drives = current_company.drives.with_viewstate(current_user).order(start: :desc).limit(10)
-    UserAction.track_list(current_user, @last_drives.reject(&:seen?))
+
+    new_drives = @last_drives.reject(&:seen?)
+    if new_drives.any?
+      UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id))
+    end
   end
 
 end

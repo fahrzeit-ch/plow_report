@@ -6,7 +6,11 @@ class Company::DrivesController < ApplicationController
   def index
     authorize current_company, :index_drives?
     @drives = apply_scopes(current_company.drives.with_viewstate(current_user)).paginate(:page => params[:page], :per_page => 30)
-    UserAction.track_list(current_user, @drives.reject(&:seen?))
+
+    new_drives = @drives.reject(&:seen?)
+    if new_drives.any?
+      UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id))
+    end
   end
 
   def destroy

@@ -38,6 +38,8 @@ gem 'pundit', '~> 1.1.0'
 gem 'will_paginate'
 
 gem 'activerecord-import'
+gem 'resque'
+gem 'resque-rollbar'
 
 gem 'trestle'
 gem 'trestle-auth'

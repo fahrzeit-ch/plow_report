@@ -80,6 +80,13 @@ class User < ApplicationRecord
     !owned_companies.empty?
   end
 
+  # Send device mails in background. See:
+  # https://github.com/plataformatec/devise#activejob-integration
+  #
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
   private
 
   def create_driver

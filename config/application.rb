@@ -34,6 +34,9 @@ module PlowReport
     config.time_zone = 'Bern'
     config.active_record.default_timezone = :utc
 
+    # Use resqueue as Job Queue Processor
+    config.active_job.queue_adapter = :resque
+
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         address:              'smtp.sendgrid.net',
