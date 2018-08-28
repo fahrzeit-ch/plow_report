@@ -35,7 +35,7 @@ gem 'rollbar'
 gem 'audited', '~> 4.7'
 gem 'pundit', '~> 1.1.0'
 
-gem 'will_paginate'
+gem 'kaminari'
 
 gem 'activerecord-import'
 gem 'resque'

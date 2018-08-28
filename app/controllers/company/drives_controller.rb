@@ -5,7 +5,7 @@ class Company::DrivesController < ApplicationController
 
   def index
     authorize current_company, :index_drives?
-    @drives = apply_scopes(current_company.drives.with_viewstate(current_user)).paginate(:page => params[:page], :per_page => 30)
+    @drives = apply_scopes(current_company.drives.with_viewstate(current_user)).page(params[:page]).per(30)
 
     new_drives = @drives.reject(&:seen?)
     if new_drives.any?
