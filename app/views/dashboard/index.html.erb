@@ -1,3 +1,6 @@
+<% content_for :js_includes do %>
+  <%= javascript_include_tag 'tour' %>
+<% end %>
 <div class="row bg-image-plow justify-content-center">
   <% if current_driver.recording? %>
     <%= render 'drive_recording' %>
