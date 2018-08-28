@@ -198,7 +198,7 @@ de:
       edit:
         title: "Firmen Einstellungen"
         destroy_company: "Firma Löschen"
-        destroy_company_description: "Sie mächten unseren Service nicht mehr weiter verwenden und alle Daten löschen? Bitte beachten Sie dass die Logins bestehen bleiben."
+        destroy_company_description: "Sie möchten unseren Service nicht mehr weiter verwenden und alle Daten löschen? Bitte beachten Sie dass die Logins bestehen bleiben."
         not_permitted_to_destroy: "Nur Eigentümer sind berechtigt den Account zu löschen."
       users:
         title: "Benutzer & Zugriff"
