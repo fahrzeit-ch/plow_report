@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-body">
+    <%= link_to t('dashboard.cards.standby_dates.show_all'), standby_dates_path, class: 'float-right' %>
+    <h5 class="card-title"><%= t'dashboard.cards.standby_dates.next_stanby_date' %></h5>
+    <% if @next_standby_date %>
+      <p class="large" style="font-size: 3em;"><i class="fa fa-calendar"></i> <%= distance_of_date_in_words_to_now @next_standby_date.day %> </p>
+    <% else %>
+      <%= t 'dashboard.cards.standby_dates.no_nex' %>
+    <% end %>
+  </div>
+</div>

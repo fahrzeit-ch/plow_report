@@ -109,6 +109,8 @@ de:
       standby_dates:
         title: "Pikett Dienst"
         show_all: "Alle Anzeigen"
+        next_stanby_date: "Nächster Pikett Dienst"
+        no_nex: "Keine bevorstehender Pikett Diens"
       new_drive:
         title: "Fahrt Erfassen"
         recording_since: "Unterwegs seit..."
@@ -269,3 +271,6 @@ de:
   sidenav:
     section:
       user: "Benutzer"
+  tomorrow: 'Morgen'
+  today: 'Heute'
+  in_x_days: 'In %{distance} Tagen'

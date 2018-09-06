@@ -19,4 +19,19 @@ module ApplicationHelper
       message.blank? ? '' : "toastr.#{toastr_method}('#{message}');".html_safe
     end.join("\n").html_safe
   end
+
+  def distance_of_date_in_words_to_now(date)
+    key = ''
+    distance = nil
+    if date == Date.current
+      key = 'today'
+    elsif Date.tomorrow == date
+      key = 'tomorrow'
+    else
+      key = 'in_x_days'
+      distance = (date - Date.current).to_i
+    end
+    I18n.t(key, distance: distance)
+  end
+
 end
