@@ -7,6 +7,7 @@
   <td><%= drive.start.strftime('%H:%M') %></td>
   <td><%= drive.end.strftime('%H:%M') %></td>
   <td><%= drive.duration_as_string %></td>
+  <td><%= drive.distance_km %></td>
   <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
   <% if local_assigns[:tools] && policy(drive).edit? %>
     <td class="d-print-none">
