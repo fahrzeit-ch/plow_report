@@ -2,7 +2,7 @@ module CalendarHelper
   def calendar_url_for_today()
     p = params.merge!({start_date: Date.current})
     p.permit!
-    url_for()
+    url_for(p)
   end
 
   # Adds a link to the current url with param start_date: today so
