@@ -5,7 +5,7 @@
       <div class="form-row">
         <div class="form-group col-md-2">
           <%= form.label :start %>
-          <%= form.text_field :start, value: form.object.end.strftime('%H:%M'), type: 'time', step: '60', required: true, id: :drive_start, class: 'form-control', autofocus: true %>
+          <%= form.text_field :start, value: form.object.end.strftime('%H:%M'), type: 'time', step: '60', required: true, id: :drive_start, class: 'form-control' %>
         </div>
 
         <div class="form-group col-md-2">
