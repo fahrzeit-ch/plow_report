@@ -1,9 +1,9 @@
 module StandbyDatesHelper
 
-  COLOR_MAP = %w(#fff #868e96 #373a3c #000 #2780E3 #6610f2 #613d7c #e83e8c #FF0039 #f0ad4e #FF7518 #3FB618 #bcffc5 #20c997 #9954BB #8A4117 #C36241)
+  COLOR_MAP = %w(#fff #054950 #789A9F #EDF4F5 #FFFFFF #F78F1E #FFEC94 #FFAEAE #FFF0AA #B0E57C #B4D8E7 #56BAEC)
 
   def driver_color(driver)
-    COLOR_MAP[driver.id % 17]
+    COLOR_MAP[driver.id % 12]
   end
 
 end
