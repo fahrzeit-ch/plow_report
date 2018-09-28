@@ -86,6 +86,9 @@ de:
       company:
         name: "Firmen Name"
         contact_email: "Kontakt Email"
+        address: "Adresse"
+        zip_code: "PLZ"
+        city: "Ort"
       drive:
         driver: "Fahrer"
         date: "Datum"
@@ -110,7 +113,7 @@ de:
         title: "Pikett Dienst"
         show_all: "Alle Anzeigen"
         next_stanby_date: "Nächster Pikett Dienst"
-        no_nex: "Keine bevorstehender Pikett Diens"
+        no_nex: "Keine bevorstehender Pikett Dienst"
       new_drive:
         title: "Fahrt Erfassen"
         recording_since: "Unterwegs seit..."
