@@ -140,7 +140,21 @@ class Drive < ApplicationRecord
     end
   end
 
+  def self.define_drive_type_accessors
+    %i[plowed salted salt_refilled].each do |type|
+      define_method "#{type}=" do |value|
+        val = ActiveRecord::Type::Boolean.new.cast(value)
+        activities[type.to_s] = val
+      end
+      define_method type do
+        activities[type]
+      end
+    end
+  end
+
+
   private
+
   def check_salt_amount
     self.salt_amount_tonns = 0 unless salt_refilled
   end

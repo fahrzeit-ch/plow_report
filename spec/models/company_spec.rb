@@ -113,15 +113,9 @@ RSpec.describe Company, type: :model do
   end
 
   describe 'options' do
-    subject { described_class.new valid_attributes }
+    subject { described_class.new(valid_attributes).options }
 
-    it 'should be possible to persist an options hash to the company' do
-      subject.options = { test_value: 'some string' }
-      subject.save!
-      subject.reload
-      expect(subject.options).to eq 'test_value' => 'some string'
-    end
-
+    it { is_expected.to be_a(Company::Settings) }
   end
 
   describe 'with_member' do

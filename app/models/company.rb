@@ -16,6 +16,8 @@ class Company < ApplicationRecord
 
   before_validation :default_values
 
+  attribute :options, Company::Settings::Type.new
+
   def add_member(user, role)
     company_members.create(user: user, role: role )
   end
@@ -57,6 +59,7 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+
   def default_values
     self.options ||= {}
   end

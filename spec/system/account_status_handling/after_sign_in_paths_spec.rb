@@ -21,7 +21,7 @@ feature 'after sign in paths' do
     it 'should be possible to create company from here' do
       sign_in_with(user.email, user.password)
       click_link(I18n.t('views.setup.create_company'))
-      fill_form 'company_registration', attributes_for(:company)
+      fill_form 'company_registration', attributes_for(:company).except(:options)
       check('company_registration[add_owner_as_driver]')
       click_button(I18n.t('common.create'))
       expect(page).to have_current_path company_dashboard_path(Company.last)
