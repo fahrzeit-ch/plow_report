@@ -1,6 +1,6 @@
 <% unless current_user.companies.empty? %>
 <li class="nav-item">
-  <%= link_to company_drives_path(company_id: current_company.id), class: 'nav-link' do %>
+  <%= link_to company_dashboard_path(company_id: current_company.id), class: 'nav-link' do %>
     <i class="fa fa-building"></i> <%= t 'navbar.main.company_show' %>
   <% end %>
 </li>
