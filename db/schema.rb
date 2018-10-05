@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180825212409) do
+ActiveRecord::Schema.define(version: 20181005181834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(version: 20180825212409) do
     t.index ["user_id"], name: "index_company_members_on_user_id"
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_customers_on_company_id"
+    t.index ["name", "company_id"], name: "index_customers_on_name_and_company_id", unique: true
+  end
+
   create_table "driver_logins", force: :cascade do |t|
     t.bigint "driver_id"
     t.bigint "user_id"
@@ -98,6 +107,8 @@ ActiveRecord::Schema.define(version: 20180825212409) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "driver_id", null: false
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_drives_on_customer_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
   end
 
@@ -134,6 +145,16 @@ ActiveRecord::Schema.define(version: 20180825212409) do
     t.datetime "invalidated_at"
     t.index ["policy_term_id"], name: "index_term_acceptances_on_policy_term_id"
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
+  end
+
+  create_table "tour_steps", force: :cascade do |t|
+    t.string "trigger"
+    t.string "selector"
+    t.text "description"
+    t.json "options"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_actions", force: :cascade do |t|
@@ -180,6 +201,7 @@ ActiveRecord::Schema.define(version: 20180825212409) do
   add_foreign_key "driver_logins", "drivers"
   add_foreign_key "driver_logins", "users"
   add_foreign_key "drivers", "companies"
+  add_foreign_key "drives", "customers"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"

@@ -5,7 +5,12 @@ class Drive < ApplicationRecord
 
   validates :salt_amount_tonns, numericality: { greater_than: 0 }, if: :salt_refilled
   validate :start_end_dates
+
+  # A drive is allways done by a driver
   belongs_to :driver
+
+  # A Drive may be recorded on a customer but its not necessary
+  belongs_to :customer, optional: true
   audited associated_with: :driver
 
   include TrackedViews

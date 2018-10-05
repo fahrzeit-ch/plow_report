@@ -24,6 +24,10 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe 'customer' do
+    it { is_expected.to belong_to(:customer) }
+  end
+
   describe 'season scope' do
     let(:this_season) { Drive.create!(start: DateTime.parse('2018-01-20 12:30'), end: DateTime.parse('2018-01-20 13:50'), driver: driver1 ) }
     let(:last_season) { Drive.create!(start: DateTime.parse('2017-01-20 12:30'), end: DateTime.parse('2017-01-20 13:50'), driver: driver1 ) }
