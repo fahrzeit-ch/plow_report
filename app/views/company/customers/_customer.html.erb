@@ -6,8 +6,10 @@
     <% end %>
   </div>
   <div>
-    <%= link_to company_customer_path(company_id: current_company.id, id: customer), method: :delete, data: { confirm: t('confirm.company.delete_customer') }, remote: true, class: 'text-muted' do %>
-      <i class="fa fa-trash"></i>
-  <% end %>
+    <% unless customer.drives.any? %>
+      <%= link_to company_customer_path(company_id: current_company.id, id: customer), method: :delete, data: { confirm: t('confirm.company.delete_customer') }, remote: true, class: 'text-muted' do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    <% end %>
   </div>
 </li>
