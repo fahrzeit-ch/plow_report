@@ -24,6 +24,10 @@ class CompanyPolicy < ApplicationPolicy
     company_member? record
   end
 
+  def index_customers?
+    company_member? record
+  end
+
   def create?
     true
   end
