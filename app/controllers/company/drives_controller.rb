@@ -43,7 +43,7 @@ class Company::DrivesController < ApplicationController
   end
 
   def drive_params
-    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :salt_amount_tonns, :salted, :plowed)
+    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :customer_id, :salt_amount_tonns, :salted, :plowed)
   end
 
   def set_drive
