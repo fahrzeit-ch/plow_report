@@ -31,6 +31,12 @@
         <%= form.label :salt_amount_tonns %>
         <%= form.text_field :salt_amount_tonns, type: 'number', required: true, min: '0', step: '0.01', id: :drive_distance_km %>
       </div>
+      <% if drive_attr_enabled?(:customer) %>
+        <div class="form-group">
+          <%= form.label :customer %>
+          <%= form.select :customer_id, drive_customer_select_options, { include_blank: true }, class: 'custom-control custom-select' %>
+        </div>
+      <% end %>
       <%= form.button type: :submit, class: 'btn btn-primary' do %>
         <%= t('common.ok') %>
       <% end %>

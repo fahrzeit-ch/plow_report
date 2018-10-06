@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def current_company
     return nil unless user_signed_in?
     # Currently only 1 company is supported
-    @current_company ||= current_user.companies.last
+    @current_company ||= default_company_from_driver_or_user
   end
 
   # @param [Company | NilClass] company
@@ -60,6 +60,14 @@ class ApplicationController < ActionController::Base
 
   def set_company_from_param
     self.current_company = Company.find(params[:company_id])
+  end
+
+  def default_company_from_driver_or_user
+    if current_driver && current_driver.company
+      current_driver.company
+    else
+      current_user.companies.last
+    end
   end
 
   private

@@ -1,3 +1,11 @@
+<% if drive_attr_enabled?(:customer) %>
+<div class="form-group col-md-2 col-lg-1">
+  <div class="form-group">
+    <%= form.label :customer %>
+    <%= form.select :customer_id, drive_customer_select_options, { include_blank: true }, class: 'custom-control custom-select' %>
+  </div>
+</div>
+<% end %>
 <div class="form-group col-md-2 col-lg-1">
   <label>Art</label>
   <div class="form-group">

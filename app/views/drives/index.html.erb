@@ -24,6 +24,7 @@
             <th><%= Drive.human_attribute_name(:duration) %></th>
             <th><%= Drive.human_attribute_name(:distance_km) %></th>
             <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
+            <% if drive_attr_enabled?(:customer) %><th><%= Drive.human_attribute_name(:customer) %></th> <% end %>
             <th class="d-print-none"></th>
           </tr>
           </thead>
@@ -40,6 +41,7 @@
               <td><%= drive.duration_as_string %></td>
               <td><%= number_to_human drive.distance_km %></td>
               <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
+              <% if drive_attr_enabled?(:customer) %><td><%= drive.customer ? drive.customer.name : '' %></td><% end %>
               <td class="d-print-none">
                 <%= link_to edit_drife_path(drive), class: 'btn btn-light' do %>
                   <i class="fa fa-edit"></i>

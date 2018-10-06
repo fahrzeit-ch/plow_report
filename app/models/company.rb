@@ -17,13 +17,16 @@ class Company < ApplicationRecord
 
   before_validation :default_values
 
+  #
   def add_member(user, role)
     company_members.create(user: user, role: role )
   end
 
   # Add a user as driver to the company. if transfer_private is set, the
   # default driver will be assigned to the company (if exists). Otherwise
-  # a new driver for the user will be created and assigned to the company
+  # a new driver for the user will be created and assigned to the company.
+  #
+  # This does NOT set the user as member of the company!
   #
   # @param [User] user
   # @param [Boolean] transfer_private

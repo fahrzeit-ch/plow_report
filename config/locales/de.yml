@@ -70,6 +70,9 @@ de:
       driver:
         one: "Fahrer"
         other: "Fahrer"
+      customer:
+        one: "Kunde"
+        other: "Kunden"
     attributes:
       standby_date:
         week_nr: "KW"
@@ -99,6 +102,7 @@ de:
         distance_km: "km"
         plowed: "Räumen"
         salted: "Salzen"
+        customer: "Kunde"
         salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
