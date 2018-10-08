@@ -27,35 +27,10 @@
           </div>
 
           <div class="col-10">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                <tr>
-                  <th><%= Drive.human_attribute_name(:driver) %></th>
-                  <th><%= Drive.human_attribute_name(:week_nr) %></th>
-                  <th><%= Drive.human_attribute_name(:day_of_week) %></th>
-                  <th><%= Drive.human_attribute_name(:date) %></th>
-                  <th><%= Drive.human_attribute_name(:type) %></th>
-                  <th><%= Drive.human_attribute_name(:start) %></th>
-                  <th><%= Drive.human_attribute_name(:end) %></th>
-                  <th><%= Drive.human_attribute_name(:duration) %></th>
-                  <th><%= Drive.human_attribute_name(:distance_km) %></th>
-                  <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
-                  <th class="d-print-none"></th>
-                </tr>
-                </thead>
-
-                <tbody id="drives">
-                  <%= render partial: 'drive_tr', collection: @drives, as: :drive, locals: { tools: true }%>
-
-                </tbody>
-              </table>
-              <% if @drives.empty? %>
-                <div>
-                  <%= t 'views.common.info.no_data_available' %>
-                </div>
-              <% end %>
+            <div id="drives">
+              <%= render partial: '/drives/drive_list', locals: { drives: @drives } %>
             </div>
+
             <%= paginate @drives %>
           </div>
         </div>

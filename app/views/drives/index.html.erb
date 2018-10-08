@@ -11,56 +11,15 @@
 <div class="card mt-3">
   <div class="card-body">
     <div class="row">
-      <div class="col-12 table-responsive">
-        <table class="table">
-          <thead>
-          <tr>
-            <th><%= Drive.human_attribute_name(:week_nr) %></th>
-            <th><%= Drive.human_attribute_name(:day_of_week) %></th>
-            <th><%= Drive.human_attribute_name(:date) %></th>
-            <th><%= Drive.human_attribute_name(:type) %></th>
-            <th><%= Drive.human_attribute_name(:start) %></th>
-            <th><%= Drive.human_attribute_name(:end) %></th>
-            <th><%= Drive.human_attribute_name(:duration) %></th>
-            <th><%= Drive.human_attribute_name(:distance_km) %></th>
-            <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
-            <% if drive_attr_enabled?(:customer) %><th><%= Drive.human_attribute_name(:customer) %></th> <% end %>
-            <th class="d-print-none"></th>
-          </tr>
-          </thead>
-
-          <tbody>
-          <% @drives.each do |drive| %>
-            <tr>
-              <td><%= drive.week_nr %></td>
-              <td class="drive-rate-type-<%= drive.surcharge_rate_type %>-bg"><%= drive.day_of_week %></td>
-              <td><%= l drive.start.to_date %></td>
-              <td><%= drive.tasks.join(', ') %></td>
-              <td><%= drive.start.strftime('%H:%M') %></td>
-              <td><%= drive.end.strftime('%H:%M') %></td>
-              <td><%= drive.duration_as_string %></td>
-              <td><%= number_to_human drive.distance_km %></td>
-              <td><%= number_to_human drive.salt_amount_tonns if drive.salt_refilled %></td>
-              <% if drive_attr_enabled?(:customer) %><td><%= drive.customer ? drive.customer.name : '' %></td><% end %>
-              <td class="d-print-none">
-                <%= link_to edit_drife_path(drive), class: 'btn btn-light' do %>
-                  <i class="fa fa-edit"></i>
-                <% end %>
-                <%= link_to drive, method: :delete, data: {confirm: t('confirmation.delete')}, class: 'btn btn-danger' do %>
-                  <i class="fa fa-trash"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+      <div class="col-12">
+        <%= render partial: '/drives/drive_list', locals: {drives: @drives} %>
         <% if @drives.empty? %>
           <div>
             <%= t 'views.common.info.no_data_available' %>
           </div>
         <% end %>
       </div>
-
     </div>
+
   </div>
 </div>

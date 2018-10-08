@@ -28,7 +28,11 @@ class Drive < ApplicationRecord
   end
 
   def day_of_week
-    I18n.l self.start, format: '%A'
+    I18n.l self.start, format: '%a'
+  end
+
+  def customer_name
+    customer ? customer.name : ''
   end
 
   # Get the tasks (drive options) as an Array with translated option names
@@ -61,7 +65,12 @@ class Drive < ApplicationRecord
     seconds = duration.to_i
     minutes = (seconds / 60).round #ignore seconds
     hours = (minutes / 60) # do not round here as we will display minutes
-    "#{justify(hours)}h #{justify((minutes % 60))}min"
+
+    parts = []
+    parts << "#{hours}h" if hours > 0
+    parts << "#{(minutes % 60)}min"
+
+    parts.join(' ')
   end
 
   # TODO: This does not belong here. Extract duration formatting
