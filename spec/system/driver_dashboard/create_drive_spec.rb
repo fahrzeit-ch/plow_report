@@ -48,9 +48,9 @@ feature 'creating a drive on dashboard' do
       expect(page).to have_content I18n.t('activerecord.attributes.drive.salted')
       expect(page).to have_content I18n.t('activerecord.attributes.drive.salt_refilled')
 
-      expect(page).to have_content '3,41' # salt amount tonns
-      expect(page).to have_content '15,1' # distance in km
-      expect(page).to have_content '00h 30min'
+      expect(page).to have_content '(3.41t)' # salt amount tonns
+      expect(page).to have_content '15.1' # distance in km
+      expect(page).to have_content '30min'
       expect(page).to have_content customer.name
     end
   end

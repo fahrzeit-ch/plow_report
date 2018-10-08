@@ -4,6 +4,11 @@
 
 .simple-calendar .day {
   height: 120px;
+
+  .btn {
+    color: $gray-800;
+    background-color: white;
+  }
 }
 
 .simple-calendar .prev-month {
@@ -33,4 +38,14 @@
 .calendar-heading {
   border: 1px solid #ddd;
   border-bottom: none;
+}
+
+@include media-breakpoint-down(sm) {
+  .simple-calendar .day {
+    height: 80px;
+
+    .btn {
+      padding: 5px;
+    }
+  }
 }

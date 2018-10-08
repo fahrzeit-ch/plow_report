@@ -14,16 +14,20 @@
     <div><strong><%= drive.distance_km %>km</strong></div>
     <div class="text-muted">
       <small><%= drive.tasks.join(', ') %></small>
+      <small>
+        <% if drive.salt_refilled? %>(<%= drive.salt_amount_tonns %>t)
+        <% end %></small>
     </div>
+    <div class="d-block d-md-none"><%= drive.customer_name %></div>
   </div>
 
-  <div class="mr-2 p-2"><%= drive.customer_name %></div>
+  <div class="mr-2 p-2 d-none d-md-block"><%= drive.customer_name %></div>
 
   <div class="align-self-center ml-auto mr-2 d-print-none">
-    <%= link_to edit_drife_path(drive), class: 'btn btn-light' do %>
+    <%= link_to edit_drife_path(drive), class: 'pull-right btn btn-light' do %>
       <i class="fa fa-edit"></i>
     <% end %>
-    <%= link_to drive, method: :delete, data: {confirm: t('confirmation.delete')}, class: 'btn btn-danger' do %>
+    <%= link_to drive, method: :delete, data: {confirm: t('confirmation.delete')}, class: 'pull-right btn btn-danger' do %>
       <i class="fa fa-trash"></i>
     <% end %>
   </div>
