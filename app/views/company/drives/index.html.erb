@@ -10,7 +10,7 @@
   <div class="col-10">
     <form class="form form-inline">
       <div class="form-group mr-2">
-        <label class="label mr-2">Fahrer</label>
+        <label class="label mr-2"><%= Driver.model_name.human %></label>
         <%= select_tag(:driver_id,
                        options_from_collection_for_select(current_company.drivers, 'id', 'name', params[:driver_id]),
                        data: {s2: true, submit_on_change: true},
@@ -18,7 +18,7 @@
       </div>
       <% if(drive_attr_enabled?(:customer)) %>
         <div class="form-group">
-          <label class="mr-2">Kunde</label>
+          <label class="mr-2"><%= Customer.model_name.human %></label>
           <%= select_tag(:customer_id,
                          options_from_collection_for_select(current_company.customers, 'id', 'name', params[:customer_id]),
                          data: {s2: true, submit_on_change: true},
