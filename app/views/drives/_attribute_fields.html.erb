@@ -2,7 +2,7 @@
 <div class="form-group col-md-2 col-lg-1">
   <div class="form-group">
     <%= form.label :customer %>
-    <%= form.select :customer_id, drive_customer_select_options, { include_blank: true }, class: 'custom-control custom-select' %>
+    <%= form.select :customer_id, drive_customer_select_options, { include_blank: true }, data: {s2: true}, class: 'custom-control custom-select' %>
   </div>
 </div>
 <% end %>

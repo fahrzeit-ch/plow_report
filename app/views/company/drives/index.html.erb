@@ -7,7 +7,27 @@
   </div>
 </div>
 <div class="row toolbar border-top bg-light p-2 d-print-none">
-  <div class="col-12">
+  <div class="col-10">
+    <form class="form form-inline">
+      <div class="form-group mr-2">
+        <label class="label mr-2">Fahrer</label>
+        <%= select_tag(:driver_id,
+                       options_from_collection_for_select(current_company.drivers, 'id', 'name', params[:driver_id]),
+                       data: {s2: true, submit_on_change: true},
+                       include_blank: t('common.all')) %>
+      </div>
+      <% if(drive_attr_enabled?(:customer)) %>
+        <div class="form-group">
+          <label class="mr-2">Kunde</label>
+          <%= select_tag(:customer_id,
+                         options_from_collection_for_select(current_company.customers, 'id', 'name', params[:customer_id]),
+                         data: {s2: true, submit_on_change: true},
+                         include_blank: t('common.all')) %>
+        </div>
+      <% end %>
+    </form>
+  </div>
+  <div class="col-sm-2">
     <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
@@ -17,16 +37,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <div class="col-2 d-print-none">
-            <nav class="nav list-group">
-              <%= link_to t('common.all'), company_drives_path(current_company), class: "list-group-item list-group-item-action #{params[:driver_id].blank? ? 'active' : ''}" %>
-              <% current_company.drivers.each do |dr| %>
-                <%= link_to dr.name, company_drives_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == params[:driver_id].to_i) ? 'active' : ''}" %>
-              <% end %>
-            </nav>
-          </div>
-
-          <div class="col-10">
+          <div class="col-12">
             <div id="drives">
               <%= render partial: '/drives/drive_list', locals: { drives: @drives } %>
             </div>

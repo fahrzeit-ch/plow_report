@@ -39,6 +39,7 @@ class Company::DrivesController < ApplicationController
   def apply_scopes(drives)
       drives = drives.by_season(selected_season).includes(:driver)
     drives = drives.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
+    drives = drives.where(customer_id: params[:customer_id]) unless params[:customer_id].blank?
     drives.order(start: :desc)
   end
 

@@ -28,6 +28,7 @@
 @import "font-awesome";
 @import "standby_dates";
 @import "drives";
+@import "select2/scss/core";
 
 $colors: map-merge((
         'green-light': $green-light,
