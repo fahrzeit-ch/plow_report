@@ -1,5 +1,5 @@
 <div class="d-flex mb-2 border">
-  <% unless drive.seen? %><i class="fa fa-circle new-label text-info" title="<%= t'common.new' %>"></i><% end %>
+  <% unless drive.seen? %><i class="fa fa-circle new-label text-success" title="<%= t'common.new' %>"></i><% end %>
   
   <div class="align-self-center p-2 ml-2 mr-2" style="background-color:<%= driver_color(drive.driver) %>">
     <strong><%= initials(drive.driver.name) %></strong>
