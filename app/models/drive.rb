@@ -93,6 +93,12 @@ class Drive < ApplicationRecord
   # Class Methods
   class << self
 
+    def stats
+      select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
+COALESCE(SUM(drives.salt_amount_tonns), cast('0' as double precision)) as salt,
+COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
+    end
+
     # Scope the drives by the given season
     def by_season(season)
       where('start > ? AND start < ?', season.start_date, season.end_date)

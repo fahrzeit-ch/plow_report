@@ -187,3 +187,9 @@ body {
     margin-left: -5px;
   }
 }
+
+@media print {
+  .card {
+    border: none;
+  }
+}
