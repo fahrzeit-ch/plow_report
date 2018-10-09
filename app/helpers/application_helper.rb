@@ -2,6 +2,10 @@
 module ApplicationHelper
   MESSAGE_TYPE_MAP = { 'notice' => 'success', 'alert' => 'error' }
 
+  def initials(text)
+    text.split(' ').map{ |n| n[0] }.join
+  end
+
   def current_path(params_overwrite, clear_params = false)
     p = clear_params ? ActionController::Parameters.new : params.clone
     p.merge!(params_overwrite)

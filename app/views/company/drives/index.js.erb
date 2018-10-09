@@ -1,6 +1,13 @@
-$('#drives').append('<%= j render partial: 'drive_tr', collection: @drives, as: :drive, locals: { tools: true } %>');
+week_nr = <%= @drives.first.week_nr %>;
+
+$('#drives').append('<%= j render partial: '/drives/drive_list', locals: { drives: @drives } %>');
 <% if @drives.next_page %>
 $('.pagination').replaceWith('<%= j paginate(@drives) %>');
 <% else %>
 $('.pagination').remove();
 <% end %>
+// We need to remove week number title if added twice
+title_elements = $('#drives').find('[data-week="' + week_nr + '"]');
+if(title_elements.length > 1) {
+    title_elements[1].remove()
+}

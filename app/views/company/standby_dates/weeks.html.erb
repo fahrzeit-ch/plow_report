@@ -16,6 +16,15 @@
         <i class="fa fa-list"></i> Liste
       <% end %>
     </div>
+    <form class="form form-inline">
+      <div class="form-group mr-2">
+        <label class="label mr-2"><%= Driver.model_name.human %></label>
+        <%= select_tag(:driver_id,
+                       options_from_collection_for_select(current_company.drivers, 'id', 'name', params[:driver_id]),
+                       data: {s2: true, submit_on_change: true},
+                       include_blank: t('common.all')) %>
+      </div>
+    </form>
   </div>
   <div class=" col-2">
     <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
@@ -27,15 +36,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <div class="col-2 d-print-none">
-            <nav class="nav list-group">
-              <% current_company.drivers.each do |dr| %>
-                <%= link_to dr.name, weeks_company_standby_dates_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == selected_driver.id) ? 'active' : ''}" %>
-              <% end %>
-            </nav>
-          </div>
-
-          <div class="col-10 table-responsive">
+          <div class="col-12 table-responsive">
             <h5><%= selected_driver.name %></h5>
             <table class="table">
               <thead>

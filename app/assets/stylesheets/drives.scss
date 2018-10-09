@@ -5,8 +5,13 @@
   border-left: 5px solid $warning;
 }
 
+.drive-rate-type-1 {
+  color: $warning;
+}
+
 .new-label {
   position: relative;
-  top: -15px;
-  left: -10px;
+  top: -5px;
+  left: -5px;
+  width: 0;
 }

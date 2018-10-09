@@ -70,6 +70,9 @@ de:
       driver:
         one: "Fahrer"
         other: "Fahrer"
+      customer:
+        one: "Kunde"
+        other: "Kunden"
     attributes:
       standby_date:
         week_nr: "KW"
@@ -102,6 +105,7 @@ de:
         distance_km: "km"
         plowed: "Räumen"
         salted: "Salzen"
+        customer: "Kunde"
         salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
@@ -221,6 +225,8 @@ de:
           title: "Meine Firma"
         drivers:
           title: "Fahrer"
+        customers:
+          title: "Kunden"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
@@ -229,6 +235,10 @@ de:
         edit: "Benutzer zuweisen"
       dashboard:
         title: "Übersicht"
+      customers:
+        edit: "Kunde Bearbeiten"
+        create: "Neuen Kunden anlegen"
+        title: "Kunden"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"
@@ -259,6 +269,7 @@ de:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
+      delete_customer: "Kunde Löschen"
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:

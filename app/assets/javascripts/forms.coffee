@@ -8,6 +8,9 @@ formatTime = (dateObject) ->
   return hour + ':' + minutes
 
 $(document).on 'turbolinks:load', ->
+# Select2
+  $('[data-s2]').select2();
+
   forms = document.getElementsByClassName('needs-validation');
 
   # Auto update timefield until focus
@@ -42,3 +45,7 @@ $(document).on 'turbolinks:load', ->
   $("[data-collapse-on-change]").on 'change', ->
     target = $(this).data('collapse-on-change')
     $("#" + target).collapse('toggle')
+
+  $("[data-submit-on-change]").on 'change', ->
+    target = $(this).closest('form')
+    $(target).submit();
