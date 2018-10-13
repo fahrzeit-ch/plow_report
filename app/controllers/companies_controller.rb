@@ -37,11 +37,11 @@ class CompaniesController < ApplicationController
     authorize @resource
 
     respond_to do |format|
-      if @resource.save
+      if @resource.update_attributes(company_attributes)
         flash[:notice] = t('flash.company.updated')
         format.html { redirect_back(fallback_location: company_dashboard_path(@resource)) }
       else
-        format.html { render :new }
+        format.html { render :edit }
       end
     end
   end
@@ -61,7 +61,7 @@ class CompaniesController < ApplicationController
 
   private
   def company_attributes
-    params.require(:company).permit(:name, :contact_email)
+    params.require(:company).permit(:name, :contact_email, :address, :zip_code, :city)
   end
 
   def registration_attributes

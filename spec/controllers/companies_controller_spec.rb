@@ -43,14 +43,33 @@ RSpec.describe CompaniesController, type: :controller do
 
   describe 'PUT #update' do
     let(:company) { create(:company) }
+    let(:new_attributes) { Hash[valid_attributes.map{|k,str| [k,"new_#{str}"] }] }
+
+
     before {
       company.add_member(user, CompanyMember::OWNER)
     }
 
     it 'returns http success' do
-      put :update, params: {id: company.id }.merge(company: valid_attributes)
+      put :update, params: {id: company.id }.merge(company: new_attributes)
       expect(response).to redirect_to company_dashboard_path(company)
     end
+
+    describe 'changed attributes' do
+      subject do
+        lambda do
+          put :update, params: {id: company.id}.merge(company: new_attributes)
+          company.reload
+        end
+      end
+
+      it { is_expected.to change(company, :name) }
+      it { is_expected.to change(company, :address) }
+      it { is_expected.to change(company, :contact_email) }
+      it { is_expected.to change(company, :zip_code) }
+      it { is_expected.to change(company, :city) }
+    end
+
   end
 
   describe 'DELETE #destroy' do
