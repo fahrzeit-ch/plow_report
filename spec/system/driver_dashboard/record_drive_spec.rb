@@ -26,11 +26,13 @@ feature 'record a drive from dashboard' do
     it 'should go to drive list' do
       finish_recording_drive
 
-      # start time should be disabled
-      expect(page).to have_no_field 'drive[start]'
+      # drive form should be displayed
+      expect(page).to have_content I18n.t('dashboard.cards.new_drive.title')
+      expect(page).to have_field 'drive[start]'
+      expect(page).to have_field 'drive[end]'
 
       # should redirect to drives
-      expect(page).to have_current_path('/drives')
+      expect(page).to have_current_path('/')
     end
 
     it 'should validate correctly' do

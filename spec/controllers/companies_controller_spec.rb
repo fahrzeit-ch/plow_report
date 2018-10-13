@@ -49,7 +49,7 @@ RSpec.describe CompaniesController, type: :controller do
 
     it 'returns http success' do
       put :update, params: {id: company.id }.merge(company: valid_attributes)
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to company_dashboard_path(company)
     end
   end
 
