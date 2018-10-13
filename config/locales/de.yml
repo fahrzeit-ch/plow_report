@@ -273,7 +273,8 @@ de:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
-      delete_customer: "Kunde Löschen"
+      delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
+      delete_member_current_user: "Sind Sie sicher, dass Sie aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmen daten mehr und können keine Fahrten für die Firma erfassen."
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:

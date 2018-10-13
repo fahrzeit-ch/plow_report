@@ -15,7 +15,14 @@
       <% end %>
     </div>
     <div>
-      <%= link_to company_driver_path(company_id: current_company.id, id: driver), method: :delete, data: { confirm: t('confirm.company.delete_driver') }, remote: true, class: 'btn btn-danger' do %>
+      <%= link_to company_driver_path(company_id: current_company.id, id: driver),
+                  method: :delete,
+                  data: {
+                      confirm: t('confirm.company.delete_driver'),
+                      disable_with: is_processing(:true)
+                  },
+                  remote: true,
+                  class: 'btn btn-danger' do %>
         <i class="fa fa-trash"></i>
     <% end %>
     </div>

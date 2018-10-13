@@ -1,5 +1,10 @@
 <li class="list-group-item" id="company-member-<%= company_member.id %>">
-  <%= link_to company_company_member_path(company_id: current_company.id, id: company_member), method: :delete, remote: true, class: 'btn btn-danger float-right' do %>
+  <%= link_to company_company_member_path(company_id: current_company.id, id: company_member),
+              method: :delete,
+              remote: true,
+              confirm: delete_member_confirm_message(company_member),
+              data: { disable_with: is_processing(true) },
+              class: 'btn btn-danger float-right' do %>
     <i class="fa fa-trash"></i>
   <% end %>
   <span class="badge badge-primary float-right">
