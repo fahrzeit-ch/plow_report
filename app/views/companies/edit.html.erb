@@ -15,7 +15,8 @@
                     company_path(current_company),
                     method: :delete,
                     class: 'text-danger',
-                    data: { confirm: t('confirm.company.delete_company') }%>
+                    data: { confirm: t('confirm.company.delete_company'),
+                            disable_with: is_processing }%>
       <% else %>
         <p class="text-warning">
           <%= t'views.companies.edit.not_permitted_to_destroy' %>

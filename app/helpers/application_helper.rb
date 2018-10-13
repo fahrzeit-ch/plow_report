@@ -38,4 +38,11 @@ module ApplicationHelper
     I18n.t(key, distance: distance)
   end
 
+  def is_processing(icon_only = false)
+    content = "<i class='fa fa-refresh fa-spin'>
+          </i>".html_safe
+    content << " #{t('common.please_wait')}".html_safe unless icon_only
+    content
+  end
+
 end

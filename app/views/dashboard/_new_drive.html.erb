@@ -14,10 +14,10 @@
         </div>
         <%= render 'drives/attribute_fields', form: form %>
         <div class="col-12">
-          <%= form.button type: :submit, class: 'btn btn-primary' do %>
+          <%= form.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
             <i class="fa fa-check"></i> <%= t('dashboard.cards.new_drive.create') %>
           <% end %>
-          <%= link_to recordings_path, method: :post, class: 'btn btn-secondary' do %>
+          <%= link_to recordings_path, method: :post, class: 'btn btn-secondary', data: { disable_with: is_processing } do %>
             <i class="fa fa-clock-o"></i> <%= t('dashboard.cards.new_drive.start_recording') %>
           <% end %>
         </div>

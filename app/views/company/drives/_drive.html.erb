@@ -30,7 +30,8 @@
       <%= link_to edit_company_drife_path(current_company, drive), class: 'pull-right btn btn-light' do %>
         <i class="fa fa-edit"></i>
       <% end %>
-      <%= link_to company_drife_path(current_company, drive), method: :delete, class: 'pull-right btn btn-danger', data: { confirm: t('confirm.company.delete_drive') } do %>
+      <%= link_to company_drife_path(current_company, drive), method: :delete, class: 'pull-right btn btn-danger',
+                  data: { confirm: t('confirmation.delete'), disable_with: is_processing(true) } do %>
         <i class="fa fa-trash"></i>
       <% end %>
     </div>

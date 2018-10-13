@@ -38,7 +38,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to root_path, notice: t('flash.company.updated') }
+        flash[:notice] = t('flash.company.updated')
+        format.html { redirect_back(fallback_location: company_dashboard_path(@resource)) }
       else
         format.html { render :new }
       end

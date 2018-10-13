@@ -37,7 +37,7 @@
           <%= form.select :customer_id, drive_customer_select_options, { include_blank: true }, data: {s2: true}, class: 'custom-control custom-select' %>
         </div>
       <% end %>
-      <%= form.button type: :submit, class: 'btn btn-primary' do %>
+      <%= form.button type: :submit, class: 'btn btn-primary', data: {disable_with: is_processing} do %>
         <%= t('common.ok') %>
       <% end %>
       <%= link_to t('actions.back'), back_path, class: 'btn btn-default' %>

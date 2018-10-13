@@ -150,6 +150,7 @@ de:
     back: "Zurück"
     print: "Drucken"
     delete: "Löschen"
+    save: "Speichern"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
@@ -163,6 +164,8 @@ de:
       destroyed: "Fahrt erfolgreich entfernt"
       created: "Fahrt erfolgreich erfasst"
       not_destroyed: "Fehler beim löschen der Fahrt."
+      not_recording: "Keine aktive Fahrt zum beenden vorhanden..."
+      already_recording: "Es wird bereits eine Fahrt aufgezeichnet"
     company:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
@@ -196,6 +199,7 @@ de:
     terms_and_policies: "AGB und Datenschutz"
     continue: "Weiter"
     new: "Neu"
+    please_wait: "Bitte warten..."
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"

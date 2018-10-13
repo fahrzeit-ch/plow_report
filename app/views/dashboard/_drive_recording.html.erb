@@ -14,7 +14,7 @@
               </div>
               <div class="col-12">
                 <%= link_to t('dashboard.cards.new_drive.recording_next'), '#finish-drive-form', class: 'btn btn-primary', data: { slide: 'next'} %>
-                <%= link_to t('dashboard.cards.new_drive.cancel_recording'), recordings_path, method: :delete, class: 'btn btn-default' %>
+                <%= link_to t('dashboard.cards.new_drive.cancel_recording'), recordings_path, method: :delete, class: 'btn btn-default', data: { disable_with: is_processing } %>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
               <%= render 'drives/attribute_fields', form: form %>
               <div class="col-12">
                 <%= link_to t('dashboard.cards.new_drive.back'), '#finish-drive-form', class: 'btn btn-primary', data: { slide: 'prev'} %>
-                <%= form.button type: :submit, class: 'btn btn-primary' do %>
+                <%= form.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
                   <%= t'dashboard.cards.new_drive.finish_recording' %>
                 <% end %>
               </div>

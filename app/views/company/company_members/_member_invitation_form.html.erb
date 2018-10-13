@@ -14,6 +14,8 @@
       <%= f.text_field :user_name, focus: true %>
     </div>
     <%= f.hidden_field :role %>
-    <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary' do %><i class="fa fa-check"></i><% end %>
+    <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary', data: { disable_with: is_processing(true) } do %>
+      <i class="fa fa-check"></i>
+    <% end %>
   <% end %>
 </div>
