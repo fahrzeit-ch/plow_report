@@ -173,8 +173,8 @@ body {
 
 @include media-breakpoint-down(xs) {
   .card-body {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .container-fluid {
@@ -185,6 +185,12 @@ body {
   .row {
     margin-right: -5px;
     margin-left: -5px;
+  }
+
+  .col,
+  [class*="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 

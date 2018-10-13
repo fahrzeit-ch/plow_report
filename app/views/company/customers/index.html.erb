@@ -1,17 +1,15 @@
-<div class="container mt-3">
-  <div class="card">
-    <div class="card-header">
-      <%= render 'navigation/company_edit_nav' %>
-    </div>
-
-    <div class="card-body">
-      <h4 class="card-title"><%= t 'views.companies.customers.title' %></h4>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item bg-light" id="company-member-form-container" >
-        <%= render 'form' %>
-      </li>
-      <%= render @customers %>
-    </ul>
+<div class="card mt-3">
+  <div class="card-header">
+    <%= render 'navigation/company_edit_nav' %>
   </div>
+
+  <div class="card-body">
+    <h4 class="card-title"><%= t 'views.companies.customers.title' %></h4>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item bg-light" id="company-member-form-container" >
+      <%= render 'form' %>
+    </li>
+    <%= render @customers %>
+  </ul>
 </div>
