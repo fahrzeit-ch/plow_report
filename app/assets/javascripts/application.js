@@ -10,14 +10,15 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery3
 //= require rails-ujs
 //= require turbolinks
-//= require jquery3
+//= require select2
 //= require popper
 //= require bootstrap-sprockets
 //= require toastr
 //= require toastr_config
-//= require forms.coffee
+//= require forms
 //= require drives
 //= require suggestion_value_loader
 //= require paginate

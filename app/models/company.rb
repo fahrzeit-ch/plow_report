@@ -13,6 +13,7 @@ class Company < ApplicationRecord
   has_many :users, through: :company_members
   has_many :drivers, dependent: :destroy
   has_many :drives, through: :drivers
+  has_many :customers, dependent: :destroy
 
   before_validation :default_values
 
@@ -24,7 +25,9 @@ class Company < ApplicationRecord
 
   # Add a user as driver to the company. if transfer_private is set, the
   # default driver will be assigned to the company (if exists). Otherwise
-  # a new driver for the user will be created and assigned to the company
+  # a new driver for the user will be created and assigned to the company.
+  #
+  # This does NOT set the user as member of the company!
   #
   # @param [User] user
   # @param [Boolean] transfer_private
@@ -53,9 +56,7 @@ class Company < ApplicationRecord
       scope = scope.by_season(season)
     end
 
-    scope.select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
-COALESCE(SUM(drives.salt_amount_tonns), cast('0' as double precision)) as salt,
-COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
+    scope.stats
   end
 
   private

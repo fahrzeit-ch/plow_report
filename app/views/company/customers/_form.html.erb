@@ -1,0 +1,7 @@
+<div id="company-member-form">
+  <h5><%= t 'views.companies.customers.create' %></h5>
+  <%= form_with(model: company_customer, url: [current_company, company_customer], remote: true, builder: BootstrapFormBuilder, class: 'form-inline') do |f| %>
+    <%= f.text_field :name, autofocus: true %>
+    <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary', data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
+  <% end %>
+</div>

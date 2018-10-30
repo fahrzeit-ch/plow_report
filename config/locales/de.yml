@@ -70,6 +70,9 @@ de:
       driver:
         one: "Fahrer"
         other: "Fahrer"
+      customer:
+        one: "Kunde"
+        other: "Kunden"
     attributes:
       standby_date:
         week_nr: "KW"
@@ -102,6 +105,7 @@ de:
         distance_km: "km"
         plowed: "Räumen"
         salted: "Salzen"
+        customer: "Kunde"
         salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
@@ -146,6 +150,7 @@ de:
     back: "Zurück"
     print: "Drucken"
     delete: "Löschen"
+    save: "Speichern"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
@@ -159,6 +164,8 @@ de:
       destroyed: "Fahrt erfolgreich entfernt"
       created: "Fahrt erfolgreich erfasst"
       not_destroyed: "Fehler beim löschen der Fahrt."
+      not_recording: "Keine aktive Fahrt zum beenden vorhanden..."
+      already_recording: "Es wird bereits eine Fahrt aufgezeichnet"
     company:
       created: "Firma erfolgreich Erfasst"
       updated: "Firma erfolgreich aktuallisiert"
@@ -192,6 +199,7 @@ de:
     terms_and_policies: "AGB und Datenschutz"
     continue: "Weiter"
     new: "Neu"
+    please_wait: "Bitte warten..."
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -221,6 +229,8 @@ de:
           title: "Meine Firma"
         drivers:
           title: "Fahrer"
+        customers:
+          title: "Kunden"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
@@ -229,6 +239,10 @@ de:
         edit: "Benutzer zuweisen"
       dashboard:
         title: "Übersicht"
+      customers:
+        edit: "Kunde Bearbeiten"
+        create: "Neuen Kunden anlegen"
+        title: "Kunden"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"
@@ -259,6 +273,8 @@ de:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
+      delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
+      delete_member_current_user: "Sind Sie sicher, dass Sie aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmen daten mehr und können keine Fahrten für die Firma erfassen."
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:

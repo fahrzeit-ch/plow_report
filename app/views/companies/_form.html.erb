@@ -2,7 +2,7 @@
   <fieldset <%= policy(@resource).update? ? '' : 'disabled' %>>
     <%= render 'fields', form: form %>
     <%= link_to t('common.back'), company_drives_path(current_company), class: 'btn btn-default' %>
-    <%= form.button type: :submit, class: 'btn btn-primary' do %>
+    <%= form.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
       <i class="fa fa-check"></i> <%= t 'common.update' %>
     <% end %>
   </fieldset>

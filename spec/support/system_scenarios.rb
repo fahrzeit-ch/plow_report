@@ -24,6 +24,8 @@ class FormFiller
         :check
       when FalseClass
         :check
+      when ApplicationRecord
+        :select
       else
         :fill_in
     end
@@ -34,6 +36,8 @@ class FormFiller
       try_check key
     elsif method == :fill_in_time
       fill_in_time(key)
+    elsif method == :select
+      try_select_option key
     else
       send(method, field_name(key), with: @values[key])
     end
@@ -45,6 +49,12 @@ class FormFiller
 
   def fill_in_time(key)
     fill_in field_name(key), with: @values[key].strftime('%H:%M')
+  end
+
+  def try_select_option(key)
+    within '[name="' + field_name(key.to_s + '_id') + '"]' do
+      find('option[value="' + @values[key].id.to_s + '"]').select_option
+    end
   end
 
   def field_name(key)

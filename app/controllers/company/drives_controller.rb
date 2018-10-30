@@ -5,7 +5,10 @@ class Company::DrivesController < ApplicationController
 
   def index
     authorize current_company, :index_drives?
-    @drives = apply_scopes(current_company.drives.with_viewstate(current_user)).page(params[:page]).per(30)
+    scope = apply_scopes(current_company.drives.includes(:driver).with_viewstate(current_user))
+
+    @stats = apply_scopes(current_company.drives).stats
+    @drives = scope.order(start: :desc).page(params[:page]).per(30)
 
     new_drives = @drives.reject(&:seen?)
     if new_drives.any?
@@ -37,13 +40,14 @@ class Company::DrivesController < ApplicationController
   private
 
   def apply_scopes(drives)
-      drives = drives.by_season(selected_season).includes(:driver)
+    drives = drives.by_season(selected_season)
     drives = drives.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
-    drives.order(start: :desc)
+    drives = drives.where(customer_id: params[:customer_id]) unless params[:customer_id].blank?
+    drives
   end
 
   def drive_params
-    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :salt_amount_tonns, :salted, :plowed)
+    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :customer_id, :salt_amount_tonns, :salted, :plowed)
   end
 
   def set_drive

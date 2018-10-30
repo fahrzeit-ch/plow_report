@@ -1,6 +1,9 @@
 <% if member.user.invited_to_sign_up? %>
 <p class="text-muted">
   <%= t 'views.companies.users.pending_invite' %>
-  (<%= link_to t('views.companies.users.resend_invite'), resend_invitation_company_company_members_path(member.company, id: member.id), method: :post %>)
+  (<%= link_to t('views.companies.users.resend_invite'),
+               resend_invitation_company_company_members_path(member.company, id: member.id),
+               data: { disable_with: is_processing },
+               method: :post %>)
 </p>
 <% end %>

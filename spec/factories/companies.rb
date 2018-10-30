@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :company do
+  factory :company,  aliases: [:client_of]  do
     sequence(:name) { |n| "Winterdienst #{n} GmbH"}
     contact_email 'info@company.com'
     address 'Some Street 1'

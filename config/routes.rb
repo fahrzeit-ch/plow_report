@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         end
       end
       resources :drivers, only: [:index, :create, :destroy, :edit, :update]
+      resources :customers
     end
   end
 

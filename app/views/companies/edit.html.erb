@@ -1,26 +1,25 @@
-<div class="container mt-3">
-  <div class="card">
-    <div class="card-header">
-      <%= render 'navigation/company_edit_nav' %>
-    </div>
+<div class="card mt-3">
+  <div class="card-header">
+    <%= render 'navigation/company_edit_nav' %>
+  </div>
 
-    <div class="card-body">
-      <h4 class="card-title"><%= t 'views.companies.edit.title' %></h4>
-      <%= render 'form' %>
-      <hr class="mb-5 mt-5">
-      <h4><%= t('views.companies.edit.destroy_company') %></h4>
-      <p><%= t('views.companies.edit.destroy_company_description') %></p>
-      <% if policy(@resource).destroy? %>
-        <%= link_to t('views.companies.edit.destroy_company'),
-                    company_path(current_company),
-                    method: :delete,
-                    class: 'text-danger',
-                    data: { confirm: t('confirm.company.delete_company') }%>
-      <% else %>
-        <p class="text-warning">
-          <%= t'views.companies.edit.not_permitted_to_destroy' %>
-        </p>
-      <% end %>
-    </div>
+  <div class="card-body">
+    <h4 class="card-title"><%= t 'views.companies.edit.title' %></h4>
+    <%= render 'form' %>
+    <hr class="mb-5 mt-5">
+    <h4><%= t('views.companies.edit.destroy_company') %></h4>
+    <p><%= t('views.companies.edit.destroy_company_description') %></p>
+    <% if policy(@resource).destroy? %>
+      <%= link_to t('views.companies.edit.destroy_company'),
+                  company_path(current_company),
+                  method: :delete,
+                  class: 'text-danger',
+                  data: { confirm: t('confirm.company.delete_company'),
+                          disable_with: is_processing }%>
+    <% else %>
+      <p class="text-warning">
+        <%= t'views.companies.edit.not_permitted_to_destroy' %>
+      </p>
+    <% end %>
   </div>
 </div>

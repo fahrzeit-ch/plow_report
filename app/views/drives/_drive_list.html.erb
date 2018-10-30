@@ -1,0 +1,10 @@
+<% week_nr = -1 if local_assigns[:week_nr].nil? %>
+<% drives.each do |drive| %>
+  <% if drive.week_nr != week_nr %>
+    <% week_nr = drive.week_nr %>
+    <h4 data-week="<%= week_nr %>">KW <%= week_nr %></h4>
+  <% end %>
+  <div class="item-group pl-2">
+    <%= render partial: 'drive', locals: { tools: true, drive: drive }%>
+  </div>
+<% end %>

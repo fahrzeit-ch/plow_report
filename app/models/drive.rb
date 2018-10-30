@@ -5,7 +5,12 @@ class Drive < ApplicationRecord
 
   validates :salt_amount_tonns, numericality: { greater_than: 0 }, if: :salt_refilled
   validate :start_end_dates
+
+  # A drive is allways done by a driver
   belongs_to :driver
+
+  # A Drive may be recorded on a customer but its not necessary
+  belongs_to :customer, optional: true
   audited associated_with: :driver
 
   include TrackedViews
@@ -23,7 +28,11 @@ class Drive < ApplicationRecord
   end
 
   def day_of_week
-    I18n.l self.start, format: '%A'
+    I18n.l self.start, format: '%a'
+  end
+
+  def customer_name
+    customer ? customer.name : ''
   end
 
   # Get the tasks (drive options) as an Array with translated option names
@@ -56,7 +65,12 @@ class Drive < ApplicationRecord
     seconds = duration.to_i
     minutes = (seconds / 60).round #ignore seconds
     hours = (minutes / 60) # do not round here as we will display minutes
-    "#{justify(hours)}h #{justify((minutes % 60))}min"
+
+    parts = []
+    parts << "#{hours}h" if hours > 0
+    parts << "#{(minutes % 60)}min"
+
+    parts.join(' ')
   end
 
   # TODO: This does not belong here. Extract duration formatting
@@ -78,6 +92,12 @@ class Drive < ApplicationRecord
 
   # Class Methods
   class << self
+
+    def stats
+      select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
+COALESCE(SUM(drives.salt_amount_tonns), cast('0' as double precision)) as salt,
+COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
+    end
 
     # Scope the drives by the given season
     def by_season(season)

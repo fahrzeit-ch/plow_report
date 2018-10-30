@@ -2,6 +2,10 @@
 module ApplicationHelper
   MESSAGE_TYPE_MAP = { 'notice' => 'success', 'alert' => 'error' }
 
+  def initials(text)
+    text.split(' ').map{ |n| n[0] }.join
+  end
+
   def current_path(params_overwrite, clear_params = false)
     p = clear_params ? ActionController::Parameters.new : params.clone
     p.merge!(params_overwrite)
@@ -32,6 +36,13 @@ module ApplicationHelper
       distance = (date - Date.current).to_i
     end
     I18n.t(key, distance: distance)
+  end
+
+  def is_processing(icon_only = false)
+    content = "<i class='fa fa-refresh fa-spin'>
+          </i>".html_safe
+    content << " #{t('common.please_wait')}".html_safe unless icon_only
+    content
   end
 
 end

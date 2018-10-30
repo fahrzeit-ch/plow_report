@@ -7,55 +7,54 @@
   </div>
 </div>
 <div class="row toolbar border-top bg-light p-2 d-print-none">
-  <div class="col-12">
+  <div class="col-10">
+    <form class="form form-inline">
+      <div class="form-group mr-2">
+        <label class="label mr-2"><%= Driver.model_name.human %></label>
+        <%= select_tag(:driver_id,
+                       options_from_collection_for_select(current_company.drivers, 'id', 'name', params[:driver_id]),
+                       data: {s2: true, submit_on_change: true},
+                       include_blank: t('common.all')) %>
+      </div>
+      <% if(drive_attr_enabled?(:customer)) %>
+        <div class="form-group">
+          <label class="mr-2"><%= Customer.model_name.human %></label>
+          <%= select_tag(:customer_id,
+                         options_from_collection_for_select(current_company.customers, 'id', 'name', params[:customer_id]),
+                         data: {s2: true, submit_on_change: true},
+                         include_blank: t('common.all')) %>
+        </div>
+      <% end %>
+    </form>
+  </div>
+  <div class="col-sm-2">
     <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
 <div class="row mt-3">
   <div class="col-12">
-
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="mr-5">
+            <h3>Total Km</h3>
+            <strong><%= @stats['distance'] %></strong>
+          </div>
+          <div>
+            <h3>Fahrzeit</h3>
+            <strong><%= @stats.duration_as_string %></strong>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <div class="col-2 d-print-none">
-            <nav class="nav list-group">
-              <%= link_to t('common.all'), company_drives_path(current_company), class: "list-group-item list-group-item-action #{params[:driver_id].blank? ? 'active' : ''}" %>
-              <% current_company.drivers.each do |dr| %>
-                <%= link_to dr.name, company_drives_path(current_company, driver_id: dr.id), class: "list-group-item list-group-item-action #{(dr.id == params[:driver_id].to_i) ? 'active' : ''}" %>
-              <% end %>
-            </nav>
-          </div>
-
-          <div class="col-10">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                <tr>
-                  <th><%= Drive.human_attribute_name(:driver) %></th>
-                  <th><%= Drive.human_attribute_name(:week_nr) %></th>
-                  <th><%= Drive.human_attribute_name(:day_of_week) %></th>
-                  <th><%= Drive.human_attribute_name(:date) %></th>
-                  <th><%= Drive.human_attribute_name(:type) %></th>
-                  <th><%= Drive.human_attribute_name(:start) %></th>
-                  <th><%= Drive.human_attribute_name(:end) %></th>
-                  <th><%= Drive.human_attribute_name(:duration) %></th>
-                  <th><%= Drive.human_attribute_name(:distance_km) %></th>
-                  <th><%= Drive.human_attribute_name(:salt_amount_tonns) %></th>
-                  <th class="d-print-none"></th>
-                </tr>
-                </thead>
-
-                <tbody id="drives">
-                  <%= render partial: 'drive_tr', collection: @drives, as: :drive, locals: { tools: true }%>
-
-                </tbody>
-              </table>
-              <% if @drives.empty? %>
-                <div>
-                  <%= t 'views.common.info.no_data_available' %>
-                </div>
-              <% end %>
+          <div class="col-12">
+            <div id="drives">
+              <%= render partial: '/drives/drive_list', locals: { drives: @drives } %>
             </div>
+
             <%= paginate @drives %>
           </div>
         </div>

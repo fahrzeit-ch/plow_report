@@ -1,0 +1,39 @@
+<div class="d-flex mb-2 border">
+  <% unless drive.seen? %><i class="fa fa-circle new-label text-success" title="<%= t'common.new' %>"></i><% end %>
+  
+  <div class="align-self-center p-2 ml-2 mr-2" style="background-color:<%= driver_color(drive.driver) %>">
+    <strong><%= initials(drive.driver.name) %></strong>
+  </div>
+
+  <div class="p-2 mr-2">
+    <div class="drive-rate-type-<%= drive.surcharge_rate_type %>"><%= drive.day_of_week %> <%= drive.start.strftime('%d.%m') %></div>
+  </div>
+
+  <div class="drive-date-times mr-2 p-2">
+    <div><%= drive.duration_as_string %></div>
+    <div class="text-muted"><small><%= drive.start.strftime('%H:%M') %>-<%= drive.end.strftime('%H:%M') %></small></div>
+  </div>
+
+  <div class="p-2">
+    <div><strong><%= drive.distance_km %>km</strong></div>
+    <div class="text-muted">
+      <small><%= drive.tasks.join(', ') %></small>
+      <small><% if drive.salt_refilled? %>(<%= drive.salt_amount_tonns %>t)<% end %></small>
+    </div>
+    <div class="d-block d-md-none"><%= drive.customer_name %></div>
+  </div>
+
+  <div class="mr-2 p-2 d-none d-md-block"><%= drive.customer_name %></div>
+
+  <% if local_assigns[:tools] && policy(drive).edit? %>
+    <div class="align-self-center ml-auto mr-2 d-print-none">
+      <%= link_to edit_company_drife_path(current_company, drive), class: 'pull-right btn btn-light' do %>
+        <i class="fa fa-edit"></i>
+      <% end %>
+      <%= link_to company_drife_path(current_company, drive), method: :delete, class: 'pull-right btn btn-danger',
+                  data: { confirm: t('confirmation.delete'), disable_with: is_processing(true) } do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    </div>
+  <% end %>
+</div>
