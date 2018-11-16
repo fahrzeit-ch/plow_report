@@ -62,14 +62,9 @@ RSpec.describe Drive, type: :model do
     end
   end
 
-  # describe 'activities' do
-  #   it { is_expected.to respond_to(:activities) }
-  #   it { expect(subject.activities).to be_a Hash }
-  #
-  #   it 'should be possible to persist any kind of activity' do
-  #     expect { subject.update(activities: { plowed: true }) }.not_to raise_error
-  #   end
-  # end
+  describe 'activity_executions' do
+    it { is_expected.to have_one(:activity_execution).dependent(:destroy).autosave(true) }
+  end
 
   describe 'salt_amount_tonns' do
 

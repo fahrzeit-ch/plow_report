@@ -11,6 +11,10 @@ class Drive < ApplicationRecord
   # A drive is allways done by a driver
   belongs_to :driver
 
+  # A drive may have an activity that was executed during the drive
+  has_one :activity_execution, dependent: :destroy, autosave: true
+  has_one :activity, through: :activity_execution
+
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
   audited associated_with: :driver
