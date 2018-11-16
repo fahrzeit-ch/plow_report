@@ -30,12 +30,12 @@ RSpec.describe DrivesController, type: :controller do
     context 'signed in' do
       before do
         sign_in user
-        create(:drive, driver: user.drivers.first, salt_refilled: true, salt_amount_tonns: 10.0)
+        create(:drive, driver: user.drivers.first)
       end
 
       context 'no similar drives' do
         it 'be successful' do
-          get :suggested_values, params: { salted: true, format: :json }
+          get :suggested_values, params: { format: :json }
           expect(subject).to be_success
         end
       end
@@ -44,7 +44,8 @@ RSpec.describe DrivesController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:valid_params) { attributes_for(:drive) }
+    let(:activity) { create(:value_activity) }
+    let(:valid_params) { attributes_for(:drive).merge({activity_execution_attributes: {activity_id: activity.id, value: 10} }) }
 
     context 'signed out' do
 
@@ -70,6 +71,11 @@ RSpec.describe DrivesController, type: :controller do
           expect {
             post :create, params: { drive: valid_params }
           }.to change(Drive.where(driver: user.drivers.last), :count)
+        end
+
+        it 'stores the activity' do
+          post :create, params: { drive: valid_params }
+          expect(Drive.last.activity_execution.value).to eq(10)
         end
 
       end

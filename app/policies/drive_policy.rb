@@ -28,6 +28,10 @@ class DrivePolicy < ApplicationPolicy
     own_record?
   end
 
+  def permitted_attributes
+    [:start, :end, :distance_km, :customer_id, activity_execution_attributes: [:activity_id, :value]]
+  end
+
 
   class Scope < Scope
     def resolve

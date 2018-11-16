@@ -8,10 +8,10 @@ class DrivesController < ApplicationController
     @drives = Drive.where(driver: current_driver).by_season(selected_season).order(start: :desc).all
   end
 
-  # GET /drives/suggested_values?[salted=true]&[plowed=true]&[salt_refilled=true]
+  # GET /drives/suggested_values?activity_id=23
   def suggested_values
-    opts = params.permit(:plowed, :salted, :salt_refilled)
-    opts.each { |k,v| opts[k] = ActiveModel::Type::Boolean.new.cast(v) }
+    opts = params.permit(:activity_id)
+    opts.each { |k,v| opts[k] = ActiveModel::Type::Integer.new.cast(v) }
     @suggested_values = Drive.suggested_values(current_driver, opts)
 
     respond_to do |format|
@@ -84,6 +84,6 @@ class DrivesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def drive_params
-    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :customer_id, :salt_amount_tonns, :salted, :plowed)
+    params.require(:drive).permit(policy(Drive).permitted_attributes)
   end
 end

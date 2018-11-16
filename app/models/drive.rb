@@ -11,6 +11,7 @@ class Drive < ApplicationRecord
   # A drive may have an activity that was executed during the drive
   has_one :activity_execution, dependent: :destroy, autosave: true
   has_one :activity, through: :activity_execution
+  accepts_nested_attributes_for :activity_execution
 
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
@@ -118,8 +119,8 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
       similar_drives = Drive.where(driver: driver).similar(drive_opts)
       last_match = similar_drives.order(end: :desc).first
       {
-          distance_km: last_match.distance_km,
-          activity_value: last_match.activity_execution.try(:value)
+          distance_km: last_match.try(:distance_km) || 0,
+          activity_value: last_match.try(:activity_execution).try(:value) || 0
       }
     end
 
