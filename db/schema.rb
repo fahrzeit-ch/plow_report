@@ -10,10 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181005181834) do
+ActiveRecord::Schema.define(version: 20181116191006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.bigint "company_id"
+    t.string "name", default: "", null: false
+    t.boolean "has_value", default: true, null: false
+    t.string "value_label"
+    t.index ["company_id", "name"], name: "index_activities_on_company_id_and_name", unique: true
+    t.index ["company_id"], name: "index_activities_on_company_id"
+    t.index ["name"], name: "index_activities_on_name"
+  end
+
+  create_table "activity_executions", force: :cascade do |t|
+    t.bigint "activity_id"
+    t.bigint "drive_id"
+    t.decimal "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_activity_executions_on_activity_id"
+    t.index ["drive_id"], name: "index_activity_executions_on_drive_id"
+  end
 
   create_table "administrators", force: :cascade do |t|
     t.string "email"
@@ -147,16 +167,6 @@ ActiveRecord::Schema.define(version: 20181005181834) do
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
   end
 
-  create_table "tour_steps", force: :cascade do |t|
-    t.string "trigger"
-    t.string "selector"
-    t.text "description"
-    t.json "options"
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "user_actions", force: :cascade do |t|
     t.string "activity"
     t.bigint "user_id"
@@ -198,6 +208,9 @@ ActiveRecord::Schema.define(version: 20181005181834) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activities", "companies"
+  add_foreign_key "activity_executions", "activities"
+  add_foreign_key "activity_executions", "drives", column: "drive_id"
   add_foreign_key "driver_logins", "drivers"
   add_foreign_key "driver_logins", "users"
   add_foreign_key "drivers", "companies"

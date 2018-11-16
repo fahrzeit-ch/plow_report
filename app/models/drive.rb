@@ -1,3 +1,5 @@
+# TODO: This model should be renamed to amore abstract entity so it cannot only
+# represent drives but also any other tasks
 class Drive < ApplicationRecord
 
   after_initialize :defaults
