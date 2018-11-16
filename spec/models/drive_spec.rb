@@ -64,127 +64,62 @@ RSpec.describe Drive, type: :model do
 
   describe 'activity_executions' do
     it { is_expected.to have_one(:activity_execution).dependent(:destroy).autosave(true) }
-  end
 
-  describe 'salt_amount_tonns' do
+    describe 'activity name' do
+      let(:activity_execution) { create(:activity_execution) }
+      let(:activity_name) { activity_execution.activity.name }
 
-    context 'salt_refilled is false and amount has value > 0' do
+      subject { create(:drive, activity_execution: activity_execution) }
 
-      before {
-        subject.salt_amount_tonns = 20
-        subject.salt_refilled = false
-      }
-
-      it 'should be valid' do
-        expect(subject).to be_valid
+      it 'is expected to return the activity name in tasks' do
+        expect(subject.tasks).to eq(activity_name)
       end
 
-      it 'should set salt amount to 0 when salt_refilled set to false' do
-        subject.validate
-        expect(subject.salt_amount_tonns).to eq 0
-      end
     end
-
-    context 'sqalt_refilled is true and salt_amount is 0' do
-      before {
-        subject.salt_refilled = true
-        subject.salt_amount_tonns = 0
-      }
-
-      it 'should not be valid' do
-        expect(subject).not_to be_valid
-      end
-
-      it 'should have error on salt_amount_tonns' do
-        subject.validate
-        expect(subject.errors).to have_key(:salt_amount_tonns)
-      end
-    end
-
   end
 
   describe '#suggested_values' do
+    let(:plowing_activity) { create(:activity_execution) }
+    let(:salting_activity) { create(:activity_execution_with_value, value: 3) }
+    let(:salting_activity2) { create(:activity_execution_with_value, value: 4) }
+
     let(:driver) { create(:driver) }
-    let(:opts) { {salt_refilled: true, plowed: false, salted: false} }
+    let(:opts) { { activity_id: plowing_activity.activity.id } }
 
     before {
-      create(:drive, driver: driver, start: '2018-02-01 12:00', end: '2018-02-01 12:30', distance_km: 1, salt_refilled: true, salt_amount_tonns: 1, plowed: false, salted: false)
-      create(:drive, driver: driver, start: '2018-02-02 12:00', end: '2018-02-02 12:30', distance_km: 2, salt_refilled: true, salt_amount_tonns: 2, plowed: true, salted: false)
-      create(:drive, driver: driver, start: '2018-02-03 12:00', end: '2018-02-03 12:30', distance_km: 3, salt_refilled: true, salt_amount_tonns: 3, plowed: false, salted: true)
-      create(:drive, driver: driver, start: '2018-02-04 12:00', end: '2018-02-04 12:30', distance_km: 4, salt_refilled: false, plowed: false, salted: true)
-      create(:drive, driver: driver, start: '2018-02-05 12:00', end: '2018-02-05 12:30', distance_km: 5, salt_refilled: false, plowed: true, salted: true)
+      create(:drive, driver: driver, start: '2018-02-01 12:00', end: '2018-02-01 12:30', distance_km: 1, activity_execution: salting_activity)
+      create(:drive, driver: driver, start: '2018-02-02 12:00', end: '2018-02-02 12:30', distance_km: 2, activity_execution: salting_activity2)
+      create(:drive, driver: driver, start: '2018-02-03 12:00', end: '2018-02-03 12:30', distance_km: 3, activity_execution: plowing_activity)
+      create(:drive, driver: driver, start: '2018-02-04 12:00', end: '2018-02-04 12:30', distance_km: 4, activity_execution: plowing_activity)
     }
+
+    subject { described_class.suggested_values(driver, opts) }
+    it { is_expected.to have_key(:distance_km) }
+    it { is_expected.to have_key(:activity_value) }
 
     describe 'distance' do
       subject { described_class.suggested_values(driver, opts)[:distance_km] }
 
-      context 'salt refill only' do
-
-        it 'should return the correct km' do
-          expect(subject).to eq 1
-        end
-
+      context 'latest plow' do
+        let(:opts) { { activity_id: plowing_activity.activity.id } }
+        it { is_expected.to eq 4.0 }
       end
 
-      context 'salt refill and plowed' do
-        let(:opts) { {salt_refilled: true, plowed: true, salted: false} }
-
-        it 'should return the correct km' do
-          expect(subject).to eq 3
-        end
-      end
-
-      context 'salt refill and salted' do
-        let(:opts) { {salt_refilled: true, plowed: false, salted: true} }
-        it 'should return the correct km' do
-          expect(subject).to eq 3
-        end
-      end
-
-      context 'salt refill, salted and plowed' do
-        let(:opts) { {salt_refilled: true, plowed: true, salted: true} }
-
-        it 'should return the correct km' do
-          expect(subject).to eq 3
-        end
-      end
-
-      context 'plowed or salted only' do
-        let(:opts) { {salt_refilled: false, plowed: true, salted: true} }
-
-        it 'should return the correct km' do
-          expect(subject).to eq 5
-        end
-      end
-
-      context 'no opts given' do
-        let(:opts) { {} }
-
-        it 'should return the correct km' do
-          expect(subject).to eq 0.0
-        end
-      end
-
-    end
-
-    describe 'salt amount' do
-      variants = [ {salt_refilled: true, plowed: false, salted: false},
-                   {salt_refilled: true, plowed: true, salted: false},
-                   {salt_refilled: true, plowed: true, salted: true}
-      ]
-      variants.each do |options|
-        it 'is allways last value for salt amount' do
-          amount = described_class.suggested_values(driver, options)[:salt_amount_tonns]
-          expect(amount).to eq 3
-        end
-      end
-
-      it 'returns zero for drives without salt refill' do
-        options = {salt_refilled: false, plowed: false, salted: false}
-        amount = described_class.suggested_values(driver, options)[:salt_amount_tonns]
-        expect(amount).to eq 0
+      context 'latest salting' do
+        let(:opts) { { activity_id: salting_activity.activity.id } }
+        it { is_expected.to eq 1.0 }
       end
     end
+
+    describe 'activity_value' do
+      subject { described_class.suggested_values(driver, opts)[:activity_value] }
+
+      context 'latest salting' do
+        let(:opts) { { activity_id: salting_activity2.activity.id } }
+        it { is_expected.to eq 4.0 }
+      end
+    end
+
   end
 
   describe 'user action' do

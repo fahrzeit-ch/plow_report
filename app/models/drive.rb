@@ -3,9 +3,6 @@
 class Drive < ApplicationRecord
 
   after_initialize :defaults
-  before_validation :check_salt_amount
-
-  validates :salt_amount_tonns, numericality: { greater_than: 0 }, if: :salt_refilled
   validate :start_end_dates
 
   # A drive is allways done by a driver
@@ -43,11 +40,7 @@ class Drive < ApplicationRecord
 
   # Get the tasks (drive options) as an Array with translated option names
   def tasks
-    tasks = []
-    tasks << Drive.human_attribute_name(:plowed) if plowed
-    tasks << Drive.human_attribute_name(:salted) if salted
-    tasks << Drive.human_attribute_name(:salt_refilled) if salt_refilled
-    tasks
+    activity.name
   end
 
   # The duration is loaded from attribute (in case it was calculated in the sql query). If
@@ -93,7 +86,7 @@ class Drive < ApplicationRecord
 
   # Returns true if start or end time is on a saturday or sunday
   def weekend?
-      start.on_weekend? || read_attribute(:end).on_weekend?
+    start.on_weekend? || read_attribute(:end).on_weekend?
   end
 
   # Class Methods
@@ -101,7 +94,7 @@ class Drive < ApplicationRecord
 
     def stats
       select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
-COALESCE(SUM(drives.salt_amount_tonns), cast('0' as double precision)) as salt,
+0 as salt,
 COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     end
 
@@ -115,75 +108,37 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
       sum('drives.end - drives.start')
     end
 
-    # Returns the last recorded distance and salt amount (if any) of the given driver depending on the drive options.
+    # Returns the last recorded distance and activity_value used by the driver depending on the drive options.
     # There are three cases:
-    #
-    # * salt_refilled and not plowed or salted
-    # * salt_refilled and plowed or salted
-    # * salt_not_refilled
-    #
-    # salt_amount_tonns will allways return value of last refill, ignoring other options
     #
     # @param [Driver] driver The driver to get the sugestion for
     # @param [Hash] drive_opts Drive options to match similar drives
     # @return [Float] Suggested distance for the given drive options
     def suggested_values(driver, drive_opts)
-      similar_drives = select(:distance_km, :salt_amount_tonns).where( driver: driver).similar(drive_opts)
-
-      latest_refill = select(:salt_amount_tonns)
-                          .where(driver: driver, salt_refilled: drive_opts.fetch(:salt_refilled, false))
-                          .order(end: :desc).first
-
+      similar_drives = Drive.where(driver: driver).similar(drive_opts)
       last_match = similar_drives.order(end: :desc).first
-
-      salt_amount = latest_refill ? latest_refill.salt_amount_tonns : 0
-      distance = last_match ? last_match.distance_km : 0
-
-      { salt_amount_tonns: salt_amount, distance_km: distance }
+      {
+          distance_km: last_match.distance_km,
+          activity_value: last_match.activity_execution.try(:value)
+      }
     end
 
-    # The similar method returns drives that have similar tasks and
-    # therefore could probably have the same distance.
-    # Similarity is checked in three groups:
-    #
-    # * salt refilled and not plowed or salted
-    # * salt refilled and plowed or salted
-    # * salt not refilled
-    #
-    # The drive_opts param can contain the following keys:
-    #
-    # * salt_refilled
-    # * plowed
-    # * salted
+    # The similar method returns drives that have the same
+    # activity.
     #
     # @param [Hash] drive_opts
     # @return [ActiveRecord::Relation<Driver>] Driver relation that have similar characteristics on the options
     def similar(drive_opts)
-      salt_refilled = drive_opts.fetch(:salt_refilled, false)
-      pos = drive_opts.fetch(:salted, false) || drive_opts.fetch(:plowed, false)
-      pos_query = "#{pos ? '' : 'NOT '}(drives.plowed OR drives.salted)"
-      where(salt_refilled: salt_refilled).where(pos_query)
-    end
-  end
-
-  def self.define_drive_type_accessors
-    %i[plowed salted salt_refilled].each do |type|
-      define_method "#{type}=" do |value|
-        val = ActiveRecord::Type::Boolean.new.cast(value)
-        activities[type.to_s] = val
-      end
-      define_method type do
-        activities[type]
+      activity_id = drive_opts[:activity_id]
+      if activity_id
+        joins(:activity_execution).where(activity_executions: { activity_id: activity_id })
+      else
+        Drive
       end
     end
   end
-
 
   private
-
-  def check_salt_amount
-    self.salt_amount_tonns = 0 unless salt_refilled
-  end
 
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start
