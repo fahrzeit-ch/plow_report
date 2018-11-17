@@ -8,8 +8,31 @@
 
     <h5><%= t'views.companies.customers.edit' %></h5>
     <%= form_for([current_company, @customer], builder: BootstrapFormBuilder) do |f| %>
-      <div class="form-group">
-        <%= f.text_field :name %>
+      <div class="form-row">
+        <div class="form-group col-12">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-10">
+          <%= f.label :street %>
+          <%= f.text_field :street %>
+        </div>
+        <div class="form-group col-2">
+          <%= f.label :nr %>
+          <%= f.text_field :nr %>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-4">
+          <%= f.label :zip %>
+          <%= f.text_field :zip %>
+        </div>
+        <div class="form-group col-8">
+          <%= f.label :city %>
+          <%= f.text_field :city %>
+        </div>
       </div>
       <div class="form-group">
         <%= f.submit class: 'btn btn-primary' do %><i class="fa fa-check"></i><% end %>

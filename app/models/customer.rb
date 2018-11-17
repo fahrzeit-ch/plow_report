@@ -6,6 +6,10 @@ class Customer < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
 
+  def details
+    "#{street}, #{city}"
+  end
+
   private
   def check_existing_drives
     if drives.any?

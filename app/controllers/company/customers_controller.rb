@@ -19,7 +19,7 @@ class Company::CustomersController < ApplicationController
     else
       flash[:error] = I18n.t 'flash.customer.not_created'
     end
-    redirect_to company_customers_path(current_company)
+    redirect_to edit_company_customer_path(current_company, @customer)
   end
 
   def edit
@@ -67,11 +67,11 @@ class Company::CustomersController < ApplicationController
   end
 
   def customer_params
-    params.require(:customer).permit(:name)
+    params.require(:customer).permit(:name, :street, :nr, :zip, :city)
   end
 
   def customer_update_params
-     params.require(:customer).permit(:name)
+     params.require(:customer).permit(:name, :street, :nr, :zip, :city)
   end
 
 end
