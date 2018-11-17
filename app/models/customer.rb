@@ -6,6 +6,8 @@ class Customer < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
 
+  default_scope { order(:name) }
+
   def details
     "#{street}, #{city}"
   end

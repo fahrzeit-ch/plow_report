@@ -4,7 +4,7 @@ class Company::DriversController < ApplicationController
   before_action :set_driver, only: [:destroy, :edit, :update]
 
   def index
-    @drivers = current_company.drivers
+    @drivers = current_company.drivers.order(:name)
   end
 
   # Creates a new driver for this company

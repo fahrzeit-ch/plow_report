@@ -12,7 +12,7 @@
       <div class="form-group mr-2">
         <label class="label mr-2"><%= Driver.model_name.human %></label>
         <%= select_tag(:driver_id,
-                       options_from_collection_for_select(current_company.drivers, 'id', 'name', params[:driver_id]),
+                       options_from_collection_for_select(current_company.drivers.order(:name), 'id', 'name', params[:driver_id]),
                        data: {s2: true, submit_on_change: true},
                        include_blank: t('common.all')) %>
       </div>
