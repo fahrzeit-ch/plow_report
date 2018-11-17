@@ -18,7 +18,7 @@
     <div><strong><%= drive.distance_km %>km</strong></div>
     <div class="text-muted">
       <small><%= drive.tasks %></small>
-      <small><% if drive.salt_refilled? %>(<%= drive.salt_amount_tonns %>t)<% end %></small>
+      <small><% if drive.activity.try(:has_value) %>(<%= drive.activity_execution.value %>)<% end %></small>
     </div>
     <div class="d-block d-md-none"><%= drive.customer_name %></div>
   </div>

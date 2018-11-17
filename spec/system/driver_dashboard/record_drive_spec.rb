@@ -76,7 +76,7 @@ feature 'record a drive from dashboard' do
     it 'should not stop current recording' do
       visit '/drives/new'
 
-      fill_drive_form
+      fill_drive_form(except: :activity_execution)
 
       click_button 'OK'
       current_driver.reload

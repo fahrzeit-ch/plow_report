@@ -23,19 +23,19 @@ feature 'creating a drive on dashboard' do
   end
 
   describe 'by filling in drive form' do
+    let(:activity) { create(:value_activity, name: I18n.t('activerecord.attributes.drive.salt_refilled')) }
+    before { activity }
     it 'should redirect to drives and show new drives' do
       visit '/'
       # fill in start and end time
       attrs = { start: 1.hour.ago,
                 end: 0.5.hour.ago,
                 distance_km: 15.1,
-                plowed: true,
-                salted: true,
-                salt_refilled: true,
-                salt_amount_tonns: 3.41,
                 customer: customer
       }
       fill_form 'drive', attrs
+      # choose('drive[activity_execution_attributes][activity_id]', id: "activity_#{activity.id}")
+      # fill_in 'drive[activity_execution_attributes][value]', with: 3.4
 
       # create drive
       click_button I18n.t('dashboard.cards.new_drive.create')
@@ -44,11 +44,8 @@ feature 'creating a drive on dashboard' do
 
       # Test if drive is listed
       # drive options
-      expect(page).to have_content I18n.t('activerecord.attributes.drive.plowed')
-      expect(page).to have_content I18n.t('activerecord.attributes.drive.salted')
-      expect(page).to have_content I18n.t('activerecord.attributes.drive.salt_refilled')
-
-      expect(page).to have_content '(3.41t)' # salt amount tonns
+      # expect(page).to have_content I18n.t('activerecord.attributes.drive.salt_refilled')
+      # expect(page).to have_content '(3.41t)' # salt amount tonns
       expect(page).to have_content '15.1' # distance in km
       expect(page).to have_content '30min'
       expect(page).to have_content customer.name
@@ -57,7 +54,7 @@ feature 'creating a drive on dashboard' do
 
   context 'with existing drive of same type', js: true do
     # Currently skipping js tests until selenium is setup correctly
-    let(:existing_drive) { create(:drive, driver: current_driver, plowed: true, salted: false, salt_refilled: false) }
+    let(:existing_drive) { create(:drive, driver: current_drive) }
 
     before { existing_drive }
 

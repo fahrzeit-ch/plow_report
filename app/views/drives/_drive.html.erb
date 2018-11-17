@@ -15,7 +15,7 @@
     <div class="text-muted">
       <small><%= drive.tasks %></small>
       <small>
-        <% if drive.salt_refilled? %>(<%= drive.salt_amount_tonns %>t)
+        <% if drive.activity.try(:has_value) %>(<%= drive.activity_execution.value %>)
         <% end %></small>
     </div>
     <div class="d-block d-md-none"><%= drive.customer_name %></div>

@@ -12,6 +12,6 @@ class ActivityExecution < ApplicationRecord
   private
 
   def value_required?
-    activity.has_value?
+    activity.try(:has_value)
   end
 end
