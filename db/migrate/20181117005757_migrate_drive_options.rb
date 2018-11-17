@@ -1,16 +1,24 @@
 class MigrateDriveOptions < ActiveRecord::Migration[5.1]
 
   def self.up
-    plow_id = Activity.find_or_create_by(name: 'Räumen')
-    salting_id = Activity.find_or_create_by(name: 'Salzen')
+    plow_id = Activity.find_or_create_by name: 'Räumen' do |a|
+      a.has_value = false
+    end
+    salting_id = Activity.find_or_create_by name: 'Salzen' do |a|
+      a.has_value = false
+    end
     refill_id = Activity.find_or_create_by name: 'Salz füllen' do |a|
       a.has_value = true
       a.value_label = 'Salzmenge'
     end
 
     Company.all.each do |c|
-      plow = c.activities.find_or_create_by(name: 'Räumen')
-      salt = c.activities.find_or_create_by(name: 'Salzen')
+      plow = c.activities.find_or_create_by name: 'Räumen' do |a|
+        a.has_value = false
+      end
+      salt = c.activities.find_or_create_by name: 'Salzen' do |a|
+        a.has_value = false
+      end
       refill = c.activities.find_or_create_by name: 'Salz füllen' do |a|
         a.has_value = true
         a.value_label = 'Salzmenge'
