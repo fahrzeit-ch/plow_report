@@ -29,7 +29,7 @@ class RecordingsController < ApplicationController
 
   private
   def drive_params
-    params.require(:drive).permit(:start, :end, :distance_km, :salt_refilled, :salt_amount_tonns, :salted, :plowed)
+    params.require(:drive).permit(policy(Drive).permitted_attributes)
   end
 
   def already_recording_response

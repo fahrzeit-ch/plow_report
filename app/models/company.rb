@@ -14,6 +14,7 @@ class Company < ApplicationRecord
   has_many :drivers, dependent: :destroy
   has_many :drives, through: :drivers
   has_many :customers, dependent: :destroy
+  has_many :activities, dependent: :destroy
 
   before_validation :default_values
 

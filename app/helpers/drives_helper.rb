@@ -16,4 +16,8 @@ module DrivesHelper
     end
   end
 
+  def available_activities(company)
+    company ? company.activities : Activity.default
+  end
+
 end

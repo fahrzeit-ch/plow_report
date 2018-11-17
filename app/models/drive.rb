@@ -41,7 +41,7 @@ class Drive < ApplicationRecord
 
   # Get the tasks (drive options) as an Array with translated option names
   def tasks
-    activity.name
+    activity.try(:name)
   end
 
   # The duration is loaded from attribute (in case it was calculated in the sql query). If

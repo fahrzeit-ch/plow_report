@@ -10,7 +10,7 @@
           <td><%= l drive.start, format: '%a %d.%m.%Y' %></td>
           <td><%= drive.duration_as_string %></td>
           <td><strong><%= number_to_human drive.distance_km %>km</strong></td>
-          <td><%= drive.tasks.join(', ') %></td>
+          <td><%= drive.tasks %></td>
         </tr>
       <% end %>
       </tbody>

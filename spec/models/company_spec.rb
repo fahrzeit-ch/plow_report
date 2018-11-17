@@ -37,6 +37,10 @@ RSpec.describe Company, type: :model do
 
   end
 
+  describe 'activities' do
+    it { is_expected.to have_many(:activities).dependent(:destroy) }
+  end
+
   describe 'drivers' do
 
     subject { create(:company) }

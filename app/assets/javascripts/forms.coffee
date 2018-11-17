@@ -49,3 +49,10 @@ $(document).on 'turbolinks:load', ->
   $("[data-submit-on-change]").on 'change', ->
     target = $(this).closest('form')
     $(target).submit();
+
+  $('[data-value-field]').on 'change', ->
+    data = $(this).data('value-field')
+    visibility = data['collapse']
+    label = data['label']
+    $('#activity_value_label').html(label)
+    $('#activity_value').collapse(visibility)

@@ -17,7 +17,7 @@
   <div class="p-2">
     <div><strong><%= drive.distance_km %>km</strong></div>
     <div class="text-muted">
-      <small><%= drive.tasks.join(', ') %></small>
+      <small><%= drive.tasks %></small>
       <small><% if drive.salt_refilled? %>(<%= drive.salt_amount_tonns %>t)<% end %></small>
     </div>
     <div class="d-block d-md-none"><%= drive.customer_name %></div>

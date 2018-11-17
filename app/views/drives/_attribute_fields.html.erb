@@ -7,27 +7,33 @@
 </div>
 <% end %>
 <div class="form-group col-md-2 col-lg-1">
-  <label>Art</label>
+  <label>Aktivität</label>
   <div class="form-group">
-    <div class="custom-control custom-checkbox">
-      <%= form.check_box :plowed, id: :drive_plowed, class: 'custom-control-input', data: { suggest: true } %>
-      <%= form.label :plowed, class: 'custom-control-label' %>
-    </div>
-    <div class="custom-control custom-checkbox">
-      <%= form.check_box :salted, id: :drive_salted, class: 'custom-control-input', data: { suggest: true } %>
-      <%= form.label :salted, class: 'custom-control-label' %>
-    </div>
-    <div class="custom-control custom-checkbox">
-      <%= form.check_box :salt_refilled, id: :drive_salt_refilled, class: 'custom-control-input', data: { collapse_on_change: 'salt-amount', suggest: true } %>
-      <%= form.label :salt_refilled, class: 'custom-control-label' %>
-    </div>
+    <% available_activities(current_company).each do |activity| %>
+      <div class="custom-control custom-radio">
+        <%= radio_button_tag 'drive[activity_execution_attributes][activity_id]',
+                             activity.id,
+                             (form.object.activity_execution.try(:activity_id) == activity.id),
+                             id: "activity_#{activity.id}",
+                             data: { value_field: { label: activity.value_label, collapse: (activity.has_value ? 'show' : 'hide') } },
+                             class: 'custom-control-input' %>
+
+        <%= label_tag "activity_#{activity.id}", activity.name, class: 'custom-control-label' %>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="form-group col-md-2 col-lg-1">
   <%= form.label :distance_km %>
   <%= form.text_field :distance_km, type: 'number', required: true, min: '0', step: '0.1', id: :drive_distance_km, class: 'form-control autoselect' %>
 </div>
-<div class="form-group col-md-2 col-lg-1 collapse" id="salt-amount">
-  <%= form.label :salt_amount_tonns %>
-  <%= form.text_field :salt_amount_tonns, type: 'number', required: true, min: '0', step: '0.01', id: :drive_salt_amount_tonns, class: 'form-control' %>
+<div class="form-group col-md-2 col-lg-1 <%= form.object.activity.try(:has_value) ? '' : 'collapse' %>" id="activity_value">
+  <%= label_tag 'drive[activity_execution_attributes][activity_value]', form.object.activity.try(:value_label), id: :activity_value_label%>
+  <%= number_field_tag 'drive[activity_execution_attributes][value]',
+                       form.object.activity_execution.try(:value),
+                       required: true,
+                       min: '0',
+                       step: '0.01',
+                       id: :activity_value_field,
+                       class: 'form-control' %>
 </div>
