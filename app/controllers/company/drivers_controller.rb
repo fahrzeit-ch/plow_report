@@ -4,6 +4,7 @@ class Company::DriversController < ApplicationController
   before_action :set_driver, only: [:destroy, :edit, :update]
 
   def index
+    authorize current_company, :index_drivers?
     @drivers = current_company.drivers.order(:name)
   end
 

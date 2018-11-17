@@ -92,6 +92,12 @@ de:
         address: "Adresse"
         zip_code: "PLZ"
         city: "Ort"
+      customer:
+        name: "Name"
+        first_name: "Vorname"
+        address: "Adresse"
+        zip: "PLZ"
+        city: "Ort"
       drive:
         driver: "Fahrer"
         date: "Datum"

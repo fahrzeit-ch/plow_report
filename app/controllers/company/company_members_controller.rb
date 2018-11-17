@@ -2,6 +2,7 @@ class Company::CompanyMembersController < ApplicationController
   before_action :set_company_from_param
 
   def index
+    authorize current_company, :index_members?
     @company_members = CompanyMember.where(company: current_company)
   end
 

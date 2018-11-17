@@ -20,6 +20,14 @@ class CompanyPolicy < ApplicationPolicy
     company_member? record
   end
 
+  def index_drivers?
+    company_admin_or_owner? record
+  end
+
+  def index_members?
+    company_admin_or_owner? record
+  end
+
   def index_standby_dates?
     company_member? record
   end
