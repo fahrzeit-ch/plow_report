@@ -1,30 +1,27 @@
 $(document).on 'turbolinks:load', ->
+  activity_value_locked = false
   distance_locked = false
   salt_amount_locked = false
 
+  $('#activity_value_field').on 'keydown', ->
+    activity_value_locked = true
   # Lock values after manual change
   $('#drive_distance_km').on 'keydown', ->
     distance_locked = true
-  $('#drive_salt_amount_tonns').on 'keydown', ->
-    salt_amount_locked = true
 
-  refill_chk = $('#drive_salt_refilled[data-suggest]')
-  plowed_chk = $('#drive_plowed[data-suggest]')
-  salted_chk = $('#drive_salted[data-suggest]')
+  selected_activity_id = 0
+  activity_select = $('input[name=drive\\[activity_execution_attributes\\]\\[activity_id\\]]')
 
-  refill_chk.on "change", ->
-    load_suggestion(getOpts())
-  plowed_chk.on "change", ->
-    load_suggestion(getOpts())
-  salted_chk.on "change", ->
+  activity_select.on "change", ->
+    # unlock activity_value when activity changed
+    activity_value_locked = false
+    selected_activity_id = $('input[name=drive\\[activity_execution_attributes\\]\\[activity_id\\]]:checked').val()
     load_suggestion(getOpts())
 
   getOpts = ->
     return {
-      salt_refilled: refill_chk.is(":checked")
-      plowed: plowed_chk.is(":checked")
-      salted: salted_chk.is(":checked")
-  }
+      activity_id: selected_activity_id
+    }
 
   load_suggestion = (opts) ->
     if !(distance_locked && salt_amount_locked)
