@@ -84,4 +84,36 @@ RSpec.describe Driver, type: :model do
     end
   end
 
+  describe 'change company' do
+    let(:driver) { create(:driver, company: nil) }
+
+    context 'with running recording' do
+      subject { driver }
+
+      before { subject.start_recording }
+      it 'should not be valid' do
+        subject.company = create(:company)
+        expect(subject).not_to be_valid
+      end
+    end
+
+    context 'with drives with an activity' do
+      let(:activity1) { create(:activity) }
+      let(:drive) { create(:drive, activity: activity1, driver: driver) }
+
+      let(:company) { create(:company) }
+
+      before do
+        drive
+      end
+
+      subject { driver.update(company: company) }
+
+      it 'copies activity to company' do
+        expect { subject }.to change(company.activities, :count).by 1
+      end
+
+    end
+  end
+
 end

@@ -30,6 +30,9 @@ class Driver < ApplicationRecord
   has_associated_audits
 
   validates :name, presence: true
+  validate :not_recording_when_changing_company
+
+  after_save :transfer_drives
 
   # Start recording a drive
   def start_recording
@@ -52,6 +55,18 @@ class Driver < ApplicationRecord
   # Checks whether the driver is currently recording a drive
   def recording?
     !(recording.nil? || recording.destroyed?)
+  end
+
+  private
+
+  def transfer_drives
+    if self.saved_change_to_attribute?(:company_id)
+      drives.each {|d| d.activity_execution.move_to(company) }
+    end
+  end
+
+  def not_recording_when_changing_company
+    errors.add(:base, :can_not_change_company_when_recording) if company_id_changed? && recording?
   end
 
 end

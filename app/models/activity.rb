@@ -23,4 +23,20 @@ class Activity < ApplicationRecord
   scope :default, -> { where(company: nil) }
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
+
+  # Create a clone of this activity for the given company
+  # This will raise an error if validation fails.
+  def clone_to!(company)
+    copy = dup
+    copy.company = company
+    copy.save!
+    copy
+  end
+
+  # Returns true if self is equal for all attributes except for company
+  # @param [Activity] other
+  def same?(other)
+    has_value? == other.has_value? && name == other.name && value_label == other.value_label
+  end
+
 end

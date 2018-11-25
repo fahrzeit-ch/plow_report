@@ -4,14 +4,13 @@
 class Company::Registration
   include ActiveModel::Model
 
+  attr_reader :add_owner_as_driver, :transfer_private_drives
   attr_accessor :name,
                 :contact_email,
                 :address,
                 :zip_code,
                 :city,
                 :owner,
-                :add_owner_as_driver,
-                :transfer_private_drives,
                 :company
 
   # Takes a Company::Registration object and creates
@@ -56,12 +55,15 @@ class Company::Registration
     self.company = Company.new(name: name, contact_email: contact_email, address: address,
                                zip_code: zip_code,
                                city: city)
-    return if company.save
-
-    # copy validation errors to registration model and return
-    errors.copy!(company.errors)
-    # registration.errors = company.errors
-    result.has_errors = true
+    if company.save
+      # create default activities
+      Activity.default.each {|a| a.clone_to!(company) }
+    else
+      # copy validation errors to registration model and return
+      errors.copy!(company.errors)
+      # registration.errors = company.errors
+      result.has_errors = true
+    end
   end
 
   # @param [Company::RegistrationResult] result

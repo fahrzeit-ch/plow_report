@@ -37,13 +37,27 @@ class Company < ApplicationRecord
   def add_driver(user, transfer_private = false)
     raise AssignmentError, I18n.t('errors.drivers.already_assigned') if user.drives_for?(self)
 
-    if transfer_private && ( transfer_driver = user.personal_driver )
-      transfer_driver.update_attribute(:company_id, self.id)
-      { driver: transfer_driver, action: :transferred }
+    if transfer_private && !user.personal_driver.nil?
+      transfered_driver = transfer_from_private(user)
+      { driver: transfered_driver, action: :transferred }
     else
       new_driver = drivers.create!(name: user.name, user: user)
       { driver: new_driver, action: :created }
     end
+  end
+
+  # Move the private driver into this company and transfer
+  # all recorded drives.
+  #
+  # This may creates activities on the company.
+  #
+  # @param [Driver] user The private driver that should be moved to this company
+  def transfer_from_private(user)
+    driver = user.personal_driver
+    raise AssignmentError, 'User has no personal driver' if driver.nil?
+    driver.company = self
+    driver.save
+    driver
   end
 
   # Returns companies that the given user_id has a membership with
