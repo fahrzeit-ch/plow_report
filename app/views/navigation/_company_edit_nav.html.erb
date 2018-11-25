@@ -19,4 +19,9 @@
       <i class="fa fa-address-card"></i> <%= t 'views.companies.nav.customers.title' %>
     <% end %>
   </li>
+  <li class="nav-item">
+    <%= link_to company_activities_path(current_company), class: "nav-link #{(controller_name == 'activities') ? 'active' : ''}" do %>
+      <i class="fa fa-hourglass-o"></i> <%= t 'views.companies.nav.activities.title' %>
+    <% end %>
+  </li>
 </ul>

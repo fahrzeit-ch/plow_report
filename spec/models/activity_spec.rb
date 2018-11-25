@@ -11,4 +11,17 @@ RSpec.describe Activity, type: :model do
     it { is_expected.to belong_to(:company) }
   end
 
+  describe '#destroy' do
+    let(:activity) { create(:activity) }
+    context 'with activity executions assigned' do
+      before { create(:drive, activity: activity) }
+
+      subject { activity.destroy }
+      it 'raises error' do
+        expect { subject }.to raise_error
+      end
+    end
+  end
+
+
 end

@@ -8,7 +8,7 @@
 
     <h5><%= t'views.companies.drivers.edit' %></h5>
     <%= form_for([current_company, @driver], builder: BootstrapFormBuilder) do |f| %>
-      <%= f.select :user, company_driver_user_selection_options, {prompt: 'Benutzer wählen'}, {class: 'custom-select col-sm-4'} %>
+      <%= f.select :user, company_driver_user_selection_options, {prompt: t('views.company_drives.select_promt')}, {class: 'custom-select col-sm-4'} %>
       <%= f.submit class: 'col-sm-2 btn btn-primary', data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
     <% end %>
 

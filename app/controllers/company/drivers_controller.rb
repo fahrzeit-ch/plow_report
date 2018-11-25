@@ -41,7 +41,7 @@ class Company::DriversController < ApplicationController
     else
       render :edit
     end
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound => _e
     head :unprocessable_entity
   end
 

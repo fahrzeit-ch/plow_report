@@ -74,6 +74,10 @@ de:
         one: "Kunde"
         other: "Kunden"
     attributes:
+      activity:
+        name: "Name"
+        has_value: "Erfordert Eingabe eines Werts (z.B. Menge oder Distanz)"
+        value_label: "Bezeichnug des einzugebenden Werts"
       standby_date:
         week_nr: "KW"
         start_date: "Datum"
@@ -237,6 +241,8 @@ de:
           title: "Fahrer"
         customers:
           title: "Kunden"
+        activities:
+          title: "Tätigkeiten"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
@@ -249,9 +255,14 @@ de:
         edit: "Kunde Bearbeiten"
         create: "Neuen Kunden anlegen"
         title: "Kunden"
+      activities:
+        title: "Tätigkeiten"
+        edit: "Tätigkeit bearbeiten"
+        new: "Neue Tätigkeit erstellen"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"
+      select_promt: "Benutzer wählen"
     company:
       standby_dates:
         calendar:

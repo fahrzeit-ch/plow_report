@@ -1,0 +1,15 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <%= render 'navigation/company_edit_nav' %>
+  </div>
+
+  <div class="card-body">
+    <h4 class="card-title"><%= t 'views.companies.activities.title' %></h4>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item bg-light" id="company-member-form-container" >
+      <%= link_to t('views.companies.activities.new'), new_company_activity_path(current_company) %>
+    </li>
+    <%= render @activities %>
+  </ul>
+</div>

@@ -20,6 +20,8 @@
 # within a company.
 class Activity < ApplicationRecord
   belongs_to :company, optional: true
+  has_many :activity_executions, dependent: :restrict_with_exception
+
   scope :default, -> { where(company: nil) }
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
