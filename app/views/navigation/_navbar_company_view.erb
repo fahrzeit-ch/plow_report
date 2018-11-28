@@ -4,7 +4,7 @@
   </button>
 
   <% if current_company %>
-  <a class="navbar-brand" href="<%= company_dashboard_path(current_company) %>"><%= image_tag 'logo.png' %> FAHRZEIT <small class="text-secondary">Beta</small></a>
+  <%= render 'shared/brand', brand_link: company_dashboard_path(current_company) %>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <%= (controller_name == 'dashboard') ? 'active' : '' %>">
@@ -50,6 +50,6 @@
     </ul>
   </div>
   <% else %>
-    <a class="navbar-brand" href="/"><%= image_tag 'logo.png' %> FAHRZEIT <small class="text-secondary">Beta</small></a>
+    <%= render 'shared/brand', brand_link: root_path %>
   <% end %>
 </nav>
