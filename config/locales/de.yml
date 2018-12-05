@@ -59,8 +59,8 @@ de:
         one: "Firma"
         other: "Firmen"
       drive:
-        one: "Fahrt"
-        other: "Fahrten"
+        one: "Einsatz"
+        other: "Einsätze"
       standby_date:
         one: "Pikett Tag"
         other: "Pikett Tage"
@@ -103,6 +103,7 @@ de:
         zip: "PLZ"
         city: "Ort"
       drive:
+        activity: "Tätigkeit"
         driver: "Fahrer"
         date: "Datum"
         week_nr: "KW"
@@ -285,6 +286,9 @@ de:
         user_email: "hans.muster@meinefirma.ch"
     standby_dates:
       driver_dropdown: "+"
+    promt: "%{model} wählen"
+    select:
+      none: "Kein"
   confirm:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
