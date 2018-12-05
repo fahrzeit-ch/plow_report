@@ -5,6 +5,12 @@ module DrivesHelper
     end
   end
 
+  def drive_driver_select_options
+    current_company.drivers.map do |driver|
+      [driver.name, driver.id]
+    end
+  end
+
   def customer_enabled?
     current_company && current_company.customers.any?
   end

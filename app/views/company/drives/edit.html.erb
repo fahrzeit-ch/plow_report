@@ -12,7 +12,11 @@
   <div class="card-body">
     <div class="row">
       <div class="col-12">
-        <%= render 'drives/form', back_path: company_drives_path(current_company), drive: [current_company, @drive] %>
+        <%= render 'drives/form',
+                   back_path: company_drives_path(current_company),
+                   drive: [current_company, @drive],
+                   can_change_driver: true
+        %>
       </div>
     </div>
   </div>

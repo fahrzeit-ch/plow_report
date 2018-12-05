@@ -47,7 +47,9 @@ class Company::DrivesController < ApplicationController
   end
 
   def drive_params
-    params.require(:drive).permit(policy(Drive).permitted_attributes)
+    permitted = policy(Drive).permitted_attributes
+    permitted << :driver_id
+    params.require(:drive).permit(permitted)
   end
 
   def set_drive
