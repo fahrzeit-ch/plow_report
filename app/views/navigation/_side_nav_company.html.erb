@@ -46,4 +46,13 @@
     <% end %>
   </li>
 </ul>
+<% else %>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <%= link_to  setup_path, class: 'nav-link' do %>
+        <i class="fa fa-arrow-left"></i>
+        <%= t 'actions.back' %>
+      <% end %>
+    </li>
+  </ul>
 <% end %>
