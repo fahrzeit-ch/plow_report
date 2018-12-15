@@ -29,7 +29,7 @@ $(document).on 'turbolinks:load', ->
         if !distance_locked
           $('#drive_distance_km').val(data.distance_km)
         if !salt_amount_locked
-          $('#drive_salt_amount_tonns').val(data.salt_amount_tonns)
+          $('#activity_value_field').val(data.activity_value)
 
 
 
