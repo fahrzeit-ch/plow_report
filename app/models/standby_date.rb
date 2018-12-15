@@ -4,7 +4,7 @@ class StandbyDate < ApplicationRecord
 
   # Returns a relation of upcoming standby dates. Returns the next
   # 10 by default. An other limit may be provided.
-  scope :upcoming, ->(num=10) { where('day >= ?', Date.current).order(:day, :asc).limit(num) }
+  scope :upcoming, ->(num=10) { where('day >= ?', Date.current).order(day: :asc).limit(num) }
 
   validates :day, uniqueness: { scope: :driver }
 
