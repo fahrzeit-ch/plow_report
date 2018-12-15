@@ -2,6 +2,10 @@ class StandbyDate < ApplicationRecord
   belongs_to :driver
   audited associated_with: :driver
 
+  # Returns a relation of upcoming standby dates. Returns the next
+  # 10 by default. An other limit may be provided.
+  scope :upcoming, ->(num=10) { where('day >= ?', Date.current).order(:day, :asc).limit(num) }
+
   validates :day, uniqueness: { scope: :driver }
 
   # Scopes records to the month of the given date. Additionally events

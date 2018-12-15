@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   def index
     @last_drives = Drive.where(driver: current_driver).by_season(selected_season).order(start: :desc).limit(10)
-    @next_standby_date = StandbyDate.where(driver: current_driver).where('day >= ?', Date.today).order(:day).first
+    @next_standby_date = StandbyDate.where(driver: current_driver).upcoming.first
   end
 
 
