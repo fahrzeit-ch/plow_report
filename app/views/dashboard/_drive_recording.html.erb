@@ -1,7 +1,12 @@
 <div class="card text-dark bg-green-light col-12">
   <div class="card-body">
     <h5 class="card-title"><i class="fa fa-clock-o"></i> <%= t'dashboard.cards.new_drive.recording_since' %> <%= current_driver.recording.start_time.strftime('%H:%M') %></h5>
-    <%= form_with(model: Drive.new(start: current_driver.recording.start_time), url: finish_recordings_path, method: :put, local: true) do |form| %>
+    <%= form_with(model: Drive.new(start: current_driver.recording.start_time),
+                  url: finish_recordings_path,
+                  method: :put,
+                  local: true,
+                  builder: DriveFormBuilder
+        ) do |form| %>
       <div id="finish-drive-form" class="carousel slide" data-interval="false">
         <div class="carousel-inner">
           <div class="carousel-item active">
