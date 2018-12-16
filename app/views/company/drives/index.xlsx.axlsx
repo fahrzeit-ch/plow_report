@@ -9,17 +9,19 @@ row_builder = Report::DriveRowBuilder.new(styles, header_builder.activity_index_
 customers_with_drives = @drives.group_by(&:customer)
 drives_without_customers = customers_with_drives.delete(nil)
 
-wb.add_worksheet(name: 'Ohne Kunde' ) do |sheet|
-  sheet.add_row ["Ohne Kundenzuordnung"], style: [styles.h1]
-  sheet.add_row
-  sheet.add_row
-  sheet.add_row ["Total Km", "=SUM(E8:E1000)"]
-  sheet.add_row ["Total Aufwand", "=SUM(C8:C1000)"], style: [nil, styles.time]
-  sheet.add_row
-  sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
+if drives_without_customers
+  wb.add_worksheet(name: 'Ohne Kunde' ) do |sheet|
+    sheet.add_row ["Ohne Kundenzuordnung"], style: [styles.h1]
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Total Km", "=SUM(E8:E1000)"]
+    sheet.add_row ["Total Aufwand", "=SUM(C8:C1000)"], style: [nil, styles.time]
+    sheet.add_row
+    sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
 
-  drives_without_customers.each do |drive|
-    sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
+    drives_without_customers.each do |drive|
+      sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
+    end
   end
 end
 
