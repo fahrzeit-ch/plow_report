@@ -2,16 +2,42 @@ xlsx_package.use_shared_strings = true
 
 wb = xlsx_package.workbook
 
-styles = wb.styles
-title = styles.add_style(:sz => 15, :b => true, :u => true)
-default = styles.add_style(:border => Axlsx::STYLE_THIN_BORDER)
-header = styles.add_style(:bg_color => '1a6ba2', :fg_color => 'FF', :b => true)
-time_format = wb.styles.add_style :format_code => 'hh:mm'
+styles = Report::Styles.new(wb)
+header_builder = Report::HeaderBuilder.new(current_company.activities, styles)
+row_builder = Report::DriveRowBuilder.new(styles, header_builder.activity_index_map)
 
-wb.add_worksheet(name: Drive.model_name.human) do |sheet|
-  sheet.add_row ["Datum", "Startzeit", "Dauer", "Fahrer", "km"], style: header
-  @drives.each do |drive|
-    sheet.add_row [drive.start, drive.start, drive.duration, drive.driver.name, drive.distance_km], style: [Axlsx::STYLE_DATE, time_format, time_format]
+customers_with_drives = @drives.group_by(&:customer)
+drives_without_customers = customers_with_drives.delete(nil)
+
+wb.add_worksheet(name: 'Ohne Kunde' ) do |sheet|
+  sheet.add_row ["Ohne Kundenzuordnung"], style: [styles.h1]
+  sheet.add_row
+  sheet.add_row
+  sheet.add_row ["Total Km", "=SUM(E8:E1000)"]
+  sheet.add_row ["Total Aufwand", "=SUM(C8:C1000)"], style: [nil, styles.time]
+  sheet.add_row
+  sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
+
+  drives_without_customers.each do |drive|
+    sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
   end
-  sheet.add_row ["", "", "=SUM(C2:C#{@drives.size + 1})", "", "=SUM(E2:E#{@drives.size + 1})"], style: [nil, nil, time_format]
+end
+
+customers_with_drives.each do |customer, drives|
+  wb.add_worksheet(name: customer.try(:name)) do |sheet|
+    sheet.add_row ["Kunde"]
+    sheet.add_row ["#{customer.first_name} #{customer.name}"], style: [styles.h1]
+    sheet.add_row [customer.street]
+    sheet.add_row ["#{customer.zip} #{customer.city}"]
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Total Km", "=SUM(E11:E1000)"]
+    sheet.add_row ["Total Aufwand", "=SUM(C11:C1000)"], style: [nil, styles.time]
+    sheet.add_row
+    sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
+
+    drives.each do |drive|
+      sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
+    end
+  end
 end
