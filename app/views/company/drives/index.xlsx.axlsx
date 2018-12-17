@@ -14,8 +14,8 @@ if drives_without_customers
     sheet.add_row ["Ohne Kundenzuordnung"], style: [styles.h1]
     sheet.add_row
     sheet.add_row
-    sheet.add_row ["Total Km", "=SUM(E8:E1000)"]
-    sheet.add_row ["Total Aufwand", "=SUM(C8:C1000)"], style: [nil, styles.time]
+    sheet.add_row ["Total Km", "=SUM(E8:E#{drives_without_customers.length + 7})"]
+    sheet.add_row ["Total Aufwand", "=SUM(C8:C#{drives_without_customers.length + 7})"], style: [nil, styles.time]
     sheet.add_row
     sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
 
@@ -34,8 +34,8 @@ customers_with_drives.each do |customer, drives|
     sheet.add_row ["#{customer.zip} #{customer.city}"]
     sheet.add_row
     sheet.add_row
-    sheet.add_row ["Total Km", "=SUM(E11:E1000)"]
-    sheet.add_row ["Total Aufwand", "=SUM(C11:C1000)"], style: [nil, styles.time]
+    sheet.add_row ["Total Km", "=SUM(E11:E#{drives.length + 10})"]
+    sheet.add_row ["Total Aufwand", "=SUM(C11:C#{drives.length + 10})"], style: [nil, styles.time]
     sheet.add_row
     sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
 

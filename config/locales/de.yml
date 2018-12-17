@@ -162,7 +162,7 @@ de:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export"
+    download_xlsx: "Excel Export (Beta)"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
