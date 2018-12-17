@@ -39,6 +39,5 @@ customers_with_drives.each do |customer, drives|
     sheet.add_row [t('reports.drives.label_total_duration'), table_builder.duration_sum_formula], style: [nil, styles.time]
     sheet.add_row
     table_builder.add_to_worksheet sheet
-
   end
 end

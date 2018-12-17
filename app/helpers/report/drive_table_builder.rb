@@ -23,7 +23,7 @@ module Report
       return if @drives.empty?
 
       @drives.each do |drive|
-        @last_row = ws.add_row @rb.columns_for(drive), style: @rb.styles
+        @last_row = ws.add_row @rb.columns_for(drive), style: @rb.styles, widths: @hb.column_widths
       end
 
       @table = ws.add_table table_ref, name: table_name
@@ -34,7 +34,7 @@ module Report
     end
 
     def table_ref
-      "#{@title_row.cells.first.r}:#{@last_row.cells.last.r}"
+      "#{@title_row.cells.first.r}:#{Axlsx::cell_r(@title_row.cells.last.index, @last_row.row_index)}"
     end
 
     def distance_sum_formula

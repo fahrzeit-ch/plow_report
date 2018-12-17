@@ -26,6 +26,10 @@ module Report
       @fixed_headers.map { @styles.header } + @activity_headers.map { @styles.header_vertical }
     end
 
+    def column_widths
+      @fixed_headers.map { :auto } + @activity_headers.map { 6 }
+    end
+
     def column_name_for(attr, activity_id=nil)
       if activity_id
         column_name_for_activity(attr, activity_id)
