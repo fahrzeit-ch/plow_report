@@ -42,6 +42,6 @@ customers_with_drives.each do |customer, drives|
     drives.each do |drive|
       sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
     end
-    sheet.add_table "A10:K#{drives.length + 10}"
+    sheet.add_table "A11:K#{drives.length + 10}"
   end
 end
