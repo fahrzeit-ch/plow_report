@@ -1,7 +1,10 @@
 module Report
+
+  # Builds header columns a drive table.
   class HeaderBuilder
 
     attr_reader :activity_index_map
+    FIXED_COLUMNS = %i[date start driver duration distance].freeze
 
     # @param [Activities] activities
     # @param [Report::Styles] styles
@@ -21,6 +24,25 @@ module Report
 
     def styles
       @fixed_headers.map { @styles.header } + @activity_headers.map { @styles.header_vertical }
+    end
+
+    def column_name_for(attr, activity_id=nil)
+      if activity_id
+        column_name_for_activity(attr, activity_id)
+      else
+        @fixed_headers[FIXED_COLUMNS.index(attr)]
+      end
+    end
+
+    def column_name_for_activity(attr, activity_id)
+      case attr
+      when :name
+        @activities.to_a.first {|a| a.id == activity_id }.name
+      when :value, :value_label
+        @activities.to_a.first {|a| a.id == activity_id }.value_label
+      else
+        raise "Activity for id #{activity_id} not found."
+      end
     end
 
     private

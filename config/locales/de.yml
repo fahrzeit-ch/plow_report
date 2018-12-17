@@ -322,3 +322,8 @@ de:
       drive_duration_title: "Dauer"
       drive_driver_title: "Fahrer"
       drive_distance_title: "Distanz"
+      tab_title_without_customer: "Ohne Kundenzuordnung"
+      sheet_title_without_customer: "Fahrten ohne Kundenzuordnung"
+      label_total_km: "Total Km"
+      label_total_duration: "Total Aufwand"
+      sheet_title_with_customer: "Raport für"
