@@ -162,6 +162,7 @@ de:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
+    download_xlsx: "Excel Export (Beta)"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
@@ -314,3 +315,10 @@ de:
   tomorrow: 'Morgen'
   today: 'Heute'
   in_x_days: 'In %{distance} Tagen'
+  reports:
+    drives:
+      drive_date_title: "Datum"
+      drive_start_time_title: "Startzeit"
+      drive_duration_title: "Dauer"
+      drive_driver_title: "Fahrer"
+      drive_distance_title: "Distanz"

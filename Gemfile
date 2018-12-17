@@ -41,6 +41,10 @@ gem 'activerecord-import'
 gem 'resque'
 gem 'resque-rollbar'
 
+# Excel export
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
+gem 'axlsx_rails'
+
 gem 'trestle'
 gem 'trestle-auth'
 

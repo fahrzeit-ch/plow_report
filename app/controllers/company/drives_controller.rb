@@ -1,6 +1,8 @@
 class Company::DrivesController < ApplicationController
   before_action :set_company_from_param
   before_action :set_drive, only: [:destroy, :edit, :update]
+
+  after_action :update_read_status, only: :index
   helper_method :selected_driver
 
   def index
@@ -8,11 +10,15 @@ class Company::DrivesController < ApplicationController
     scope = apply_scopes(current_company.drives.includes(:driver).with_viewstate(current_user))
 
     @stats = apply_scopes(current_company.drives).stats
-    @drives = scope.order(start: :desc).page(params[:page]).per(30)
+    @drives = scope.order(start: :desc)
 
-    new_drives = @drives.reject(&:seen?)
-    if new_drives.any?
-      UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id))
+    respond_to do |format|
+      format.html do
+        @drives = @drives.page(params[:page]).per(30)
+      end
+      format.xlsx do
+        @drives = @drives.by_season(current_season)
+      end
     end
   end
 
@@ -38,6 +44,11 @@ class Company::DrivesController < ApplicationController
   end
 
   private
+
+  def update_read_status
+    new_drives = @drives.reject(&:seen?)
+    UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id)) if new_drives.any?
+  end
 
   def apply_scopes(drives)
     drives = drives.by_season(selected_season)

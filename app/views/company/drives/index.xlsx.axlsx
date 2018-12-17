@@ -1,0 +1,47 @@
+xlsx_package.use_shared_strings = true
+
+wb = xlsx_package.workbook
+
+styles = Report::Styles.new(wb)
+header_builder = Report::HeaderBuilder.new(current_company.activities, styles)
+row_builder = Report::DriveRowBuilder.new(styles, header_builder.activity_index_map)
+
+customers_with_drives = @drives.group_by(&:customer)
+drives_without_customers = customers_with_drives.delete(nil)
+
+if drives_without_customers
+  wb.add_worksheet(name: 'Ohne Kunde' ) do |sheet|
+    sheet.add_row ["Ohne Kundenzuordnung"], style: [styles.h1]
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Total Km", "=SUM(E8:E#{drives_without_customers.length + 7})"]
+    sheet.add_row ["Total Aufwand", "=SUM(C8:C#{drives_without_customers.length + 7})"], style: [nil, styles.time]
+    sheet.add_row
+    sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
+
+    drives_without_customers.each do |drive|
+      sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
+    end
+    sheet.add_table "A7:K#{drives_without_customers.length + 7}"
+  end
+end
+
+customers_with_drives.each do |customer, drives|
+  wb.add_worksheet(name: customer.try(:name)) do |sheet|
+    sheet.add_row ["Kunde"]
+    sheet.add_row ["#{customer.first_name} #{customer.name}"], style: [styles.h1]
+    sheet.add_row [customer.street]
+    sheet.add_row ["#{customer.zip} #{customer.city}"]
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Total Km", "=SUM(E11:E#{drives.length + 10})"]
+    sheet.add_row ["Total Aufwand", "=SUM(C11:C#{drives.length + 10})"], style: [nil, styles.time]
+    sheet.add_row
+    sheet.add_row header_builder.columns, style: header_builder.styles, height: 120
+
+    drives.each do |drive|
+      sheet.add_row row_builder.columns_for(drive), style: row_builder.styles
+    end
+    sheet.add_table "A10:K#{drives.length + 10}"
+  end
+end
