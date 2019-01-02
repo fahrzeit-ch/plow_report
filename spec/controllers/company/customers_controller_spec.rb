@@ -93,15 +93,16 @@ RSpec.describe Company::CustomersController, type: :controller do
 
   describe '#GET new' do
     subject { response }
-    before { get :new, params: { company_id: company.to_param } }
 
     context 'as driver' do
       before { CompanyMember.last.update(role: CompanyMember::DRIVER) }
+      before { get :new, params: { company_id: company.to_param } }
       it { is_expected.to redirect_to(root_path) }
     end
 
     context 'as admin' do
       before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
+      before { get :new, params: { company_id: company.to_param } }
       it { is_expected.to be_successful }
     end
   end

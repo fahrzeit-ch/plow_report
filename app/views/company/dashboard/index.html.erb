@@ -34,6 +34,23 @@
       </div>
     </div>
   </div>
+  <% @statistics.activity_values.each do |av| %>
+    <div class="col-sm-4 col-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="fa fa-line-chart"></i>
+            </div>
+            <div class="ml-5 align-self-center">
+              <h3 class="mb-0 font-light"><%= av[:total] %></h3>
+              <h5 class="mb-0 font-light"><%= av[:title] %></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <!--  ----- Currently not available---- -->
 
 <!--  <div class="col-sm-4 col-lg-3">-->

@@ -28,6 +28,33 @@ RSpec.describe Drive, type: :model do
     it { is_expected.to belong_to(:customer) }
   end
 
+  describe '#activity_value_summary' do
+    let(:activity1) { create(:activity, value_label: 'Salz', has_value: true) }
+    let(:activity2) { create(:activity, value_label: 'Kies', has_value: true) }
+
+    let(:drive1) { create(:drive, activity_execution_attributes: { activity_id: activity1.id, value: 12})}
+    let(:drive2) { create(:drive, activity_execution_attributes: { activity_id: activity2.id, value: 2})}
+    let(:drive3) { create(:drive, activity_execution_attributes: { activity_id: activity1.id, value: 10})}
+
+    before { drive1; drive2; drive3 }
+
+    subject { described_class.activity_value_summary }
+
+    it 'should include one row for each value label' do
+      expect(subject.length).to eq 2
+    end
+
+    it 'includes titles of the value labels' do
+      expect(subject[1][:title]).to eq 'Salz'
+      expect(subject[0][:title]).to eq 'Kies'
+    end
+
+    it 'calculates the total of each' do
+      expect(subject[1][:total]).to eq 22.0
+      expect(subject[0][:total]).to eq 2
+    end
+  end
+
   describe 'season scope' do
     let(:this_season) { Drive.create!(start: DateTime.parse('2018-01-20 12:30'), end: DateTime.parse('2018-01-20 13:50'), driver: driver1 ) }
     let(:last_season) { Drive.create!(start: DateTime.parse('2017-01-20 12:30'), end: DateTime.parse('2017-01-20 13:50'), driver: driver1 ) }

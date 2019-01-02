@@ -51,14 +51,14 @@ RSpec.describe CompaniesController, type: :controller do
     }
 
     it 'returns http success' do
-      put :update, params: {id: company.id }.merge(company: new_attributes)
+      put :update, params: {id: company.to_param }.merge(company: new_attributes)
       expect(response).to redirect_to company_dashboard_path(company)
     end
 
     describe 'changed attributes' do
       subject do
         lambda do
-          put :update, params: {id: company.id}.merge(company: new_attributes)
+          put :update, params: {id: company.to_param}.merge(company: new_attributes)
           company.reload
         end
       end
@@ -76,7 +76,7 @@ RSpec.describe CompaniesController, type: :controller do
     let(:company) { create(:company) }
     before {
       company.add_member(user, CompanyMember::OWNER)
-      delete :destroy, params: { id: company.id }
+      delete :destroy, params: { id: company.to_param }
     }
 
     it 'returns http success' do

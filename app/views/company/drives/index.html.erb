@@ -39,12 +39,18 @@
         <div class="d-flex">
           <div class="mr-5">
             <h3>Total Km</h3>
-            <strong><%= @stats['distance'] %></strong>
+            <strong><%= @stats.distance %></strong>
           </div>
-          <div>
+          <div class="mr-5">
             <h3>Fahrzeit</h3>
             <strong><%= @stats.duration_as_string %></strong>
           </div>
+          <% @stats.activity_values.each do |av| %>
+            <div class="mr-5">
+              <h3><%= av[:title] %></h3>
+              <strong><%= av[:total] %></strong>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

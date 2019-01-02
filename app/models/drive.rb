@@ -94,9 +94,19 @@ class Drive < ApplicationRecord
   class << self
 
     def stats
-      select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
+      values = Statistic.new
+      drive_stats = select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
 0 as salt,
 COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
+
+      values.distance = drive_stats.distance
+      values.duration_as_string = drive_stats.duration_as_string
+      values.activity_values = activity_value_summary
+      values
+    end
+
+    def activity_value_summary
+      select('activities.value_label as title, SUM(activity_executions.value) as total').joins(:activity).group(:value_label)
     end
 
     # Scope the drives by the given season
