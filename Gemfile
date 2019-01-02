@@ -38,7 +38,7 @@ gem 'rollbar'
 gem 'kaminari'
 
 gem 'activerecord-import'
-gem 'resque'
+gem 'resque', '~> 2.0.0'
 gem 'resque-rollbar'
 
 # Excel export
