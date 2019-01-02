@@ -5,7 +5,7 @@ class CustomerPolicy < ApplicationPolicy
   end
 
   def new?
-    true
+    company_admin_or_owner?(record.client_of)
   end
 
   def create?

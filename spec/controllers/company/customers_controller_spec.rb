@@ -39,7 +39,7 @@ RSpec.describe Company::CustomersController, type: :controller do
     subject { response }
 
     context 'as non admin' do
-      before {post :create, params: {company_id: company.id}.merge(attributes_for(:customer))}
+      before {post :create, params: {company_id: company.to_param}.merge(attributes_for(:customer))}
 
       it 'redirects to root (because of not authorized error)' do
         expect(response).to redirect_to(root_path)
@@ -53,7 +53,7 @@ RSpec.describe Company::CustomersController, type: :controller do
     context 'as admin' do
       before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
 
-      before {post :create, params: {company_id: company.id}.merge(customer: attributes_for(:customer))}
+      before {post :create, params: {company_id: company.to_param}.merge(customer: attributes_for(:customer))}
 
       it { is_expected.to be_redirect }
       it 'creates new customer' do
@@ -65,12 +65,12 @@ RSpec.describe Company::CustomersController, type: :controller do
   describe 'GET #destroy' do
     context 'as non admin' do
       it 'redirects to root (because of not authorized error)' do
-        delete :destroy, params:{ company_id: company.id, id: customers.first.id }
+        delete :destroy, params:{ company_id: company.to_param, id: customers.first.id }
         expect(response).to redirect_to(root_path)
       end
 
       it 'does not destroy customer' do
-        delete :destroy, params:{ company_id: company.id, id: customers.first.id }
+        delete :destroy, params:{ company_id: company.to_param, id: customers.first.id }
         expect(Customer.all.count).to be 3
       end
     end
@@ -79,16 +79,31 @@ RSpec.describe Company::CustomersController, type: :controller do
 
       before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
       it 'returns http success' do
-        delete :destroy, params:{ company_id: company.id, id: customers.first.id }
+        delete :destroy, params:{ company_id: company.to_param, id: customers.first.id }
         expect(response).to redirect_to(company_customers_path company)
       end
 
       it 'destroys customer' do
-        delete :destroy, params:{ company_id: company.id, id: customers.first.id }
+        delete :destroy, params:{ company_id: company.to_param, id: customers.first.id }
         expect(Customer.all.count).to be 2
       end
     end
 
+  end
+
+  describe '#GET new' do
+    subject { response }
+    before { get :new, params: { company_id: company.to_param } }
+
+    context 'as driver' do
+      before { CompanyMember.last.update(role: CompanyMember::DRIVER) }
+      it { is_expected.to redirect_to(root_path) }
+    end
+
+    context 'as admin' do
+      before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
+      it { is_expected.to be_successful }
+    end
   end
 
   describe '#PUT update' do
@@ -99,7 +114,7 @@ RSpec.describe Company::CustomersController, type: :controller do
       before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
 
       it 'updates the customer' do
-        put :update, params: { id: customer.id, company_id: company.id, customer: new_attrs }
+        put :update, params: { id: customer.id, company_id: company.to_param, customer: new_attrs }
         customer.reload
         expect(customer.name).to eq new_attrs[:name]
       end

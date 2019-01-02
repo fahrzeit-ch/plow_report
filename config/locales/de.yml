@@ -257,6 +257,7 @@ de:
         edit: "Kunde Bearbeiten"
         create: "Neuen Kunden anlegen"
         title: "Kunden"
+        new: "Neuer Kunde erstellen"
       activities:
         title: "Tätigkeiten"
         edit: "Tätigkeit bearbeiten"

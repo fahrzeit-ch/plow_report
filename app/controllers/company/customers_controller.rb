@@ -22,6 +22,11 @@ class Company::CustomersController < ApplicationController
     redirect_to edit_company_customer_path(current_company, @customer)
   end
 
+  def new
+    @customer = Customer.new(client_of: current_company)
+    authorize @customer
+  end
+
   def edit
   end
 
