@@ -12,19 +12,19 @@ RSpec.describe Company::StandbyDatesController, type: :controller do
 
   describe 'GET #index' do
     it 'returns http success' do
-      get :index, params:{ company_id: company.id }
+      get :index, params:{ company_id: company.to_param }
       expect(response).to have_http_status(:success)
     end
 
     it 'accepts driver id scope' do
-      get :index, params: { company_id: company.id, driver_id: 12 }
+      get :index, params: { company_id: company.to_param, driver_id: 12 }
     end
 
     context 'as non company member' do
       let(:other_company) { create(:company) }
 
       it 'redirects to root page' do
-        get :index, params: { company_id: other_company.id }
+        get :index, params: { company_id: other_company.to_param }
         expect(response).to redirect_to root_path
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe Company::StandbyDatesController, type: :controller do
 
   describe 'POST #create' do
     let(:standby_params) { {standby_date: { driver_id: driver.id, day: Date.today }} }
-    subject { post :create, params: { company_id: company.id}.merge(standby_params) }
+    subject { post :create, params: { company_id: company.to_param }.merge(standby_params) }
 
     context 'standby date' do
       it 'redirects back to standby dates' do

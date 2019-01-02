@@ -17,6 +17,7 @@ class Company < ApplicationRecord
   has_many :activities, dependent: :destroy
 
   before_validation :default_values
+  before_create :create_slug
 
   attribute :options, Company::Settings::Type.new
 
@@ -72,6 +73,14 @@ class Company < ApplicationRecord
     end
 
     scope.stats
+  end
+
+  def to_param
+    self.slug
+  end
+
+  def create_slug
+    self.slug ||= name.parameterize
   end
 
   private

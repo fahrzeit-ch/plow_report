@@ -28,7 +28,7 @@ RSpec.describe Company::CustomersController, type: :controller do
       let(:other_company) { create(:company) }
 
       it 'redirects to root page' do
-        get :index, params: { company_id: other_company.id }
+        get :index, params: { company_id: other_company.to_param }
         expect(response).to redirect_to root_path
       end
     end

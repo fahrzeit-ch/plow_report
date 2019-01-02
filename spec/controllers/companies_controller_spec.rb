@@ -36,7 +36,7 @@ RSpec.describe CompaniesController, type: :controller do
       company.add_member(user, CompanyMember::OWNER)
     }
     it 'returns http success' do
-      get :edit, params: { id: company.id }
+      get :edit, params: { id: company.to_param }
       expect(response).to have_http_status(:success)
     end
   end

@@ -28,12 +28,12 @@ class CompaniesController < ApplicationController
   end
 
   def edit
-    @resource = Company.with_member(current_user.id).find(params[:id])
+    @resource = Company.with_member(current_user.id).find_by(slug: params[:id])
     authorize @resource
   end
 
   def update
-    @resource = Company.with_member(current_user.id).find(params[:id])
+    @resource = Company.with_member(current_user.id).find_by(slug: params[:id])
     authorize @resource
 
     respond_to do |format|
@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    @resource = Company.with_member(current_user.id).find(params[:id])
+    @resource = Company.with_member(current_user.id).find_by(slug: params[:id])
     authorize @resource
     @resource.destroy
     if @resource.destroyed?

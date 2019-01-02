@@ -19,7 +19,7 @@ feature 'assign user to existing driver' do
     click_link(I18n.t('views.companies.drivers.edit'))
     find('#driver_user').find(:xpath, 'option[2]').select_option
     find('[name=commit]').click
-    expect(page).to have_current_path("/companies/#{company.id}/drivers")
+    expect(page).to have_current_path("/companies/#{company.to_param}/drivers")
   end
 
 end

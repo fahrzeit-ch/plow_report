@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_company_from_param
-    self.current_company = Company.find(params[:company_id])
+    self.current_company = Company.find_by(slug: params[:company_id])
   end
 
   def default_company_from_driver_or_user

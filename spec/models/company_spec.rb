@@ -103,6 +103,14 @@ RSpec.describe Company, type: :model do
     it { is_expected.to have_many(:customers) }
   end
 
+  describe 'create_slug' do
+    let(:company) { build(:company, name: 'Some name AG') }
+    before { company.create_slug }
+    subject { company.slug }
+
+    it { is_expected.to eq 'Some name AG'.parameterize }
+  end
+
   describe '#drives' do
     subject { create(:company) }
     # create driver associated to the company
