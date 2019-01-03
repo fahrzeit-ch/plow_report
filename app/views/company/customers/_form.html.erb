@@ -1,5 +1,5 @@
 <div id="company-member-form">
-  <%= form_with(model: @customer, url: [current_company, @customer], builder: BootstrapFormBuilder) do |f| %>
+  <%= form_with(model: @customer, url: [current_company, @customer], builder: BootstrapFormBuilder, local: true) do |f| %>
     <div class="form-row">
       <div class="form-group col-md-6">
         <%= f.label :name %>

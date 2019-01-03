@@ -36,6 +36,7 @@ class Company::CustomersController < ApplicationController
       flash[:success] = I18n.t 'flash.customer.updated'
       redirect_to company_customers_path(current_company)
     else
+      flash[:error] = I18n.t 'flash.customer.error'
       render :edit
     end
   end
