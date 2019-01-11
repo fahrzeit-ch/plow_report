@@ -17,10 +17,11 @@ class Company::SitesController < ApplicationController
     authorize @site
     if @site.save
       flash[:success] = I18n.t 'flash.site.created'
+      redirect_to edit_company_customer_path(current_company, @customer)
     else
       flash[:error] = I18n.t 'flash.site.not_created'
+      render :new
     end
-    redirect_to edit_company_customer_path(current_company, @customer)
   end
 
   def new
@@ -61,7 +62,7 @@ class Company::SitesController < ApplicationController
     else
       flash[:error] = I18n.t 'flash.site.not_destroyed'
     end
-    redirect_to company_customers_path(current_company)
+    redirect_back fallback_location: [current_company, @site.customer]
   end
 
   private

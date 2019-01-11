@@ -10,7 +10,7 @@ class Customer < ApplicationRecord
   default_scope { order(:name) }
 
   def details
-    "#{street}, #{city}"
+    [street, city].reject(&:blank?).join(', ')
   end
 
   private

@@ -212,6 +212,13 @@ de:
       updated: "Fahrer wurde erfolgreich aktuallisiert"
     customer:
       error: "Fehler beim speichern"
+    site:
+      created: "Objekt erfolgreich erstellt"
+      not_created: "Objekt konnte nicht erstellt werden."
+      updated: "Objekt erfolgreich aktuallisiert"
+      error: "Objekt konnte nicht aktuallisiert werden"
+      destroyed: "Objekt erfolgreich gelöscht"
+      not_destroyed: "Objekt konnte nicht gelöscht werden"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -274,6 +281,9 @@ de:
         title: "Tätigkeiten"
         edit: "Tätigkeit bearbeiten"
         new: "Neue Tätigkeit erstellen"
+      sites:
+        name_info: "Anzeigename für dieses Objekt"
+        new: "Neues Objekt"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"

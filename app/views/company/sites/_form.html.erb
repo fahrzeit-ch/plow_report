@@ -1,0 +1,36 @@
+<div id="company-member-form">
+  <%= form_with(model: @site, url: [current_company, @customer, @site], builder: BootstrapFormBuilder, local: true) do |f| %>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+        <p class="label-info">
+          <i class="fa fa-info"></i> <%= t 'views.companies.sites.name_info' %>
+        </p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-10">
+        <%= f.label :street %>
+        <%= f.text_field :street %>
+      </div>
+      <div class="form-group col-md-2">
+        <%= f.label :nr %>
+        <%= f.text_field :nr %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <%= f.label :zip %>
+        <%= f.text_field :zip %>
+      </div>
+      <div class="form-group col-md-8">
+        <%= f.label :city %>
+        <%= f.text_field :city %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: 'btn btn-primary' do %><i class="fa fa-check"></i><% end %>
+    </div>
+  <% end %>
+</div>

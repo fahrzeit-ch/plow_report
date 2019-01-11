@@ -65,3 +65,15 @@ en:
   flash:
     customer:
       error: ""
+    site:
+      created: ""
+      not_created: ""
+      updated: ""
+      error: ""
+      destroyed: ""
+      not_destroyed: ""
+  views:
+    companies:
+      sites:
+        name_info: ""
+        new: ""
