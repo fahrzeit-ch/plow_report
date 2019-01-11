@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :site do
-    name "Überbauung Sennstrasse"
+    name { generate(:site_name) }
     street "Sennstrasse"
     nr "1 - 6"
     zip "5999"

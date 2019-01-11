@@ -28,6 +28,10 @@ class CompanyPolicy < ApplicationPolicy
     company_admin_or_owner? record
   end
 
+  def index_sites?
+    company_admin_or_owner? record
+  end
+
   def index_activities?
     company_admin_or_owner? record
   end
