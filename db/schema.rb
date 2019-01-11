@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190102211908) do
+ActiveRecord::Schema.define(version: 20190110181300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,19 @@ ActiveRecord::Schema.define(version: 20190102211908) do
     t.index ["driver_id"], name: "index_recordings_on_driver_id", unique: true
   end
 
+  create_table "sites", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "nr"
+    t.string "zip"
+    t.string "city"
+    t.bigint "customer_id"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_sites_on_customer_id"
+  end
+
   create_table "standby_dates", force: :cascade do |t|
     t.date "day", null: false
     t.datetime "created_at", null: false
@@ -233,6 +246,7 @@ ActiveRecord::Schema.define(version: 20190102211908) do
   add_foreign_key "drivers", "companies"
   add_foreign_key "drives", "customers"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
+  add_foreign_key "sites", "customers"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"

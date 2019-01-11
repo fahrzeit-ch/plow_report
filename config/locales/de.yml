@@ -55,6 +55,9 @@ de:
             user:
               taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
     models:
+      site:
+        one: "Objekt"
+        other: "Objekte"
       company:
         one: "Firma"
         other: "Firmen"
@@ -100,6 +103,13 @@ de:
         name: "Name"
         first_name: "Vorname"
         address: "Adresse"
+        nr: "Nr."
+        zip: "PLZ"
+        city: "Ort"
+      site:
+        name: "Objektbezeichnung"
+        address: "Adresse"
+        nr: "Nr."
         zip: "PLZ"
         city: "Ort"
       drive:
