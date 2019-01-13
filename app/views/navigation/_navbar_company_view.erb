@@ -20,7 +20,7 @@
         <% end %>
       </li>
       <li class="nav-item <%= (controller_name == 'drives') ? 'active' : '' %>">
-        <%= link_to company_drives_path(company_id: current_company.id), class: 'nav-link' do %>
+        <%= link_to company_drives_path(current_company), class: 'nav-link' do %>
           <i class="fa fa-truck"></i>
           <%= t 'navbar.companies.drives' %>
         <% end %>
