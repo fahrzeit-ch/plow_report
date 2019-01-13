@@ -22,6 +22,18 @@
 <div class="row mt-3">
   <div class="col-6">
     <div class="card">
+      <div class="card-header">
+        <div class="tools pull-right">
+          <%= link_to company_customer_site_path(company_id: current_company.to_param, customer_id: @customer.to_param, id: @site),
+                      method: :delete,
+                      data: { disable_with: is_processing(true) },
+                      remote: true,
+                      class: 'btn btn-danger' do %>
+            <i class="fa fa-trash"></i>
+            <%= t 'actions.delete' %>
+          <% end %>
+        </div>
+      </div>
       <div class="card-body">
         <%= render 'form' %>
       </div>

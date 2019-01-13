@@ -20,6 +20,14 @@ class SitePolicy < ApplicationPolicy
     company_admin_or_owner?(company)
   end
 
+  def deactivate?
+    company_admin_or_owner?(company)
+  end
+
+  def activate?
+    company_admin_or_owner?(company)
+  end
+
   def company
     @company ||= record.customer.try(:client_of)
   end

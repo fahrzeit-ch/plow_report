@@ -12,7 +12,7 @@ class Company::SitesController < ApplicationController
 
   # Creates a new site for the current company and the given customer
   def create
-    @site = Site.new site_parems
+    @site = Site.new site_params
     @site.customer = @customer
     authorize @site
     if @site.save
@@ -36,7 +36,7 @@ class Company::SitesController < ApplicationController
   def update
     if @site.update(site_update_params)
       flash[:success] = I18n.t 'flash.site.updated'
-      redirect_to company_customers_path(current_company)
+      redirect_to edit_company_customer_path(company_id: current_company.to_param, id: @customer.to_param)
     else
       flash[:error] = I18n.t 'flash.site.error'
       render :edit
@@ -62,7 +62,7 @@ class Company::SitesController < ApplicationController
     else
       flash[:error] = I18n.t 'flash.site.not_destroyed'
     end
-    redirect_to edit_company_customer_path(company_id: current_company.to_param, customer_id: @site.customer.to_param)
+    redirect_to edit_company_customer_path(company_id: current_company.to_param, id: @customer.to_param)
   end
 
   private
@@ -76,12 +76,12 @@ class Company::SitesController < ApplicationController
     authorize @site
   end
 
-  def site_parems
+  def site_params
     params.require(:site).permit(:name, :street, :nr, :zip, :city)
   end
 
   def site_update_params
-     params.require(:site).permit(:name, :street, :nr, :zip, :city, :activate)
+     params.require(:site).permit(:name, :street, :nr, :zip, :city, :active)
   end
 
 end

@@ -112,6 +112,7 @@ de:
         nr: "Nr."
         zip: "PLZ"
         city: "Ort"
+        active: 'Objekt Aktiv'
       drive:
         activity: "Tätigkeit"
         driver: "Fahrer"
@@ -132,6 +133,7 @@ de:
           salt: "Salzen"
           plow: "Räumen"
           refill_salt: "Füllen"
+      inactive: "Inaktiv"
   dashboard:
     cards:
       standby_dates:
@@ -173,6 +175,7 @@ de:
     delete: "Löschen"
     save: "Speichern"
     download_xlsx: "Excel Export (Beta)"
+    disable: "Deaktivieren"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert"
@@ -284,6 +287,7 @@ de:
       sites:
         name_info: "Anzeigename für dieses Objekt"
         new: "Neues Objekt"
+        activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"

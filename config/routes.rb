@@ -38,7 +38,12 @@ Rails.application.routes.draw do
       end
       resources :drivers, only: [:index, :create, :destroy, :edit, :update]
       resources :customers do
-        resources :sites
+        resources :sites do
+          member do
+            post :deactivate
+            post :activate
+          end
+        end
       end
       resources :activities
     end
