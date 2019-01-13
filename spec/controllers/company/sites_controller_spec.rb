@@ -81,7 +81,8 @@ RSpec.describe Company::SitesController, type: :controller do
       before do
         CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR)
       end
-      it {is_expected.to redirect_to(company_customers_path company) }
+
+      it {is_expected.to redirect_to(edit_company_customer_path(company_id: company.to_param, customer_id: customer.to_param)) }
 
       it 'destroys customer' do
         subject

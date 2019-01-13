@@ -62,7 +62,7 @@ class Company::SitesController < ApplicationController
     else
       flash[:error] = I18n.t 'flash.site.not_destroyed'
     end
-    redirect_back fallback_location: [current_company, @site.customer]
+    redirect_to edit_company_customer_path(company_id: current_company.to_param, customer_id: @site.customer.to_param)
   end
 
   private
