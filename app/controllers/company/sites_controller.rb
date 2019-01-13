@@ -4,13 +4,13 @@ class Company::SitesController < ApplicationController
   before_action :set_customer
   before_action :set_site, only: [:edit, :update, :destroy, :activate, :deactivate]
 
-  # List all customers of the current company
+  # List all sites of the customer
   def index
     authorize current_company, :index_sites?
     @sites = @customer.sites.order(:name)
   end
 
-  # Creates a new customer for the current company
+  # Creates a new site for the current company and the given customer
   def create
     @site = Site.new site_parems
     @site.customer = @customer
@@ -32,7 +32,7 @@ class Company::SitesController < ApplicationController
   def edit
   end
 
-  # Update a customer
+  # Update a site
   def update
     if @site.update(site_update_params)
       flash[:success] = I18n.t 'flash.site.updated'
@@ -48,13 +48,13 @@ class Company::SitesController < ApplicationController
     @site.update_attribute(:active, true)
   end
 
-  # Dectivate a customer. This customer will not be visible
+  # Dectivate a site. This site will not be visible
   # for selection in future drives
   def deactivate
     @site.update_attribute(:active, false)
   end
 
-  # Destroy a customer. Only customers without recorded drives can be
+  # Destroy a site. Only customers without recorded drives can be
   # destroyed.
   def destroy
     if @site.destroy
