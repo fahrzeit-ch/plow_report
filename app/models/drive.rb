@@ -15,6 +15,9 @@ class Drive < ApplicationRecord
 
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
+  belongs_to :site, optional: true
+  validate :customer_associated_with_site
+
   audited associated_with: :driver
 
   include TrackedViews
@@ -29,6 +32,17 @@ class Drive < ApplicationRecord
 
   def week_nr
     self.start.to_date.cweek
+  end
+
+  def associated_to_as_json
+    "{\"customer_id\": #{customer_id || 'null'}, \"site_id\": #{site_id || 'null'}}"
+  end
+
+  def associated_to_as_json=(json)
+    return if json.blank?
+    associated_to = JSON.parse(json)
+    self.customer_id = associated_to['customer_id']
+    self.site_id = associated_to['site_id']
   end
 
   def day_of_week
@@ -150,6 +164,11 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+
+  def customer_associated_with_site
+    return if customer.nil? || site.nil?
+    errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
+  end
 
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start

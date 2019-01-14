@@ -24,8 +24,28 @@ RSpec.describe Drive, type: :model do
     end
   end
 
-  describe 'customer' do
+  describe 'customer and site' do
     it { is_expected.to belong_to(:customer) }
+    it { is_expected.to belong_to(:site) }
+
+    context 'customer without site' do
+      let(:customer) { create(:customer) }
+      subject { build(:drive, customer: customer, site: nil) }
+      it { is_expected.to be_valid }
+    end
+
+    context 'site without customer' do
+      let(:site) { create(:site) }
+      subject { build(:drive, customer: nil, site: site) }
+      it { is_expected.to be_valid }
+    end
+
+    context 'sites customer different than drives customer' do
+      let(:site) { create(:site) }
+      let(:customer) { create(:customer) }
+      subject { build(:drive, customer: customer, site: site) }
+      it { is_expected.not_to be_valid }
+    end
   end
 
   describe '#activity_value_summary' do

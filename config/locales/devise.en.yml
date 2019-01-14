@@ -78,3 +78,7 @@ en:
         name_info: ""
         new: ""
         activation_status_info: ""
+  forms:
+    drives:
+      select_group_name:
+        customers_without_sites: ""

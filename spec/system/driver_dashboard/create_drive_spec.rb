@@ -31,7 +31,7 @@ feature 'creating a drive on dashboard' do
       attrs = { start: 1.hour.ago,
                 end: 0.5.hour.ago,
                 distance_km: 15.1,
-                customer: customer
+                # customer: customer
       }
       fill_form 'drive', attrs
       # choose('drive[activity_execution_attributes][activity_id]', id: "activity_#{activity.id}")
@@ -48,7 +48,7 @@ feature 'creating a drive on dashboard' do
       # expect(page).to have_content '(3.41t)' # salt amount tonns
       expect(page).to have_content '15.1' # distance in km
       expect(page).to have_content '30min'
-      expect(page).to have_content customer.name
+      # expect(page).to have_content customer.name
     end
   end
 

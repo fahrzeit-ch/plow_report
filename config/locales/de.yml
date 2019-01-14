@@ -317,6 +317,9 @@ de:
     promt: "%{model} wählen"
     select:
       none: "Kein"
+    drives:
+      select_group_name:
+        customers_without_sites: "Kunden ohne Objekte"
   confirm:
     company:
       delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
