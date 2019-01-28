@@ -17,4 +17,20 @@ RSpec.describe Site, type: :model do
 
   end
 
+  describe 'destroy' do
+    let(:site) { create(:site) }
+
+    context 'without drives assigned' do
+      subject { site.destroy }
+      it { is_expected.to be_destroyed }
+    end
+
+    context 'with drives assigned' do
+      before { create(:drive, customer_id: site.customer_id, site_id: site.id) }
+      subject { site.destroy }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
 end
