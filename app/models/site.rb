@@ -12,6 +12,10 @@ class Site < ApplicationRecord
     ["#{street} #{nr}", zip, city].reject(&:blank?).join(', ')
   end
 
+  def as_select_value
+    CustomerAssociation.new(customer_id, id).to_json
+  end
+
   private
 
   def check_drives

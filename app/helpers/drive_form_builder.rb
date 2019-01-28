@@ -4,7 +4,7 @@ class DriveFormBuilder < BootstrapFormBuilder
             @template.drive_customer_select_options(
                 object.associated_to_as_json,
                 prompt: I18n.t('forms.select.none')
-            ), prompt: I18n.t('forms.select.none')
+            )
   end
 
   def activity_choice(activity)

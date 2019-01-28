@@ -13,6 +13,10 @@ class Customer < ApplicationRecord
     [street, city].reject(&:blank?).join(', ')
   end
 
+  def as_select_value
+    CustomerAssociation.new(id, nil).to_json
+  end
+
   private
   def check_existing_drives
     if drives.any?

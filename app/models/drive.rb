@@ -35,14 +35,14 @@ class Drive < ApplicationRecord
   end
 
   def associated_to_as_json
-    "{\"customer_id\": #{customer_id || 'null'}, \"site_id\": #{site_id || 'null'}}"
+    return nil unless site_id || customer_id
+    CustomerAssociation.new(customer_id, site_id).to_json
   end
 
   def associated_to_as_json=(json)
-    return if json.blank?
-    associated_to = JSON.parse(json)
-    self.customer_id = associated_to['customer_id']
-    self.site_id = associated_to['site_id']
+    assoc = CustomerAssociation.from_json json
+    self.customer_id = assoc.customer_id
+    self.site_id = assoc.site_id
   end
 
   def day_of_week
