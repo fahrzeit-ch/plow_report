@@ -19,7 +19,6 @@ module DrivesHelper
       end
     end
 
-    # Ungroup if one default group exists
     build_options(grouped_options, selected, opts.delete(:prompt))
   end
 
@@ -47,10 +46,11 @@ module DrivesHelper
   private
 
   def build_options(grouped_options, selected, prompt)
+    # Ungroup if one default group exists
     if grouped_options.keys.count == 1
-      options_for_select [[prompt, nil]] + grouped_options.values[0], selected
+      options_for_select [[prompt, nil], grouped_options.values[0]], selected
     else
-      grouped_options_for_select grouped_options, selected, promt:prompt
+      grouped_options_for_select grouped_options, selected, prompt: prompt
     end
   end
 

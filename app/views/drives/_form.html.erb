@@ -9,9 +9,7 @@
         <%= form.label :end  %>
         <%= form.text_field :end, value: form.object.end.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_end %>
       </div>
-      <div class="form-row">
-        <%= render 'drives/attribute_fields', form: form %>
-      </div>
+      <%= render 'drives/attribute_fields', form: form %>
       <% if local_assigns[:can_change_driver] %>
         <div class="form-group">
           <%= form.label :driver  %>
