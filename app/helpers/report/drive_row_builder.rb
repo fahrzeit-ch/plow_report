@@ -12,7 +12,7 @@ module Report
     # @param [Drive] drive
     def columns_for(drive)
       columns = [
-        drive.start, drive.start, drive.duration, drive.driver.name, drive.distance_km
+        drive.start, drive.start, drive.duration, drive.site_name, drive.driver.name, drive.distance_km
       ]
       return columns unless drive.activity_execution
 
