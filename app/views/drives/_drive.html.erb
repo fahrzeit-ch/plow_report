@@ -18,10 +18,15 @@
         <% if drive.activity.try(:has_value) %>(<%= drive.activity_execution.value %>)
         <% end %></small>
     </div>
-    <div class="d-block d-md-none"><%= drive.customer_name %></div>
+    <div class="d-block d-md-none"><%= drive.site_name %></div>
   </div>
 
-  <div class="mr-2 p-2 d-none d-md-block"><%= drive.customer_name %></div>
+  <div class="ml-3 mr-2 p-2 d-none d-md-block">
+    <div><%= drive.customer_name %></div>
+    <div class="text-muted">
+      <small><%= drive.site_name %></small>
+    </div>
+  </div>
 
   <div class="align-self-center ml-auto mr-2 d-print-none">
     <%= link_to edit_drife_path(drive), class: 'pull-right btn btn-light' do %>

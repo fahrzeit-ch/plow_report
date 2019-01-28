@@ -53,6 +53,10 @@ class Drive < ApplicationRecord
     customer ? customer.name : ''
   end
 
+  def site_name
+    site ? site.name : ''
+  end
+
   # Get the tasks (drive options) as an Array with translated option names
   def tasks
     activity.try(:name)
