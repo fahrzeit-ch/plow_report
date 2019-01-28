@@ -1,0 +1,47 @@
+class CustomerToSiteTransition
+  include ActiveModel::Model
+
+  # The customer that should be converted to a site
+  attr_accessor :source
+
+  # The customer that the resulting site will be assigned to
+  attr_accessor :assign_to
+
+  # the resulting site that will be created
+  def target
+    @target ||= Site.new(attributes_for_target)
+  end
+
+  def target_attributes=(attrs)
+    self.target.customer = assign_to
+    self.target.assign_attributes(attrs)
+  end
+
+  def save
+    return false unless target.valid?
+    Site.transaction do
+      target.save
+      affected_drives.each { |drive| drive.update_attributes(customer_id: target.customer_id, site_id: target.id) }
+      source.destroy
+    end
+    target
+  end
+
+  # Returns a list of drives that will be affected (and updated) by this transition
+  def affected_drives
+    Drive.where(customer_id: source, site_id: nil)
+  end
+
+  private
+
+  def attributes_for_target
+    {
+        name: "#{source.first_name} #{source.name}}".strip,
+        street: source.street,
+        customer: assign_to,
+        nr: source.nr,
+        zip: source.zip,
+        city: source.city
+    }
+  end
+end
