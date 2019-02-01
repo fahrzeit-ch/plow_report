@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         end
       end
       resources :drivers, only: [:index, :create, :destroy, :edit, :update]
+      resources :customer_to_site_transitions, only: [:new, :create]
       resources :customers do
         resources :sites do
           member do

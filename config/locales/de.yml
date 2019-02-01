@@ -26,6 +26,8 @@ de:
         one: "Saison"
         other: "Saison"
     attributes:
+      customer_to_site_transition:
+        assign_to: "Zielkunde"
       company/registration:
         name: "Firmen Name"
         contact_email: "Kontakt Email"
@@ -102,13 +104,13 @@ de:
       customer:
         name: "Name"
         first_name: "Vorname"
-        address: "Adresse"
+        street: "Adresse"
         nr: "Nr."
         zip: "PLZ"
         city: "Ort"
       site:
         name: "Objektbezeichnung"
-        address: "Adresse"
+        street: "Adresse"
         nr: "Nr."
         zip: "PLZ"
         city: "Ort"
@@ -222,6 +224,8 @@ de:
       error: "Objekt konnte nicht aktuallisiert werden"
       destroyed: "Objekt erfolgreich gelöscht"
       not_destroyed: "Objekt konnte nicht gelöscht werden"
+    customer_to_site_transition:
+      success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -280,6 +284,10 @@ de:
         create: "Neuen Kunden anlegen"
         title: "Kunden"
         new: "Neuer Kunde erstellen"
+        convert_to_site: "In Objekt umwandeln"
+        convert_to_site_info:
+          one: "Ein Einsatz wird auf das neue Objekt umgehängt."
+          other: "%{count} Einsätze werden auf das neue Objekt umgehängt."
       activities:
         title: "Tätigkeiten"
         edit: "Tätigkeit bearbeiten"

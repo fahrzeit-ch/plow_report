@@ -3,13 +3,25 @@ class CustomerToSiteTransition
 
   # The customer that should be converted to a site
   attr_accessor :source
+  attr_accessor :source_id
 
   # The customer that the resulting site will be assigned to
   attr_accessor :assign_to
+  attr_accessor :assign_to_id
 
   # the resulting site that will be created
   def target
     @target ||= Site.new(attributes_for_target)
+  end
+
+  def assign_to
+    return nil if @assign_to_id.nil? && @assign_to.nil?
+    @assign_to ||= Customer.find(@assign_to_id)
+  end
+
+  def source
+    return nil if @source_id.nil? && @source.nil?
+    @source ||= Customer.find(@source_id)
   end
 
   def target_attributes=(attrs)
@@ -22,7 +34,7 @@ class CustomerToSiteTransition
     Site.transaction do
       target.save
       affected_drives.each { |drive| drive.update_attributes(customer_id: target.customer_id, site_id: target.id) }
-      source.destroy
+      source.destroy unless source == assign_to
     end
     target
   end
@@ -36,7 +48,7 @@ class CustomerToSiteTransition
 
   def attributes_for_target
     {
-        name: "#{source.first_name} #{source.name}}".strip,
+        name: "#{source.first_name} #{source.name}".strip,
         street: source.street,
         customer: assign_to,
         nr: source.nr,

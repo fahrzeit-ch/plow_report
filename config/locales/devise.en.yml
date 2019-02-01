@@ -72,6 +72,8 @@ en:
       error: ""
       destroyed: ""
       not_destroyed: ""
+    customer_to_site_transition:
+      success: ""
   views:
     companies:
       sites:

@@ -36,6 +36,15 @@ RSpec.describe CustomerToSiteTransition, type: :model do
         expect(drive.customer_id).to eq assign_to.id
       end
     end
+
+    context 'with source as target' do
+      let(:assign_to) { source }
+
+      it 'does not destroy the source' do
+        subject
+        expect(source).not_to be_destroyed
+      end
+    end
   end
 
 end
