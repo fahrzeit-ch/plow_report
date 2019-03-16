@@ -14,6 +14,7 @@ class Drive < ApplicationRecord
   accepts_nested_attributes_for :activity_execution, reject_if: :all_blank
 
   # A Drive may be recorded on a customer but its not necessary
+  # TODO: Refactor to only allow site relation and create a transition to move existing records to new concept
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
   validate :customer_associated_with_site
@@ -36,11 +37,19 @@ class Drive < ApplicationRecord
 
   def associated_to_as_json
     return nil unless site_id || customer_id
-    CustomerAssociation.new(customer_id, site_id).to_json
+    customer_association.to_json
   end
 
   def associated_to_as_json=(json)
     assoc = CustomerAssociation.from_json json
+    self.customer_association = assoc
+  end
+
+  def customer_association
+    CustomerAssociation.new(customer_id, site_id)
+  end
+
+  def customer_association=(assoc)
     self.customer_id = assoc.customer_id
     self.site_id = assoc.site_id
   end

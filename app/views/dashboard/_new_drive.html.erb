@@ -1,7 +1,7 @@
 <div class="card text-dark bg-light col-12">
   <div class="card-body">
     <h5 class="card-title"><%= t 'dashboard.cards.new_drive.title' %></h5>
-    <%= form_with(model: Drive.new, local: true, builder: DriveFormBuilder) do |form| %>
+    <%= form_with(model: build_drive, local: true, builder: DriveFormBuilder) do |form| %>
       <div class="form-row">
         <div class="form-group col-md-2">
           <%= form.label :start %>

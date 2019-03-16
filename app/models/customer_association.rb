@@ -2,7 +2,7 @@ class CustomerAssociation
 
   attr_accessor :customer_id, :site_id
 
-  def initialize(customer_id, site_id)
+  def initialize(customer_id = nil, site_id = nil)
     self.customer_id = customer_id
     self.site_id = site_id
   end
@@ -17,8 +17,17 @@ class CustomerAssociation
     'unknown'
   end
 
+  def empty?
+    customer_id.nil? && site_id.nil?
+  end
+
   def to_json
     "{\"customer_id\": #{customer_id || 'null'}, \"site_id\": #{site_id || 'null'}}"
+  end
+
+  def ==( other )
+    return false unless other.is_a?(CustomerAssociation)
+    other.customer_id == customer_id && other.site_id == site_id
   end
 
   def self.from_json(json)

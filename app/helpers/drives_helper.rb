@@ -22,6 +22,15 @@ module DrivesHelper
     build_options(grouped_options, selected, opts.delete(:prompt))
   end
 
+  def build_drive(attrs = {})
+    drive = Drive.new(attrs)
+    assoc_suggestion = CustomerSuggestor.suggest(
+        CustomerSuggestor.samples_for(current_driver, 20)
+    )
+    drive.customer_association = assoc_suggestion
+    drive
+  end
+
   def drive_driver_select_options
     current_company.drivers.map do |driver|
       [driver.name, driver.id]
