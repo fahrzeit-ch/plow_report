@@ -130,6 +130,7 @@ de:
         plowed: "Räumen"
         salted: "Salzen"
         customer: "Kunde"
+        site: "Objekt"
         salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
