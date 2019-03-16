@@ -41,3 +41,10 @@ en:
       sites:
         name_info: ""
         new: ""
+  flash:
+    customer:
+      created: "Customer was successfully created"
+      not_created: "Customer not created, please check you input"
+      destroyed: "Customer successfully deleted"
+      not_destroyed: "Customer could not be deleted"
+      updated: "Customer updated"

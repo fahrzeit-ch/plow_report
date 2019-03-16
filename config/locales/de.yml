@@ -217,6 +217,11 @@ de:
       updated: "Fahrer wurde erfolgreich aktuallisiert"
     customer:
       error: "Fehler beim speichern"
+      created: "Der kunde wurde erfolgreich angelegt"
+      not_created: "Der Kunde konnte nicht gespeichert werden. Bitte prüfen Sie Ihre eingaben"
+      destroyed: "Der Kunde wurde erfolgreich gelöscht."
+      not_destroyed: "Der Kunde konnte nicht gelöscht werden."
+      updated: "Kunde erfolgreich aktuallisiert"
     site:
       created: "Objekt erfolgreich erstellt"
       not_created: "Objekt konnte nicht erstellt werden."
