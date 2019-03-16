@@ -3,23 +3,12 @@ module DrivesHelper
   # and sites. Customers that do not have sites are on toplevel.
   #
   # The values are JSON objects containing the customer_id and the site_id
-  # TODO: Refactor - key generation (json keys) is very coupled to Drive#associated_to_as_json
   #
   def drive_customer_select_options(selected, opts)
-    grouped_options = {}
-    without_sites_label = t 'forms.drives.select_group_name.customers_without_sites'
-    grouped_options[without_sites_label] = []
+    sites = Site.order(:name).joins(:customer).where(customers: { client_of: current_company })
+    options = sites.map { |site| [site.name, site.as_select_value] }
 
-    # TODO: Improve this to only have one queryè
-    current_company.customers.includes(:sites).each do |cus|
-      if cus.sites.active.any?
-        grouped_options[cus.name] = cus.sites.active.map { |site| [site.name, site.as_select_value] }
-      else
-        grouped_options[without_sites_label] += [[cus.name, cus.as_select_value]]
-      end
-    end
-
-    build_options(grouped_options, selected, opts.delete(:prompt))
+    build_options(options, selected, opts.delete(:prompt))
   end
 
   def build_drive(attrs = {})
@@ -54,32 +43,28 @@ module DrivesHelper
 
   private
 
-  def build_options(grouped_options, selected, prompt)
+  def build_options(options, selected, prompt)
     # Ungroup if one default group exists
-    add_selection_if_missing(grouped_options, selected)
-    if grouped_options.keys.count == 1
-      options_for_select [[prompt, nil], grouped_options.values[0]], selected
-    else
-      grouped_options_for_select grouped_options, selected, prompt: prompt
-    end
+    add_selection_if_missing(options, selected)
+    options_for_select [[prompt, nil]] + options, selected
   end
 
   # Checks if the selected value is contained in the given grouped options
-  def contains_selection?(grouped_options, selected)
+  def contains_selection?(options, selected)
     return true if selected.nil?
     contained = false
-    grouped_options.each do |_key, val|
-      val.each do |label_value_pair|
-        contained = true if label_value_pair[1] == selected
-      end
+
+    options.each do |label_value_pair|
+      contained = true if label_value_pair[1] == selected
     end
+
     contained
   end
 
-  def add_selection_if_missing(grouped_options, selected)
-    unless contains_selection?(grouped_options, selected)
+  def add_selection_if_missing(options, selected)
+    unless contains_selection?(options, selected)
       assoc = CustomerAssociation.from_json(selected)
-      grouped_options.values[0] << [assoc.display_name, assoc.to_json]
+      options << [assoc.display_name, assoc.to_json]
     end
   end
 
