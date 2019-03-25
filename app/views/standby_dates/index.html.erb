@@ -55,7 +55,7 @@
                 <%= link_to 'x', standby_date_path(s),
                             method: :delete, class: 'text-dark mr-3 float-right d-print-none',
                             data: { disable_with: is_processing(true) } %>
-                <i class="fa fa-truck"></i><span class="sr-only"><%= t 'standby_dates.index.me' %></span>
+                <i class="fa fa-truck"></i><span class="sr-only"><%= t 'standby_dates.index.standby_label' %></span>
               </div>
             <% else %>
               <div class="" style="background-color: <%= driver_color_by_id(s.driver_id) %>">
