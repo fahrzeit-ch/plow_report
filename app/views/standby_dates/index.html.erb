@@ -53,7 +53,7 @@
             <% if(current_driver.id == s.driver_id) %>
               <div class="bg-primary">
                 <%= link_to 'x', standby_date_path(s),
-                            method: :delete, class: 'text-dark mr-3 float-right',
+                            method: :delete, class: 'text-dark mr-3 float-right d-print-none',
                             data: { disable_with: is_processing(true) } %>
                 <i class="fa fa-truck"></i><span class="sr-only"><%= t 'standby_dates.index.me' %></span>
               </div>
@@ -65,7 +65,7 @@
             <% end %>
           <% end %>
           <% if stand_by.empty? %>
-            <%= form_with(model: StandbyDate.new(day: date), local: true) do |form| %>
+            <%= form_with(model: StandbyDate.new(day: date), local: true, class: 'd-print-none') do |form| %>
               <%= form.hidden_field :day, id: :standby_date_day %>
               <%= form.button class: 'btn', type: :submit, data: { disable_with: is_processing(true) } do %>
                 <i class="fa fa-plus"></i>
