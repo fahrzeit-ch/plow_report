@@ -172,6 +172,8 @@ de:
     index:
       calendar: "Kalender"
       standby_label: "Pikett"
+      me: 'Ich'
+      show_others: "Alle Fahrer anzeigen"
   actions:
     back: "Zurück"
     print: "Drucken"
