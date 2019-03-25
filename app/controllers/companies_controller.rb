@@ -61,11 +61,11 @@ class CompaniesController < ApplicationController
 
   private
   def company_attributes
-    params.require(:company).permit(:name, :contact_email, :address, :zip_code, :city)
+    params.require(:company).permit(:name, :contact_email, :address, :nr, :zip_code, :city)
   end
 
   def registration_attributes
-    params.require(:company_registration).permit(:name, :contact_email, :add_owner_as_driver, :transfer_private_drives, :address, :zip_code, :city)
+    params.require(:company_registration).permit(:name, :contact_email, :add_owner_as_driver, :transfer_private_drives, :address, :nr, :zip_code, :city)
   end
 
   def check_company_assigned
