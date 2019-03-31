@@ -1,26 +1,25 @@
-<div class="row">
-  <div class="col-12">
-    <%= form_with(model: drive, local: true, builder: DriveFormBuilder, layout: :inline) do |form| %>
-      <div class="form-group">
-        <%= form.label :start %>
-        <%= form.text_field :start, value: form.object.start.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>
+<%= form_with(model: drive, local: true, builder: DriveFormBuilder, layout: :inline) do |form| %>
+  <div class="row">
+    <div class="form-group col-12">
+      <%= form.label :start %>
+      <%= form.text_field :start, value: form.object.start.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>
+    </div>
+    <div class="form-group col-12">
+      <%= form.label :end  %>
+      <%= form.text_field :end, value: form.object.end.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_end %>
+    </div>
+    <%= render 'drives/attribute_fields', form: form %>
+    <% if local_assigns[:can_change_driver] %>
+      <div class="form-group col-12">
+        <%= form.label :driver  %>
+        <%= form.select2 :driver_id, drive_driver_select_options %>
       </div>
-      <div class="form-group">
-        <%= form.label :end  %>
-        <%= form.text_field :end, value: form.object.end.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_end %>
-      </div>
-      <%= render 'drives/attribute_fields', form: form %>
-      <% if local_assigns[:can_change_driver] %>
-        <div class="form-group">
-          <%= form.label :driver  %>
-          <%= form.select2 :driver_id, drive_driver_select_options %>
-        </div>
-      <% end %>
+    <% end %>
+    <div class="col-12">
       <%= form.button type: :submit, class: 'btn btn-primary', data: {disable_with: is_processing} do %>
         <%= t('common.ok') %>
       <% end %>
       <%= link_to t('actions.back'), back_path, class: 'btn btn-default' %>
-    <% end %>
-
+    </div>
   </div>
-</div>
+<% end %>
