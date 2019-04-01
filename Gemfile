@@ -35,6 +35,8 @@ gem 'devise_invitable', '~> 1.7.0'
 gem 'pundit', '~> 1.1.0'
 gem 'rollbar'
 
+gem 'money-rails', '~>1.12'
+
 gem 'kaminari'
 
 gem 'activerecord-import'
@@ -69,6 +71,7 @@ group :development, :test do
   gem 'pundit-matchers', '~> 1.6.0'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '>= 3.7.2', '< 4.0'
+  gem 'rspec-its', '~> 1.2.0'
   gem 'rubocop'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
