@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'creating a drive on dashboard' do
+feature 'creating a drive on the index drive page' do
   let(:user) { create(:user) }
   let(:current_driver) { user.drivers.last }
   let(:company) { create(:company) }
@@ -26,7 +26,7 @@ feature 'creating a drive on dashboard' do
     let(:activity) { create(:value_activity, name: I18n.t('activerecord.attributes.drive.salt_refilled')) }
     before { activity }
     it 'should redirect to drives and show new drives' do
-      visit '/'
+      visit drives_path
       # fill in start and end time
       attrs = { start: 1.hour.ago,
                 end: 0.5.hour.ago,
