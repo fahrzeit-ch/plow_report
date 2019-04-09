@@ -11,14 +11,27 @@ class HourlyRate < ApplicationRecord
   # When customer is specified, the rate will only apply to drives for that customer.
   belongs_to :customer, optional: true
 
+  scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.now) }
   scope :overlapping, -> (other) { where('(valid_from, valid_until) OVERLAPS (?, ?)', other.valid_from, other.valid_until) }
   scope :same_scope, -> (other) { where(customer: other.customer, activity: other.activity, company: other.company).where.not(id: other.id) }
+
+  include RateAssocType
 
   monetize :price_cents
   audited
 
   validates :company, presence: true
   validate :uniqueness_of_scope
+
+  class << self
+    def base_rate
+      find_by(customer_id: nil, activity_id: nil)
+    end
+
+    def activity_rates
+      where(customer_id: nil).where.not(activity_id: nil)
+    end
+  end
 
   private
 
