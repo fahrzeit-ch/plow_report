@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ImplicitHourlyRate do
+
+  # We need to disable transactional specs because implicit hourly rates is based on a db view
+  # which will not be populated until the transaction is committed.
   self.use_transactional_tests = false
 
   def clear_all
@@ -24,6 +27,36 @@ RSpec.describe ImplicitHourlyRate do
   subject { ImplicitHourlyRate.first }
 
   it { is_expected.to be_readonly }
+
+  describe '#to_explicit_rate' do
+    let(:price) { Money.new(20000, 'CHF') }
+    let(:valid_from) { 1.month.ago }
+    let(:valid_until){ 1.year.from_now }
+
+    let(:base_rate) { create(:hourly_rate, company: company,
+                             price: price,
+                             valid_until: valid_until,
+                             valid_from: valid_from,
+                             customer: nil,
+                             activity: nil)}
+    let(:implicit_rate) { described_class.new company_id: company.id,
+                                              hourly_rate_id: base_rate.id,
+                                              price: price,
+                                              customer_id: customer.id,
+                                              activity_id: activity.id }
+
+    subject { implicit_rate.to_explicit_rate }
+
+    it { is_expected.to be_a HourlyRate }
+    it { is_expected.not_to be_persisted }
+    it { is_expected.to be_valid }
+    its(:valid_from) { is_expected.to eq valid_from.to_date }
+    its(:valid_until) { is_expected.to eq valid_until.to_date }
+    its(:price) { is_expected.to eq price }
+    its(:customer) { is_expected.to eq customer }
+    its(:activity) { is_expected.to eq activity }
+    its(:company) { is_expected.to eq company }
+  end
 
   xdescribe 'performance (Skipped because takes quire some time to run)' do
     include RSpec::Benchmark::Matchers
