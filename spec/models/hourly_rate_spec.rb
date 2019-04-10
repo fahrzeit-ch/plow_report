@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe HourlyRate, type: :model do
 
   let(:company) { create(:company) }
-  let(:customer) { create(:customer, company: company) }
+  let(:customer) { create(:customer, client_of: company) }
   let(:activity) { create(:activity, company: company) }
 
   describe 'validations' do
