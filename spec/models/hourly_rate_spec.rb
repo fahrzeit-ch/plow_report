@@ -9,6 +9,8 @@ RSpec.describe HourlyRate, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:company) }
 
+    describe 'valida'
+
     describe 'uniqueness' do
 
       subject { existing.dup }

@@ -14,12 +14,14 @@
 class ImplicitHourlyRate < ApplicationRecord
 
   belongs_to :inherited_from, foreign_key: :hourly_rate_id, class_name: 'HourlyRate'
+  belongs_to :activity
+  belongs_to :customer
   monetize :price_cents
 
   delegate :valid_from, :valid_until, to: :inherited_from
 
-  def inheritance_type
-    rate_type == inherited_from.rate_type ? EXPLICIT_RATE : IMPLICIT_RATE
+  def inherited?
+    inheritance_level > 0
   end
 
   def to_explicit_rate

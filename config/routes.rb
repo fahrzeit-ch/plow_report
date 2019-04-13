@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     scope module: 'company' do
+      resources :hourly_rates
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
       resources :drives, only: [:index, :destroy, :edit, :update]
       resources :standby_dates, only: [:index, :destroy, :create] do

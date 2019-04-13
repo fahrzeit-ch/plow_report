@@ -18,17 +18,18 @@ RSpec.describe ImplicitHourlyRate do
   let(:activity) { create(:activity, company: company) }
   let(:rate) { create(:hourly_rate, activity: activity, customer: nil, company: company) }
 
-  before do
-    clear_all
-    rate
-  end
-
-  after { clear_all }
   subject { ImplicitHourlyRate.first }
 
   it { is_expected.to be_readonly }
 
   describe '#to_explicit_rate' do
+    before do
+      clear_all
+      rate
+    end
+
+    after { clear_all }
+
     let(:price) { Money.new(20000, 'CHF') }
     let(:valid_from) { 1.month.ago }
     let(:valid_until){ 1.year.from_now }
@@ -58,7 +59,7 @@ RSpec.describe ImplicitHourlyRate do
     its(:company) { is_expected.to eq company }
   end
 
-  xdescribe 'performance (Skipped because takes quire some time to run)' do
+  describe 'performance (Skipped because takes quire some time to run)' do
     include RSpec::Benchmark::Matchers
 
     let(:amount) { 200 }

@@ -137,6 +137,10 @@ de-CH:
           plow: "Räumen"
           refill_salt: "Füllen"
       inactive: "Inaktiv"
+      hourly_rate:
+        inheritance_types:
+          base_rate: "Basis Stundensatz"
+          activity_rate: "Stundensatz - Tätigkeit"
   dashboard:
     cards:
       standby_dates:

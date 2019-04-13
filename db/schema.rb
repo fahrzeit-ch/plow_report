@@ -284,7 +284,8 @@ ActiveRecord::Schema.define(version: 20190409200758) do
       q1.customer_id,
       q1.company_id,
       q1.rate_type,
-      q1.inheritance_type
+      q1.inheritance_type,
+      q1.inheritance_level
      FROM ( SELECT hr.id AS hourly_rate_id,
               hr.price_cents,
               hr.price_currency,
@@ -298,6 +299,13 @@ ActiveRecord::Schema.define(version: 20190409200758) do
                       WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
                       ELSE NULL::text
                   END AS rate_type,
+                  CASE
+                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 0
+                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id IS NULL) AND (ca.activity_id IS NOT NULL)) THEN 1
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 2
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 3
+                      ELSE NULL::integer
+                  END AS inheritance_level,
                   CASE
                       WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 'explicit'::text
                       ELSE 'inherited'::text
@@ -319,7 +327,8 @@ ActiveRecord::Schema.define(version: 20190409200758) do
       q2.customer_id,
       q2.company_id,
       q2.rate_type,
-      q2.inheritance_type
+      q2.inheritance_type,
+      q2.inheritance_level
      FROM ( SELECT hr.id,
               hr.price_cents,
               hr.price_currency,
@@ -327,12 +336,15 @@ ActiveRecord::Schema.define(version: 20190409200758) do
               ca.id AS activity_id,
               hr.customer_id,
                   CASE
-                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NOT NULL)) THEN 'customer_activity_rate'::text
-                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NULL)) THEN 'customer_base_rate'::text
                       WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 'activity_rate'::text
                       WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
                       ELSE NULL::text
                   END AS rate_type,
+                  CASE
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 0
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 1
+                      ELSE NULL::integer
+                  END AS inheritance_level,
                   CASE
                       WHEN ((hr.customer_id IS NULL) AND (hr.activity_id = ca.id)) THEN 'explicit'::text
                       ELSE 'inherited'::text
