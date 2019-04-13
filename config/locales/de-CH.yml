@@ -1,4 +1,4 @@
-de:
+de-CH:
   navbar:
     main:
       dashboard: "Übersicht"
@@ -234,6 +234,8 @@ de:
       not_destroyed: "Objekt konnte nicht gelöscht werden"
     customer_to_site_transition:
       success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
+    common:
+      saved: "Änderungen erfolgreich gespeichert"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -304,6 +306,8 @@ de:
         name_info: "Anzeigename für dieses Objekt"
         new: "Neues Objekt"
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
+      price_rates:
+        title: "Preise"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"

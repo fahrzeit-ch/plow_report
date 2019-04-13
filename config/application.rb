@@ -28,8 +28,8 @@ module PlowReport
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    config.i18n.available_locales = [:de, :en]
-    config.i18n.default_locale = :de
+    config.i18n.available_locales = [:'de-CH', :en]
+    config.i18n.default_locale = :'de-CH'
 
     config.time_zone = 'Bern'
     config.active_record.default_timezone = :utc

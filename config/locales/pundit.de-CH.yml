@@ -1,4 +1,4 @@
-de:
+de-CH:
   pundit:
     default: 'Sie haben keine Berechtigung diese Aktion durchzuführen.'
     not_logged_in: 'Sie müssen sich andmelden um fortzufahren.'

@@ -1,6 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
-de:
+de-CH:
   devise:
     confirmations:
       confirmed: "Vielen Dank für Ihre Registrierung. Bitte melden Sie sich jetzt an."
