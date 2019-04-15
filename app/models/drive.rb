@@ -135,6 +135,7 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     def activity_value_summary
       select('activities.value_label as title, SUM(activity_executions.value) as total')
           .joins(:activity)
+          .where(activities: { has_value: true })
           .group(:value_label)
           .sort_by{|item| item[:title]}
     end
