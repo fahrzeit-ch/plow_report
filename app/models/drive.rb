@@ -133,7 +133,10 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     end
 
     def activity_value_summary
-      select('activities.value_label as title, SUM(activity_executions.value) as total').joins(:activity).group(:value_label)
+      select('activities.value_label as title, SUM(activity_executions.value) as total')
+          .joins(:activity)
+          .group(:value_label)
+          .sort_by{|item| item[:title]}
     end
 
     # Scope the drives by the given season

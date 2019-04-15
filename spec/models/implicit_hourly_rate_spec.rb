@@ -12,15 +12,18 @@ RSpec.describe ImplicitHourlyRate do
     ActiveRecord::Base.connection.execute('delete from activities')
     ActiveRecord::Base.connection.execute('delete from companies')
   end
+  after(:all) { clear_all }
 
   let(:company) { create(:company) }
   let(:customer) { create(:customer, company_id: company.id) }
   let(:activity) { create(:activity, company: company) }
   let(:rate) { create(:hourly_rate, activity: activity, customer: nil, company: company) }
 
-  subject { ImplicitHourlyRate.first }
+  describe 'readonly' do
+    subject { ImplicitHourlyRate.new }
 
-  it { is_expected.to be_readonly }
+    it { is_expected.to be_readonly }
+  end
 
   describe '#to_explicit_rate' do
     before do
@@ -59,7 +62,66 @@ RSpec.describe ImplicitHourlyRate do
     its(:company) { is_expected.to eq company }
   end
 
-  describe 'performance (Skipped because takes quire some time to run)' do
+  describe 'scopes' do
+
+    describe '#best_matches' do
+      let(:hourly_rates) { [] }
+      subject { described_class.best_matches(hourly_rates) }
+
+
+      context 'explicits only' do
+        let(:hourly_rates) {[
+            #base rate
+            ImplicitHourlyRate.new(activity_id: 1, customer_id: nil, inheritance_level: 0),
+            ImplicitHourlyRate.new(activity_id: 2, customer_id: nil, inheritance_level: 0)
+        ]}
+
+        its(:count) { is_expected.to eq 2 }
+      end
+
+      context 'nil' do
+        let(:hourly_rates) { nil }
+        it { expect{ subject }.to raise_error(ArgumentError)}
+      end
+
+      context 'same target different inheritance levels' do
+        let(:implicit) { ImplicitHourlyRate.new(activity_id: 1, customer_id: nil, inheritance_level: 1) }
+        let(:explicit) { ImplicitHourlyRate.new(activity_id: 1, customer_id: nil, inheritance_level: 0) }
+        let(:hourly_rates) {
+          [
+              implicit, explicit
+          ]
+        }
+
+        its(:count) { is_expected.to eq 1}
+        it 'returns the hourly rate' do
+          expect(subject[0]).to eq explicit
+        end
+      end
+
+      context 'different scopes same level' do
+        let(:scope1) { ImplicitHourlyRate.new(activity_id: 1, customer_id: nil, inheritance_level: 1) }
+        let(:scope2) { ImplicitHourlyRate.new(activity_id: 2, customer_id: 1, inheritance_level: 1) }
+        let(:scope3) { ImplicitHourlyRate.new(activity_id: 2, customer_id: 2, inheritance_level: 1) }
+
+        let(:hourly_rates) {[scope1, scope2, scope3]}
+
+        its(:count) { is_expected.to eq 3}
+
+        it { is_expected.to include(scope1) }
+        it { is_expected.to include(scope2) }
+        it { is_expected.to include(scope3) }
+      end
+
+      context 'empty array' do
+        let(:hourly_rates) { [] }
+        it { is_expected.to be_empty }
+        it { is_expected.to be_a Array }
+      end
+    end
+  end
+
+  xdescribe 'performance (Skipped because takes quire some time to run)' do
     include RSpec::Benchmark::Matchers
 
     let(:amount) { 200 }

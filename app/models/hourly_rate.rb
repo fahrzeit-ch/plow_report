@@ -11,7 +11,8 @@ class HourlyRate < ApplicationRecord
   # When customer is specified, the rate will only apply to drives for that customer.
   belongs_to :customer, optional: true
 
-  attribute :valid_from, default: Date.new(2000, 1, 1)
+  attribute :valid_from, :date, default: Date.new(2000, 1, 1)
+  attribute :valid_until, :date, default: Date.new(2100, 1, 1)
 
   scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.now) }
   scope :overlapping, -> (other) { where('(valid_from, valid_until) OVERLAPS (?, ?)', other.valid_from, other.valid_until) }

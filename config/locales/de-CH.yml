@@ -240,6 +240,7 @@ de-CH:
       success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
     common:
       saved: "Änderungen erfolgreich gespeichert"
+      deleted: "Eintrag erfolgreich gelöscht"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -312,6 +313,7 @@ de-CH:
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
       price_rates:
         title: "Preise"
+        set_price: "Neuen Preis setzen"
     company_drives:
       title: "Fahrten"
       edit: "Fahrt Bearbeiten"
