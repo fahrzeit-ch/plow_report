@@ -286,6 +286,8 @@ de-CH:
           title: "Kunden"
         activities:
           title: "Tätigkeiten"
+        hourly_rates:
+          title: "Preise"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
