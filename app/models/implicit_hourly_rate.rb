@@ -32,6 +32,11 @@ class ImplicitHourlyRate < ApplicationRecord
   belongs_to :customer
   monetize :price_cents
 
+  # Inform pundit policy resolver to use +HourlyRatePolicy+.
+  def self.policy_class
+    HourlyRatePolicy
+  end
+
   delegate :valid_from, :valid_until, to: :inherited_from
 
   # Whether or not the price for this customer/activity combination was defined explicitly

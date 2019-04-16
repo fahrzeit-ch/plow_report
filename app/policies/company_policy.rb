@@ -44,6 +44,10 @@ class CompanyPolicy < ApplicationPolicy
     company_member? record
   end
 
+  def index_hourly_rates?
+    company_admin_or_owner? record
+  end
+
   def create?
     true
   end
