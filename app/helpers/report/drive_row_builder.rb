@@ -29,7 +29,7 @@ module Report
 
     def get_price(drive)
       if drive.hourly_rate
-        (drive.hourly_rate.to_f * drive.duration_in_hours).round(2)
+        (drive.hourly_rate.amount * drive.duration_in_hours).round(2)
       end
     end
   end

@@ -124,8 +124,6 @@ RSpec.describe ImplicitHourlyRate do
   xdescribe 'performance (Skipped because takes quire some time to run)' do
     include RSpec::Benchmark::Matchers
 
-    let(:amount) { 200 }
-
     before(:all) do
       puts 'clearing database'
       clear_all
