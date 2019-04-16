@@ -58,6 +58,21 @@ class Drive < ApplicationRecord
     I18n.l self.start, format: '%a'
   end
 
+  # @return Returns
+  def hourly_rate
+    if @hourly_rate
+      @hourly_rate
+    else
+      possible_rates = ImplicitHourlyRate.where(company_id: company.id, customer_id: customer_id, activity_id: activity_execution.activity_id)
+      if possible_rates.any?
+        best_match = ImplicitHourlyRate.best_matches(possible_rates).first
+        @hourly_rate = best_match.price
+      else
+        @hourly_rate = Money.new(0.0, Money.default_currency)
+      end
+    end
+  end
+
   def customer_name
     customer ? customer.name : ''
   end
@@ -81,6 +96,10 @@ class Drive < ApplicationRecord
     else
       Time.at(self.end - self.start).utc
     end
+  end
+
+  def duration_in_hours
+    ( self.end - self.start ) / 3600.0
   end
 
   # Returns the duration in as string in the form HH:MM.

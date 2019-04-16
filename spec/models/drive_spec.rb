@@ -206,4 +206,18 @@ RSpec.describe Drive, type: :model do
     end
 
   end
+
+  describe 'hourly_rates' do
+
+    subject { described_class.with_hourly_rates }
+
+    let(:company) { create(:company) }
+    let(:drive) { create(:drive, company: company) }
+
+    let(:hourly_rate) { create(:hourly_rate, company_id: company.id) }
+
+    before { hourly_rate }
+
+  end
+
 end
