@@ -58,6 +58,25 @@ class Drive < ApplicationRecord
     I18n.l self.start, format: '%a'
   end
 
+  # @return The hourly rate applicable for this drive.
+  def hourly_rate
+    if @hourly_rate
+      @hourly_rate
+    elsif activity_execution.nil?
+      # Lookup for hourly rates without activity in the implicit rates does not work so we need
+      # to fetch explicitly the base rate (as long as w do not support customer prices)
+      @hourly_rate = HourlyRate.where(company_id: company.id).base_rate.try(:price) || Money.new(0.0, Money.default_currency)
+    else
+      possible_rates = ImplicitHourlyRate.where(company_id: company.id, customer_id: customer_id, activity_id: activity_execution.activity_id)
+      if possible_rates.any?
+        best_match = ImplicitHourlyRate.best_matches(possible_rates).first
+        @hourly_rate = best_match.price
+      else
+        @hourly_rate = Money.new(0.0, Money.default_currency)
+      end
+    end
+  end
+
   def customer_name
     customer ? customer.name : ''
   end
@@ -81,6 +100,10 @@ class Drive < ApplicationRecord
     else
       Time.at(self.end - self.start).utc
     end
+  end
+
+  def duration_in_hours
+    ( self.end - self.start ) / 3600.0
   end
 
   # Returns the duration in as string in the form HH:MM.
@@ -133,7 +156,11 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     end
 
     def activity_value_summary
-      select('activities.value_label as title, SUM(activity_executions.value) as total').joins(:activity).group(:value_label)
+      select('activities.value_label as title, SUM(activity_executions.value) as total')
+          .joins(:activity)
+          .where(activities: { has_value: true })
+          .group(:value_label)
+          .sort_by{|item| item[:title]}
     end
 
     # Scope the drives by the given season

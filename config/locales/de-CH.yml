@@ -1,0 +1,391 @@
+de-CH:
+  navbar:
+    main:
+      dashboard: "Übersicht"
+      standby_dates: "Pikett"
+      drives: "Fahrten"
+      sign_in: "Anmelden"
+      sign_up: "Registrieren"
+      signout: "Abmelden"
+      new_company: "Firma Registrieren"
+      company_settings: "Einstellungen"
+      company_show: "Meine Firma"
+      my_dashboard: "Meine Daten"
+      edit_registration: "Benutzer Einstellungen"
+    companies:
+      drives: "Fahrten"
+      settings: "Einstellungen"
+      stand_by_dates: "Pikett"
+      dashboard: "Übersicht"
+  activemodel:
+    models:
+      standby_date/date_range:
+        one: "Pikett Tage"
+        other: "Pikett Tage"
+      season:
+        one: "Saison"
+        other: "Saison"
+    attributes:
+      customer_to_site_transition:
+        assign_to: "Zielkunde"
+      company/registration:
+        name: "Firmen Name"
+        contact_email: "Kontakt Email"
+        add_as_driver: "Mich als Fahrer in dieser Firma hinzufügen"
+        transfer_private_drives: "Fahrten die als Privat erfasst wurden an die Firma übertragen."
+      standby_date/date_range:
+        start_date: "Start Datum"
+        end_date: "End Datum"
+  errors:
+    attributes:
+      base:
+        consent_required: "Bitte akzeptieren sie die mit * gekennzeichneten Bedingungen."
+      end:
+        not_before_start: "darf nicht vor der Start Zeit liegen"
+      end_date:
+        must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
+    drivers:
+      already_assigned: "Der Benutzer ist bereits als Fahrer für diese Firma erfasst."
+      could_not_create: "Fahrer konnte nicht erstellt werden: %{error}"
+  activerecord:
+    errors:
+      models:
+        company_member:
+          attributes:
+            user_email:
+              user_not_found: "Benutzer konnte nicht gefunden werden."
+            user:
+              taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
+    models:
+      site:
+        one: "Objekt"
+        other: "Objekte"
+      company:
+        one: "Firma"
+        other: "Firmen"
+      drive:
+        one: "Einsatz"
+        other: "Einsätze"
+      standby_date:
+        one: "Pikett Tag"
+        other: "Pikett Tage"
+      user:
+        one: "Benutzer"
+        other: "Benutzer"
+      driver:
+        one: "Fahrer"
+        other: "Fahrer"
+      customer:
+        one: "Kunde"
+        other: "Kunden"
+    attributes:
+      activity:
+        name: "Name"
+        has_value: "Erfordert Eingabe eines Werts (z.B. Menge oder Distanz)"
+        value_label: "Bezeichnug des einzugebenden Werts"
+      standby_date:
+        week_nr: "KW"
+        start_date: "Datum"
+        day_count: "Tage"
+      company_member:
+        role: "Rolle"
+        roles:
+          owner: "Besitzer"
+          employee: "Mitarbeiter"
+          driver: "Fahrer"
+        user_email: "Email"
+        user_name: "Name"
+      company:
+        name: "Firmen Name"
+        contact_email: "Kontakt Email"
+        address: "Adresse"
+        zip_code: "PLZ"
+        city: "Ort"
+      customer:
+        name: "Name"
+        first_name: "Vorname"
+        street: "Adresse"
+        nr: "Nr."
+        zip: "PLZ"
+        city: "Ort"
+      site:
+        name: "Objektbezeichnung"
+        street: "Adresse"
+        nr: "Nr."
+        zip: "PLZ"
+        city: "Ort"
+        active: 'Objekt Aktiv'
+      drive:
+        activity: "Tätigkeit"
+        driver: "Fahrer"
+        date: "Datum"
+        week_nr: "KW"
+        day_of_week: "Wochentag"
+        duration: "Dauer"
+        type: "Was"
+        start: "Start Zeit"
+        end: "End Zeit"
+        salt_amount_tonns: "Salz (t)"
+        distance_km: "km"
+        plowed: "Räumen"
+        salted: "Salzen"
+        customer: "Kunde"
+        site: "Objekt"
+        salt_refilled: "Salz füllen"
+        task:
+          salt: "Salzen"
+          plow: "Räumen"
+          refill_salt: "Füllen"
+      inactive: "Inaktiv"
+      hourly_rate:
+        inheritance_types:
+          base_rate: "Basis Stundensatz"
+          activity_rate: "Stundensatz - Tätigkeit"
+  dashboard:
+    cards:
+      standby_dates:
+        title: "Pikett Dienst"
+        show_all: "Alle Anzeigen"
+        next_stanby_date: "Nächster Pikett Dienst"
+        no_nex: "Keine bevorstehender Pikett Dienst"
+      new_drive:
+        title: "Fahrt Erfassen"
+        recording_since: "Unterwegs seit..."
+        finish_recording: "Fahrt beenden"
+        start_recording: "Jetzt losfahren"
+        create: "Fahrt erstellen"
+        cancel_recording: "Aufzeichnung abbrechen"
+        back: "Zurück"
+        recording_next: "Weiter"
+      last_drives:
+        title: "Letzte Fahrten"
+        show_all: "Alle anzeigen"
+      driver_info:
+        title: "Fahren als"
+        private: "Privater Account"
+        no_company: "Sie sind keiner Firma zugeordnet."
+        link_with_company: "Mit meiner Firma verknüpfen"
+      total_km:
+        title: "km gefahren"
+      total_hrs:
+        title: "gefahren"
+      total_salt:
+        title: "Tonnen Salz gestreut"
+  standby_dates:
+    summary_row: "Total Pikett Tage"
+    index:
+      calendar: "Kalender"
+      standby_label: "Pikett"
+      me: 'Ich'
+      show_others: "Alle Fahrer anzeigen"
+  actions:
+    back: "Zurück"
+    print: "Drucken"
+    delete: "Löschen"
+    save: "Speichern"
+    download_xlsx: "Excel Export (Beta)"
+    disable: "Deaktivieren"
+  flash:
+    standby_dates:
+      created: "Pikett Tag erfolgreich gespeichert"
+      updated: "Pikett Tag erfolgreich aktuallisiert"
+      destroyed: "Pikett Tag erfolgreich entfernt"
+      not_created: "Pikket Tag konnte nicht erfasst werden."
+    standby_date_ranges:
+      created: "%{num} Pikett Tage erfolgreich gespeichert"
+    drives:
+      updated: "Eintrag erfolgreich aktuallisiert"
+      destroyed: "Fahrt erfolgreich entfernt"
+      created: "Fahrt erfolgreich erfasst"
+      not_destroyed: "Fehler beim löschen der Fahrt."
+      not_recording: "Keine aktive Fahrt zum beenden vorhanden..."
+      already_recording: "Es wird bereits eine Fahrt aufgezeichnet"
+    company:
+      created: "Firma erfolgreich Erfasst"
+      updated: "Firma erfolgreich aktuallisiert"
+      already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden"
+      destroyed: "Die Firma und alle dazugehörigen Daten wurden erfolgreich gelöscht."
+      not_destroyed: "Fehler beim Löschen der Firma"
+    company_member:
+      created: "Benutzer erfolgreich zur Firma hinzugefügt."
+      updated: "Benutzer erfolgreich aktuallisiert."
+      destroyed: "Benutzer erfolgreich entfernt."
+      could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
+      invited: "Der Benutzer wurde erfolgreich eingeladen"
+      destroyed_me: "Sie wurden erfolgreich aus dem Firmenaccount entfernt."
+      invitation_resent: "Die einladung wurde versendet."
+      invitation_failed: "Fehler beim versenden der Einladung"
+    drivers:
+      destroyed: "Fahrer wurde erfolgreich gelöscht"
+      not_destroyed: "Fahrer konnte nicht gelöscht werden"
+      created: "Fahrer wurde erfolgreich hinzugefügt"
+      driver_not_created: "Fahrer konnte nicht hinzugefügt werden"
+      user_already_has_driver: "Sie sind bereits als Fahrer registriert."
+      updated: "Fahrer wurde erfolgreich aktuallisiert"
+    customer:
+      error: "Fehler beim speichern"
+      created: "Der kunde wurde erfolgreich angelegt"
+      not_created: "Der Kunde konnte nicht gespeichert werden. Bitte prüfen Sie Ihre eingaben"
+      destroyed: "Der Kunde wurde erfolgreich gelöscht."
+      not_destroyed: "Der Kunde konnte nicht gelöscht werden."
+      updated: "Kunde erfolgreich aktuallisiert"
+    site:
+      created: "Objekt erfolgreich erstellt"
+      not_created: "Objekt konnte nicht erstellt werden."
+      updated: "Objekt erfolgreich aktuallisiert"
+      error: "Objekt konnte nicht aktuallisiert werden"
+      destroyed: "Objekt erfolgreich gelöscht"
+      not_destroyed: "Objekt konnte nicht gelöscht werden"
+    customer_to_site_transition:
+      success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
+    common:
+      saved: "Änderungen erfolgreich gespeichert"
+      deleted: "Eintrag erfolgreich gelöscht"
+  common:
+    ok: "OK"
+    create: "Erstellen"
+    back: "Zurück"
+    update: "Speichern"
+    all: "Alle"
+    required: "*"
+    read: "Lesen"
+    terms_and_policies: "AGB und Datenschutz"
+    continue: "Weiter"
+    new: "Neu"
+    please_wait: "Bitte warten..."
+  views:
+    setup:
+      instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
+      create_driver: "Als privater Fahrer anmelden"
+      create_company: "Firmen Konto einrichten"
+    companies:
+      new:
+        title: "Firmen Konto registrieren"
+      edit:
+        title: "Firmen Einstellungen"
+        destroy_company: "Firma Löschen"
+        destroy_company_description: "Sie möchten unseren Service nicht mehr weiter verwenden und alle Daten löschen? Bitte beachten Sie dass die Logins bestehen bleiben."
+        not_permitted_to_destroy: "Nur Eigentümer sind berechtigt den Account zu löschen."
+      users:
+        title: "Benutzer & Zugriff"
+        add_new: "Neuen Benutzer hinzufügen"
+        invite_description: "Die Email Addresse ist noch nicht in unserem System registriert. Möchten sie den Benutzer jetzt einladen?"
+        pending_invite: "Pendente Einladung"
+        invite_new: "Benutzer einladen und hinzufügen"
+        resend_invite: "Einladung erneut senden"
+      nav:
+        users:
+          title: "Benutzer & Zugriff"
+        edit:
+          title: "Allgemeine Einstellungen"
+        show:
+          title: "Meine Firma"
+        drivers:
+          title: "Fahrer"
+        customers:
+          title: "Kunden"
+        activities:
+          title: "Tätigkeiten"
+        hourly_rates:
+          title: "Preise"
+      drivers:
+        title: "Fahrer"
+        add_new: "Neuen Fahrer hinzufügen"
+        status_linked: "Dieser Fahrer ist mit einem Benutzer Login verknüpft."
+        status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
+        edit: "Benutzer zuweisen"
+      dashboard:
+        title: "Übersicht"
+      customers:
+        edit: "Kunde Bearbeiten"
+        create: "Neuen Kunden anlegen"
+        title: "Kunden"
+        new: "Neuer Kunde erstellen"
+        convert_to_site: "In Objekt umwandeln"
+        convert_to_site_info:
+          one: "Ein Einsatz wird auf das neue Objekt umgehängt."
+          other: "%{count} Einsätze werden auf das neue Objekt umgehängt."
+      activities:
+        title: "Tätigkeiten"
+        edit: "Tätigkeit bearbeiten"
+        new: "Neue Tätigkeit erstellen"
+      sites:
+        name_info: "Anzeigename für dieses Objekt"
+        new: "Neues Objekt"
+        activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
+      price_rates:
+        title: "Preise"
+        set_price: "Neuen Preis setzen"
+    company_drives:
+      title: "Fahrten"
+      edit: "Fahrt Bearbeiten"
+      select_promt: "Benutzer wählen"
+    company:
+      standby_dates:
+        calendar:
+          title: "Pikett Kalender"
+        title: "Pikett Dienst"
+    static_pages:
+      home:
+        welcome_title: "FAHRZEIT.ch"
+        welcome_subtitle: "Die einfache Art Ihren Winterdienst im Griff zu haben."
+    common:
+      info:
+        no_data_available: "Keine Daten verfügbar"
+    policies_and_terms:
+      require_new_concent: "Unsere Bestimmungen haben sich geändert"
+  forms:
+    placeholders:
+      driver:
+        name: "Name"
+      company_member:
+        user_email: "hans.muster@meinefirma.ch"
+    standby_dates:
+      driver_dropdown: "+"
+    promt: "%{model} wählen"
+    select:
+      none: "Kein"
+    drives:
+      select_group_name:
+        customers_without_sites: "Kunden ohne Objekte"
+  confirm:
+    company:
+      delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
+      delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
+      delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
+      delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
+      delete_member_current_user: "Sind Sie sicher, dass Sie aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmen daten mehr und können keine Fahrten für die Firma erfassen."
+  confirmation:
+    delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
+  devise:
+    sign_in: "Anmelden"
+    sign_up: "Registrieren"
+  static_pages:
+    welcome:
+      start: "Jetzt loslegen"
+      wellcome: "Vielen Dank, dass Sie sich für fahrzeit.ch registriert haben."
+      title: "Herzlich Wilkommen %{name}"
+  simple_calendar:
+    jump_to_today: "Zu Heute springen"
+  sidenav:
+    section:
+      user: "Benutzer"
+  tomorrow: 'Morgen'
+  today: 'Heute'
+  in_x_days: 'In %{distance} Tagen'
+  reports:
+    drives:
+      drive_date_title: "Datum"
+      drive_start_time_title: "Startzeit"
+      drive_duration_title: "Dauer"
+      drive_driver_title: "Fahrer"
+      drive_distance_title: "Distanz"
+      tab_title_without_customer: "Ohne Kundenzuordnung"
+      sheet_title_without_customer: "Fahrten ohne Kundenzuordnung"
+      label_total_km: "Total Km"
+      label_total_duration: "Total Aufwand"
+      sheet_title_with_customer: "Raport für"
+      drive_site_title: "Objekt"
+      drive_hourly_rate: "Stundensatz"
+      drive_total_price: "Preis"
+      label_total_price: "Total Preis"
