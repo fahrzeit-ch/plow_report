@@ -32,6 +32,7 @@ gem 'audited', '~> 4.7'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable', '~> 1.7.0'
+gem 'doorkeeper', '~> 5.1.0'
 gem 'pundit', '~> 1.1.0'
 gem 'rollbar'
 

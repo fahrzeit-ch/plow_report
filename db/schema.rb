@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190102211908) do
+ActiveRecord::Schema.define(version: 20190409200758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20190102211908) do
     t.string "zip_code", default: "", null: false
     t.string "city", default: "", null: false
     t.string "slug"
+    t.string "nr", default: "", null: false
     t.index ["name"], name: "index_companies_on_name", unique: true
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
@@ -135,8 +136,27 @@ ActiveRecord::Schema.define(version: 20190102211908) do
     t.datetime "updated_at", null: false
     t.integer "driver_id", null: false
     t.bigint "customer_id"
+    t.bigint "site_id"
     t.index ["customer_id"], name: "index_drives_on_customer_id"
+    t.index ["site_id"], name: "index_drives_on_site_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
+  end
+
+  create_table "hourly_rates", force: :cascade do |t|
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", null: false
+    t.bigint "activity_id"
+    t.bigint "customer_id"
+    t.bigint "company_id", null: false
+    t.date "valid_from", default: "2000-01-01", null: false
+    t.date "valid_until", default: "2100-01-01", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_hourly_rates_on_activity_id"
+    t.index ["company_id"], name: "index_hourly_rates_on_company_id"
+    t.index ["customer_id"], name: "index_hourly_rates_on_customer_id"
+    t.index ["valid_from"], name: "index_hourly_rates_on_valid_from"
+    t.index ["valid_until"], name: "index_hourly_rates_on_valid_until"
   end
 
   create_table "policy_terms", force: :cascade do |t|
@@ -153,6 +173,19 @@ ActiveRecord::Schema.define(version: 20190102211908) do
     t.datetime "start_time", null: false
     t.bigint "driver_id"
     t.index ["driver_id"], name: "index_recordings_on_driver_id", unique: true
+  end
+
+  create_table "sites", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "nr"
+    t.string "zip"
+    t.string "city"
+    t.bigint "customer_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_sites_on_customer_id"
   end
 
   create_table "standby_dates", force: :cascade do |t|
@@ -233,6 +266,11 @@ ActiveRecord::Schema.define(version: 20190102211908) do
   add_foreign_key "drivers", "companies"
   add_foreign_key "drives", "customers"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
+  add_foreign_key "drives", "sites"
+  add_foreign_key "hourly_rates", "activities"
+  add_foreign_key "hourly_rates", "companies"
+  add_foreign_key "hourly_rates", "customers"
+  add_foreign_key "sites", "customers"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"

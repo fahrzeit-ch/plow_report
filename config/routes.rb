@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   get 'static_pages/home'
 
   scope path: '/users' do
