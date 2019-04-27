@@ -208,15 +208,34 @@ RSpec.describe Drive, type: :model do
   end
 
   describe 'hourly_rates' do
+    # We need to disable transactional specs because implicit hourly rates is based on a db view
+    # which will not be populated until the transaction is committed.
+    self.use_transactional_tests = false
 
-    subject { described_class.with_hourly_rates }
+    def clear_all
+      ActiveRecord::Base.connection.execute('delete from hourly_rates')
+      ActiveRecord::Base.connection.execute('delete from customers')
+      ActiveRecord::Base.connection.execute('delete from activities')
+      ActiveRecord::Base.connection.execute('delete from companies')
+    end
+    before(:all) { clear_all }
+    after(:all) { clear_all }
 
     let(:company) { create(:company) }
-    let(:drive) { create(:drive, company: company) }
-
-    let(:hourly_rate) { create(:hourly_rate, company_id: company.id) }
+    let(:driver) { build(:driver, company_id: company.id ) }
+    let(:drive) { build(:drive, driver: driver) }
 
     before { hourly_rate }
+
+    subject { drive.hourly_rate }
+
+    context 'without activity or customer' do
+      let(:hourly_rate) { create(:hourly_rate, company_id: company.id, activity: nil, customer: nil ) }
+      it { is_expected.to be_a Money }
+      it { is_expected.to eq hourly_rate.price }
+    end
+
+
 
   end
 

@@ -88,7 +88,7 @@ class ImplicitHourlyRate < ApplicationRecord
   # This may return base_rate, activity_base_rate and the customer_base_rate.
   #
   #   customer_rates = ImplicitHourlyRates.where(customer_id: 12, activity_id: 3)
-  #   applicable_rates = ImplicitHourlyRates(customer_rates)
+  #   applicable_rates = ImplicitHourlyRates.best_matches(customer_rates)
   #
   # @param [Enumerable] list, A list of ImplicitHourlyRates that.
   # @return [Array] Array with hourly rates having lowest inheritance_level for their target
