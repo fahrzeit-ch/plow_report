@@ -28,8 +28,6 @@ feature 'record a drive from dashboard' do
 
       # drive form should be displayed
       expect(page).to have_content I18n.t('dashboard.cards.new_drive.title')
-      expect(page).to have_field 'drive[start]'
-      expect(page).to have_field 'drive[end]'
 
       # should redirect to drives
       expect(page).to have_current_path('/')

@@ -7,7 +7,7 @@ feature 'after sign in paths' do
   context 'user with driver' do
     it 'should open driver dashboard' do
       sign_in_with(user.email, user.password)
-      expect(page).to have_content(I18n.t('dashboard.cards.new_drive.create'))
+      expect(page).to have_content(I18n.t('dashboard.cards.standby_dates.title'))
     end
   end
 
