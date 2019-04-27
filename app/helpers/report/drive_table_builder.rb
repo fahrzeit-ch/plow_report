@@ -48,6 +48,10 @@ module Report
       "=SUM(#{table_name}[#{column_name_for(:duration)}])"
     end
 
+    def price_sum_formula
+      "=SUM(#{table_name}[#{column_name_for(:total_price)}])"
+    end
+
     def column_name_for(key)
       @hb.column_name_for(key)
     end
