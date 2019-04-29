@@ -51,7 +51,7 @@ class Company::CompanyMembersController < ApplicationController
 
   def destroy
     @company_member = member_resource
-    if @company_member.destroy
+    if @company_member.destroy_unless_owner
       response_for_destroy(@company_member)
     else
       flash[:error] = t 'flash.company_member.could_not_destroy'
