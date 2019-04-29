@@ -18,7 +18,7 @@ RSpec.describe Activity, type: :model do
 
       subject { activity.destroy }
       it 'raises error' do
-        expect { subject }.to raise_error
+        expect { subject }.to raise_error ActiveRecord::DeleteRestrictionError
       end
     end
   end
