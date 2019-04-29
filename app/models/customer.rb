@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
 
   before_destroy :check_existing_drives
 
-  validates :name, presence: true, uniqueness: { scope: :company_id }
+  validates :name, presence: true
 
   default_scope { order(:name) }
 
