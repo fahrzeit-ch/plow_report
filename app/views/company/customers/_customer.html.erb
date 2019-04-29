@@ -1,5 +1,5 @@
 <li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= customer.id %>">
-  <div class="p-2"><%= customer.name %> <br><small><%= customer.details %></small></div>
+  <div class="p-2"><%= customer.name %> <%= customer.first_name %><br><small><%= customer.details %></small></div>
   <div class="ml-auto p-2">
     <%= link_to edit_company_customer_path(company_id: current_company.id, id: customer), class: 'text-muted', title: t('views.companies.customers.edit') do %>
       <i class="fa fa-edit"></i>

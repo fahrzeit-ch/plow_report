@@ -10,7 +10,7 @@ class Customer < ApplicationRecord
   default_scope { order(:name) }
 
   def details
-    [street, city].reject(&:blank?).join(', ')
+    ["#{street} #{nr}", city].reject(&:blank?).join(', ')
   end
 
   def as_select_value
