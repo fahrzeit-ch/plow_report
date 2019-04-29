@@ -160,12 +160,47 @@ RSpec.describe Company, type: :model do
 
   describe 'destroy' do
 
-    subject { create(:company) }
+    let(:company) { create(:company) }
 
-    before { create_list(:driver, 2, company: subject) }
+    before do
+      drivers = create_list(:driver, 2, company: company)
+      cust = create(:customer, client_of: company)
+      site = create(:site, customer: cust)
+      activity = create(:activity, company: company)
+      create(:hourly_rate, company: company, activity: activity, customer: cust)
+      create(:drive, driver: drivers[1], customer: cust, site: site, activity: activity)
+    end
+
+    subject { company.destroy }
 
     it 'destroys all drivers' do
-      expect{ subject.destroy }.to change(Driver, :count).by(-2)
+      expect {
+        subject
+      }.to change(Driver, :count).by(-2)
+    end
+
+    it 'destroys activity' do
+      expect {
+        subject
+      }.to change(Activity, :count).by(-1)
+    end
+
+    it 'destroys customer' do
+      expect {
+        subject
+      }.to change(Customer, :count).by(-1)
+    end
+
+    it 'destroys site' do
+      expect {
+        subject
+      }.to change(Site, :count).by(-1)
+    end
+
+    it 'destroys drive' do
+      expect {
+        subject
+      }.to change(Drive, :count).by(-1)
     end
   end
 end

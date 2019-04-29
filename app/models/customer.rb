@@ -1,7 +1,7 @@
 class Customer < ApplicationRecord
   belongs_to :client_of, foreign_key: :company_id, class_name: 'Company'
   has_many :drives, class_name: 'Drive'
-  has_many :sites
+  has_many :sites, dependent: :destroy
 
   before_destroy :check_existing_drives
 
