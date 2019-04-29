@@ -31,6 +31,11 @@ class CompanyMember < ApplicationRecord
     @new_user
   end
 
+  # Returns the role of the company member. Default is DRIVER
+  def role
+    role_before_type_cast || DRIVER
+  end
+
   def is_driver?
     role == DRIVER
   end
