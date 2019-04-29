@@ -1,6 +1,7 @@
 <div class="d-flex mb-2 border">
   <div class="p-2 mr-2">
     <div class="drive-rate-type-<%= drive.surcharge_rate_type %>"><%= drive.day_of_week %> <%= drive.start.strftime('%d.%m') %></div>
+    <div class="text-muted"><small><%= drive.start.strftime('%Y') %></small></div>
   </div>
 
   <div class="drive-date-times mr-2 p-2">
