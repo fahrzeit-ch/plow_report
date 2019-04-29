@@ -5,10 +5,19 @@ module DrivesHelper
   # The values are JSON objects containing the customer_id and the site_id
   #
   def drive_customer_select_options(selected, opts)
-    sites = Site.order(:name).joins(:customer).where(customers: { client_of: current_company })
-    options = sites.map { |site| [site.name, site.as_select_value] }
+    sites = Site.select(:display_name, :street, :id, :customer_id)
+                .joins(:customer)
+                .where(customers: { client_of: current_company })
+                .order(:display_name)
+    options = sites.map { |site| [customer_site_display(site), site.as_select_value] }
 
     build_options(options, selected, opts.delete(:prompt))
+  end
+
+  def customer_site_display(site)
+    text = "#{site.display_name}"
+    text << " (#{site.street})" unless site.street.blank?
+    text
   end
 
   def build_drive(attrs = {})

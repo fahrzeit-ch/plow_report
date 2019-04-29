@@ -1,5 +1,5 @@
 <li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= site.id %>">
-  <div class="p-2"><%= site.name %> <br><small><%= site.details %></small></div>
+  <div class="p-2"><%= site.display_name %> <br><small><%= site.details %></small></div>
   <% unless site.active %>
     <span class="badge badge-secondary"><%= t 'activerecord.attributes.inactive' %></span>
   <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190409200758) do
+ActiveRecord::Schema.define(version: 20190429214009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,7 +185,10 @@ ActiveRecord::Schema.define(version: 20190409200758) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "display_name", default: "", null: false
+    t.string "first_name", default: "", null: false
     t.index ["customer_id"], name: "index_sites_on_customer_id"
+    t.index ["display_name"], name: "index_sites_on_display_name"
   end
 
   create_table "standby_dates", force: :cascade do |t|

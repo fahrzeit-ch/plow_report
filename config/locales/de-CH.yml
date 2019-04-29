@@ -113,7 +113,9 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
       site:
-        name: "Objektbezeichnung"
+        display_name: "Objektbezeichnung"
+        name: "Name"
+        first_name: "Vorname"
         street: "Adresse"
         nr: "Nr."
         zip: "PLZ"
@@ -262,6 +264,7 @@ de-CH:
     continue: "Weiter"
     new: "Neu"
     please_wait: "Bitte warten..."
+    cancel: "Abbrechen"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -319,7 +322,7 @@ de-CH:
         edit: "Tätigkeit bearbeiten"
         new: "Neue Tätigkeit erstellen"
       sites:
-        name_info: "Anzeigename für dieses Objekt"
+        name_info: "Dieser Name ist für die Fahrer für die Objektauswahl ersichtlich."
         new: "Neues Objekt"
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
       price_rates:

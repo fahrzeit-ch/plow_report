@@ -16,7 +16,7 @@ class Company::CustomerToSiteTransitionsController < ApplicationController
 
   private
   def transition_params
-    params.require(:customer_to_site_transition).permit(:assign_to_id, :source_id, target_attributes: [:name, :street, :nr, :zip, :city])
+    params.require(:customer_to_site_transition).permit(:assign_to_id, :source_id, target_attributes: [:display_name, :fist_name, :name, :street, :nr, :zip, :city])
   end
 
 end

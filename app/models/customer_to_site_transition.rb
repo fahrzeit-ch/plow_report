@@ -48,7 +48,9 @@ class CustomerToSiteTransition
 
   def attributes_for_target
     {
-        name: "#{source.first_name} #{source.name}".strip,
+        display_name: "#{source.name} #{source.first_name}".strip,
+        first_name: source.first_name,
+        name: source.name,
         street: source.street,
         customer: assign_to,
         nr: source.nr,
