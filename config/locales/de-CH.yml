@@ -363,7 +363,7 @@ de-CH:
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
       delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
-      delete_member_current_user: "Sind Sie sicher, dass Sie aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmen daten mehr und können keine Fahrten für die Firma erfassen."
+      delete_member_current_user: "Sind Sie sicher, dass Sie sich aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmendaten mehr und können keine Fahrten für diese Firma erfassen."
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:

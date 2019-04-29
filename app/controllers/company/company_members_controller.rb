@@ -55,7 +55,10 @@ class Company::CompanyMembersController < ApplicationController
       response_for_destroy(@company_member)
     else
       flash[:error] = t 'flash.company_member.could_not_destroy'
-      head 404
+      respond_to do |format|
+        format.js { render js: "window.location = '#{company_company_members_path(current_company)}'" }
+        format.html { redirect_to company_company_members_path(current_company) }
+      end
     end
   end
 
