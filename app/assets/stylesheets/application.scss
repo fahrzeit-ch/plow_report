@@ -43,9 +43,11 @@ $colors: map-merge((
   background-size: cover;
 }
 
+html, body { height: 100%; }
+
 body {
   background-color: #b5b6d447;
-  font-family: Lato Light, sans-serif;
+  font-family: Lato, sans-serif;
 }
 
 .devise-bs {
@@ -57,6 +59,7 @@ body {
 }
 
 .navbar-dark {
+  border-bottom-color: #00254b;
   .navbar-nav {
     .nav-link {
       color: rgba(255, 255, 255, 0.75);
@@ -111,16 +114,19 @@ body {
 .wrapper {
   display: flex;
   width: 100%;
+  height: calc(100vh - 54px);
   align-items: stretch;
+  overflow: hidden;
 }
 
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  color: #fff;
-  transition: all 0.3s;
+  transition: margin-left 0.3s;
   margin-left: -250px;
   visibility: hidden;
+  border-right: 1px solid #ccc;
+  overflow: auto;
 
   &.show {
     margin-left: 0;
@@ -128,19 +134,35 @@ body {
     visibility: inherit;
   }
 
+  &.collapse { display: inherit }
+
   .nav-section {
     margin-top: 5px;
     text-transform: uppercase;
     font-size: 0.8em;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #5a5e61;
+    padding: 0.75rem 1rem 0.5rem 1rem
+  }
+
+  .active {
+    .nav-link {
+      background: #e5e5e6;
+    }
   }
 
   .nav-link {
     padding: 0.75rem 1rem;
+    color: #767777;
     i {
       margin-right: 5px;
     }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  #sidebar {
+    margin-left: 0;
+    tab-index: 2;
+    visibility: inherit;
   }
 }
 
@@ -151,7 +173,7 @@ body {
         color: $white;
         background: darken($dark, 2)
       }
-      color: $light;
+      color: $body-bg;
     }
   }
 }
@@ -165,6 +187,7 @@ body {
   width: 100%;
   min-height: calc(100vh - 55px);
   transition: all 0.3s;
+  overflow: auto;
 }
 
 /* ---------------------------------------------------

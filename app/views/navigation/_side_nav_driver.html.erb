@@ -1,4 +1,4 @@
-<ul class="nav flex-column mr-auto">
+<ul class="nav flex-column">
   <li class="nav-item <%= current_page?(controller: '/dashboard') ? 'active' : false %>">
     <%= link_to root_path, class: 'nav-link' do %>
       <i class="fa fa-dashboard"></i>
@@ -17,14 +17,11 @@
       <%= t 'navbar.main.drives' %>
     <% end %>
   </li>
-</ul>
-<ul class="nav flex-column">
-  <li class="nav-item dropdown">
+  <div class="d-lg-none">
     <%= render 'companies/selector' %>
-  </li>
-  <%= render 'shared/season_selector' %>
-  <li class="nav-section"><%= t 'sidenav.section.user' %></li>
-  <li class="nav-item">
+  </div>
+  <li class="nav-section d-lg-none"><%= t 'sidenav.section.user' %></li>
+  <li class="nav-item d-lg-none">
     <%= link_to edit_user_registration_path, class: 'nav-link' do %>
       <i class="fa fa-cog"></i> <%= t('navbar.main.edit_registration') %>
     <% end %>

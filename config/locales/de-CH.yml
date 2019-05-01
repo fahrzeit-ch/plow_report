@@ -9,12 +9,12 @@ de-CH:
       signout: "Abmelden"
       new_company: "Firma Registrieren"
       company_settings: "Einstellungen"
-      company_show: "Meine Firma"
-      my_dashboard: "Meine Daten"
+      company_show: "Zur Firmen Ansicht"
+      my_dashboard: "Zur Fahrer Ansicht"
       edit_registration: "Benutzer Einstellungen"
     companies:
       drives: "Fahrten"
-      settings: "Einstellungen"
+      settings: "Firmen Einstellungen"
       stand_by_dates: "Pikett"
       dashboard: "Übersicht"
   activemodel:
@@ -381,7 +381,9 @@ de-CH:
     jump_to_today: "Zu Heute springen"
   sidenav:
     section:
-      user: "Benutzer"
+      user: "Mein Benutzer"
+      settings: "Einstallungen"
+      master_data: "Stammdaten"
   tomorrow: 'Morgen'
   today: 'Heute'
   in_x_days: 'In %{distance} Tagen'
