@@ -8,6 +8,11 @@ class Site < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  attribute :name, :string, default: ''
+  attribute :first_name, :string, default: ''
+  attribute :city, :string, default: ''
+  attribute :zip, :string, default: ''
+
   def details
     ["#{name} #{first_name}", "#{street} #{nr}", "#{zip} #{city}"].reject(&:blank?).join(', ')
   end

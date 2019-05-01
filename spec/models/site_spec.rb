@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Site, type: :model do
 
   it { is_expected.to validate_uniqueness_of(:display_name).scoped_to(:customer_id) }
-  it { is_expected.to validate_presence_of(:display_name).scoped_to(:customer_id) }
+  it { is_expected.to validate_presence_of(:display_name) }
 
   describe 'active scope' do
     let(:active) { create(:site, active: true) }
