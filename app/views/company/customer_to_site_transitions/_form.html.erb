@@ -10,29 +10,43 @@
   <div class="modal-body">
     <div class="form-group">
       <%= f.label :assign_to %>
-      <%= f.select :assign_to_id, options_from_collection_for_select(current_company.customers, 'id', 'name') %>
+      <%= f.select :assign_to_id, options_from_collection_for_select(current_company.customers, 'id', 'display_name') %>
     </div>
     <%= f.fields_for :target do |target_fields| %>
       <div class="form-group">
-        <%= target_fields.label :name %>
-        <%= target_fields.text_field :name %>
+        <%= target_fields.label :display_name %>
+        <%= target_fields.text_field :display_name %>
       </div>
       <hr>
-      <div class="form-group">
-        <%= target_fields.label :street %>
-        <%= target_fields.text_field :street %>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= target_fields.label :name %>
+          <%= target_fields.text_field :name %>
+        </div>
+        <div class="form-group col-md-6">
+          <%= target_fields.label :first_name %>
+          <%= target_fields.text_field :first_name %>
+        </div>
       </div>
-      <div class="form-group">
-        <%= target_fields.label :nr %>
-        <%= target_fields.text_field :nr %>
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <%= target_fields.label :street %>
+          <%= target_fields.text_field :street %>
+        </div>
+        <div class="form-group col-md-2">
+          <%= target_fields.label :nr %>
+          <%= target_fields.text_field :nr %>
+        </div>
       </div>
-      <div class="form-group">
-        <%= target_fields.label :zip %>
-        <%= target_fields.text_field :zip %>
-      </div>
-      <div class="form-group">
-        <%= target_fields.label :city %>
-        <%= target_fields.text_field :city %>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <%= target_fields.label :zip %>
+          <%= target_fields.text_field :zip %>
+        </div>
+        <div class="form-group col-md-8">
+          <%= target_fields.label :city %>
+          <%= target_fields.text_field :city %>
+        </div>
       </div>
     <% end %>
     <hr>
@@ -41,7 +55,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t'common.cancel' %></button>
     <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
   </div>
   <% end %>

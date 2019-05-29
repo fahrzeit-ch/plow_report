@@ -3,28 +3,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <%= render 'shared/brand', brand_link: root_path %>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item <%= current_page?(controller: '/dashboard') ? 'active' : false %>">
-        <%= link_to root_path, class: 'nav-link' do %>
-          <i class="fa fa-dashboard"></i>
-          <%= t 'navbar.main.dashboard' %>
-        <% end %>
-      </li>
-      <li class="nav-item <%= current_page?(controller: '/standby_dates') ? 'active' : false %>">
-        <%= link_to standby_dates_path, class: 'nav-link' do %>
-          <i class="fa fa-calendar"></i>
-          <%= t 'navbar.main.standby_dates' %>
-        <% end %>
-      </li>
-      <li class="nav-item <%= current_page?(controller: '/drives') ? 'active' : false %>">
-        <%= link_to drives_path, class: 'nav-link' do %>
-          <i class="fa fa-truck"></i>
-          <%= t 'navbar.main.drives' %>
-        <% end %>
-      </li>
-    </ul>
+    <div class="mr-auto"></div>
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <%= render 'companies/selector' %>

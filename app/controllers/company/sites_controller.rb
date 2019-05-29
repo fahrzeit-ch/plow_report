@@ -77,11 +77,11 @@ class Company::SitesController < ApplicationController
   end
 
   def site_params
-    params.require(:site).permit(:name, :street, :nr, :zip, :city)
+    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city)
   end
 
   def site_update_params
-     params.require(:site).permit(:name, :street, :nr, :zip, :city, :active)
+     params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active)
   end
 
 end

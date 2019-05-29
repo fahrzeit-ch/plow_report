@@ -4,12 +4,17 @@ class Site < ApplicationRecord
 
   has_many :drives, class_name: 'Drive'
 
-  validates :name, presence: true, uniqueness: { scope: :customer_id }
+  validates :display_name, presence: true, uniqueness: { scope: :customer_id }
 
   scope :active, -> { where(active: true) }
 
+  attribute :name, :string, default: ''
+  attribute :first_name, :string, default: ''
+  attribute :city, :string, default: ''
+  attribute :zip, :string, default: ''
+
   def details
-    ["#{street} #{nr}", zip, city].reject(&:blank?).join(', ')
+    ["#{name} #{first_name}", "#{street} #{nr}", "#{zip} #{city}"].reject(&:blank?).join(', ')
   end
 
   def as_select_value

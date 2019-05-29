@@ -9,12 +9,12 @@ de-CH:
       signout: "Abmelden"
       new_company: "Firma Registrieren"
       company_settings: "Einstellungen"
-      company_show: "Meine Firma"
-      my_dashboard: "Meine Daten"
+      company_show: "Zur Firmen Ansicht"
+      my_dashboard: "Zur Fahrer Ansicht"
       edit_registration: "Benutzer Einstellungen"
     companies:
       drives: "Fahrten"
-      settings: "Einstellungen"
+      settings: "Firmen Einstellungen"
       stand_by_dates: "Pikett"
       dashboard: "Übersicht"
   activemodel:
@@ -33,6 +33,10 @@ de-CH:
         contact_email: "Kontakt Email"
         add_as_driver: "Mich als Fahrer in dieser Firma hinzufügen"
         transfer_private_drives: "Fahrten die als Privat erfasst wurden an die Firma übertragen."
+        contact_email: "Kontakt Email"
+        address: "Adresse"
+        zip_code: "PLZ"
+        city: "Ort"
       standby_date/date_range:
         start_date: "Start Datum"
         end_date: "End Datum"
@@ -109,7 +113,9 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
       site:
-        name: "Objektbezeichnung"
+        display_name: "Objektbezeichnung"
+        name: "Name"
+        first_name: "Vorname"
         street: "Adresse"
         nr: "Nr."
         zip: "PLZ"
@@ -183,64 +189,69 @@ de-CH:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export (Beta)"
+    download_xlsx: "Excel Export"
     disable: "Deaktivieren"
   flash:
     standby_dates:
-      created: "Pikett Tag erfolgreich gespeichert"
-      updated: "Pikett Tag erfolgreich aktuallisiert"
-      destroyed: "Pikett Tag erfolgreich entfernt"
+      created: "Pikett Tag erfolgreich gespeichert."
+      updated: "Pikett Tag erfolgreich aktuallisiert."
+      destroyed: "Pikett Tag erfolgreich entfernt."
       not_created: "Pikket Tag konnte nicht erfasst werden."
     standby_date_ranges:
-      created: "%{num} Pikett Tage erfolgreich gespeichert"
+      created: "%{num} Pikett Tage erfolgreich gespeichert."
     drives:
-      updated: "Eintrag erfolgreich aktuallisiert"
-      destroyed: "Fahrt erfolgreich entfernt"
-      created: "Fahrt erfolgreich erfasst"
+      updated: "Eintrag erfolgreich aktuallisiert."
+      destroyed: "Fahrt erfolgreich entfernt."
+      created: "Fahrt erfolgreich erfasst."
       not_destroyed: "Fehler beim löschen der Fahrt."
       not_recording: "Keine aktive Fahrt zum beenden vorhanden..."
-      already_recording: "Es wird bereits eine Fahrt aufgezeichnet"
+      already_recording: "Es wird bereits eine Fahrt aufgezeichnet."
     company:
-      created: "Firma erfolgreich Erfasst"
-      updated: "Firma erfolgreich aktuallisiert"
-      already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden"
+      created: "Firma erfolgreich Erfasst."
+      updated: "Firma erfolgreich aktuallisiert."
+      already_assigned: "Benutzer können noch nicht mehreren Firmen zugeordnet werden."
       destroyed: "Die Firma und alle dazugehörigen Daten wurden erfolgreich gelöscht."
-      not_destroyed: "Fehler beim Löschen der Firma"
+      not_destroyed: "Fehler beim Löschen der Firma."
     company_member:
       created: "Benutzer erfolgreich zur Firma hinzugefügt."
       updated: "Benutzer erfolgreich aktuallisiert."
       destroyed: "Benutzer erfolgreich entfernt."
       could_not_destroy: "Benutzer konnte nicht entfernt werden. Bitte kontaktieren Sie den Support."
-      invited: "Der Benutzer wurde erfolgreich eingeladen"
+      invited: "Der Benutzer wurde erfolgreich eingeladen."
       destroyed_me: "Sie wurden erfolgreich aus dem Firmenaccount entfernt."
       invitation_resent: "Die einladung wurde versendet."
-      invitation_failed: "Fehler beim versenden der Einladung"
+      invitation_failed: "Fehler beim versenden der Einladung."
     drivers:
-      destroyed: "Fahrer wurde erfolgreich gelöscht"
-      not_destroyed: "Fahrer konnte nicht gelöscht werden"
-      created: "Fahrer wurde erfolgreich hinzugefügt"
-      driver_not_created: "Fahrer konnte nicht hinzugefügt werden"
+      destroyed: "Fahrer wurde erfolgreich gelöscht."
+      not_destroyed: "Fahrer konnte nicht gelöscht werden."
+      created: "Fahrer wurde erfolgreich hinzugefügt."
+      driver_not_created: "Fahrer konnte nicht hinzugefügt werden."
       user_already_has_driver: "Sie sind bereits als Fahrer registriert."
-      updated: "Fahrer wurde erfolgreich aktuallisiert"
+      updated: "Fahrer wurde erfolgreich aktuallisiert."
     customer:
-      error: "Fehler beim speichern"
-      created: "Der kunde wurde erfolgreich angelegt"
-      not_created: "Der Kunde konnte nicht gespeichert werden. Bitte prüfen Sie Ihre eingaben"
+      error: "Fehler beim speichern."
+      created: "Der kunde wurde erfolgreich angelegt."
+      not_created: "Der Kunde konnte nicht gespeichert werden. Bitte prüfen Sie Ihre eingaben."
       destroyed: "Der Kunde wurde erfolgreich gelöscht."
       not_destroyed: "Der Kunde konnte nicht gelöscht werden."
-      updated: "Kunde erfolgreich aktuallisiert"
+      updated: "Kunde erfolgreich aktuallisiert."
     site:
-      created: "Objekt erfolgreich erstellt"
+      created: "Objekt erfolgreich erstellt."
       not_created: "Objekt konnte nicht erstellt werden."
-      updated: "Objekt erfolgreich aktuallisiert"
-      error: "Objekt konnte nicht aktuallisiert werden"
-      destroyed: "Objekt erfolgreich gelöscht"
-      not_destroyed: "Objekt konnte nicht gelöscht werden"
+      updated: "Objekt erfolgreich aktuallisiert."
+      error: "Objekt konnte nicht aktuallisiert werden."
+      destroyed: "Objekt erfolgreich gelöscht."
+      not_destroyed: "Objekt konnte nicht gelöscht werden."
     customer_to_site_transition:
       success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
     common:
-      saved: "Änderungen erfolgreich gespeichert"
-      deleted: "Eintrag erfolgreich gelöscht"
+      saved: "Änderungen erfolgreich gespeichert."
+      deleted: "Eintrag erfolgreich gelöscht."
+    activities:
+      created: "Tätigkeit erfolgreich erstellt."
+      updated: "Tätigkeit erfolgreich aktuallisiert."
+      destroyed: "Tätigkeit erfolgreich gelöscht."
+      not_destroyed: "Diese Tätigkeit wurde bereits für Fahrten verwendet und kann nicht mehr gelöscht werden."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -253,6 +264,7 @@ de-CH:
     continue: "Weiter"
     new: "Neu"
     please_wait: "Bitte warten..."
+    cancel: "Abbrechen"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -310,7 +322,7 @@ de-CH:
         edit: "Tätigkeit bearbeiten"
         new: "Neue Tätigkeit erstellen"
       sites:
-        name_info: "Anzeigename für dieses Objekt"
+        name_info: "Dieser Name ist für die Fahrer für die Objektauswahl ersichtlich."
         new: "Neues Objekt"
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
       price_rates:
@@ -354,7 +366,7 @@ de-CH:
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
       delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
-      delete_member_current_user: "Sind Sie sicher, dass Sie aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmen daten mehr und können keine Fahrten für die Firma erfassen."
+      delete_member_current_user: "Sind Sie sicher, dass Sie sich aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmendaten mehr und können keine Fahrten für diese Firma erfassen."
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
   devise:
@@ -369,7 +381,9 @@ de-CH:
     jump_to_today: "Zu Heute springen"
   sidenav:
     section:
-      user: "Benutzer"
+      user: "Mein Benutzer"
+      settings: "Einstallungen"
+      master_data: "Stammdaten"
   tomorrow: 'Morgen'
   today: 'Heute'
   in_x_days: 'In %{distance} Tagen'

@@ -3,8 +3,8 @@ RSpec.describe Company::CompanyMembersController, type: :controller do
 
   let(:company) { create(:company) }
   let(:company_admin) { create(:user) }
-
-  before { company.add_member company_admin, CompanyMember::OWNER }
+  let(:admin_membership) { company.add_member company_admin, CompanyMember::OWNER }
+  before { admin_membership }
 
   before { sign_in(company_admin) }
 
@@ -123,6 +123,13 @@ RSpec.describe Company::CompanyMembersController, type: :controller do
       delete :destroy, params: { company_id: company.id, id: member.id }
       company.reload
       expect(company.drivers.count).to eq(1)
+    end
+
+    it 'does not destroy the company member if it is the last owner' do
+      delete :destroy, params: { company_id: company.id, id: admin_membership.id }
+      expect {
+        admin_membership.reload
+      }.not_to raise_error
     end
   end
 
