@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190409200758) do
+ActiveRecord::Schema.define(version: 20190501191539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,15 +95,15 @@ ActiveRecord::Schema.define(version: 20190409200758) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "street"
-    t.string "nr"
-    t.string "zip"
-    t.string "city"
-    t.string "first_name"
+    t.string "street", default: "", null: false
+    t.string "nr", default: "", null: false
+    t.string "zip", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_customers_on_company_id"
     t.index ["name", "company_id"], name: "index_customers_on_name_and_company_id", unique: true
   end
@@ -159,6 +159,48 @@ ActiveRecord::Schema.define(version: 20190409200758) do
     t.index ["valid_until"], name: "index_hourly_rates_on_valid_until"
   end
 
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.bigint "resource_owner_id", null: false
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  end
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.bigint "resource_owner_id"
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.string "refresh_token"
+    t.integer "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.string "scopes"
+    t.string "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  end
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "uid", null: false
+    t.string "secret", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
   create_table "policy_terms", force: :cascade do |t|
     t.string "key"
     t.boolean "required"
@@ -177,15 +219,18 @@ ActiveRecord::Schema.define(version: 20190409200758) do
 
   create_table "sites", force: :cascade do |t|
     t.string "name"
-    t.string "street"
-    t.string "nr"
-    t.string "zip"
-    t.string "city"
+    t.string "street", default: "", null: false
+    t.string "nr", default: "", null: false
+    t.string "zip", default: "", null: false
+    t.string "city", default: "", null: false
     t.bigint "customer_id"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "display_name", default: "", null: false
+    t.string "first_name", default: "", null: false
     t.index ["customer_id"], name: "index_sites_on_customer_id"
+    t.index ["display_name"], name: "index_sites_on_display_name"
   end
 
   create_table "standby_dates", force: :cascade do |t|
@@ -270,9 +315,91 @@ ActiveRecord::Schema.define(version: 20190409200758) do
   add_foreign_key "hourly_rates", "activities"
   add_foreign_key "hourly_rates", "companies"
   add_foreign_key "hourly_rates", "customers"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "sites", "customers"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "user_actions", "users"
+
+  create_view "implicit_hourly_rates", sql_definition: <<-SQL
+      SELECT q1.hourly_rate_id,
+      q1.price_cents,
+      q1.price_currency,
+      q1.activity_id,
+      q1.customer_id,
+      q1.company_id,
+      q1.rate_type,
+      q1.inheritance_type,
+      q1.inheritance_level
+     FROM ( SELECT hr.id AS hourly_rate_id,
+              hr.price_cents,
+              hr.price_currency,
+              hr.company_id,
+              ca.activity_id,
+              ca.customer_id,
+                  CASE
+                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NOT NULL)) THEN 'customer_activity_rate'::text
+                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NULL)) THEN 'customer_base_rate'::text
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 'activity_rate'::text
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
+                      ELSE NULL::text
+                  END AS rate_type,
+                  CASE
+                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 0
+                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id IS NULL) AND (ca.activity_id IS NOT NULL)) THEN 1
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 2
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 3
+                      ELSE NULL::integer
+                  END AS inheritance_level,
+                  CASE
+                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 'explicit'::text
+                      ELSE 'inherited'::text
+                  END AS inheritance_type
+             FROM ( SELECT customers.id AS customer_id,
+                      activities.id AS activity_id,
+                      customers.company_id
+                     FROM customers,
+                      activities
+                    WHERE (customers.company_id = activities.company_id)
+                    ORDER BY customers.id, activities.id) ca,
+              hourly_rates hr
+            WHERE (((hr.activity_id = ca.activity_id) OR (hr.activity_id IS NULL)) AND ((hr.customer_id = ca.customer_id) OR (hr.customer_id IS NULL)) AND (hr.company_id = ca.company_id))) q1
+  UNION
+   SELECT q2.id AS hourly_rate_id,
+      q2.price_cents,
+      q2.price_currency,
+      q2.activity_id,
+      q2.customer_id,
+      q2.company_id,
+      q2.rate_type,
+      q2.inheritance_type,
+      q2.inheritance_level
+     FROM ( SELECT hr.id,
+              hr.price_cents,
+              hr.price_currency,
+              hr.company_id,
+              ca.id AS activity_id,
+              hr.customer_id,
+                  CASE
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 'activity_rate'::text
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
+                      ELSE NULL::text
+                  END AS rate_type,
+                  CASE
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 0
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 1
+                      ELSE NULL::integer
+                  END AS inheritance_level,
+                  CASE
+                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id = ca.id)) THEN 'explicit'::text
+                      ELSE 'inherited'::text
+                  END AS inheritance_type
+             FROM activities ca,
+              hourly_rates hr
+            WHERE (((hr.activity_id = ca.id) OR (hr.activity_id IS NULL)) AND (hr.company_id = ca.company_id) AND (hr.customer_id IS NULL))) q2;
+  SQL
 end

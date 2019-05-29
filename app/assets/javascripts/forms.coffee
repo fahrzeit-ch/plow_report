@@ -11,6 +11,11 @@ $(document).on 'turbolinks:load', ->
 # Select2
   $('[data-s2]').select2();
 
+  # Update select 2 after carusel slid
+  $('#finish-drive-form').on 'slid.bs.carousel', ->
+      $('[data-s2]').select2();
+
+
   forms = document.getElementsByClassName('needs-validation');
 
   # Auto update timefield until focus

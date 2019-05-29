@@ -1,8 +1,10 @@
 class DriveFormBuilder < BootstrapFormBuilder
   def customer_select
-    select2 :customer_id,
-            @template.drive_customer_select_options,
-            prompt: I18n.t('forms.select.none')
+    select2 :associated_to_as_json,
+            @template.drive_customer_select_options(
+                object.associated_to_as_json,
+                prompt: I18n.t('forms.select.none')
+            )
   end
 
   def activity_choice(activity)

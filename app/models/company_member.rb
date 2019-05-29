@@ -1,14 +1,15 @@
 class CompanyMember < ApplicationRecord
-  OWNER = 'owner'
-  ADMINISTRATOR = 'administrator'
-  EMPLOYEE = 'employee'
-  DRIVER = 'driver'
+  OWNER = 'owner'.freeze
+  ADMINISTRATOR = 'administrator'.freeze
+  EMPLOYEE = 'employee'.freeze
+  DRIVER = 'driver'.freeze
   ROLES = [OWNER, ADMINISTRATOR, DRIVER]
 
   belongs_to :user, optional: true # set to true in order for to conditionally validate
   validates_presence_of :user, unless: :new_user?
 
   belongs_to :company
+  scope :owners, -> { where(role: OWNER) }
 
   attribute :user_email
   attribute :user_name
@@ -20,10 +21,11 @@ class CompanyMember < ApplicationRecord
   end
 
   before_validation :assign_user_by_email
-  after_create :add_driver, if: :is_driver?
+  after_create :add_driver, if: :driver?
   after_destroy :remove_driver_login, if: :has_driver?
 
   validates :role, presence: true, inclusion: ROLES
+  attribute :role, :string, default: DRIVER
   validates :user, uniqueness: { scope: :company }
   validates :user_name, presence: true, if: :new_user?
 
@@ -31,8 +33,16 @@ class CompanyMember < ApplicationRecord
     @new_user
   end
 
-  def is_driver?
+  def driver?
     role == DRIVER
+  end
+
+  def owner?
+    role == OWNER
+  end
+
+  def admin?
+    role == ADMINISTRATOR
   end
 
   def has_driver?
@@ -59,6 +69,24 @@ class CompanyMember < ApplicationRecord
 
   def resend_invitation!
     user.invite!
+  end
+
+  # Destroys this company member only if there is
+  # at least one other owner in the same company
+  def destroy_unless_owner
+    if last_owner?
+      errors.add(:base, :last_owner)
+      false
+    else
+      destroy
+    end
+  end
+
+  # Returns true if this is the last
+  def last_owner?
+    @last_owner ||= owner? && self.class
+                        .where(company: company)
+                        .owners.size == 1
   end
 
   private

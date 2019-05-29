@@ -4,7 +4,6 @@ module Report
   class HeaderBuilder
 
     attr_reader :activity_index_map
-    FIXED_COLUMNS = %i[date start duration driver distance].freeze
 
     # @param [Activities] activities
     # @param [Report::Styles] styles
@@ -34,7 +33,7 @@ module Report
       if activity_id
         column_name_for_activity(attr, activity_id)
       else
-        @fixed_headers[FIXED_COLUMNS.index(attr)]
+        @fixed_headers[Report::FIXED_COLUMNS.index(attr)]
       end
     end
 
@@ -73,8 +72,11 @@ module Report
           I18n.t('reports.drives.drive_date_title'),
           I18n.t('reports.drives.drive_start_time_title'),
           I18n.t('reports.drives.drive_duration_title'),
+          I18n.t('reports.drives.drive_site_title'),
           I18n.t('reports.drives.drive_driver_title'),
-          I18n.t('reports.drives.drive_distance_title')
+          I18n.t('reports.drives.drive_distance_title'),
+          I18n.t('reports.drives.drive_hourly_rate'),
+          I18n.t('reports.drives.drive_total_price')
       ]
     end
   end

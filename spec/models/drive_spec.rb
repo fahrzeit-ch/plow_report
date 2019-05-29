@@ -24,8 +24,28 @@ RSpec.describe Drive, type: :model do
     end
   end
 
-  describe 'customer' do
+  describe 'customer and site' do
     it { is_expected.to belong_to(:customer) }
+    it { is_expected.to belong_to(:site) }
+
+    context 'customer without site' do
+      let(:customer) { create(:customer) }
+      subject { build(:drive, customer: customer, site: nil) }
+      it { is_expected.to be_valid }
+    end
+
+    context 'site without customer' do
+      let(:site) { create(:site) }
+      subject { build(:drive, customer: nil, site: site) }
+      it { is_expected.to be_valid }
+    end
+
+    context 'sites customer different than drives customer' do
+      let(:site) { create(:site) }
+      let(:customer) { create(:customer) }
+      subject { build(:drive, customer: customer, site: site) }
+      it { is_expected.not_to be_valid }
+    end
   end
 
   describe '#activity_value_summary' do
@@ -186,4 +206,37 @@ RSpec.describe Drive, type: :model do
     end
 
   end
+
+  describe 'hourly_rates' do
+    # We need to disable transactional specs because implicit hourly rates is based on a db view
+    # which will not be populated until the transaction is committed.
+    self.use_transactional_tests = false
+
+    def clear_all
+      ActiveRecord::Base.connection.execute('delete from hourly_rates')
+      ActiveRecord::Base.connection.execute('delete from customers')
+      ActiveRecord::Base.connection.execute('delete from activities')
+      ActiveRecord::Base.connection.execute('delete from companies')
+    end
+    before(:all) { clear_all }
+    after(:all) { clear_all }
+
+    let(:company) { create(:company) }
+    let(:driver) { build(:driver, company_id: company.id ) }
+    let(:drive) { build(:drive, driver: driver) }
+
+    before { hourly_rate }
+
+    subject { drive.hourly_rate }
+
+    context 'without activity or customer' do
+      let(:hourly_rate) { create(:hourly_rate, company_id: company.id, activity: nil, customer: nil ) }
+      it { is_expected.to be_a Money }
+      it { is_expected.to eq hourly_rate.price }
+    end
+
+
+
+  end
+
 end

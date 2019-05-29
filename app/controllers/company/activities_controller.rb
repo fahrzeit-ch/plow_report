@@ -41,9 +41,10 @@ class Company::ActivitiesController < ApplicationController
   def destroy
     @activity = current_company.activities.find(params[:id])
     authorize(@activity)
-    if @activity.destroy
+    begin
+      @activity.destroy
       flash[:success] = I18n.t 'flash.activities.destroyed'
-    else
+    rescue ActiveRecord::DeleteRestrictionError => e
       flash[:error] = I18n.t 'flash.activities.not_destroyed'
     end
     redirect_to company_activities_path(current_company)

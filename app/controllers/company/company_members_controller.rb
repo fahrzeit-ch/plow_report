@@ -51,11 +51,14 @@ class Company::CompanyMembersController < ApplicationController
 
   def destroy
     @company_member = member_resource
-    if @company_member.destroy
+    if @company_member.destroy_unless_owner
       response_for_destroy(@company_member)
     else
       flash[:error] = t 'flash.company_member.could_not_destroy'
-      head 404
+      respond_to do |format|
+        format.js { render js: "window.location = '#{company_company_members_path(current_company)}'" }
+        format.html { redirect_to company_company_members_path(current_company) }
+      end
     end
   end
 

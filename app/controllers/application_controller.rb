@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def current_driver
     return nil unless user_signed_in?
-    current_user.drivers.last
+    @current_driver ||= current_user.drivers.last
   end
 
   # @return [Company]

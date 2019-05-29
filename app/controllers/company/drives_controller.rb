@@ -7,14 +7,15 @@ class Company::DrivesController < ApplicationController
 
   def index
     authorize current_company, :index_drives?
-    scope = apply_scopes(current_company.drives.includes(:driver).with_viewstate(current_user))
-
-    @stats = apply_scopes(current_company.drives).stats
+    scope = apply_scopes(current_company.drives
+                             .with_viewstate(current_user)
+                             .includes(:driver, :activity_execution, :site, :activity, :customer))
     @drives = scope.order(start: :desc)
 
     respond_to do |format|
       format.html do
-        @drives = @drives.page(params[:page]).per(30)
+        @stats = apply_scopes(current_company.drives).stats
+        @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30)
       end
       format.xlsx do
         @drives = @drives.by_season(current_season)

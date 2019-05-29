@@ -1,0 +1,17 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <%= render 'navigation/company_edit_nav' %>
+  </div>
+
+  <div class="card-body">
+    <h4 class="card-title">
+      <%= t('views.companies.customers.title') %> / <%= link_to @customer.name,
+                  edit_company_customers_path(current_company, customer_id: params[:company_id]) %> / </h4>
+
+    <h5><%= t'views.companies.sites.index' %></h5>
+    <ul>
+      <%= render @sites %>
+    </ul>
+
+  </div>
+</div>

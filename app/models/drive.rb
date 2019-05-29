@@ -14,7 +14,11 @@ class Drive < ApplicationRecord
   accepts_nested_attributes_for :activity_execution, reject_if: :all_blank
 
   # A Drive may be recorded on a customer but its not necessary
+  # TODO: Refactor to only allow site relation and create a transition to move existing records to new concept
   belongs_to :customer, optional: true
+  belongs_to :site, optional: true
+  validate :customer_associated_with_site
+
   audited associated_with: :driver
 
   include TrackedViews
@@ -31,12 +35,54 @@ class Drive < ApplicationRecord
     self.start.to_date.cweek
   end
 
+  def associated_to_as_json
+    return nil unless site_id || customer_id
+    customer_association.to_json
+  end
+
+  def associated_to_as_json=(json)
+    assoc = CustomerAssociation.from_json json
+    self.customer_association = assoc
+  end
+
+  def customer_association
+    CustomerAssociation.new(customer_id, site_id)
+  end
+
+  def customer_association=(assoc)
+    self.customer_id = assoc.customer_id
+    self.site_id = assoc.site_id
+  end
+
   def day_of_week
     I18n.l self.start, format: '%a'
   end
 
+  # @return The hourly rate applicable for this drive.
+  def hourly_rate
+    if @hourly_rate
+      @hourly_rate
+    elsif activity_execution.nil?
+      # Lookup for hourly rates without activity in the implicit rates does not work so we need
+      # to fetch explicitly the base rate (as long as w do not support customer prices)
+      @hourly_rate = HourlyRate.where(company_id: company.id).base_rate.try(:price) || Money.new(0.0, Money.default_currency)
+    else
+      possible_rates = ImplicitHourlyRate.where(company_id: company.id, customer_id: customer_id, activity_id: activity_execution.activity_id)
+      if possible_rates.any?
+        best_match = ImplicitHourlyRate.best_matches(possible_rates).first
+        @hourly_rate = best_match.price
+      else
+        @hourly_rate = Money.new(0.0, Money.default_currency)
+      end
+    end
+  end
+
   def customer_name
     customer ? customer.name : ''
+  end
+
+  def site_name
+    site ? site.name : ''
   end
 
   # Get the tasks (drive options) as an Array with translated option names
@@ -54,6 +100,10 @@ class Drive < ApplicationRecord
     else
       Time.at(self.end - self.start).utc
     end
+  end
+
+  def duration_in_hours
+    ( self.end - self.start ) / 3600.0
   end
 
   # Returns the duration in as string in the form HH:MM.
@@ -106,7 +156,11 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     end
 
     def activity_value_summary
-      select('activities.value_label as title, SUM(activity_executions.value) as total').joins(:activity).group(:value_label)
+      select('activities.value_label as title, SUM(activity_executions.value) as total')
+          .joins(:activity)
+          .where(activities: { has_value: true })
+          .group(:value_label)
+          .sort_by{|item| item[:title]}
     end
 
     # Scope the drives by the given season
@@ -150,6 +204,11 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+
+  def customer_associated_with_site
+    return if customer.nil? || site.nil?
+    errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
+  end
 
   def start_end_dates
     errors.add(:end, :not_before_start) if self.end < self.start

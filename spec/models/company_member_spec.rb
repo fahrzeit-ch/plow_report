@@ -31,6 +31,31 @@ RSpec.describe CompanyMember, type: :model do
       subject.destroy
       expect(user).not_to be_destroyed
     end
+
+    context 'as owner' do
+      before { subject.update_attribute(:role, CompanyMember::OWNER) }
+
+      context 'one owner left' do
+        it 'is not possible to destroy member' do
+          subject.destroy_unless_owner
+          expect(subject).not_to be_destroyed
+        end
+
+        it 'destroys if destroying the user' do
+          subject
+          user.destroy
+          expect{subject.reload}.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context 'additional owner left' do
+        before { company.add_member create(:user), CompanyMember::OWNER }
+        it 'is possible to destroy member' do
+          subject.destroy_unless_owner
+          expect(subject).to be_destroyed
+        end
+      end
+    end
   end
 
   describe 'assign user email' do

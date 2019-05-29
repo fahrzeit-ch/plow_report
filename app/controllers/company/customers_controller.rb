@@ -16,10 +16,11 @@ class Company::CustomersController < ApplicationController
     @customer.client_of = current_company
     if @customer.save
       flash[:success] = I18n.t 'flash.customer.created'
+      redirect_to edit_company_customer_path(current_company, @customer)
     else
       flash[:error] = I18n.t 'flash.customer.not_created'
+      render :new
     end
-    redirect_to edit_company_customer_path(current_company, @customer)
   end
 
   def new

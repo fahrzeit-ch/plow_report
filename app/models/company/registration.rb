@@ -8,6 +8,7 @@ class Company::Registration
   attr_accessor :name,
                 :contact_email,
                 :address,
+                :nr,
                 :zip_code,
                 :city,
                 :owner,
@@ -52,7 +53,10 @@ class Company::Registration
   end
 
   def create_company(result)
-    self.company = Company.new(name: name, contact_email: contact_email, address: address,
+    self.company = Company.new(name: name,
+                               contact_email: contact_email,
+                               address: address,
+                               nr: nr || '', # nr is but null is not accepted
                                zip_code: zip_code,
                                city: city)
     if company.save

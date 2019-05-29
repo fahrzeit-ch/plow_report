@@ -11,15 +11,16 @@ gem 'rails', '~> 5.1.6'
 gem 'sprockets', '~> 3.7.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
+gem "scenic", '~> 1.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails', '~> 2.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'bootstrap', '~> 4.1.2'
+gem 'bootstrap', '~> 4.3.1'
 gem 'bootstrap_form',
     git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
     branch: 'master'
@@ -35,6 +36,8 @@ gem 'devise_invitable', '~> 1.7.0'
 gem 'doorkeeper', '~> 5.1.0'
 gem 'pundit', '~> 1.1.0'
 gem 'rollbar'
+
+gem 'money-rails', '~>1.12'
 
 gem 'kaminari'
 
@@ -69,7 +72,9 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'pundit-matchers', '~> 1.6.0'
   gem 'rails-controller-testing'
+  gem 'rspec-benchmark', '>= 0.4'
   gem 'rspec-rails', '>= 3.7.2', '< 4.0'
+  gem 'rspec-its', '~> 1.2.0'
   gem 'rubocop'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'

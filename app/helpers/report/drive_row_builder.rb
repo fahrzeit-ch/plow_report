@@ -12,7 +12,7 @@ module Report
     # @param [Drive] drive
     def columns_for(drive)
       columns = [
-        drive.start, drive.start, drive.duration, drive.driver.name, drive.distance_km
+        drive.start, drive.start, drive.duration, drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
       ]
       return columns unless drive.activity_execution
 
@@ -25,6 +25,12 @@ module Report
 
     def styles
       [@styles.date, @styles.time, @styles.duration]
+    end
+
+    def get_price(drive)
+      if drive.hourly_rate
+        (drive.hourly_rate.amount * drive.duration_in_hours).round(2)
+      end
     end
   end
 end
