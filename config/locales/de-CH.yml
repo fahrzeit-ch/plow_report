@@ -189,7 +189,7 @@ de-CH:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export (Beta)"
+    download_xlsx: "Excel Export"
     disable: "Deaktivieren"
   flash:
     standby_dates:
