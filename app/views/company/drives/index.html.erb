@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="row toolbar border-top bg-light p-2 d-print-none">
-  <div class="col-10">
+  <div class="col">
     <form class="form form-inline">
       <div class="form-group mr-2">
         <label class="label mr-2"><%= Driver.model_name.human %></label>
@@ -27,9 +27,9 @@
       <% end %>
     </form>
   </div>
-  <div class="col-sm-2">
-    <a href="javascript:window.print()" class="btn btn-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
+  <div class="col button-group">
     <a href="<%= url_for(params.to_unsafe_h.merge(format: :xlsx))  %>" class="btn btn-primary d-print-none float-right"><i class="fa fa-download"></i> <%= t('actions.download_xlsx') %></a>
+    <a href="javascript:window.print()" class="btn btn-outline-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
 <div class="row mt-3">

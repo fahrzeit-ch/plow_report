@@ -190,6 +190,12 @@ body {
   overflow: auto;
 }
 
+.button-group {
+  .btn {
+    margin-left: 5px;
+  }
+}
+
 /* ---------------------------------------------------
     Reduced Padding on SM devices
 ----------------------------------------------------- */
