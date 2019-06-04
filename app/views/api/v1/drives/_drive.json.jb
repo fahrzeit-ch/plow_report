@@ -1,0 +1,11 @@
+json = {
+    id: drive.id,
+    distance_km: drive.distance_km,
+    start: drive.start,
+    end: drive.end,
+    driver_id: drive.driver_id,
+    customer_id: drive.customer_id,
+    site_id: drive.site_id,
+    created_at: drive.created_at,
+    updated_at: drive.updated_at
+}

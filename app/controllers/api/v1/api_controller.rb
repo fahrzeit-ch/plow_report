@@ -29,7 +29,7 @@ class Api::V1::ApiController < ActionController::Base
     @driver_id ||= current_resource_owner
                         .drivers
                         .select(:id)
-                        .find(params[:id]).id
+                        .find(params[:driver_id]).id
   end
 
   # Find the user that owns the access token
