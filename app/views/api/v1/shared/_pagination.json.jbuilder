@@ -1,0 +1,1 @@
+json.extract! pagination_source, :next_page, :prev_page, :current_page, :total_pages

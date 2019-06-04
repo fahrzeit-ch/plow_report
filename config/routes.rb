@@ -2,6 +2,16 @@ Rails.application.routes.draw do
   use_doorkeeper
   get 'static_pages/home'
 
+  namespace :api do
+    defaults format: :json do
+      namespace :v1 do
+        resources :companies, only: [] do
+          resources :sites, only: [:index]
+        end
+      end
+    end
+  end
+
   scope path: '/users' do
     resource :term_acceptances, only: [:edit, :update]
   end
