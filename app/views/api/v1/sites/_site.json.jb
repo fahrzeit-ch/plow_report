@@ -1,0 +1,12 @@
+json = {
+    id: site.id,
+    display_name: site.display_name,
+    name: site.name,
+    first_name: site.first_name,
+    street: site.street,
+    city: site.city,
+    zip: site.zip,
+    customer_id: site.customer_id,
+    created_at: site.created_at,
+    updated_at: site.updated_at
+}

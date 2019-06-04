@@ -18,6 +18,20 @@ class Api::V1::ApiController < ActionController::Base
 
   protected
 
+  def company_id
+    @company_id ||= current_resource_owner
+                        .companies
+                        .select(:id)
+                        .find_by!(slug: params[:company_id]).id
+  end
+
+  def driver_id
+    @driver_id ||= current_resource_owner
+                        .drivers
+                        .select(:id)
+                        .find(params[:id]).id
+  end
+
   # Find the user that owns the access token
   def current_resource_owner
     @user ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
