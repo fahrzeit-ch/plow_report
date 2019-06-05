@@ -1,4 +1,6 @@
 class Api::V1::ApiController < ActionController::Base
+  include Pundit
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -18,6 +20,12 @@ class Api::V1::ApiController < ActionController::Base
 
   protected
 
+  def sort_params(default_column, default_direction)
+    col = params[:sortBy] || default_column
+    dir = params[:sortDir] || default_direction
+    { col => dir }
+  end
+
   def company_id
     @company_id ||= current_resource_owner
                         .companies
@@ -30,6 +38,10 @@ class Api::V1::ApiController < ActionController::Base
                         .drivers
                         .select(:id)
                         .find(params[:driver_id]).id
+  end
+
+  def pundit_user
+    @authorization_context ||= current_resource_owner
   end
 
   # Find the user that owns the access token

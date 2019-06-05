@@ -9,3 +9,12 @@ json = {
     created_at: drive.created_at,
     updated_at: drive.updated_at
 }
+
+if drive.activity_execution
+  json[:activity] = {
+      activity_id: drive.activity_execution.activity_id,
+      value: drive.activity_execution.value
+  }
+end
+
+json

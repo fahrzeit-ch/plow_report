@@ -14,9 +14,9 @@ class Drive < ApplicationRecord
   accepts_nested_attributes_for :activity_execution, reject_if: :all_blank
 
   # A Drive may be recorded on a customer but its not necessary
-  # TODO: Refactor to only allow site relation and create a transition to move existing records to new concept
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
+
   validate :customer_associated_with_site
 
   audited associated_with: :driver
