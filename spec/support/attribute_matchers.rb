@@ -6,7 +6,7 @@ module HashHelpers
     indiff_actual = actual.with_indifferent_access
 
     missing_keys = indiff_expected.reject { |key| indiff_actual.key?(key) }
-    different_values = indiff_expected.reject { |key| indiff_actual[key] == expected[key] }
+    different_values = indiff_expected.reject { |key| indiff_actual[key] == indiff_expected[key] }
 
     {
         missing: missing_keys,
