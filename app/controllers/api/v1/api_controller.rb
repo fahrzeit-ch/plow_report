@@ -27,10 +27,15 @@ class Api::V1::ApiController < ActionController::Base
   end
 
   def company_id
-    @company_id ||= current_resource_owner
-                        .companies
-                        .select(:id)
-                        .find_by!(slug: params[:company_id]).id
+    company.id
+  end
+
+  def current_company
+    return nil if params[:company_id].nil?
+    @company ||= current_resource_owner
+            .companies
+            .select(:id)
+            .find_by!(slug: params[:company_id])
   end
 
   def driver_id
