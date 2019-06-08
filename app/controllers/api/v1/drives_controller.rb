@@ -11,8 +11,9 @@ class Api::V1::DrivesController < Api::V1::ApiController
   end
 
   def create
-    @record = Drive.new(create_attributes)
-    @record.activity_execution_attributes = params[:activity] || {}
+    activity = create_attributes[:activity]
+    @record = Drive.new(create_attributes.except(:activity))
+    @record.activity_execution_attributes = activity || {}
     if @record.save
       render :create, status: :created
     else
