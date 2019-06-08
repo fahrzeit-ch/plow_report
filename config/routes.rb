@@ -7,7 +7,9 @@ Rails.application.routes.draw do
       namespace :v1 do
         resources :drivers, only: [:index] do
           resources :drives, only: [:index, :create, :update, :delete]
+          resources :standby_dates, only: [:index]
         end
+
         resources :companies, only: [] do
           resources :drivers, only: [:index]
           resources :sites, only: [:index]

@@ -1,0 +1,4 @@
+{
+    items: render(partial: 'standby_date', collection: @records, as: :standby_date),
+
+}
