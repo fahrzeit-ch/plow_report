@@ -13,7 +13,7 @@ class DriversService
       when CompanyMember::ADMINISTRATOR
         company.drivers
       when CompanyMember::DRIVER
-        company.drivers.where(user_id: user.id)
+        company.drivers.joins(:driver_login).where(driver_logins: { user_id: user.id})
       else
         []
       end
