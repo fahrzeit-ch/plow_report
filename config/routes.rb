@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     defaults format: :json do
       namespace :v1 do
         resources :drivers, only: [:index] do
-          resources :drives, only: [:index, :create, :update, :delete]
+          resources :drives, only: [:index, :create, :update, :delete] do
+            collection do
+              get :history
+            end
+          end
           resources :standby_dates, only: [:index]
         end
 

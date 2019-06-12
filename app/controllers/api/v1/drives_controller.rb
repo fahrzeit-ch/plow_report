@@ -7,7 +7,21 @@ class Api::V1::DrivesController < Api::V1::ApiController
                    .includes(:activity_execution)
                    .order(sort_params(:start, :desc))
                    .page(params[:page])
-                   .per(params[:per])
+                   .per(params[:per_page])
+  end
+
+  def history
+    items = Audited::Audit
+                .where(auditable_type: 'Drive')
+                .where('created_at >= ?', params[:changes_since] || 1.week.ago)
+                .order(created_at: :asc).page(params[:page]).per(params[:per_page])
+    render json: {
+        items: items,
+        next_page: items.next_page,
+        prev_page: items.prev_page,
+        current_page: items.current_page,
+        total_pages: items.total_pages
+    }
   end
 
   def create
@@ -20,7 +34,6 @@ class Api::V1::DrivesController < Api::V1::ApiController
       render json: @record.errors, status: :bad_request
     end
   end
-
 
   private
 

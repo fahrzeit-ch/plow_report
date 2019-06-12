@@ -12,8 +12,37 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     sign_in_user(user)
   end
 
-  describe 'get' do
+  describe 'get#index' do
     before { get :index, params: { driver_id: driver.to_param, format: :json } }
+
+    describe 'response code' do
+      subject { response }
+
+      it { is_expected.to be_successful }
+    end
+
+    describe 'content' do
+      subject { api_response }
+
+      it { is_expected.to have_pagination }
+      it { is_expected.to have_attribute_keys :items }
+
+      describe 'item values' do
+        subject { api_response.attributes[:items][0] }
+        it { is_expected.to contain_hash_values({
+                                                    id: drive1.id,
+                                                    start: drive1.start.as_json,
+                                                    end: drive1.end.as_json,
+                                                    activity: {
+                                                        activity_id: drive1.activity_execution.activity_id,
+                                                        value: nil
+                                                    }}) }
+      end
+    end
+  end
+
+  describe 'get#history' do
+    before { get :history, params: { driver_id: driver.to_param, format: :json } }
 
     describe 'response code' do
       subject { response }
