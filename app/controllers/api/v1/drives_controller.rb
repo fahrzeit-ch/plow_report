@@ -11,17 +11,11 @@ class Api::V1::DrivesController < Api::V1::ApiController
   end
 
   def history
-    items = Audited::Audit
+    @since = params[:changes_since] || 1.week.ago
+    @records = Audited::Audit
                 .where(auditable_type: 'Drive')
-                .where('created_at >= ?', params[:changes_since] || 1.week.ago)
-                .order(created_at: :asc).page(params[:page]).per(params[:per_page])
-    render json: {
-        items: items,
-        next_page: items.next_page,
-        prev_page: items.prev_page,
-        current_page: items.current_page,
-        total_pages: items.total_pages
-    }
+                .where('created_at >= ?', @since)
+                .order(created_at: :asc).page(params[:page]).per(params[:per_page] || 500)
   end
 
   def create

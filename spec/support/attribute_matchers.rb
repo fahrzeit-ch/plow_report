@@ -20,7 +20,8 @@ module HashHelpers
   end
 
   def self.missing_keys(actual, expected)
-    normalize(expected).reject { |key| actual.key?(key) }
+    actual = normalize(actual)
+    expected.reject { |key| actual.key?(key) }
   end
 end
 
