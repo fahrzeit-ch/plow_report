@@ -5,7 +5,7 @@ RSpec.describe DriversService do
   subject { described_class.new }
 
   describe 'drivers for' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, skip_create_driver: true) }
     let(:drivers) { create_list(:driver, 2, user: user) }
 
     context 'when no company given' do
@@ -23,13 +23,10 @@ RSpec.describe DriversService do
       end
 
       context 'and user is of member type sdriver' do
-        let(:company_driver) { drivers.first }
-        before do
-          company.add_member(user, CompanyMember::DRIVER)
-          company_driver.update(comapany: company)
-        end
+        let!(:company_driver) { company.add_driver(user)[:driver] }
+        before { company.add_member(user, CompanyMember::DRIVER)}
 
-        it { is_expected.to company_driver }
+        it { is_expected.to include company_driver }
         its(:length) { is_expected.to eq 1 }
       end
 

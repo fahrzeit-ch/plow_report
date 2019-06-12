@@ -57,15 +57,14 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       it { is_expected.to have_attribute_keys :items }
 
       describe 'item values' do
+        let(:expected) { Audited::Audit.where(auditable_type: 'Drive').last  }
         subject { api_response.attributes[:items][0] }
-        it { is_expected.to contain_hash_values({
-                                                    id: drive1.id,
-                                                    start: drive1.start.as_json,
-                                                    end: drive1.end.as_json,
-                                                    activity: {
-                                                        activity_id: drive1.activity_execution.activity_id,
-                                                        value: nil
-                                                    }}) }
+        it { is_expected.to contain_keys ([
+                                            :id,
+                                            :action,
+                                            :audited_changes
+
+        ]) }
       end
     end
   end
