@@ -1,4 +1,4 @@
-class Api::V1::ApiController < ActionController::Base
+class Api::V1::ApiController < ActionController::API
   include Pundit
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -27,7 +27,7 @@ class Api::V1::ApiController < ActionController::Base
   end
 
   def company_id
-    company.id
+    current_company.id
   end
 
   def current_company
