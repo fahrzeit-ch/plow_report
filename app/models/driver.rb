@@ -27,6 +27,8 @@ class Driver < ApplicationRecord
 
   has_many :drives, class_name: 'Drive', dependent: :destroy
   has_many :standby_dates, dependent: :destroy
+  has_many :tours, dependent: :destroy
+
   has_associated_audits
 
   validates :name, presence: true

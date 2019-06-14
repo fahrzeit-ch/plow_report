@@ -3,10 +3,11 @@
 class Drive < ApplicationRecord
 
   after_initialize :defaults
-  validate :start_end_dates
+  validates :end, date: { after: :start }
 
   # A drive is allways done by a driver
   belongs_to :driver
+  belongs_to :tour, optional: true
 
   # A drive may have an activity that was executed during the drive
   has_one :activity_execution, dependent: :destroy
@@ -208,10 +209,6 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   def customer_associated_with_site
     return if customer.nil? || site.nil?
     errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
-  end
-
-  def start_end_dates
-    errors.add(:end, :not_before_start) if self.end < self.start
   end
 
   def defaults
