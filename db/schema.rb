@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190501191539) do
+ActiveRecord::Schema.define(version: 20190622184440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.boolean "confidential", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "default_app", default: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
@@ -250,16 +251,6 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.datetime "invalidated_at"
     t.index ["policy_term_id"], name: "index_term_acceptances_on_policy_term_id"
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
-  end
-
-  create_table "tour_steps", force: :cascade do |t|
-    t.string "trigger"
-    t.string "selector"
-    t.text "description"
-    t.json "options"
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "user_actions", force: :cascade do |t|

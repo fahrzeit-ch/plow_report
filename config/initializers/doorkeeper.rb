@@ -317,7 +317,7 @@ Doorkeeper.configure do
   # For example if dealing with a trusted application.
   #
   skip_authorization do |_resource_owner, client|
-    client.default_app?
+    client.application.default_app
   end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
