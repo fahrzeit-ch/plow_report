@@ -37,7 +37,7 @@ class DrivePolicy < ApplicationPolicy
     when :default
       [:start, :end, :distance_km, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
     when :api_create
-      [:driver_id, :start, :end, :company_id, :site_id, :distance_km, :created_at, activity: [:activity_id, :value]]
+      [:driver_id, :start, :end, :company_id, :site_id, :customer_id, :distance_km, :created_at, activity: [:activity_id, :value]]
     end
   end
 
