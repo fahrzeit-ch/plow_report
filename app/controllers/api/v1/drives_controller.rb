@@ -25,7 +25,7 @@ class Api::V1::DrivesController < Api::V1::ApiController
     if @record.save
       render :create, status: :created
     else
-      render json: { error: @drive.errors }, status: :bad_request
+      render json: { error: @record.errors }, status: :bad_request
     end
   end
 
