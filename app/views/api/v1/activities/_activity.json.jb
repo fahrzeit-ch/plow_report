@@ -1,0 +1,6 @@
+json = {
+    id: activity.id,
+    name: activity.name,
+    value_label: activity.value_label,
+    value_required: activity.has_value
+}

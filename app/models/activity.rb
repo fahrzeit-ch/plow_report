@@ -3,7 +3,7 @@
 #
 # ## Activity Scopes
 # An activity is created and visible within a company. Activities
-# without a company assigned are available globaly and
+# without a company assigned are available globally and
 # visible for personal that have no company assigned
 #
 # ## Values

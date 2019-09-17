@@ -1,0 +1,3 @@
+json = {
+    items: render(partial: 'activity', collection: @records, as: :activity),
+}.merge! render('api/v1/shared/pagination', pagination_source: @records)

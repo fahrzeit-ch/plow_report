@@ -13,8 +13,8 @@ Rails.application.routes.draw do
           end
           resources :standby_dates, only: [:index]
         end
-
         resources :companies, only: [] do
+          resources :activities, only: [:index]
           resources :drivers, only: [:index]
           resources :sites, only: [:index]
         end
