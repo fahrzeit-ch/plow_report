@@ -16,7 +16,7 @@ RSpec.describe Api::V1::SitesController, type: :controller do
   end
 
   describe 'get' do
-    before { get :index, params: { company_id: company.to_param, format: :json } }
+    before { get :index, params: { company_id: company.id, format: :json } }
 
     describe 'response code' do
       subject { response }

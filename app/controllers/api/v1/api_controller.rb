@@ -35,7 +35,7 @@ class Api::V1::ApiController < ActionController::API
     @company ||= current_resource_owner
             .companies
             .select(:id)
-            .find!(params[:company_id])
+            .find(params[:company_id])
   end
 
   def driver_id
