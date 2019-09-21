@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     defaults format: :json do
       namespace :v1 do
         resources :drivers, only: [:index] do
-          resources :drives, only: [:index, :create, :update, :destroy] do
+          resources :drives, only: %i[index create update destroy] do
             collection do
               get :history
             end
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   scope path: '/users' do
-    resource :term_acceptances, only: [:edit, :update]
+    resource :term_acceptances, only: %i[edit update]
   end
 
   devise_for :users, controllers: {
@@ -35,10 +35,10 @@ Rails.application.routes.draw do
       get :suggested_values
     end
   end
-  resources :standby_dates, only: [:create, :destroy, :index]
+  resources :standby_dates, only: %i[create destroy index]
   resources :standby_date_ranges, only: :create
   resource :driver, only: :create
-  resource :recordings, only: [:create, :destroy] do
+  resource :recordings, only: %i[create destroy] do
     put :finish
   end
 
@@ -46,20 +46,20 @@ Rails.application.routes.draw do
     scope module: 'company' do
       resources :hourly_rates
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
-      resources :drives, only: [:index, :destroy, :edit, :update]
-      resources :standby_dates, only: [:index, :destroy, :create] do
+      resources :drives, only: %i[index destroy edit update]
+      resources :standby_dates, only: %i[index destroy create] do
         collection do
           get :weeks
         end
       end
-      resources :company_members, only: [:create, :index, :destroy, :update] do
+      resources :company_members, only: %i[create index destroy update] do
         collection do
           post :invite
           post :resend_invitation
         end
       end
-      resources :drivers, only: [:index, :create, :destroy, :edit, :update]
-      resources :customer_to_site_transitions, only: [:new, :create]
+      resources :drivers, only: %i[index create destroy edit update]
+      resources :customer_to_site_transitions, only: %i[new create]
       resources :customers do
         resources :sites do
           member do

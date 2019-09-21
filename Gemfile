@@ -30,6 +30,7 @@ gem 'rails-i18n'
 gem 'simple_calendar', '~> 2.0'
 
 gem 'audited', '~> 4.7'
+gem 'discard', '~> 1.0'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable', '~> 1.7.0'

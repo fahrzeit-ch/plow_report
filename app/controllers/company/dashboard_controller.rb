@@ -2,7 +2,7 @@ class Company::DashboardController < ApplicationController
 
   def index
     @statistics = current_company.statistics(current_season)
-    @last_drives = current_company.drives.with_viewstate(current_user).order(start: :desc).limit(10)
+    @last_drives = current_company.drives.kept.with_viewstate(current_user).order(start: :desc).limit(10)
 
     new_drives = @last_drives.reject(&:seen?)
     if new_drives.any?

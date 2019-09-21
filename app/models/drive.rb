@@ -2,6 +2,10 @@
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
 
+  # Allow to discard instead of destroy drives
+  include Discard::Model
+  default_scope -> { kept }
+
   after_initialize :defaults
   validate :start_end_dates
 
