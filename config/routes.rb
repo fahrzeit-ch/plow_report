@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     defaults format: :json do
       namespace :v1 do
         resources :drivers, only: [:index] do
-          resources :drives, only: [:index, :create, :update, :delete] do
+          resources :drives, only: [:index, :create, :update, :destroy] do
             collection do
               get :history
             end

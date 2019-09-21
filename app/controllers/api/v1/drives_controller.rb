@@ -18,6 +18,16 @@ class Api::V1::DrivesController < Api::V1::ApiController
                 .order(created_at: :asc).page(params[:page]).per(params[:per_page] || 500)
   end
 
+  def destroy
+    @record = Drive.where(driver_id: driver_id).find(params[:id])
+    authorize @record
+    if @record.destroy
+      head :no_content
+    else
+      render json: { error: @record.errors }, status: :bad_request
+    end
+  end
+
   def create
     activity = create_attributes[:activity]
     @record = Drive.new(create_attributes.except(:activity))

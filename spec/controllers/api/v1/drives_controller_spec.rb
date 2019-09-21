@@ -81,4 +81,14 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     end
 
   end
+
+  describe 'delete#destroy' do
+    before { delete :destroy, params: { driver_id: driver.to_param, id: drive1.id } }
+
+    describe 'response code' do
+      subject { response.code }
+
+      it { is_expected.to eq "204" }
+    end
+  end
 end
