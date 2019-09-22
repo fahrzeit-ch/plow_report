@@ -16,7 +16,7 @@ class StandbyDatesController < ApplicationController
     show_drivers = params[:show_others] ? current_company.driver_ids : current_driver.id
     @standby_dates = StandbyDate.joins(:driver)
                          .where(driver_id: show_drivers)
-                         .select('standby_dates.*, drivers.id, drivers.name')
+                         .select('standby_dates.*, drivers.name')
                          .by_calendar_month(calendar_start_date)
   end
 

@@ -16,24 +16,24 @@ class StandbyDate < ApplicationRecord
   def self.by_calendar_month(date)
     start = date.beginning_of_month.beginning_of_week
     to = date.end_of_month.end_of_week
-    from(start).until(to)
+    from_date(start).until_date(to)
   end
 
   # Returns standby dates that have day greater or equal than given date
   # @param [Date | DateTime] date
-  def self.from(date)
+  def self.from_date(date)
     where arel_table["day"].gteq(date)
   end
 
   # Returns standby dates that have day less or equal than given date
   # # @param [Date | DateTime] date
-  def self.until(date)
+  def self.until_date(date)
     where arel_table["day"].lteq(date)
   end
 
   # Scopes all standby dates within the given season
   def self.by_season(season)
-    from(season.start_date).until(season.end_date)
+    from_date(season.start_date).until_date(season.end_date)
   end
 
   # Create a standby date for each day in the given range
