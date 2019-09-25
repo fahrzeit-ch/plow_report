@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190501191539) do
+ActiveRecord::Schema.define(version: 20190925204951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.string "city", default: "", null: false
     t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_customers_on_company_id"
-    t.index ["name", "company_id"], name: "index_customers_on_name_and_company_id", unique: true
   end
 
   create_table "driver_logins", force: :cascade do |t|
@@ -208,16 +207,6 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.datetime "invalidated_at"
     t.index ["policy_term_id"], name: "index_term_acceptances_on_policy_term_id"
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
-  end
-
-  create_table "tour_steps", force: :cascade do |t|
-    t.string "trigger"
-    t.string "selector"
-    t.text "description"
-    t.json "options"
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "user_actions", force: :cascade do |t|
