@@ -15,8 +15,10 @@ class HourlyRate < ApplicationRecord
   attribute :valid_until, :date, default: Date.new(2100, 1, 1)
 
   scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.now) }
-  scope :overlapping, -> (other) { where('(valid_from, valid_until) OVERLAPS (?, ?)', other.valid_from, other.valid_until) }
-  scope :same_scope, -> (other) { where(customer: other.customer, activity: other.activity, company: other.company).where.not(id: other.id) }
+  scope :overlapping, ->(other) { where('(valid_from, valid_until) OVERLAPS (?, ?)',
+                                         other.valid_from, other.valid_until) }
+  scope :same_scope, ->(other) { where(customer: other.customer, activity: other.activity,
+                                        company: other.company).where.not(id: other.id) }
 
   include RateAssocType
 
@@ -25,6 +27,24 @@ class HourlyRate < ApplicationRecord
 
   validates :company, presence: true
   validate :uniqueness_of_scope
+
+  def base_rate?
+    customer_id.nil? && activity_id.nil?
+  end
+
+  def destroy_children
+    children.destroy_all
+  end
+
+  def destroy_self_and_children
+    destroy_children
+    destroy
+  end
+
+  def children
+    return self.class.none unless base_rate?
+    self.class.where(company: company).where.not(id: id)
+  end
 
   class << self
     def base_rate
