@@ -7,7 +7,7 @@ class ActivityExecution < ApplicationRecord
   belongs_to :activity
   belongs_to :drive
 
-  validates_presence_of :value, if: 'value_required?'
+  validates_presence_of :value, if: :value_required?
 
   # Moves this execution to a corresponding activity on the given company
   # @raise [StandardError] When no matching activity could be found and activity could not cloned to the target company

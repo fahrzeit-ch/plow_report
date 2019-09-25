@@ -10,7 +10,7 @@ module CompanyMembersHelper
   end
 
   def delete_member_confirm_message(member)
-    if member == current_user
+    if member.user == current_user
       t('confirm.company.delete_member_current_user')
     else
       t('confirm.company.delete_member')

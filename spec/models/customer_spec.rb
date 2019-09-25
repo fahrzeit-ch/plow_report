@@ -6,7 +6,6 @@ RSpec.describe Customer, type: :model do
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to belong_to(:client_of) }
-  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:company_id) }
 
   describe '#destroy' do
     let(:customer) { create(:customer) }

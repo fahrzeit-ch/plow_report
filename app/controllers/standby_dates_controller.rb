@@ -13,7 +13,11 @@ class StandbyDatesController < ApplicationController
   # GET /standby_dates.json
   def index
     @standby_weeks = StandbyDate.where(driver: current_driver).by_season(selected_season).weeks
-    @standby_dates = StandbyDate.where(driver: current_driver).by_calendar_month(calendar_start_date)
+    show_drivers = params[:show_others] ? current_company.driver_ids : current_driver.id
+    @standby_dates = StandbyDate.joins(:driver)
+                         .where(driver_id: show_drivers)
+                         .select('standby_dates.*, drivers.id, drivers.name')
+                         .by_calendar_month(calendar_start_date)
   end
 
   # GET /standby_dates/1

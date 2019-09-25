@@ -14,11 +14,12 @@ if drives_without_customers
 
     table_builder = Report::DriveTableBuilder.new(drives_without_customers, row_builder, header_builder)
 
-    sheet.add_row [t('reports.drives.sheet_title_without_customer')], style: [styles.h1]
+    sheet.add_row [I18n.t('reports.drives.sheet_title_without_customer')], style: [styles.h1]
     sheet.add_row
     sheet.add_row
-    sheet.add_row [t('reports.drives.label_total_km'), table_builder.distance_sum_formula]
-    sheet.add_row [t('reports.drives.label_total_duration'), table_builder.duration_sum_formula], style: [nil, styles.time]
+    sheet.add_row [I18n.t('reports.drives.label_total_km'), table_builder.distance_sum_formula]
+    sheet.add_row [I18n.t('reports.drives.label_total_duration'), table_builder.duration_sum_formula], style: [nil, styles.time]
+    sheet.add_row [I18n.t('reports.drives.label_total_price'), table_builder.price_sum_formula]
     sheet.add_row
     table_builder.add_to_worksheet sheet
   end
@@ -29,14 +30,15 @@ customers_with_drives.each do |customer, drives|
   wb.add_worksheet(name: customer.try(:name)) do |sheet|
     table_builder = Report::DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
-    sheet.add_row [t('reports.drives.sheet_title_with_customer')]
+    sheet.add_row [I18n.t('reports.drives.sheet_title_with_customer')]
     sheet.add_row ["#{customer.first_name} #{customer.name}"], style: [styles.h1]
     sheet.add_row [customer.street]
     sheet.add_row ["#{customer.zip} #{customer.city}"]
     sheet.add_row
     sheet.add_row
-    sheet.add_row [t('reports.drives.label_total_km'), table_builder.distance_sum_formula]
-    sheet.add_row [t('reports.drives.label_total_duration'), table_builder.duration_sum_formula], style: [nil, styles.time]
+    sheet.add_row [I18n.t('reports.drives.label_total_km'), table_builder.distance_sum_formula]
+    sheet.add_row [I18n.t('reports.drives.label_total_duration'), table_builder.duration_sum_formula], style: [nil, styles.time]
+    sheet.add_row [I18n.t('reports.drives.label_total_price'), table_builder.price_sum_formula]
     sheet.add_row
     table_builder.add_to_worksheet sheet
   end

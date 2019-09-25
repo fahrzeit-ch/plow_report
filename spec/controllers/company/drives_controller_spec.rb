@@ -12,13 +12,16 @@ RSpec.describe Company::DrivesController, type: :controller do
   end
 
   describe 'GET #index' do
+    subject { response }
+
     it 'returns http success' do
       get :index, params:{ company_id: company.to_param }
-      expect(response).to have_http_status(:success)
+      expect(subject).to have_http_status(:success)
     end
 
     it 'accepts driver id scope' do
       get :index, params: { company_id: company.to_param, driver_id: 12 }
+      expect(subject).to have_http_status(:success)
     end
 
     context 'as non company member' do
@@ -28,6 +31,11 @@ RSpec.describe Company::DrivesController, type: :controller do
         get :index, params: { company_id: other_company.to_param }
         expect(response).to redirect_to root_path
       end
+    end
+
+    context 'format xlsx' do
+      before { get :index, params: { company_id: company.to_param, format: :xlsx } }
+      it { is_expected.to have_http_status(:success) }
     end
   end
 

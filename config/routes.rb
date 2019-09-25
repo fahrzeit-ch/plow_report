@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     scope module: 'company' do
+      resources :hourly_rates
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
       resources :drives, only: [:index, :destroy, :edit, :update]
       resources :standby_dates, only: [:index, :destroy, :create] do
@@ -37,7 +38,15 @@ Rails.application.routes.draw do
         end
       end
       resources :drivers, only: [:index, :create, :destroy, :edit, :update]
-      resources :customers
+      resources :customer_to_site_transitions, only: [:new, :create]
+      resources :customers do
+        resources :sites do
+          member do
+            post :deactivate
+            post :activate
+          end
+        end
+      end
       resources :activities
     end
   end

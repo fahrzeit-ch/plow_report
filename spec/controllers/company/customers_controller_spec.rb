@@ -59,6 +59,13 @@ RSpec.describe Company::CustomersController, type: :controller do
       it 'creates new customer' do
         expect(Customer.all.count).to be 1
       end
+
+      context 'with invalid attributes' do
+        before {post :create, params: {company_id: company.to_param}.merge(customer: attributes_for(:customer, name: ''))}
+
+        it { is_expected.to be_successful }
+      end
+
     end
   end
 

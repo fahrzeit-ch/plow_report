@@ -29,7 +29,7 @@ class DrivePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:start, :end, :distance_km, :customer_id, activity_execution_attributes: [:activity_id, :value]]
+    [:start, :end, :distance_km, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
   end
 
 

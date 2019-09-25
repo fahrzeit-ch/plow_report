@@ -1,0 +1,81 @@
+<div class="row bg-white pt-3">
+  <div class="col-sm-6">
+    <h1><%= t 'views.companies.price_rates.title' %></h1>
+  </div>
+</div>
+<div class="row toolbar border-top bg-light p-2 d-print-none">
+  <div class="col">
+    <form class="form form-inline">
+      <!-- May insert search and filter -->
+    </form>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3>Basis Stundensatz</h3>
+        <%= form_with(model: [current_company, (@base_rate || HourlyRate.new)], class: 'form', builder: BootstrapFormBuilder) do |f| %>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <div class="input-group">
+                <%= f.text_field :price %>
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2"><%= f.object.price.currency %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %>
+            <%= t 'actions.save' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% @activity_price_rates.each do |pr| %>
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4><%= pr.activity.name %></h4>
+          <% if pr.inherited? %>
+            <div class="alert alert-info">
+              <p><strong><%= pr.price.to_s %></strong> (<%= t 'activerecord.attributes.hourly_rate.inheritance_types.' + pr.rate_type %>)</p>
+              <%= form_with(model: [current_company, pr.to_explicit_rate]) do |f| %>
+                <%= f.hidden_field :activity_id %>
+                <%= f.hidden_field :price %>
+                <%= f.button type: :submit, class: 'btn btn-default' do %>
+                  <%= t 'views.companies.price_rates.set_price' %>
+                <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <%= form_with(model: [current_company, pr.inherited_from],  class: 'form', builder: BootstrapFormBuilder) do |f| %>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <div class="input-group">
+                    <%= f.text_field :price %>
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2"><%= f.object.price.currency %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %>
+                <%= t 'actions.save' %>
+              <% end %>
+              <%= link_to company_hourly_rate_path(current_company, pr.inherited_from), method: :delete,
+                          class: 'btn btn-danger',
+                          data: { disable_with: is_processing(true) } do %>
+                <%= t 'actions.delete' %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

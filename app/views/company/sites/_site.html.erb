@@ -1,0 +1,13 @@
+<li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= site.id %>">
+  <div class="p-2"><%= site.display_name %> <br><small><%= site.details %></small></div>
+  <% unless site.active %>
+    <span class="badge badge-secondary"><%= t 'activerecord.attributes.inactive' %></span>
+  <% end %>
+  <div class="ml-auto p-2">
+    <%= link_to edit_company_customer_site_path(company_id: current_company.to_param, customer_id: site.customer_id, id: site.id), class: 'text-muted', title: t('views.companies.sites.edit') do %>
+      <i class="fa fa-edit"></i>
+    <% end %>
+  </div>
+  <div>
+  </div>
+</li>

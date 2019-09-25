@@ -1,10 +1,19 @@
-<div class="card mt-3">
-  <div class="card-header">
-    <%= render 'navigation/company_edit_nav' %>
+<div class="row bg-white pt-3">
+  <div class="col-sm-6">
+    <h1><%= t 'views.companies.activities.title' %></h1>
   </div>
+</div>
+<div class="row toolbar border-top bg-light p-2 d-print-none">
+  <div class="col">
+    <h4 class="card-title"><%= link_to t('views.companies.activities.title'), company_activities_path(current_company) %> / <%= t'common.new' %></h4>
+  </div>
+  <div class="col">
+  </div>
+</div>
+
+<div class="card mt-3">
 
   <div class="card-body">
-    <h4 class="card-title"><%= link_to t('views.companies.activities.title'), company_activities_path(current_company) %> / <%= t'common.new' %></h4>
     <%= render 'form' %>
   </div>
 </div>

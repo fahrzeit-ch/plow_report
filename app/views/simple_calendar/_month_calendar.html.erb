@@ -4,6 +4,12 @@
     <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
     <%= link_to raw(t('simple_calendar.next', default: 'Next')), calendar.url_for_next_view , class: 'btn btn-default' %>
     <%= calendar_today_link %>
+    <%= form_with(url: url_for(@params), method: :get, class: 'pull-right') do |f| %>
+      <div class="custom-control custom-switch m-2">
+        <input type="checkbox" class="custom-control-input" id="showOthers" name="show_others" <%= params[:show_others] ? 'checked' : '' %> data-submit-on-change="true">
+        <label class="custom-control-label" for="showOthers"><%= t('standby_dates.index.show_others') %></label>
+      </div>
+    <% end %>
   </div>
 
   <table class="table">

@@ -9,19 +9,4 @@
       <i class="fa fa-users"></i> <%= t'views.companies.nav.users.title' %>
     <% end %>
   </li>
-  <li class="nav-item">
-    <%= link_to company_drivers_path(current_company), class: "nav-link #{(controller_name == 'drivers') ? 'active' : ''}" do %>
-      <i class="fa fa-truck"></i> <%= t'views.companies.nav.drivers.title' %>
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to company_customers_path(current_company), class: "nav-link #{(controller_name == 'customers') ? 'active' : ''}" do %>
-      <i class="fa fa-address-card"></i> <%= t 'views.companies.nav.customers.title' %>
-    <% end %>
-  </li>
-  <li class="nav-item">
-    <%= link_to company_activities_path(current_company), class: "nav-link #{(controller_name == 'activities') ? 'active' : ''}" do %>
-      <i class="fa fa-hourglass-o"></i> <%= t 'views.companies.nav.activities.title' %>
-    <% end %>
-  </li>
 </ul>

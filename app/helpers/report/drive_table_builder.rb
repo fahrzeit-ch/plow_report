@@ -1,4 +1,6 @@
 module Report
+  FIXED_COLUMNS = %i[date start duration site driver distance hourly_rate total_price].freeze
+
   class DriveTableBuilder
 
     HEADER_HEIGHT = 120
@@ -17,6 +19,7 @@ module Report
     attr_reader :table
     attr_reader :last_row
     attr_reader :title_row
+    attr_reader :header_builder
 
     def add_to_worksheet(ws)
       @title_row = ws.add_row @hb.columns, style: @hb.styles, height: HEADER_HEIGHT
@@ -38,11 +41,19 @@ module Report
     end
 
     def distance_sum_formula
-      "=SUM(#{table_name}[#{@hb.column_name_for(:distance)}])"
+      "=SUM(#{table_name}[#{column_name_for(:distance)}])"
     end
 
     def duration_sum_formula
-      "=SUM(#{table_name}[#{@hb.column_name_for(:duration)}])"
+      "=SUM(#{table_name}[#{column_name_for(:duration)}])"
+    end
+
+    def price_sum_formula
+      "=SUM(#{table_name}[#{column_name_for(:total_price)}])"
+    end
+
+    def column_name_for(key)
+      @hb.column_name_for(key)
     end
 
   end
