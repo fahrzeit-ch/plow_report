@@ -17,7 +17,7 @@ class Company::DrivesController < ApplicationController
         @drives = @drives.page(params[:page]).per(30)
       end
       format.xlsx do
-        @drives = @drives.by_season(current_season)
+        @drives
       end
     end
   end
