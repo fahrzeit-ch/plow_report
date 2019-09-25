@@ -46,16 +46,28 @@ RSpec.describe HourlyRate, type: :model do
 
     let(:customer2_activity1_price) { create(:hourly_rate, customer: customer, company: company, activity: activity) }
 
-    let(:company_rates) { [base_price, activity1_price, customer_base_price, customer_activity2_price, customer2_activity1_price] }
+    let!(:company_rates) { [base_price, activity1_price, customer_base_price, customer_activity2_price, customer2_activity1_price] }
+
+
+    describe 'children' do
+      subject { base_price.children }
+      it { is_expected.to include(activity1_price, customer_base_price, customer_activity2_price, customer2_activity1_price)}
+      it { is_expected.not_to include(base_price) }
+
+      describe 'children of child' do
+        subject { activity1_price.children }
+        it { is_expected.to be_empty }
+      end
+
+
+    end
 
     describe 'base_price' do
-      before { company_rates }
       subject { HourlyRate.base_rate }
       it { is_expected.to eq(base_price) }
     end
 
     describe 'activity_rates' do
-      before { company_rates }
       subject { HourlyRate.activity_rates }
       it { is_expected.to include(activity1_price) }
       its(:size) { is_expected.to eq 1 }
@@ -69,6 +81,28 @@ RSpec.describe HourlyRate, type: :model do
     subject { audited_model.audits.last }
 
     its(:action) { is_expected.to eq 'update' }
+  end
+
+  describe 'deletion' do
+    let!(:base_price) { create(:hourly_rate, customer: nil, company: company, activity: nil) }
+    let!(:activity1_price) { create(:hourly_rate, customer: nil, company: company, activity: activity) }
+
+    subject { base_price.destroy_children }
+
+    it 'destroys related prices' do
+      expect {
+        subject
+        activity1_price.reload
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'does not destroy self' do
+      expect {
+        subject
+        base_price.reload
+      }.not_to raise_error
+    end
+
   end
 
 
