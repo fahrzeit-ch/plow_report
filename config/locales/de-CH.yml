@@ -381,7 +381,7 @@ de-CH:
     jump_to_today: "Zu Heute springen"
   sidenav:
     section:
-      user: "Mein Benutzer"
+      user: "Mein Profil"
       settings: "Einstallungen"
       master_data: "Stammdaten"
   tomorrow: 'Morgen'
