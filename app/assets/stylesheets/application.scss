@@ -133,6 +133,11 @@ body {
   border-right: 1px solid #ccc;
   overflow: auto;
 
+  .nav {
+    flex-wrap: nowrap;
+    flex: auto;
+  }
+
   &.show {
     margin-left: 0;
     tab-index: 2;
