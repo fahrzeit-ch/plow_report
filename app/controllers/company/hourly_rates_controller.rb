@@ -36,7 +36,8 @@ class Company::HourlyRatesController < ApplicationController
   def destroy
     @hourly_rate = HourlyRate.find(params[:id])
     authorize @hourly_rate
-    if @hourly_rate.destroy
+
+    if @hourly_rate.destroy_self_and_children
       flash[:success] = t 'flash.common.deleted'
       redirect_to company_hourly_rates_path current_company
     else
