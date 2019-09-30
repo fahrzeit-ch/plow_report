@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190921190935) do
+ActiveRecord::Schema.define(version: 20190925204951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20190921190935) do
     t.string "city", default: "", null: false
     t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_customers_on_company_id"
-    t.index ["name", "company_id"], name: "index_customers_on_name_and_company_id", unique: true
   end
 
   create_table "driver_logins", force: :cascade do |t|
