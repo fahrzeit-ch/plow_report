@@ -19,7 +19,8 @@ Doorkeeper.configure do
     # Example implementation:
 
     if current_user
-      head :forbidden unless current_user
+      # TODO: Replace this with a serious authentication for managing apps
+      head :forbidden unless current_user && current_user.email == 'ste.staub@gmail.com'
     else
       redirect_to sign_in_url
     end
