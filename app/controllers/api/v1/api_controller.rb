@@ -27,22 +27,28 @@ class Api::V1::ApiController < ActionController::API
   end
 
   def company_id
-    current_company.id
+    current_company.try(:id)
   end
 
   def current_company
-    return nil if params[:company_id].nil?
-    @company ||= current_resource_owner
-            .companies
-            .select(:id)
-            .find(params[:company_id])
+    @current_company ||= if params[:company_id].nil?
+                           current_driver.try(:company)
+                         else
+                           current_resource_owner
+                             .companies
+                             .select(:id)
+                             .find(params[:company_id])
+                         end
   end
 
   def driver_id
-    @driver_id ||= current_resource_owner
+    current_driver.id
+  end
+
+  def current_driver
+    @current_driver ||= current_resource_owner
                         .drivers
-                        .select(:id)
-                        .find(params[:driver_id]).id
+                        .find_by(id: params[:driver_id])
   end
 
   def pundit_user
