@@ -106,5 +106,13 @@ class CompanyMember < ApplicationRecord
     end
   end
 
+  def self.role_of(user, company)
+    company.company_members
+        .where(user_id: user.id)
+        .limit(1)
+        .pluck(:role)
+        .first
+  end
+
 
 end

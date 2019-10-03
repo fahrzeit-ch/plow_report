@@ -60,9 +60,9 @@ RSpec.describe Company::DrivesController, type: :controller do
         expect(response).to redirect_to(company_drives_path company)
       end
 
-      it 'destroys drive' do
+      it 'destroys drive (discards it)' do
         delete :destroy, params:{ company_id: company.to_param, id: drives.first.id }
-        expect(Drive.all.count).to be 2
+        expect(Drive.kept.count).to be 2
       end
     end
 

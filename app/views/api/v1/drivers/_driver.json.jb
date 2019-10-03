@@ -1,0 +1,8 @@
+json = {
+    id: driver.id,
+    name: driver.name,
+    company_id: driver.company_id,
+    created_at: driver.created_at,
+    updated_at: driver.updated_at
+}
+json

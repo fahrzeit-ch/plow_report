@@ -28,8 +28,19 @@ class DrivePolicy < ApplicationPolicy
     own_record?
   end
 
-  def permitted_attributes
-    [:start, :end, :distance_km, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
+  # Scopes:
+  # :default
+  # :api_create
+  # :api_update
+  def permitted_attributes(scope = :default)
+    case scope
+    when :default
+      [:start, :end, :distance_km, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
+    when :api_create
+      [:driver_id, :start, :end, :company_id, :site_id, :customer_id, :distance_km, :updated_at, :discarded_at, :created_at, activity: [:activity_id, :value]]
+    when :api_update
+      [:driver_id, :start, :end, :site_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
+    end
   end
 
 

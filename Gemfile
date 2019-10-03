@@ -30,9 +30,11 @@ gem 'rails-i18n'
 gem 'simple_calendar', '~> 2.0'
 
 gem 'audited', '~> 4.7'
+gem 'discard', '~> 1.0'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable', '~> 1.7.0'
+gem 'doorkeeper', '~> 5.1.0'
 gem 'pundit', '~> 1.1.0'
 gem 'rollbar'
 
@@ -58,7 +60,8 @@ gem 'coffee-rails', '> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+#gem 'jbuilder', '~> 2.5'
+gem 'jb', '~> 0.7.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 

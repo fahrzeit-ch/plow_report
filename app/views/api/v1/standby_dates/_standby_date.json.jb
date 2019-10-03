@@ -1,0 +1,8 @@
+{
+    id: standby_date.id,
+    day: standby_date.day,
+    driver_id: standby_date.driver_id,
+    driver_name: standby_date[:driver_name],
+    created_at: standby_date.created_at,
+    updated_at: standby_date.updated_at
+}

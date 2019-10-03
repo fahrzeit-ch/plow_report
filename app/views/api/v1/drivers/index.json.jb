@@ -1,0 +1,3 @@
+json = {
+    items: render(partial: 'driver', collection: @records, as: :driver),
+}

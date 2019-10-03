@@ -5,7 +5,7 @@ class DrivesController < ApplicationController
   # GET /drives
   # GET /drives.json
   def index
-    @drives = Drive.where(driver: current_driver).by_season(selected_season).order(start: :desc).all
+    @drives = Drive.kept.where(driver: current_driver).by_season(selected_season).order(start: :desc).all
   end
 
   # GET /drives/suggested_values?activity_id=23
@@ -67,7 +67,7 @@ class DrivesController < ApplicationController
   # DELETE /drives/1
   # DELETE /drives/1.json
   def destroy
-    @drive.destroy
+    @drive.discard
     respond_to do |format|
       format.html { redirect_to drives_path, notice: t('flash.drives.destroyed') }
       format.json { head :no_content }
