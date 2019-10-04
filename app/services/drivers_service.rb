@@ -15,7 +15,7 @@ class DriversService
       when CompanyMember::DRIVER
         company.drivers.joins(:driver_login).where(driver_logins: { user_id: user.id})
       else
-        []
+        Driver.none
       end
     end
   end
