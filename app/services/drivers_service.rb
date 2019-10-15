@@ -7,7 +7,7 @@ class DriversService
       role = CompanyMember.role_of(user, company)
       case role
       when role.nil?
-        []
+        Driver.none
       when CompanyMember::OWNER
         company.drivers
       when CompanyMember::ADMINISTRATOR

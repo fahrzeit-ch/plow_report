@@ -14,15 +14,31 @@ RSpec.describe Api::V1::DriversController, type: :controller do
   end
 
   describe 'get' do
-    before { get :index, params: { format: :json } }
-
     describe 'response code' do
+      before { get :index, params: { format: :json } }
       subject { response }
 
       it { is_expected.to be_successful }
     end
 
+    context 'as company admin given a company id' do
+      let(:company) { create(:company) }
+      let!(:company_driver) { create(:driver, company: company) }
+
+      before { company.add_member(user, CompanyMember::ADMINISTRATOR) }
+
+
+      describe 'returned items' do
+        before { get :index, params: { format: :json, company_id: company.id } }
+        subject { api_response.attributes[:items] }
+
+        its(:count) { is_expected.to eq 1 }
+      end
+
+    end
+
     context 'without company assigned' do
+      before { get :index, params: { format: :json } }
       describe 'content' do
         subject { api_response }
 
