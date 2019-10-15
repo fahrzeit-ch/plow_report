@@ -60,6 +60,7 @@ RSpec.describe Api::V1::DriversController, type: :controller do
     end
 
     context 'with company assigned driver' do
+      before { get :index, params: { format: :json } }
       let(:company) { create(:company) }
       let(:driver) { create(:driver, user: user, company: company) }
 
