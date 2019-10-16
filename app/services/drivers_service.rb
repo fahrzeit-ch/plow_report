@@ -7,7 +7,7 @@ class DriversService
       role = CompanyMember.role_of(user, company)
       case role
       when role.nil?
-        []
+        Driver.none
       when CompanyMember::OWNER
         company.drivers
       when CompanyMember::ADMINISTRATOR
@@ -15,7 +15,7 @@ class DriversService
       when CompanyMember::DRIVER
         company.drivers.joins(:driver_login).where(driver_logins: { user_id: user.id})
       else
-        []
+        Driver.none
       end
     end
   end
