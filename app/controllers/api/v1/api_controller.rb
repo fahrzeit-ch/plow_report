@@ -46,9 +46,15 @@ class Api::V1::ApiController < ActionController::API
   end
 
   def current_driver
-    @current_driver ||= current_resource_owner
-                        .drivers
-                        .find_by(id: params[:driver_id])
+    @current_driver ||= resolve_driver
+  end
+
+  def resolve_driver
+    if params[:driver_id]
+      DriverPolicy::Scope.new(pundit_user, Driver.all).resolve.find(params[:driver_id])
+    else
+      current_resource_owner.drivers.last
+    end
   end
 
   def pundit_user
