@@ -12,7 +12,7 @@ module Report
     # @param [Drive] drive
     def columns_for(drive)
       columns = [
-        drive.start, drive.start, duration_to_excel_time(drive), drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
+        drive.start, drive.start, duration_to_excel_time(drive.duration), drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
       ]
       return columns unless drive.activity_execution
 
