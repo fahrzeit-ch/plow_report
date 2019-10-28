@@ -39,4 +39,31 @@ RSpec.describe Api::V1::StandbyDatesController, type: :controller do
     end
   end
 
+  describe 'access standby dates' do
+    let(:company) { create(:company) }
+    let(:other_driver) { create(:driver, company: company) }
+
+    context 'as other driver' do
+
+      before do
+        company.add_member(user, CompanyMember::DRIVER)
+        get :index, params: {driver_id: other_driver.id, format: :json}
+      end
+
+      subject { response.status }
+      it { is_expected.to eq 404 }
+    end
+
+    context 'as company admin' do
+
+      before do
+        company.add_member(user, CompanyMember::ADMINISTRATOR)
+        get :index, params: {driver_id: other_driver.id, format: :json}
+      end
+
+      subject { response.status }
+      it { is_expected.to eq 200 }
+    end
+  end
+
 end

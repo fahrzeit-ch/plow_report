@@ -90,5 +90,11 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
 
       it { is_expected.to eq "204" }
     end
+
+    describe 'removed record' do
+      before { drive1.reload }
+      subject { drive1 }
+      it { is_expected.to be_discarded }
+    end
   end
 end

@@ -19,7 +19,10 @@ class DriverPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope
+      full_permitted_companies = user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).select(:id)
+      own_drivers = user.drivers.select(:id)
+
+      scope.where(id: own_drivers).or(Driver.where(company_id: full_permitted_companies))
     end
   end
 end
