@@ -22,7 +22,7 @@ Doorkeeper.configure do
       # TODO: Replace this with a serious authentication for managing apps
       head :forbidden unless current_user && current_user.email == 'ste.staub@gmail.com'
     else
-      redirect_to sign_in_url
+      warden.authenticate!(scope: :user)
     end
   end
 

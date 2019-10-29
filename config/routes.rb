@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  use_doorkeeper
+  use_doorkeeper do
+    controllers authorizations: 'authorizations'
+  end
   get 'static_pages/home'
 
   namespace :api do
