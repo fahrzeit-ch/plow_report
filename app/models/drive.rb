@@ -82,11 +82,11 @@ class Drive < ApplicationRecord
   end
 
   def customer_name
-    customer ? customer.name : ''
+    customer ? "#{customer.name} #{customer.first_name}" : ''
   end
 
   def site_name
-    site ? site.name : ''
+    site ? site.display_name : ''
   end
 
   # Get the tasks (drive options) as an Array with translated option names
