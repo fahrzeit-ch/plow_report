@@ -41,6 +41,11 @@ gem 'rollbar'
 
 gem 'money-rails', '~>1.12'
 
+# Geo libraries
+gem 'rgeo'
+gem 'rgeo-geojson'
+
+
 gem 'kaminari'
 
 gem 'activerecord-import'

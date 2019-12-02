@@ -17,6 +17,14 @@ class Site < ApplicationRecord
     ["#{name} #{first_name}", "#{street} #{nr}", "#{zip} #{city}"].reject(&:blank?).join(', ')
   end
 
+  def area
+    RGeo::GeoJSON.decode(area_json) unless area_json.keys.empty?
+  end
+
+  def area=(feature)
+    self.area_json = RGeo::GeoJSON.encode(feature)
+  end
+
   def as_select_value
     CustomerAssociation.new(customer_id, id).to_json
   end
