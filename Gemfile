@@ -45,7 +45,6 @@ gem 'money-rails', '~>1.12'
 gem 'rgeo'
 gem 'rgeo-geojson'
 
-
 gem 'kaminari'
 
 gem 'activerecord-import'

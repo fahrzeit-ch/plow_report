@@ -1,6 +1,6 @@
 <div class="row bg-white pt-3">
   <div class="col-sm-6">
-    <h1><%= t 'views.companies.sites.new' %></h1>
+    <h1><%= t 'views.companies.sites.edit' %></h1>
   </div>
 </div>
 <div class="row toolbar border-top bg-light p-2 d-print-none">
@@ -10,7 +10,7 @@
                   edit_company_customer_path(company_id:
                                                  current_company.to_param,
                                              id: @customer.to_param) %> /
-      <%= @site.name %>
+      <%= @site.display_name %>
 
     </h4>
     <form class="form form-inline">
@@ -38,6 +38,29 @@
       </div>
       <div class="card-body">
         <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <div class="tools -pull-right">
+          <p><%= t 'views.companies.sites.location_panel_header' %></p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info">
+          <i class="fa fa-question"></i> <spam>Die Markierung oder Linie dient der App zur sortierung der vorgeschlagenen Kundenobjekte.</spam>
+        </div>
+        <div>
+          <%= text_field_tag :location, '', id: 'searchTextField', class: 'form-control' %>
+        </div>
+        <div class="map-tools">
+          <button class="btn btn-dark" id="addMarker"><i class="fa fa-map-marker"></i> <%= t'actions.add_marker' %>n</button>
+          <button class="btn btn-dark" id="addLine"><i class="fa fa-map-marker"></i> <%= t'actions.add_line' %>n</button>
+          <button class="btn btn-dark" style="display: none" id="finishEdit"><i class="fa fa-check"></i> <%= t'actions.finish' %></button>
+        </div>
+        <div id="map" data-site-id="<%= @site.id %>" data-company-id="<%= current_company.to_param %>" data-customer-id="<%= params[:customer_id] %>"></div>
       </div>
     </div>
   </div>

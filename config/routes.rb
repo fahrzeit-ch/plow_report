@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       resources :customers do
         resources :sites do
           member do
+            get :area
             post :deactivate
             post :activate
           end

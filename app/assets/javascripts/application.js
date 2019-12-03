@@ -22,3 +22,4 @@
 //= require drives
 //= require suggestion_value_loader
 //= require paginate
+//= require map
