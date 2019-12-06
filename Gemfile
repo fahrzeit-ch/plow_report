@@ -14,7 +14,7 @@ gem 'sprockets', '~> 3.7.2'
 gem 'pg', '~> 0.18'
 gem "scenic", '~> 1.5'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sassc-rails', '~> 2.1'
 # Use Uglifier as compressor for JavaScript assets
