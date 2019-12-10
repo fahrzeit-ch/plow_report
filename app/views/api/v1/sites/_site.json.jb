@@ -6,6 +6,7 @@ json = {
     street: site.street,
     city: site.city,
     zip: site.zip,
+    location: site.area_json,
     customer_id: site.customer_id,
     created_at: site.created_at,
     updated_at: site.updated_at
