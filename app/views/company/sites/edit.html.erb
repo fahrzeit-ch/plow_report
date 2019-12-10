@@ -41,27 +41,5 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header">
-        <div class="tools -pull-right">
-          <p><%= t 'views.companies.sites.location_panel_header' %></p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="alert alert-info">
-          <i class="fa fa-question"></i> <spam>Die Markierung oder Linie dient der App zur sortierung der vorgeschlagenen Kundenobjekte.</spam>
-        </div>
-        <div>
-          <%= text_field_tag :location, '', id: 'searchTextField', class: 'form-control' %>
-        </div>
-        <div class="map-tools">
-          <button class="btn btn-primary btn-maptool" id="addMarker" data-infotext="<%= t'maptools.addmarker.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_marker' %>n</button>
-          <button class="btn btn-primary btn-maptool" id="addLine" data-infotext="<%= t'maptools.addline.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_line' %>n</button>
-          <span id="toolInfo" style="display: none;" class="map-tools-info"></span><button class="btn btn-primary" style="display: none" id="finishEdit"><i class="fa fa-check"></i> <%= t'actions.finish' %></button>
-        </div>
-        <div id="map" data-site-id="<%= @site.id %>" data-company-id="<%= current_company.to_param %>" data-customer-id="<%= params[:customer_id] %>"></div>
-      </div>
-    </div>
-  </div>
+  <%= render 'map' %>
 </div>
