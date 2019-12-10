@@ -54,14 +54,6 @@ class Company::SitesController < ApplicationController
     @site.update_attribute(:active, false)
   end
 
-  def area
-    render json: wrap(@site.area_json)
-  end
-
-  def wrap(geometry)
-    { type: 'Feature', geometry: geometry }
-  end
-
   # Destroy a site. Only customers without recorded drives can be
   # destroyed.
   def destroy
@@ -85,11 +77,11 @@ class Company::SitesController < ApplicationController
   end
 
   def site_params
-    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city)
+    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :area_features)
   end
 
   def site_update_params
-    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active)
+    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features)
   end
 
 end

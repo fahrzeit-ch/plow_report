@@ -409,3 +409,8 @@ de-CH:
       drive_hourly_rate: "Stundensatz"
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
+  maptools:
+    addmarker:
+      infotext: "Auf die Karte klicken um Markierung zu setzen."
+    addline:
+      infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"

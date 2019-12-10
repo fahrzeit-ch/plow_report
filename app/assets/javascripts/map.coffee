@@ -1,4 +1,3 @@
-
 componentForm = {
   street_number: 'short_name',
   route: 'long_name',
@@ -39,21 +38,48 @@ $(document).on 'turbolinks:load', ->
       zoom: 10
     },
   };
+  mapStyles = [
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
 
   marker = null;
   polyLine = null;
   map = null;
 
   mode = modes.none;
+  geoJson = {}
+
+  jsonData = {}
 
   country = 'ch';
 
   mapDiv = $('#map')
+  return unless mapDiv.length
+
   addMarkerBtn = $('#addMarker')
   addLineBtn = $('#addLine')
   finishEditBtn = $('#finishEdit')
+  infoTextArea = $('#toolInfo')
+  mapDataInput = $('#mapData')
+
+  loadMapData = () ->
+    try
+      geoJson = JSON.parse(mapDataInput.val())
+    catch e
+      # Do something
+
+  storeMapData = () ->
+    mapDataInput.val(JSON.stringify(jsonData))
 
   resetMarkers = () ->
+    map.data.forEach (feature) ->
+      map.data.remove(feature)
     if(marker != null)
       marker.setMap(null)
       marker = null;
@@ -72,6 +98,10 @@ $(document).on 'turbolinks:load', ->
 
     path = polyLine.getPath()
     path.push(event.latLng)
+    coordinates = path.getArray().map (seg) ->
+      [seg.lng(), seg.lat()]
+    jsonData = {type: "Feature", geometry: {type:"LineString", coordinates: coordinates}}
+
 
   setMarker = (event) ->
     if(marker != null)
@@ -81,6 +111,7 @@ $(document).on 'turbolinks:load', ->
         position: event.latLng,
         map: map
       });
+    jsonData = {type: "Feature", geometry: {type:"Point", coordinates: [event.latLng.lng(), event.latLng.lat()]}}
 
   handleMapClick = (event) ->
     if mode == modes.addPolyline
@@ -90,9 +121,14 @@ $(document).on 'turbolinks:load', ->
     else
 
   finishEditMode = () ->
+    infoTextArea.css 'display', 'none'
     addMarkerBtn.css 'display', 'inline'
     addLineBtn.css 'display', 'inline'
     finishEditBtn.css 'display', 'none'
+
+  setEditInfoText = (text) ->
+    infoTextArea.css 'display', 'inline'
+    infoTextArea.text(text)
 
   setEditMode = () ->
     addMarkerBtn.css 'display', 'none'
@@ -102,18 +138,21 @@ $(document).on 'turbolinks:load', ->
   finishEditBtn.on 'click', ->
     mode = modes.none;
     finishEditMode()
+    storeMapData()
 
   addMarkerBtn.on 'click', ->
     if mode != modes.addMarker
       resetMarkers()
       mode = modes.addMarker
       setEditMode()
+      setEditInfoText(addMarkerBtn.data('infotext'))
 
   addLineBtn.on 'click', ->
     if mode != modes.addPolyline
       resetMarkers()
       mode = modes.addPolyline
       setEditMode()
+      setEditInfoText(addLineBtn.data('infotext'))
 
   siteId = mapDiv.data('site-id')
   companyId = mapDiv.data('company-id')
@@ -128,8 +167,7 @@ $(document).on 'turbolinks:load', ->
 
   input = document.getElementById('searchTextField')
   options = {
-    bounds: defaultBounds,
-    types: ['address']
+    bounds: defaultBounds
   };
 
   autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -141,9 +179,23 @@ $(document).on 'turbolinks:load', ->
     panControl: true,
     zoomControl: true,
     streetViewControl: true
+    styles: mapStyles
   }
   map = new google.maps.Map(document.getElementById('map'), mapOptions)
-  map.data.loadGeoJson('/companies/'+ companyId + '/customers/' + customerId + '/sites/' + siteId + '/area.json')
+  loadMapData()
+  map.data.addGeoJson(geoJson)
+
+  bounds = new google.maps.LatLngBounds()
+  if geoJson.geometry
+    coords = geoJson.geometry.coordinates
+    for a in coords
+      if typeIsArray(a)
+        bounds.extend(new google.maps.LatLng(a[1], a[0]))
+      else
+        bounds.extend(new google.maps.LatLng(coords[1], coords[0]))
+        break
+    map.fitBounds(bounds)
+
   map.addListener('click', handleMapClick);
 
   autocomplete.setComponentRestrictions({'country': country});

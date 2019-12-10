@@ -1,5 +1,6 @@
 <div id="company-member-form">
   <%= form_with(model: @site, url: [current_company, @customer, @site], builder: BootstrapFormBuilder, local: true, disabled: true) do |f| %>
+    <%= f.hidden_field :area_features, id: 'mapData' %>
     <div class="form-row">
       <div class="form-group col-md-6">
         <%= f.label :display_name %>

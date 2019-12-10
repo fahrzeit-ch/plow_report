@@ -4,4 +4,17 @@
 
 .map-tools {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  .map-tools-info {
+    flex-grow: 1;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    background-color: $info;
+  }
 }
+

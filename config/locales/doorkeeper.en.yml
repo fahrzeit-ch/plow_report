@@ -136,3 +136,8 @@ en:
           home: 'Home'
       application:
         title: 'OAuth authorization required'
+  maptools:
+    addmarker:
+      infotext: ""
+    addline:
+      infotext: ""

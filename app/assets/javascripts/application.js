@@ -23,3 +23,8 @@
 //= require suggestion_value_loader
 //= require paginate
 //= require map
+
+window.typeIsArray = function(value) {
+    obj = {};
+    return Array.isArray() || obj.toString.call(value) === '[object Array]'
+};
