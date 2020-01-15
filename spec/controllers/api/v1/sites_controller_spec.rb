@@ -41,7 +41,7 @@ RSpec.describe Api::V1::SitesController, type: :controller do
                                                               :customer_id])}
       end
 
-      describe 'location' do
+      describe 'location point' do
         before do
           site1.area = RGeo::WKRep::WKTParser.new.parse('POINT(1.0 3.4)')
           site1.save
@@ -51,6 +51,19 @@ RSpec.describe Api::V1::SitesController, type: :controller do
         subject { api_response.attributes[:items][0] }
 
         it { is_expected.to contain_hash_values({location: {type: 'Point', coordinates: [1.0, 3.4]}}) }
+
+      end
+
+      describe 'location LineString' do
+        before do
+          site1.area = RGeo::WKRep::WKTParser.new.parse('LINESTRING(1.0 3.4, 2.0 3.6)')
+          site1.save
+
+          get :index, params: { company_id: company.id, format: :json }
+        end
+        subject { api_response.attributes[:items][0] }
+
+        it { is_expected.to contain_hash_values({location: {type: 'LineString', coordinates: [[1.0, 3.4], [2.0, 3.6]]}}) }
 
       end
     end
