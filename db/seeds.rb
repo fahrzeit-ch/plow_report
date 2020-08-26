@@ -16,3 +16,9 @@ User.find_or_create_by email: 'demo.user1@company1.com' do |u|
   u.password_confirmation = 'password'
   u.name = 'Demo User1'
 end
+
+User.find_or_create_by email: 'ste.staub@gmail.com' do |u|
+  u.password = 'password'
+  u.password_confirmation = 'password'
+  u.name = 'Demo User1'
+end
