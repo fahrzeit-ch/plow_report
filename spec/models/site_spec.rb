@@ -34,4 +34,13 @@ RSpec.describe Site, type: :model do
     end
   end
 
+  describe 'area' do
+    subject { described_class.new }
+
+    it 'sets the area_json' do
+      subject.area = RGeo::WKRep::WKTParser.new.parse('POINT(1.0 3.4)')
+      expect(subject.area_json.keys).not_to be_empty
+    end
+  end
+
 end

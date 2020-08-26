@@ -191,6 +191,9 @@ de-CH:
     save: "Speichern"
     download_xlsx: "Excel Export"
     disable: "Deaktivieren"
+    add_marker: "Markierung setzen"
+    add_line: "Linie Zeichnen"
+    finish: "Fertig"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert."
@@ -325,6 +328,8 @@ de-CH:
         name_info: "Dieser Name ist für die Fahrer für die Objektauswahl ersichtlich."
         new: "Neues Objekt"
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
+        location_panel_header: "Standort"
+        edit: "Objekt bearbeiten"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
@@ -404,3 +409,8 @@ de-CH:
       drive_hourly_rate: "Stundensatz"
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
+  maptools:
+    addmarker:
+      infotext: "Auf die Karte klicken um Markierung zu setzen."
+    addline:
+      infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"
