@@ -12,6 +12,10 @@ class SitePolicy < ApplicationPolicy
     company_member?(company)
   end
 
+  def area?
+    show?
+  end
+
   def update?
     company_admin_or_owner?(company)
   end

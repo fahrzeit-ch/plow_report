@@ -24,11 +24,12 @@
 @import "bootstrap";
 @import "simple_calendar";
 @import "devise_bootstrap_views";
+@import "select2/scss/core";
 @import "toastr.min";
 @import "font-awesome";
 @import "standby_dates";
 @import "drives";
-@import "select2/scss/core";
+@import "sites";
 
 $colors: map-merge((
         'green-light': $green-light,
@@ -48,6 +49,11 @@ html, body { height: 100%; }
 body {
   background-color: #b5b6d447;
   font-family: Lato, sans-serif;
+}
+
+
+.select2-results__option {
+  border-bottom: 1px solid #CCCCCC;
 }
 
 .devise-bs {
@@ -127,6 +133,11 @@ body {
   visibility: hidden;
   border-right: 1px solid #ccc;
   overflow: auto;
+
+  .nav {
+    flex-wrap: nowrap;
+    flex: auto;
+  }
 
   &.show {
     margin-left: 0;

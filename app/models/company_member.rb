@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class CompanyMember < ApplicationRecord
-  OWNER = 'owner'.freeze
-  ADMINISTRATOR = 'administrator'.freeze
-  EMPLOYEE = 'employee'.freeze
-  DRIVER = 'driver'.freeze
-  ROLES = [OWNER, ADMINISTRATOR, DRIVER]
+  OWNER = 'owner'
+  ADMINISTRATOR = 'administrator'
+  EMPLOYEE = 'employee'
+  DRIVER = 'driver'
+  ROLES = [OWNER, ADMINISTRATOR, DRIVER].freeze
 
   belongs_to :user, optional: true # set to true in order for to conditionally validate
   validates_presence_of :user, unless: :new_user?
@@ -61,8 +63,8 @@ class CompanyMember < ApplicationRecord
     return unless valid?
     transaction do
       self.user = User.invite!({ email: user_email, name: user_name, skip_invitation: true, skip_create_driver: true }, current_user)
-      self.save
-      self.user.deliver_invitation
+      save
+      user.deliver_invitation
     end
     self
   end
@@ -85,26 +87,31 @@ class CompanyMember < ApplicationRecord
   # Returns true if this is the last
   def last_owner?
     @last_owner ||= owner? && self.class
-                        .where(company: company)
-                        .owners.size == 1
+                                  .where(company: company)
+                                  .owners.size == 1
   end
 
   private
+
   def add_driver
     company.add_driver user
   rescue AssignmentError => e
     Rails.logger.warn(e.message)
-    self.warnings << e.message
+    warnings << e.message
   end
 
   def assign_user_by_email
     return if user_email.blank? || !user.blank?
 
     self.user = User.find_by(email: user_email)
-    unless self.user
-      @new_user = true
-    end
+    @new_user = true unless user
   end
 
-
+  def self.role_of(user, company)
+    company.company_members
+           .where(user_id: user.id)
+           .limit(1)
+           .pluck(:role)
+           .first
+  end
 end

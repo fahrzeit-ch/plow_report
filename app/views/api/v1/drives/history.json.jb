@@ -1,0 +1,4 @@
+{
+    items: render(partial: 'history_entry', collection: @records, as: :history),
+    changes_since: @since
+}.merge! render('api/v1/shared/pagination', pagination_source: @records)

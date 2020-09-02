@@ -1,0 +1,3 @@
+json = {
+    items: render(partial: 'drive', collection: @records, as: :drive),
+}.merge! render('api/v1/shared/pagination', pagination_source: @records)

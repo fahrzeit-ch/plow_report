@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -17,16 +19,26 @@ class User < ApplicationRecord
   has_many :company_members, dependent: :destroy
   has_many :companies, through: :company_members
 
+  has_many :access_grants,
+           class_name:  'Doorkeeper::AccessGrant',
+           foreign_key: :resource_owner_id,
+           dependent:   :delete_all # or :destroy if you need callbacks
+
+  has_many :access_tokens,
+           class_name:  'Doorkeeper::AccessToken',
+           foreign_key: :resource_owner_id,
+           dependent:   :delete_all # or :destroy if you need callbacks
+
   def owned_companies
-    self.companies_for_role CompanyMember::OWNER
+    companies_for_role CompanyMember::OWNER
   end
 
   def administrated_companies
-    self.companies_for_role CompanyMember::ADMINISTRATOR
+    companies_for_role CompanyMember::ADMINISTRATOR
   end
 
   def companies_for_role(role)
-    self.companies.where(company_members: { role: role } )
+    companies.where(company_members: { role: role })
   end
 
   def company_admin_or_owner?(company)
@@ -44,11 +56,10 @@ class User < ApplicationRecord
   def self.available_as_driver(company)
     # Get users that are assigned as drivers on this company
     user_ids = DriverLogin.select(:user_id).joins(:driver)
-                   .where(drivers: {company_id: company.id} )
+                          .where(drivers: { company_id: company.id })
 
     company.users.where.not(id: user_ids)
   end
-
 
   # this is useful when a user is invited but has not
   # set a name yet
@@ -90,7 +101,7 @@ class User < ApplicationRecord
   private
 
   def create_driver
-    raise "Personal driver already exists for user #{self.id}" unless personal_driver.nil?
-    drivers.create(name: self.name)
+    raise "Personal driver already exists for user #{id}" unless personal_driver.nil?
+    drivers.create(name: name)
   end
 end

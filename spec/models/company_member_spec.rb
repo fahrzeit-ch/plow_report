@@ -127,4 +127,21 @@ RSpec.describe CompanyMember, type: :model do
       end
     end
   end
+
+  describe 'role_of' do
+    let(:user) { create(:user) }
+    let(:company) { create(:company) }
+
+    subject { described_class.role_of(user, company) }
+
+    context 'when not a member of company' do
+      it { is_expected.to be_nil }
+    end
+
+    context 'when is member of company' do
+      let(:role) { CompanyMember::DRIVER }
+      before { company.add_member(user, role) }
+      it { is_expected.to eq role }
+    end
+  end
 end

@@ -2,6 +2,10 @@
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
 
+  # Allow to discard instead of destroy drives
+  include Discard::Model
+  default_scope -> { kept }
+
   after_initialize :defaults
   validates :end, date: { after: :start }
 
@@ -15,9 +19,9 @@ class Drive < ApplicationRecord
   accepts_nested_attributes_for :activity_execution, reject_if: :all_blank
 
   # A Drive may be recorded on a customer but its not necessary
-  # TODO: Refactor to only allow site relation and create a transition to move existing records to new concept
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
+
   validate :customer_associated_with_site
 
   audited associated_with: :driver
@@ -79,11 +83,11 @@ class Drive < ApplicationRecord
   end
 
   def customer_name
-    customer ? customer.name : ''
+    customer ? "#{customer.name} #{customer.first_name}" : ''
   end
 
   def site_name
-    site ? site.name : ''
+    site ? site.display_name : ''
   end
 
   # Get the tasks (drive options) as an Array with translated option names

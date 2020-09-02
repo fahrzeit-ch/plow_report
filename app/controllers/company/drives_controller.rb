@@ -8,6 +8,7 @@ class Company::DrivesController < ApplicationController
   def index
     authorize current_company, :index_drives?
     scope = apply_scopes(current_company.drives
+                             .kept
                              .with_viewstate(current_user)
                              .includes(:driver, :activity_execution, :site, :activity, :customer))
     @drives = scope.order(start: :desc)
@@ -18,13 +19,13 @@ class Company::DrivesController < ApplicationController
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30)
       end
       format.xlsx do
-        @drives = @drives.by_season(current_season)
+        @drives
       end
     end
   end
 
   def destroy
-    if @drive.destroy
+    if @drive.discard
       flash[:success] = I18n.t 'flash.drives.destroyed'
     else
       flash[:error] = I18n.t 'flash.drives.not_destroyed'

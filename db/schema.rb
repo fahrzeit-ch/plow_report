@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190501191539) do
+ActiveRecord::Schema.define(version: 20191202202811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,7 +137,9 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.integer "driver_id", null: false
     t.bigint "customer_id"
     t.bigint "site_id"
+    t.datetime "discarded_at"
     t.index ["customer_id"], name: "index_drives_on_customer_id"
+    t.index ["discarded_at"], name: "index_drives_on_discarded_at"
     t.index ["site_id"], name: "index_drives_on_site_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
   end
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.boolean "confidential", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "default_app", default: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
@@ -229,6 +232,7 @@ ActiveRecord::Schema.define(version: 20190501191539) do
     t.datetime "updated_at", null: false
     t.string "display_name", default: "", null: false
     t.string "first_name", default: "", null: false
+    t.json "area_json", default: {}, null: false
     t.index ["customer_id"], name: "index_sites_on_customer_id"
     t.index ["display_name"], name: "index_sites_on_display_name"
   end

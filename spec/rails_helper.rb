@@ -35,6 +35,7 @@ RSpec.configure do |config|
 
   # Allows us to mock times
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include Api::SpecHelpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

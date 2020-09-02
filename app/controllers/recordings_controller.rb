@@ -28,6 +28,7 @@ class RecordingsController < ApplicationController
   end
 
   private
+
   def drive_params
     params.require(:drive).permit(policy(Drive).permitted_attributes)
   end

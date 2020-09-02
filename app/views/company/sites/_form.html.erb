@@ -1,5 +1,6 @@
 <div id="company-member-form">
   <%= form_with(model: @site, url: [current_company, @customer, @site], builder: BootstrapFormBuilder, local: true, disabled: true) do |f| %>
+    <%= f.hidden_field :area_features, id: 'mapData' %>
     <div class="form-row">
       <div class="form-group col-md-6">
         <%= f.label :display_name %>
@@ -25,7 +26,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <%= f.label :name %>
-        <%= f.text_field :name, autofocus: true %>
+        <%= f.text_field :name %>
       </div>
       <div class="form-group col-md-6">
         <%= f.label :first_name %>
@@ -35,21 +36,21 @@
     <div class="form-row">
       <div class="form-group col-md-10">
         <%= f.label :street %>
-        <%= f.text_field :street %>
+        <%= f.text_field :street, id: 'route' %>
       </div>
       <div class="form-group col-md-2">
         <%= f.label :nr %>
-        <%= f.text_field :nr %>
+        <%= f.text_field :nr, id: 'street_number' %>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-4">
         <%= f.label :zip %>
-        <%= f.text_field :zip %>
+        <%= f.text_field :zip, id: 'postal_code' %>
       </div>
       <div class="form-group col-md-8">
         <%= f.label :city %>
-        <%= f.text_field :city %>
+        <%= f.text_field :city, id: 'locality' %>
       </div>
     </div>
     <div class="form-group">

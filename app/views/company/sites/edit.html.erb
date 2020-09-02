@@ -1,6 +1,6 @@
 <div class="row bg-white pt-3">
   <div class="col-sm-6">
-    <h1><%= t 'views.companies.sites.new' %></h1>
+    <h1><%= t 'views.companies.sites.edit' %></h1>
   </div>
 </div>
 <div class="row toolbar border-top bg-light p-2 d-print-none">
@@ -10,7 +10,7 @@
                   edit_company_customer_path(company_id:
                                                  current_company.to_param,
                                              id: @customer.to_param) %> /
-      <%= @site.name %>
+      <%= @site.display_name %>
 
     </h4>
     <form class="form form-inline">
@@ -41,4 +41,5 @@
       </div>
     </div>
   </div>
+  <%= render 'map' %>
 </div>

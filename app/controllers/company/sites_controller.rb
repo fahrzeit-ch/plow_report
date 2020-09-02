@@ -2,7 +2,7 @@ class Company::SitesController < ApplicationController
 
   before_action :set_company_from_param
   before_action :set_customer
-  before_action :set_site, only: [:edit, :update, :destroy, :activate, :deactivate]
+  before_action :set_site, only: [:edit, :update, :destroy, :activate, :deactivate, :area]
 
   # List all sites of the customer
   def index
@@ -77,11 +77,11 @@ class Company::SitesController < ApplicationController
   end
 
   def site_params
-    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city)
+    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :area_features)
   end
 
   def site_update_params
-     params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active)
+    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features)
   end
 
 end

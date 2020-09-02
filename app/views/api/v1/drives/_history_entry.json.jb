@@ -1,0 +1,6 @@
+{
+    record_id: history.auditable_id,
+    action: history.action,
+    id: history.id,
+    audited_changes: history.audited_changes.as_json
+}

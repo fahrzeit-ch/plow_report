@@ -191,6 +191,9 @@ de-CH:
     save: "Speichern"
     download_xlsx: "Excel Export"
     disable: "Deaktivieren"
+    add_marker: "Markierung setzen"
+    add_line: "Linie Zeichnen"
+    finish: "Fertig"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert."
@@ -325,6 +328,8 @@ de-CH:
         name_info: "Dieser Name ist für die Fahrer für die Objektauswahl ersichtlich."
         new: "Neues Objekt"
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
+        location_panel_header: "Standort"
+        edit: "Objekt bearbeiten"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
@@ -369,6 +374,7 @@ de-CH:
       delete_member_current_user: "Sind Sie sicher, dass Sie sich aus dieser Firma entfernen möchten? Sie haben anschliessend keinen Zugriff auf die Firmendaten mehr und können keine Fahrten für diese Firma erfassen."
   confirmation:
     delete: "Sind Sie sicher dass dieser Eintrag gelöscht werden soll?"
+    delete_base_rate: "Das Löschen des Basis Stundensatzes entfernt auch ALLE anderen Stundensätze. Möchten Sie trotzdem fortfahren?"
   devise:
     sign_in: "Anmelden"
     sign_up: "Registrieren"
@@ -381,7 +387,7 @@ de-CH:
     jump_to_today: "Zu Heute springen"
   sidenav:
     section:
-      user: "Mein Benutzer"
+      user: "Mein Profil"
       settings: "Einstallungen"
       master_data: "Stammdaten"
   tomorrow: 'Morgen'
@@ -403,3 +409,8 @@ de-CH:
       drive_hourly_rate: "Stundensatz"
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
+  maptools:
+    addmarker:
+      infotext: "Auf die Karte klicken um Markierung zu setzen."
+    addline:
+      infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"

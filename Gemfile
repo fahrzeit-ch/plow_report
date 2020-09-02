@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.4.2'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -13,7 +14,7 @@ gem 'sprockets', '~> 3.7.2'
 gem 'pg', '~> 0.18'
 gem "scenic", '~> 1.5'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sassc-rails', '~> 2.1'
 # Use Uglifier as compressor for JavaScript assets
@@ -30,13 +31,19 @@ gem 'rails-i18n'
 gem 'simple_calendar', '~> 2.0'
 
 gem 'audited', '~> 4.7'
+gem 'discard', '~> 1.0'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable', '~> 1.7.0'
+gem 'doorkeeper', '~> 5.1.1'
 gem 'pundit', '~> 1.1.0'
 gem 'rollbar'
 
 gem 'money-rails', '~>1.12'
+
+# Geo libraries
+gem 'rgeo'
+gem 'rgeo-geojson'
 
 gem 'kaminari'
 
@@ -59,7 +66,8 @@ gem 'coffee-rails', '> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+#gem 'jbuilder', '~> 2.5'
+gem 'jb', '~> 0.7.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 
