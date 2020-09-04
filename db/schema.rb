@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20191202202811) do
     t.string "city", default: "", null: false
     t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_customers_on_company_id"
-    t.index ["name", "company_id"], name: "index_customers_on_name_and_company_id", unique: true
   end
 
   create_table "driver_logins", force: :cascade do |t|
@@ -138,10 +137,12 @@ ActiveRecord::Schema.define(version: 20191202202811) do
     t.bigint "customer_id"
     t.bigint "site_id"
     t.datetime "discarded_at"
+    t.bigint "tour_id"
     t.index ["customer_id"], name: "index_drives_on_customer_id"
     t.index ["discarded_at"], name: "index_drives_on_discarded_at"
     t.index ["site_id"], name: "index_drives_on_site_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
+    t.index ["tour_id"], name: "index_drives_on_tour_id"
   end
 
   create_table "hourly_rates", force: :cascade do |t|
@@ -256,14 +257,13 @@ ActiveRecord::Schema.define(version: 20191202202811) do
     t.index ["user_id"], name: "index_term_acceptances_on_user_id"
   end
 
-  create_table "tour_steps", force: :cascade do |t|
-    t.string "trigger"
-    t.string "selector"
-    t.text "description"
-    t.json "options"
-    t.integer "position"
+  create_table "tours", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time"
+    t.bigint "driver_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_tours_on_driver_id"
   end
 
   create_table "user_actions", force: :cascade do |t|
@@ -316,6 +316,7 @@ ActiveRecord::Schema.define(version: 20191202202811) do
   add_foreign_key "drives", "customers"
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "drives", "sites"
+  add_foreign_key "drives", "tours"
   add_foreign_key "hourly_rates", "activities"
   add_foreign_key "hourly_rates", "companies"
   add_foreign_key "hourly_rates", "customers"
@@ -327,6 +328,7 @@ ActiveRecord::Schema.define(version: 20191202202811) do
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"
+  add_foreign_key "tours", "drivers"
   add_foreign_key "user_actions", "users"
 
   create_view "implicit_hourly_rates", sql_definition: <<-SQL
