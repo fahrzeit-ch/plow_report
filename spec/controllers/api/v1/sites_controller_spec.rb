@@ -38,6 +38,7 @@ RSpec.describe Api::V1::SitesController, type: :controller do
                                                               :street,
                                                               :city,
                                                               :zip,
+                                                              :active,
                                                               :customer_id])}
       end
 
