@@ -11,9 +11,26 @@ modes = {
   addPolyline: 'add-polyline'
 }
 
-fillInAddress = (autocomplete, map) ->
-  # Get the place details from the autocomplete object.
+isFormEmpty = () ->
+  empty = true
+  for component of componentForm
+    if !!document.getElementById(component).value
+      empty = false
+  return empty
+
+onAutocompleteChanged = (autocomplete, map) ->
   place = autocomplete.getPlace()
+  alignMap(place, map)
+  if isFormEmpty()
+    fillInAddress(place)
+
+alignMap = (place, map) ->
+  bounds = new google.maps.LatLngBounds()
+  bounds.extend(place.geometry.location)
+  map.fitBounds(bounds)
+
+fillInAddress = (place) ->
+  # Get the place details from the autocomplete object.
   for component of componentForm
     document.getElementById(component).value = ''
     document.getElementById(component).disabled = false
@@ -26,10 +43,6 @@ fillInAddress = (autocomplete, map) ->
       val = place.address_components[i][componentForm[addressType]]
       document.getElementById(addressType).value = val
     i++
-
-  bounds = new google.maps.LatLngBounds()
-  bounds.extend(place.geometry.location)
-  map.fitBounds(bounds)
 
 $(document).on 'turbolinks:load', ->
   countries = {
@@ -199,4 +212,4 @@ $(document).on 'turbolinks:load', ->
   map.addListener('click', handleMapClick);
 
   autocomplete.setComponentRestrictions({'country': country});
-  autocomplete.addListener('place_changed', () -> fillInAddress(autocomplete, map));
+  autocomplete.addListener('place_changed', () -> onAutocompleteChanged(autocomplete, map));
