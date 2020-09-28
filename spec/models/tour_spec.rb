@@ -41,4 +41,16 @@ RSpec.describe Tour, type: :model do
       its(:last_drive) { is_expected.to eq drive1 }
     end
   end
+
+  describe 'discard tour' do
+    let(:driver) { create(:driver) }
+    subject { create(:tour, driver: driver, start_time: 4.hours.ago, drives: build_list(:drive, 2, driver: driver)) }
+
+    before {
+      subject.discard
+    }
+    it { is_expected.to be_discarded }
+  end
+
+
 end

@@ -2,14 +2,10 @@
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
 
-  # Allow to discard instead of destroy drives
-  include Discard::Model
-  default_scope -> { kept }
-
   after_initialize :defaults
   validates :end, date: { after: :start }
 
-  # A drive is allways done by a driver
+  # A drive is always done by a driver
   belongs_to :driver
   belongs_to :tour, optional: true
 
@@ -21,6 +17,19 @@ class Drive < ApplicationRecord
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
+
+  # Allow to discard instead of destroy drives
+  include Discard::Model
+  default_scope -> { kept }
+  scope :without_tour, -> { where(tour_id: nil) }
+
+  def kept?
+    discarded? && tour.kept?
+  end
+
+  def self.kept
+    undiscarded.without_tour.or(Drive.where(id: undiscarded.joins(:tour).merge(Tour.undiscarded)))
+  end
 
   validate :customer_associated_with_site
 

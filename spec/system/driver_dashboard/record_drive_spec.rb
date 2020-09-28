@@ -24,7 +24,10 @@ feature 'record a drive from dashboard' do
     before { current_driver.start_recording }
 
     it 'should go to drive list' do
-      finish_recording_drive
+      finish_recording_drive do
+        # fill in valid end time
+        fill_in 'drive[end]', with: 2.minutes.from_now.strftime('%H:%M')
+      end
 
       # drive form should be displayed
       expect(page).to have_content I18n.t('dashboard.cards.new_drive.title')
@@ -40,7 +43,7 @@ feature 'record a drive from dashboard' do
       end
 
       # form should show us error
-      expect(page).to have_content(I18n.t('errors.attributes.end.not_before_start'))
+      expect(page).to have_content(I18n.t('errors.attributes.end.after'))
 
       # we want recording to have been stopped
       current_driver.reload

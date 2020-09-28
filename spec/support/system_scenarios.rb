@@ -89,6 +89,7 @@ module SystemScenarios
   def finish_recording_drive
     visit '/'
     yield if block_given?
+
     click_link_or_button I18n.t('dashboard.cards.new_drive.finish_recording')
   end
 

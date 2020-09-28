@@ -1,8 +1,14 @@
 # A tour combines multiple drives and tracks the overall
 # time spent by a driver.
 class Tour < ApplicationRecord
+  include Discard::Model
+  default_scope -> { kept }
+
   belongs_to :driver
-  has_many :drives, class_name: 'Drive', dependent: :nullify
+  has_many :drives, -> { kept }, class_name: 'Drive', dependent: :nullify
+  audited
+
+  include TrackedViews
 
   validates :start_time, presence: true
   validates :end_time, date: { after: :start_time }, allow_nil: true

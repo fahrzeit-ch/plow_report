@@ -45,7 +45,7 @@ de-CH:
       base:
         consent_required: "Bitte akzeptieren sie die mit * gekennzeichneten Bedingungen."
       end:
-        not_before_start: "darf nicht vor der Start Zeit liegen"
+        after: "darf nicht vor der Start Zeit liegen"
       end_date:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
     drivers:
