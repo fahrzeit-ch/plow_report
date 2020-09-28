@@ -1,14 +1,14 @@
 require 'rails_helper'
+require 'securerandom'
 
-RSpec.describe Api::V1::DrivesController, type: :controller do
+RSpec.describe Api::V1::ToursController, type: :controller do
   render_views
 
   let(:user) { create(:user) }
   let(:driver) { create(:driver, user: user) }
-  let(:drive1) { create(:drive, driver: driver, activity_execution: create(:activity_execution)) }
+  let!(:tour) { create(:tour, driver: driver) }
 
   before do
-    drive1
     sign_in_user(user)
   end
 
@@ -30,13 +30,9 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       describe 'item values' do
         subject { api_response.attributes[:items][0] }
         it { is_expected.to contain_hash_values({
-                                                    id: drive1.id,
-                                                    start: drive1.start.as_json,
-                                                    end: drive1.end.as_json,
-                                                    activity: {
-                                                        activity_id: drive1.activity_execution.activity_id,
-                                                        value: nil
-                                                    }}) }
+                                                    id: tour.id,
+                                                    start_time: tour.start_time.as_json,
+                                                    end_time: tour.end_time.as_json }) }
       end
     end
   end
@@ -57,39 +53,37 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       it { is_expected.to have_attribute_keys :items }
 
       describe 'item values' do
-        let(:expected) { Audited::Audit.where(auditable_type: 'Drive').last  }
+        let(:expected) { Audited::Audit.where(auditable_type: 'Tour').last  }
         subject { api_response.attributes[:items][0] }
         it { is_expected.to contain_keys ([
-                                            :id,
-                                            :action,
-                                            :audited_changes
-
+            :id,
+            :action,
+            :audited_changes
         ]) }
       end
     end
   end
 
   describe 'post' do
-    let!(:tour) { create(:tour, driver: driver)}
-    let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: DateTime.now, tour_id: tour.id } }
+    let(:minimal_params) { { id: SecureRandom.uuid, start_time: 1.hour.ago.as_json, end_time: 1.minute.ago.as_json, created_at: DateTime.now.as_json} }
 
     before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
 
     describe 'response code' do
-      subject { response }
+      subject { response.code }
 
-      its(:code) { is_expected.to eq "201" }
+      it { is_expected.to eq "201" }
     end
 
-    describe 'response body' do
-      subject { api_response }
-      it { is_expected.to have_attribute_values(tour_id: tour.id) }
+    describe 'return values' do
+      subject { api_response.attributes }
+      it { is_expected.to contain_hash_values(minimal_params) }
     end
 
   end
 
   describe 'delete#destroy' do
-    before { delete :destroy, params: { driver_id: driver.to_param, id: drive1.id } }
+    before { delete :destroy, params: { driver_id: driver.to_param, id: tour.id } }
 
     describe 'response code' do
       subject { response.code }
@@ -98,8 +92,8 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     end
 
     describe 'removed record' do
-      before { drive1.reload }
-      subject { drive1 }
+      before { tour.reload }
+      subject { tour }
       it { is_expected.to be_discarded }
     end
   end

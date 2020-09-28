@@ -10,6 +10,11 @@ Rails.application.routes.draw do
         resources :drivers, only: [:index] do
           resources :activities, only: [:index]
           resources :sites, only: [:index]
+          resources :tours, only: %i[index create update destroy] do
+            collection do
+              get :history
+            end
+          end
           resources :drives, only: %i[index create update destroy] do
             collection do
               get :history

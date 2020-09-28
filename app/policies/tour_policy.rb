@@ -1,4 +1,4 @@
-class DrivePolicy < ApplicationPolicy
+class TourPolicy < ApplicationPolicy
 
   def index?
     true
@@ -24,10 +24,6 @@ class DrivePolicy < ApplicationPolicy
     own_record? || company_admin_or_owner?(record.driver.company)
   end
 
-  def finish?
-    own_record?
-  end
-
   # Scopes:
   # :default
   # :api_create
@@ -35,11 +31,11 @@ class DrivePolicy < ApplicationPolicy
   def permitted_attributes(scope = :default)
     case scope
     when :default
-      [:start, :end, :distance_km, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
+      [:start_time, :end_time]
     when :api_create
-      [:driver_id, :start, :end, :company_id, :site_id, :tour_id,  :customer_id, :distance_km, :updated_at, :discarded_at, :created_at, activity: [:activity_id, :value]]
+      [:id, :driver_id, :start_time, :end_time, :created_at]
     when :api_update
-      [:driver_id, :start, :end, :site_id, :tour_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
+      [:driver_id, :start_time, :end_time]
     end
   end
 

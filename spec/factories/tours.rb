@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :tour do
-    start_time ""
+    start_time { 1.hour.ago }
     end_time ""
-    driver nil
+    driver
   end
 end
