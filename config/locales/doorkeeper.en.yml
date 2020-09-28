@@ -141,3 +141,8 @@ en:
       infotext: ""
     addline:
       infotext: ""
+  views:
+    tours:
+      empty: ""
+    company_tours:
+      edit: ""

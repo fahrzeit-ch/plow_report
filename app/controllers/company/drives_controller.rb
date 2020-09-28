@@ -18,6 +18,9 @@ class Company::DrivesController < ApplicationController
         @stats = apply_scopes(current_company.drives).stats
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30)
       end
+      format.js do
+        @drives
+      end
       format.xlsx do
         @drives
       end
@@ -34,12 +37,13 @@ class Company::DrivesController < ApplicationController
   end
 
   def edit
+    session[:return_to] ||= request.referer
   end
 
   def update
     if @drive.update(drive_params)
       flash[:success] = I18n.t 'flash.drives.updated'
-      redirect_to company_drives_path current_company
+      redirect_to session.delete(:return_to)
     else
       render :edit
     end
@@ -49,7 +53,7 @@ class Company::DrivesController < ApplicationController
 
   def update_read_status
     new_drives = @drives.reject(&:seen?)
-    UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id)) if new_drives.any?
+    UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id), 'Drive') if new_drives.any?
   end
 
   def apply_scopes(drives)

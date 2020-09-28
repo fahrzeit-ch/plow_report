@@ -5,10 +5,8 @@ class Tour < ApplicationRecord
   default_scope -> { kept }
 
   belongs_to :driver
-  has_many :drives, -> { kept }, class_name: 'Drive', dependent: :nullify
+  has_many :drives, -> { kept.order(start: :desc) }, class_name: 'Drive', dependent: :nullify
   audited
-
-  include TrackedViews
 
   validates :start_time, presence: true
   validates :end_time, date: { after: :start_time }, allow_nil: true
@@ -41,6 +39,63 @@ class Tour < ApplicationRecord
     self.read_attribute(:end_time) || last_drive.try(:end)
   end
 
+  def distance_km
+    drives.sum(:distance_km)
+  end
+
+  def week_nr
+    self.start_time.to_date.cweek
+  end
+
+  def day_of_week
+    I18n.l self.start_time, format: '%a'
+  end
+
+  # The duration is loaded from attribute (in case it was calculated in the sql query). If
+  # the attribute is not defined, it is calculated on the fly.
+  #
+  # @return [Time] the duration of the drive
+  def duration
+    if has_attribute? :duration
+      Time.at(read_attribute(:duration)).utc
+    else
+      Time.at(self.end_time - self.start_time).utc
+    end
+  end
+
+  def duration_in_hours
+    ( self.end_time - self.start_time ) / 3600.0
+  end
+
+  # Returns the duration in as string in the form HH:MM.
+  # Seconds will be rounded.
+  # Can show hours > 24
+  #
+  # @return [String] duration as text
+  def duration_as_string
+    seconds = duration.to_i
+    minutes = (seconds / 60).round #ignore seconds
+    hours = (minutes / 60) # do not round here as we will display minutes
+
+    parts = []
+    parts << "#{hours}h" if hours > 0
+    parts << "#{(minutes % 60)}min"
+
+    parts.join(' ')
+  end
+
+  # TODO: This does not belong here. Extract duration formatting
+  # to some kind of TimeSpan class
+  def justify(hours)
+    hours.to_s.rjust(2, '0')
+  end
+
+  class << self
+    # Scope the drives by the given season
+    def by_season(season)
+      where('start_time > ? AND start_time < ?', season.start_date, season.end_date)
+    end
+  end
 
   private
 
