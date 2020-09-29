@@ -51,6 +51,14 @@ class ApplicationController < ActionController::Base
     @season = session[:season] ? Season.from_sym(session[:season]) : current_season
   end
 
+  def redirect_to_referral(fallback_location: nil)
+    redirect_to session.delete(:return_to) || fallback_location
+  end
+
+  def store_referral
+    session[:return_to] ||= request.referer
+  end
+
   protected
 
   def user_not_authorized

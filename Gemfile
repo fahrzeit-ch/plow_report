@@ -59,6 +59,7 @@ gem 'trestle'
 gem 'trestle-auth'
 
 gem 'select2-rails'
+gem 'date_validator'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '> 4.2'

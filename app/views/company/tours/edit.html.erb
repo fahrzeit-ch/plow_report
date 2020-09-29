@@ -1,0 +1,40 @@
+<div class="row pt-3 bg-white">
+  <div class="col-12">
+    <h1><%= t 'views.company_tours.edit' %></h1>
+  </div>
+</div>
+<div class="row toolbar border-top bg-light d-print-none">
+  <div class="col-12">
+    <h4><%= Tour.model_name.human %> <%= @record.start_time.strftime('%d.%m.%Y') %></h4>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-body">
+    <h3><%= @record.duration_as_string %></h3>
+    <dl class="row" style="margin-bottom: 0">
+      <dt class="col-sm-3">Fahrer:</dt>
+      <dd class="col-sm-9" style="margin-bottom: 0"><%= @record.driver.name %></dd>
+    </dl>
+    <dl class="row" style="margin-bottom: 0">
+      <dt class="col-sm-3">Start:</dt>
+      <dd class="col-sm-9" style="margin-bottom: 0"><%= @record.start_time.strftime('%H:%M') %></dd>
+    </dl>
+    <dl class="row" style="margin-bottom: 0">
+      <dt class="col-sm-3">Ende:</dt>
+      <dd class="col-sm-9" style="margin-bottom: 0"><%= @record.end_time.strftime('%H:%M') %></dd>
+    </dl>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <% if @record.drives.empty? %>
+          <div class="alert alert-info"><%= t('views.tours.empty') %></div>
+        <% else %>
+          <%= render partial: '/company/drives/drive', collection: @record.drives, locals: { tools: true } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

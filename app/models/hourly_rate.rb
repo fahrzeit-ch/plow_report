@@ -14,7 +14,7 @@ class HourlyRate < ApplicationRecord
   attribute :valid_from, :date, default: Date.new(2000, 1, 1)
   attribute :valid_until, :date, default: Date.new(2100, 1, 1)
 
-  scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.now) }
+  scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.current) }
   scope :overlapping, ->(other) { where('(valid_from, valid_until) OVERLAPS (?, ?)',
                                          other.valid_from, other.valid_until) }
   scope :same_scope, ->(other) { where(customer: other.customer, activity: other.activity,

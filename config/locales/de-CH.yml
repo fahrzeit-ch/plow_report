@@ -45,7 +45,7 @@ de-CH:
       base:
         consent_required: "Bitte akzeptieren sie die mit * gekennzeichneten Bedingungen."
       end:
-        not_before_start: "darf nicht vor der Start Zeit liegen"
+        date_after: "darf nicht vor der Start Zeit liegen"
       end_date:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
     drivers:
@@ -351,6 +351,10 @@ de-CH:
         no_data_available: "Keine Daten verfügbar"
     policies_and_terms:
       require_new_concent: "Unsere Bestimmungen haben sich geändert"
+    tours:
+      empty: "Keine Kunden Objekte auf dieser Tour erfasst"
+    company_tours:
+      edit: "Tour bearbeiten"
   forms:
     placeholders:
       driver:

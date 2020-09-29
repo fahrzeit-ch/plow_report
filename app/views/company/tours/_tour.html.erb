@@ -1,0 +1,32 @@
+<div class="d-flex mb-2 border">
+  
+  <div class="align-self-center p-2 ml-2 mr-2" style="background-color:<%= driver_color(tour.driver) %>">
+    <strong><%= initials(tour.driver.name) %></strong>
+  </div>
+
+  <div class="p-2 mr-2">
+    <div class="drive-rate-type-0"><%= tour.day_of_week %> <%= tour.start_time.strftime('%d.%m') %></div>
+    <div class="text-muted"><small><%= tour.start_time.strftime('%Y') %></small></div>
+  </div>
+
+  <div class="drive-date-times mr-2 p-2">
+    <div><%= tour.duration_as_string %></div>
+    <div class="text-muted"><small><%= tour.start_time.strftime('%H:%M') %>-<%= tour.end_time.strftime('%H:%M') %></small></div>
+  </div>
+
+  <div class="p-2">
+    <div><strong><%= tour.distance_km %>km</strong></div>
+  </div>
+
+  <% if local_assigns[:tools] && policy(tour).edit? %>
+    <div class="align-self-center ml-auto mr-2 d-print-none">
+      <%= link_to edit_company_tour_path(current_company, tour), class: 'pull-right btn btn-light' do %>
+        <i class="fa fa-edit"></i>
+      <% end %>
+      <%= link_to company_tour_path(current_company, tour), method: :delete, class: 'pull-right btn btn-danger',
+                  data: { confirm: t('confirmation.delete'), disable_with: is_processing(true) } do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    </div>
+  <% end %>
+</div>

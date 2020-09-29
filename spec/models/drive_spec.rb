@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Drive, type: :model do
   let(:driver1) { Driver.create(name: 'Test Driver')}
 
-  subject { Drive.new start: 1.hour.ago, end: DateTime.now, distance_km: 0, driver: driver1 }
+  subject { Drive.new start: 1.hour.ago, end: Time.current, distance_km: 0, driver: driver1 }
 
   describe 'validation' do
 
@@ -84,6 +84,47 @@ RSpec.describe Drive, type: :model do
       expect(Drive.by_season(season)).to include this_season
       expect(Drive.by_season(season)).not_to include last_season
     end
+  end
+
+  describe '#discarded' do
+    let(:driver) { create(:driver) }
+    let(:tour) { create(:tour, driver: driver, start_time: Time.current)}
+
+    context '#discarded tour' do
+      subject { create(:drive, tour: tour, driver: driver) }
+      before { tour.discard }
+
+      it { is_expected.not_to be_kept }
+
+      it 'is not in the default scope' do
+        expect(Drive.all).not_to include(subject)
+      end
+    end
+
+    context 'discarded drive in a tour' do
+      subject { create(:drive, tour: tour, driver: driver) }
+      before { subject.discard }
+
+      it 'is not in default scope' do
+        expect(Drive.all).not_to include(subject)
+      end
+    end
+
+    context 'non discarded drive with a non discarded tour' do
+      subject { create(:drive, tour: tour, driver: driver) }
+      it 'is in default scope' do
+        expect(Drive.all).to include(subject)
+      end
+    end
+
+    context 'non discarded drive without tour' do
+      subject { create(:drive, driver: driver) }
+
+      it 'is in default scope' do
+        expect(Drive.all).to include(subject)
+      end
+    end
+
   end
 
   describe '#surcharge_rate_type' do

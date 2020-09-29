@@ -1,0 +1,11 @@
+json = {
+    id: tour.id,
+    start_time: tour.start_time,
+    end_time: tour.end_time,
+    driver_id: tour.driver_id,
+    created_at: tour.created_at,
+    updated_at: tour.updated_at,
+    discarded_at: tour.discarded_at
+}
+
+json

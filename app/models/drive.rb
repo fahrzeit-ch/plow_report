@@ -2,15 +2,12 @@
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
 
-  # Allow to discard instead of destroy drives
-  include Discard::Model
-  default_scope -> { kept }
-
   after_initialize :defaults
-  validate :start_end_dates
+  validates :end, date: { after: :start }
 
-  # A drive is allways done by a driver
+  # A drive is always done by a driver
   belongs_to :driver
+  belongs_to :tour, optional: true
 
   # A drive may have an activity that was executed during the drive
   has_one :activity_execution, dependent: :destroy
@@ -20,6 +17,19 @@ class Drive < ApplicationRecord
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
+
+  # Allow to discard instead of destroy drives
+  include Discard::Model
+  default_scope -> { kept }
+  scope :without_tour, -> { where(tour_id: nil) }
+
+  def kept?
+    discarded? && tour.kept?
+  end
+
+  def self.kept
+    undiscarded.without_tour.or(Drive.where(id: undiscarded.joins(:tour).merge(Tour.undiscarded)))
+  end
 
   validate :customer_associated_with_site
 
@@ -214,13 +224,9 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
   end
 
-  def start_end_dates
-    errors.add(:end, :not_before_start) if self.end < self.start
-  end
-
   def defaults
-    self.start ||= DateTime.now if self.has_attribute? :start
-    self.end ||= DateTime.now if self.has_attribute? :end
+    self.start ||= Time.current if self.has_attribute? :start
+    self.end ||= Time.current if self.has_attribute? :end
   end
 
 end

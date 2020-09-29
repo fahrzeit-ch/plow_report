@@ -12,7 +12,7 @@
       <%= t 'navbar.companies.stand_by_dates' %>
     <% end %>
   </li>
-  <li class="nav-item <%= (controller_name == 'drives') ? 'active' : '' %>">
+  <li class="nav-item <%= (controller_name == 'drives' || controller_name == 'tours') ? 'active' : '' %>">
     <%= link_to company_drives_path(current_company), class: 'nav-link' do %>
       <i class="fa fa-truck"></i>
       <%= t 'navbar.companies.drives' %>

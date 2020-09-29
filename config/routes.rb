@@ -10,6 +10,11 @@ Rails.application.routes.draw do
         resources :drivers, only: [:index] do
           resources :activities, only: [:index]
           resources :sites, only: [:index]
+          resources :tours, only: %i[index create update destroy] do
+            collection do
+              get :history
+            end
+          end
           resources :drives, only: %i[index create update destroy] do
             collection do
               get :history
@@ -51,6 +56,7 @@ Rails.application.routes.draw do
       resources :hourly_rates
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
       resources :drives, only: %i[index destroy edit update]
+      resources :tours, only: %i[index destroy edit update]
       resources :standby_dates, only: %i[index destroy create] do
         collection do
           get :weeks

@@ -10,7 +10,7 @@
   <div class="col">
     <form class="form form-inline">
       <div class="btn-group mr-4" role="group">
-        <%= link_to company_drives_path, class: "btn btn-secondary #{current_page?(action: :index) ? 'active' : ''}" do %>
+        <%= link_to company_drives_path, class: "btn btn-secondary #{current_page?(controller: :drives, action: :index) ? 'active' : ''}" do %>
           <i class="fa fa-calendar"></i> Fahrten
         <% end %>
         <%= link_to company_tours_path, class: "btn btn-secondary  #{current_page?(controller: :tours, action: :index) ? 'active' : ''}" do %>
@@ -25,20 +25,9 @@
                        data: {s2: true, submit_on_change: true},
                        include_blank: t('common.all')) %>
       </div>
-      <% if(drive_attr_enabled?(:customer)) %>
-        <div class="form-group">
-          <label class="mr-2"><%= Customer.model_name.human %></label>
-          <%= select_tag(:customer_id,
-                         options_from_collection_for_select(current_company.customers, 'id', 'name', params[:customer_id]),
-                         class: 'dropdown-select',
-                         data: {s2: true, submit_on_change: true},
-                         include_blank: t('common.all')) %>
-        </div>
-      <% end %>
     </form>
   </div>
   <div class="col button-group">
-    <a href="<%= url_for(params.to_unsafe_h.merge(format: :xlsx))  %>" class="btn btn-primary d-print-none float-right"><i class="fa fa-download"></i> <%= t('actions.download_xlsx') %></a>
     <a href="javascript:window.print()" class="btn btn-outline-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
@@ -68,11 +57,11 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12">
-            <div id="drives">
-              <%= render partial: '/drives/drive_list', locals: { drives: @drives } %>
+            <div id="tours">
+              <%= render partial: 'tour', collection: @records, locals: { tools: true} %>
             </div>
 
-            <%= paginate @drives %>
+            <%= paginate @records %>
           </div>
         </div>
       </div>

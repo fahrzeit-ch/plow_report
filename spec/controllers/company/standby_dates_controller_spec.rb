@@ -31,7 +31,7 @@ RSpec.describe Company::StandbyDatesController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:standby_params) { {standby_date: { driver_id: driver.id, day: Date.today }} }
+    let(:standby_params) { {standby_date: { driver_id: driver.id, day: Date.current }} }
     subject { post :create, params: { company_id: company.to_param }.merge(standby_params) }
 
     context 'standby date' do
@@ -50,7 +50,7 @@ RSpec.describe Company::StandbyDatesController, type: :controller do
       # Be aware to use Date.current in order to respect time zones.
       # This should fix the error when running this spec in codeship whith an other
       # timezone than configured.
-      let(:standby_params) { {standby_date_date_range: {driver_id: driver.id, start_date: Date.yesterday, end_date: Date.current}} }
+      let(:standby_params) { {standby_date_date_range: {driver_id: driver.id, start_date: Time.zone.yesterday, end_date: Date.current}} }
       it 'redirects back to standby dates' do
         expect(subject).to redirect_to(company_standby_dates_path(company))
       end

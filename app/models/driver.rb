@@ -27,6 +27,8 @@ class Driver < ApplicationRecord
 
   has_many :drives, class_name: 'Drive', dependent: :destroy
   has_many :standby_dates, dependent: :destroy
+  has_many :tours, dependent: :destroy
+
   has_associated_audits
 
   validates :name, presence: true
@@ -37,7 +39,7 @@ class Driver < ApplicationRecord
   # Start recording a drive
   def start_recording
     raise 'Already recording' if recording?
-    create_recording(start_time: Time.now)
+    create_recording(start_time: Time.current)
   end
 
   # Finishes current recording and returns the start time
