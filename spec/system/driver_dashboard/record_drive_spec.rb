@@ -43,7 +43,7 @@ feature 'record a drive from dashboard' do
       end
 
       # form should show us error
-      expect(page).to have_content(I18n.t('errors.attributes.end.after'))
+      expect(page).to have_content(I18n.t('errors.attributes.end.date_after'))
 
       # we want recording to have been stopped
       current_driver.reload

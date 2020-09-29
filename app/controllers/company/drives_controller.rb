@@ -28,22 +28,23 @@ class Company::DrivesController < ApplicationController
   end
 
   def destroy
+    store_referral
     if @drive.discard
       flash[:success] = I18n.t 'flash.drives.destroyed'
     else
       flash[:error] = I18n.t 'flash.drives.not_destroyed'
     end
-    redirect_to company_drives_path current_company
+    redirect_to_referral fallback_location: company_drives_path(current_company)
   end
 
   def edit
-    session[:return_to] ||= request.referer
+    store_referral
   end
 
   def update
     if @drive.update(drive_params)
       flash[:success] = I18n.t 'flash.drives.updated'
-      redirect_to session.delete(:return_to)
+      redirect_to_referral fallback_location: company_drives_path(current_company)
     else
       render :edit
     end
