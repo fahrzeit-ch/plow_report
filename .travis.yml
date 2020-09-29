@@ -2,4 +2,5 @@ language: ruby
 services:
   - postgresql
 before_script:
+  - curl -sL https://deb.nodesource.com/setup_10.x | bash -
   - psql -c 'create database plow_report_test;' -U postgres
