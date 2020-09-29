@@ -225,8 +225,8 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   def defaults
-    self.start ||= DateTime.now if self.has_attribute? :start
-    self.end ||= DateTime.now if self.has_attribute? :end
+    self.start ||= Time.current if self.has_attribute? :start
+    self.end ||= Time.current if self.has_attribute? :end
   end
 
 end

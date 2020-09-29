@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Drive, type: :model do
   let(:driver1) { Driver.create(name: 'Test Driver')}
 
-  subject { Drive.new start: 1.hour.ago, end: DateTime.now, distance_km: 0, driver: driver1 }
+  subject { Drive.new start: 1.hour.ago, end: Time.current, distance_km: 0, driver: driver1 }
 
   describe 'validation' do
 
@@ -88,7 +88,7 @@ RSpec.describe Drive, type: :model do
 
   describe '#discarded' do
     let(:driver) { create(:driver) }
-    let(:tour) { create(:tour, driver: driver, start_time: Time.now)}
+    let(:tour) { create(:tour, driver: driver, start_time: Time.current)}
 
     context '#discarded tour' do
       subject { create(:drive, tour: tour, driver: driver) }

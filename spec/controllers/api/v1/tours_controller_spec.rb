@@ -65,7 +65,10 @@ RSpec.describe Api::V1::ToursController, type: :controller do
   end
 
   describe 'post' do
-    let(:minimal_params) { { id: SecureRandom.uuid, start_time: 1.hour.ago.as_json, end_time: 1.minute.ago.as_json, created_at: DateTime.now.as_json} }
+    let(:minimal_params) { { id: SecureRandom.uuid, start_time: 1.hour.ago.utc.as_json, end_time: 1.minute.ago.utc.as_json, created_at: Time.current.utc.as_json} }
+    let(:expected) { {
+        id: minimal_params[:id],
+    } }
 
     before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
 
@@ -77,7 +80,7 @@ RSpec.describe Api::V1::ToursController, type: :controller do
 
     describe 'return values' do
       subject { api_response.attributes }
-      it { is_expected.to contain_hash_values(minimal_params) }
+      it { is_expected.to contain_hash_values(expected) }
     end
 
   end

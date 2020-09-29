@@ -71,7 +71,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
 
   describe 'post' do
     let!(:tour) { create(:tour, driver: driver)}
-    let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: DateTime.now, tour_id: tour.id } }
+    let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id } }
 
     before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
 
