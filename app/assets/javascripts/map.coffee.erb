@@ -11,39 +11,6 @@ modes = {
   addPolyline: 'add-polyline'
 }
 
-isFormEmpty = () ->
-  empty = true
-  for component of componentForm
-    if !!document.getElementById(component).value
-      empty = false
-  return empty
-
-onAutocompleteChanged = (autocomplete, map) ->
-  place = autocomplete.getPlace()
-  alignMap(place, map)
-  if isFormEmpty()
-    fillInAddress(place)
-
-alignMap = (place, map) ->
-  bounds = new google.maps.LatLngBounds()
-  bounds.extend(place.geometry.location)
-  map.fitBounds(bounds)
-
-fillInAddress = (place) ->
-  # Get the place details from the autocomplete object.
-  for component of componentForm
-    document.getElementById(component).value = ''
-    document.getElementById(component).disabled = false
-  # Get each component of the address from the place details,
-  # and then fill-in the corresponding field on the form.
-  i = 0
-  while i < place.address_components.length
-    addressType = place.address_components[i].types[0]
-    if componentForm[addressType]
-      val = place.address_components[i][componentForm[addressType]]
-      document.getElementById(addressType).value = val
-    i++
-
 $(document).on 'turbolinks:load', ->
   countries = {
     'ch': {
@@ -61,11 +28,12 @@ $(document).on 'turbolinks:load', ->
     }
   ];
 
-  marker = null;
-  polyLine = null;
-  map = null;
+  marker = null
+  placeMarker = null
+  polyLine = null
+  map = null
 
-  mode = modes.none;
+  mode = modes.none
   geoJson = {}
 
   jsonData = {}
@@ -85,6 +53,51 @@ $(document).on 'turbolinks:load', ->
   sitesForm.on 'submit', ->
     finishEditMode()
     storeMapData()
+
+  isFormEmpty = () ->
+    empty = true
+    for component of componentForm
+      if !!document.getElementById(component).value
+        empty = false
+    return empty
+
+  onAutocompleteChanged = (autocomplete, map) ->
+    place = autocomplete.getPlace()
+    alignMap(place, map)
+    addPlaceMarker(place, map)
+    if isFormEmpty()
+      fillInAddress(place)
+
+  addPlaceMarker = (place, map) ->
+    if(placeMarker)
+      placeMarker.setMap(null)
+
+    placeMarker = new google.maps.Marker({
+      map,
+      icon: '<%= image_path 'place_marker.png' %>',
+      position: place.geometry.location,
+    });
+
+  alignMap = (place, map) ->
+    bounds = place.geometry.viewport
+    map.fitBounds(bounds)
+    if(map.getZoom() < 18)
+      map.setZoom(map.getZoom() + 2)
+
+  fillInAddress = (place) ->
+  # Get the place details from the autocomplete object.
+    for component of componentForm
+      document.getElementById(component).value = ''
+      document.getElementById(component).disabled = false
+    # Get each component of the address from the place details,
+    # and then fill-in the corresponding field on the form.
+    i = 0
+    while i < place.address_components.length
+      addressType = place.address_components[i].types[0]
+      if componentForm[addressType]
+        val = place.address_components[i][componentForm[addressType]]
+        document.getElementById(addressType).value = val
+      i++
 
   loadMapData = () ->
     try
@@ -121,21 +134,21 @@ $(document).on 'turbolinks:load', ->
     jsonData = {type: "Feature", geometry: {type:"LineString", coordinates: coordinates}}
 
 
-  setMarker = (event) ->
+  setMarker = (latLng) ->
     if(marker != null)
-      marker.setPosition(event.latLng)
+      marker.setPosition(latLng)
     else
       marker = new google.maps.Marker({
         position: event.latLng,
         map: map
       });
-    jsonData = {type: "Feature", geometry: {type:"Point", coordinates: [event.latLng.lng(), event.latLng.lat()]}}
+    jsonData = {type: "Feature", geometry: {type:"Point", coordinates: [latLng.lng(), latLng.lat()]}}
 
   handleMapClick = (event) ->
     if mode == modes.addPolyline
       addPolylinePoint(event)
     else if mode == modes.addMarker
-      setMarker(event)
+      setMarker(event.latLng)
     else
 
   finishEditMode = () ->
