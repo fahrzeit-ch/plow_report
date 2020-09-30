@@ -80,6 +80,11 @@ $(document).on 'turbolinks:load', ->
   finishEditBtn = $('#finishEdit')
   infoTextArea = $('#toolInfo')
   mapDataInput = $('#mapData')
+  sitesForm = mapDataInput.closest('form')
+
+  sitesForm.on 'submit', ->
+    finishEditMode()
+    storeMapData()
 
   loadMapData = () ->
     try
@@ -134,6 +139,7 @@ $(document).on 'turbolinks:load', ->
     else
 
   finishEditMode = () ->
+    mode = modes.none
     infoTextArea.css 'display', 'none'
     addMarkerBtn.css 'display', 'inline'
     addLineBtn.css 'display', 'inline'
@@ -149,7 +155,6 @@ $(document).on 'turbolinks:load', ->
     finishEditBtn.css 'display', 'inline'
 
   finishEditBtn.on 'click', ->
-    mode = modes.none;
     finishEditMode()
     storeMapData()
 
