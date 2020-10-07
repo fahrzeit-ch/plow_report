@@ -1,6 +1,6 @@
 <div class="row bg-white pt-3">
   <div class="col-sm-6">
-    <h1><%= t 'views.company_drives.title' %></h1>
+    <h1><%= t 'views.company_tours.title' %></h1>
   </div>
   <div class="col-auto ml-auto">
     <%= render 'shared/season_selector' %>
@@ -10,11 +10,11 @@
   <div class="col">
     <form class="form form-inline">
       <div class="btn-group mr-4" role="group">
-        <%= link_to company_drives_path, class: "btn btn-secondary #{current_page?(controller: :drives, action: :index) ? 'active' : ''}" do %>
-          <i class="fa fa-calendar"></i> Fahrten
-        <% end %>
         <%= link_to company_tours_path, class: "btn btn-secondary  #{current_page?(controller: :tours, action: :index) ? 'active' : ''}" do %>
-          <i class="fa fa-list"></i> Touren
+          <i class="fa fa-location-arrow"></i> Touren
+        <% end %>
+        <%= link_to company_drives_path, class: "btn btn-secondary #{current_page?(controller: :drives, action: :index) ? 'active' : ''}" do %>
+          <i class="fa fa-truck"></i> Fahrten ohne Tour
         <% end %>
       </div>
       <div class="form-group mr-2">
@@ -27,7 +27,7 @@
       </div>
     </form>
   </div>
-  <div class="col button-group">
+  <div class="col-3 button-group">
     <a href="javascript:window.print()" class="btn btn-outline-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>

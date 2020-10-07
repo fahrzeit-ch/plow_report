@@ -334,7 +334,7 @@ de-CH:
         title: "Preise"
         set_price: "Neuen Preis setzen"
     company_drives:
-      title: "Fahrten"
+      title: "Fahrten ohne Tour"
       edit: "Fahrt Bearbeiten"
       select_promt: "Benutzer wählen"
     company:
@@ -355,6 +355,7 @@ de-CH:
       empty: "Keine Kunden Objekte auf dieser Tour erfasst"
     company_tours:
       edit: "Tour bearbeiten"
+      title: "Touren"
   forms:
     placeholders:
       driver:
