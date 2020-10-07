@@ -11,10 +11,10 @@
     <form class="form form-inline">
       <div class="btn-group mr-4" role="group">
         <%= link_to company_tours_path, class: "btn btn-secondary  #{current_page?(controller: :tours, action: :index) ? 'active' : ''}" do %>
-          <i class="fa fa-location-arrow"></i> Touren
+          <i class="fa fa-location-arrow"></i>&nbsp;<%= t 'views.company_tours.title' %>
         <% end %>
         <%= link_to company_drives_path, class: "btn btn-secondary #{current_page?(controller: :drives, action: :index) ? 'active' : ''}" do %>
-          <i class="fa fa-truck"></i> Fahrten ohne Tour
+          <i class="fa fa-truck"></i>&nbsp;<%= t'views.company_drives.title' %>
         <% end %>
       </div>
       <div class="form-group mr-2">
@@ -28,31 +28,13 @@
     </form>
   </div>
   <div class="col-3 button-group">
+    <a href="<%= url_for(params.to_unsafe_h.merge(format: :xlsx))  %>" class="btn btn-primary d-print-none float-right"><i class="fa fa-download"></i> <%= t('actions.download_xlsx') %></a>
     <a href="javascript:window.print()" class="btn btn-outline-primary d-print-none float-right"><i class="fa fa-print"></i> <%= t('actions.print') %></a>
   </div>
 </div>
 <div class="row mt-3">
   <div class="col-12">
-    <div class="card mb-3">
-      <div class="card-body">
-        <div class="d-flex">
-          <div class="mr-5">
-            <h3>Total Km</h3>
-            <strong><%= @stats.distance %></strong>
-          </div>
-          <div class="mr-5">
-            <h3>Fahrzeit</h3>
-            <strong><%= @stats.duration_as_string %></strong>
-          </div>
-          <% @stats.activity_values.each do |av| %>
-            <div class="mr-5">
-              <h3><%= av[:title] %></h3>
-              <strong><%= av[:total] %></strong>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <%= render partial: 'company/shared/seasonal_stats', locals: { stats: @stats } %>
     <div class="card">
       <div class="card-body">
         <div class="row">

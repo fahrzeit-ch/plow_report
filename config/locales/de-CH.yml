@@ -334,9 +334,10 @@ de-CH:
         title: "Preise"
         set_price: "Neuen Preis setzen"
     company_drives:
-      title: "Fahrten ohne Tour"
+      title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"
       select_promt: "Benutzer wählen"
+      empty: "Keine Einzelfahrten erfasst"
     company:
       standby_dates:
         calendar:
@@ -356,6 +357,9 @@ de-CH:
     company_tours:
       edit: "Tour bearbeiten"
       title: "Touren"
+    stats:
+      duration: "Fahrzeit"
+      total_distance: "Total Km"
   forms:
     placeholders:
       driver:

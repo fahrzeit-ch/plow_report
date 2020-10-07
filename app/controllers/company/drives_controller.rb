@@ -9,6 +9,7 @@ class Company::DrivesController < ApplicationController
     authorize current_company, :index_drives?
     scope = apply_scopes(current_company.drives
                              .kept
+                             .without_tour
                              .with_viewstate(current_user)
                              .includes(:driver, :activity_execution, :site, :activity, :customer))
     @drives = scope.order(start: :desc)
