@@ -43,6 +43,22 @@ class Tour < ApplicationRecord
     drives.sum(:distance_km)
   end
 
+  def empty_drive_time
+    (self.end_time - self.start_time).seconds - drives_duration
+  end
+
+  def drives_duration
+    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds)
+  end
+
+  def empty_drive_percentage
+    100 - drives_percentage
+  end
+
+  def drives_percentage
+    100 / duration_seconds * drives_duration
+  end
+
   def week_nr
     self.start_time.to_date.cweek
   end
@@ -56,11 +72,11 @@ class Tour < ApplicationRecord
   #
   # @return [Time] the duration of the drive
   def duration
-    if has_attribute? :duration
-      Time.at(read_attribute(:duration)).utc
-    else
-      Time.at(self.end_time - self.start_time).utc
-    end
+    Time.at(duration_seconds).utc
+  end
+
+  def duration_seconds
+    self.end_time - self.start_time
   end
 
   def duration_in_hours

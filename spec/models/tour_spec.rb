@@ -52,5 +52,23 @@ RSpec.describe Tour, type: :model do
     it { is_expected.to be_discarded }
   end
 
+  describe 'durations' do
+    let(:tour) { create(:tour) }
+    let(:start) { 1.hour.ago }
+
+    context 'with drives' do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time ) }
+
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 20.minutes }
+    end
+
+    context 'without drives' do
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 0.minutes }
+    end
+  end
+
 
 end
