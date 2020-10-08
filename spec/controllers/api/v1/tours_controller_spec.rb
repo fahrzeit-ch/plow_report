@@ -89,21 +89,37 @@ RSpec.describe Api::V1::ToursController, type: :controller do
     let!(:existing_tour) { create(:tour, start_time: 1.hour.ago, end_time: 1.minute.ago, driver: driver) }
     let(:minimal_params) { { id: existing_tour.id, start_time: 2.hour.ago.utc.as_json, end_time: 2.minute.ago.utc.as_json, updated_at: 2.minutes.ago.utc.as_json} }
 
-    before { put :update, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+    context 'regular update' do
+      before { put :update, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
 
-    describe 'response code' do
-      subject { response.code }
+      describe 'response code' do
+        subject { response.code }
 
-      it { is_expected.to eq "204" }
+        it { is_expected.to eq "204" }
+      end
+
+      describe 'return values' do
+        subject { Tour.find(existing_tour.id) }
+        its(:updated_at) { is_expected.to eq(Time.parse(minimal_params[:updated_at]).localtime) }
+        its(:start_time) { is_expected.to eq(Time.parse(minimal_params[:start_time]).localtime) }
+        its(:end_time) { is_expected.to eq(Time.parse(minimal_params[:end_time]).localtime) }
+      end
     end
 
-    describe 'return values' do
-      subject { Tour.find(existing_tour.id) }
-      its(:updated_at) { is_expected.to eq(Time.parse(minimal_params[:updated_at]).localtime) }
-      its(:start_time) { is_expected.to eq(Time.parse(minimal_params[:start_time]).localtime) }
-      its(:end_time) { is_expected.to eq(Time.parse(minimal_params[:end_time]).localtime) }
-    end
+    context 'discard tour' do
+      before { put :update, params: { driver_id: driver.to_param, id: existing_tour.id, discarded_at: 1.minute.ago, format: :json } }
 
+      describe 'response code' do
+        subject { response.code }
+
+        it { is_expected.to eq "204" }
+      end
+
+      describe 'return values' do
+        subject { Tour.unscoped.find(existing_tour.id) }
+        it { is_expected.to be_discarded }
+      end
+    end
   end
 
   describe 'delete#destroy' do
