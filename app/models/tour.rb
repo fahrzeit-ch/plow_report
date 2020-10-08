@@ -19,12 +19,7 @@ class Tour < ApplicationRecord
   #
   # @return [Drive | NilClass] The first drive of this tour or nil if no drive associated yet
   def first_drive
-    sorted_drives.first
-  end
-
-  # @return [Drive[]] Array of drives sorted descending by their start time
-  def sorted_drives
-    drives.sort_by(&:start)
+    drives.last
   end
 
   # Returns the first drive associated to this
@@ -32,7 +27,15 @@ class Tour < ApplicationRecord
   #
   # @return [Drive | NilClass] The first drive of this tour or nil if no drive associated yet
   def last_drive
-    sorted_drives.last
+    drives.first
+  end
+
+  def avg_empty_drive_time_per_site
+    if drives_count == 0
+      empty_drive_time
+    else
+      empty_drive_time / drives_count
+    end
   end
 
   def end_time
@@ -44,7 +47,11 @@ class Tour < ApplicationRecord
   end
 
   def empty_drive_time
-    (self.end_time - self.start_time).seconds - drives_duration
+    @empty_drive_time ||= (self.end_time - self.start_time).seconds - drives_duration
+  end
+
+  def drives_count
+    @drives_count ||= drives.size
   end
 
   def drives_duration
@@ -77,33 +84,6 @@ class Tour < ApplicationRecord
 
   def duration_seconds
     self.end_time - self.start_time
-  end
-
-  def duration_in_hours
-    ( self.end_time - self.start_time ) / 3600.0
-  end
-
-  # Returns the duration in as string in the form HH:MM.
-  # Seconds will be rounded.
-  # Can show hours > 24
-  #
-  # @return [String] duration as text
-  def duration_as_string
-    seconds = duration.to_i
-    minutes = (seconds / 60).round #ignore seconds
-    hours = (minutes / 60) # do not round here as we will display minutes
-
-    parts = []
-    parts << "#{hours}h" if hours > 0
-    parts << "#{(minutes % 60)}min"
-
-    parts.join(' ')
-  end
-
-  # TODO: This does not belong here. Extract duration formatting
-  # to some kind of TimeSpan class
-  def justify(hours)
-    hours.to_s.rjust(2, '0')
   end
 
   class << self

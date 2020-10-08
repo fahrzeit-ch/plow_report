@@ -8,7 +8,7 @@
       <% @last_drives.each do |drive| %>
         <tr>
           <td><%= l drive.start, format: '%a %d.%m.%Y' %></td>
-          <td><%= drive.duration_as_string %></td>
+          <td><%= seconds_to_h_min(drive.duration_seconds) %></td>
           <td><strong><%= number_to_human drive.distance_km %>km</strong></td>
           <td><%= drive.tasks %></td>
         </tr>

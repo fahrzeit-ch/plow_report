@@ -12,7 +12,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
-        <h3><%= @record.duration_as_string %></h3>
+        <h3><%= seconds_to_h_min(@record.duration_seconds) %></h3>
       </div>
       <div class="col-md-6">
         <div class="progress" style="height: 20px;">
