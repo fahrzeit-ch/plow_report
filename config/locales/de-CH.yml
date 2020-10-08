@@ -338,6 +338,7 @@ de-CH:
       edit: "Fahrt Bearbeiten"
       select_promt: "Benutzer wählen"
       empty: "Keine Einzelfahrten erfasst"
+      empty_drive_time_hint: "Zuzüglich durchschnittlicher Leerfahrtzeit"
     company:
       standby_dates:
         calendar:
