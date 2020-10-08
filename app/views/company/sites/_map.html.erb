@@ -13,8 +13,8 @@
         <%= text_field_tag :location, '', id: 'searchTextField', class: 'form-control' %>
       </div>
       <div class="map-tools">
-        <button class="btn btn-primary btn-maptool" id="addMarker" data-infotext="<%= t'maptools.addmarker.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_marker' %>n</button>
-        <button class="btn btn-primary btn-maptool" id="addLine" data-infotext="<%= t'maptools.addline.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_line' %>n</button>
+        <button class="btn btn-primary btn-maptool" id="addMarker" data-infotext="<%= t'maptools.addmarker.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_marker' %></button>
+        <button class="btn btn-primary btn-maptool" id="addLine" data-infotext="<%= t'maptools.addline.infotext' %>"><i class="fa fa-map-marker"></i> <%= t'actions.add_line' %></button>
         <span id="toolInfo" style="display: none;" class="map-tools-info"></span><button class="btn btn-primary" style="display: none" id="finishEdit"><i class="fa fa-check"></i> <%= t'actions.finish' %></button>
       </div>
       <div id="map" data-site-id="<%= @site.id %>" data-company-id="<%= current_company.to_param %>" data-customer-id="<%= params[:customer_id] %>"></div>
