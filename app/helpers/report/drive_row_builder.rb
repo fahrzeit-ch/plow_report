@@ -12,7 +12,7 @@ module Report
     # @param [Drive] drive
     def columns_for(drive)
       columns = [
-        drive.start, drive.start, duration_to_excel_time(drive.duration), drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
+        drive.start, drive.start, seconds_to_excel_time(drive.duration_with_empty_drives), drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
       ]
       return columns unless drive.activity_execution
 
@@ -29,13 +29,13 @@ module Report
 
     def get_price(drive)
       if drive.hourly_rate
-        (drive.hourly_rate.amount * drive.duration_in_hours).round(2)
+        (drive.hourly_rate.amount * (drive.duration_seconds / 3600.0)).round(2)
       end
     end
 
     private
 
-    def duration_to_excel_time(duration)
+    def seconds_to_excel_time(duration)
       seconds_per_day = 86_400.0
       duration.to_f/seconds_per_day
     end

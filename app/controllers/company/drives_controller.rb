@@ -9,7 +9,6 @@ class Company::DrivesController < ApplicationController
     authorize current_company, :index_drives?
     scope = apply_scopes(current_company.drives
                              .kept
-                             .without_tour
                              .with_viewstate(current_user)
                              .includes(:driver, :activity_execution, :site, :activity, :customer))
     @drives = scope.order(start: :desc)
@@ -17,13 +16,13 @@ class Company::DrivesController < ApplicationController
     respond_to do |format|
       format.html do
         @stats = apply_scopes(current_company.drives).stats
-        @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30)
+        @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
       format.js do
-        @drives
+        @drives.without_tour
       end
       format.xlsx do
-        @drives
+        @drives = @drives.includes(:tour)
       end
     end
   end
