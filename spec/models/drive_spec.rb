@@ -127,6 +127,17 @@ RSpec.describe Drive, type: :model do
 
   end
 
+  describe 'changed_since scope' do
+    let!(:old_drive1) { create(:drive, created_at: 4.days.ago, updated_at: 3.days.ago) }
+    let!(:new_drive1) { create(:drive, created_at: 4.days.ago, updated_at: 10.minutes.ago) }
+    let!(:discarded_drive) { create(:drive, created_at: 4.days.ago, updated_at: 3.days.ago, discarded_at: 2.minutes.ago) }
+
+    subject { Drive.unscoped.changed_since(11.minutes.ago) }
+    it { is_expected.to include(new_drive1) }
+    it { is_expected.to include(discarded_drive) }
+    it { is_expected.not_to include(old_drive1) }
+  end
+
   describe '#surcharge_rate_type' do
     let(:start_time) { DateTime.parse('2018-08-21 12:30') }
     let(:end_time) { DateTime.parse('2018-08-21 13:30') }

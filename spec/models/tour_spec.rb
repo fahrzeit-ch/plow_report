@@ -66,5 +66,16 @@ RSpec.describe Tour, type: :model do
     end
   end
 
+  describe 'changed_since scope' do
+    let!(:old_tour1) { create(:tour, created_at: 4.days.ago, updated_at: 3.days.ago) }
+    let!(:new_tour1) { create(:tour, created_at: 4.days.ago, updated_at: 10.minutes.ago) }
+    let!(:discarded_tour) { create(:tour, created_at: 4.days.ago, updated_at: 3.days.ago, discarded_at: 2.minutes.ago) }
+
+    subject { Tour.unscoped.changed_since(11.minutes.ago) }
+    it { is_expected.to include(new_tour1) }
+    it { is_expected.to include(discarded_tour) }
+    it { is_expected.not_to include(old_tour1) }
+  end
+
 
 end

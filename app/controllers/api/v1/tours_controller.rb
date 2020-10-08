@@ -1,10 +1,12 @@
 class Api::V1::ToursController < Api::V1::ApiController
   def index
-     @records = Tour.with_discarded
-                    .where(driver_id: driver_id)
-                    .order(sort_params(:start_time, :desc))
-                    .page(params[:page])
-                    .per(params[:per_page])
+    since = params[:changed_since] || 6.months.ago
+    @records = Tour.with_discarded
+                   .changed_since(since)
+                   .where(driver_id: driver_id)
+                   .order(sort_params(:start_time, :desc))
+                   .page(params[:page])
+                   .per(params[:per_page])
   end
 
   def history
