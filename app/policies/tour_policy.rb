@@ -33,9 +33,9 @@ class TourPolicy < ApplicationPolicy
     when :default
       [:start_time, :end_time]
     when :api_create
-      [:id, :driver_id, :start_time, :end_time, :created_at, :updated_at]
+      [:id, :driver_id, :start_time, :end_time, :created_at, :updated_at, :discarded_at]
     when :api_update
-      [:driver_id, :start_time, :end_time, :updated_at]
+      [:driver_id, :start_time, :end_time, :updated_at, :discarded_at]
     end
   end
 
