@@ -39,6 +39,27 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
                                                     }}) }
       end
     end
+
+    context 'with changed_since filter' do
+      let!(:new_drive) { create(:drive, driver: driver, activity_execution: create(:activity_execution)) }
+      let!(:old_drive) { create(:drive, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
+      let!(:old_drive_discarded) { create(:drive, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
+      before do
+        old_drive_discarded.discard
+        get :index, params: {driver_id: driver.to_param, format: :json, changed_since: 1.day.ago}
+      end
+
+      describe 'content' do
+        subject { api_response }
+
+        it { is_expected.to have_pagination }
+        it { is_expected.to have_attribute_keys :items }
+        describe 'item count' do
+          subject { api_response.attributes[:items].count }
+          it { is_expected.to eq 2 }
+        end
+      end
+    end
   end
 
   describe 'get#history' do

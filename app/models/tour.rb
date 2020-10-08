@@ -2,6 +2,7 @@
 # time spent by a driver.
 class Tour < ApplicationRecord
   include Discard::Model
+  include ChangedSince
   default_scope -> { kept }
 
   belongs_to :driver

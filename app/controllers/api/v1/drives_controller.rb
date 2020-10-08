@@ -3,7 +3,9 @@ class Api::V1::DrivesController < Api::V1::ApiController
   rescue_from ActionController::ParameterMissing, with: :handle_param_missing
 
   def index
+    since = params[:changed_since] || 6.months.ago
     @records = Drive
+                   .changed_since(since)
                    .with_discarded
                    .where(driver_id: driver_id)
                    .includes(:activity_execution)
