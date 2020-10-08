@@ -19,12 +19,7 @@ class Tour < ApplicationRecord
   #
   # @return [Drive | NilClass] The first drive of this tour or nil if no drive associated yet
   def first_drive
-    sorted_drives.first
-  end
-
-  # @return [Drive[]] Array of drives sorted descending by their start time
-  def sorted_drives
-    drives.sort_by(&:start)
+    drives.last
   end
 
   # Returns the first drive associated to this
@@ -32,7 +27,15 @@ class Tour < ApplicationRecord
   #
   # @return [Drive | NilClass] The first drive of this tour or nil if no drive associated yet
   def last_drive
-    sorted_drives.last
+    drives.first
+  end
+
+  def avg_empty_drive_time_per_site
+    if drives_count == 0
+      empty_drive_time
+    else
+      empty_drive_time / drives_count
+    end
   end
 
   def end_time
@@ -41,6 +44,26 @@ class Tour < ApplicationRecord
 
   def distance_km
     drives.sum(:distance_km)
+  end
+
+  def empty_drive_time
+    @empty_drive_time ||= (self.end_time - self.start_time).seconds - drives_duration
+  end
+
+  def drives_count
+    @drives_count ||= drives.size
+  end
+
+  def drives_duration
+    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds)
+  end
+
+  def empty_drive_percentage
+    100 - drives_percentage
+  end
+
+  def drives_percentage
+    100 / duration_seconds * drives_duration
   end
 
   def week_nr
@@ -56,38 +79,11 @@ class Tour < ApplicationRecord
   #
   # @return [Time] the duration of the drive
   def duration
-    if has_attribute? :duration
-      Time.at(read_attribute(:duration)).utc
-    else
-      Time.at(self.end_time - self.start_time).utc
-    end
+    Time.at(duration_seconds).utc
   end
 
-  def duration_in_hours
-    ( self.end_time - self.start_time ) / 3600.0
-  end
-
-  # Returns the duration in as string in the form HH:MM.
-  # Seconds will be rounded.
-  # Can show hours > 24
-  #
-  # @return [String] duration as text
-  def duration_as_string
-    seconds = duration.to_i
-    minutes = (seconds / 60).round #ignore seconds
-    hours = (minutes / 60) # do not round here as we will display minutes
-
-    parts = []
-    parts << "#{hours}h" if hours > 0
-    parts << "#{(minutes % 60)}min"
-
-    parts.join(' ')
-  end
-
-  # TODO: This does not belong here. Extract duration formatting
-  # to some kind of TimeSpan class
-  def justify(hours)
-    hours.to_s.rjust(2, '0')
+  def duration_seconds
+    self.end_time - self.start_time
   end
 
   class << self

@@ -23,6 +23,7 @@
 //= require suggestion_value_loader
 //= require paginate
 //= require map
+//= require bootstrap_features
 
 window.typeIsArray = function(value) {
     obj = {};

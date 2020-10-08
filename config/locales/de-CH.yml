@@ -334,9 +334,11 @@ de-CH:
         title: "Preise"
         set_price: "Neuen Preis setzen"
     company_drives:
-      title: "Fahrten"
+      title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"
       select_promt: "Benutzer wählen"
+      empty: "Keine Einzelfahrten erfasst"
+      empty_drive_time_hint: "Zuzüglich durchschnittlicher Leerfahrtzeit"
     company:
       standby_dates:
         calendar:
@@ -355,6 +357,10 @@ de-CH:
       empty: "Keine Kunden Objekte auf dieser Tour erfasst"
     company_tours:
       edit: "Tour bearbeiten"
+      title: "Touren"
+    stats:
+      duration: "Fahrzeit"
+      total_distance: "Total Km"
   forms:
     placeholders:
       driver:

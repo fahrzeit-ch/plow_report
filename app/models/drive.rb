@@ -99,7 +99,7 @@ class Drive < ApplicationRecord
     site ? site.display_name : ''
   end
 
-  # Get the tasks (drive options) as an Array with translated option names
+  # returns the name of the activity performed on this drive
   def tasks
     activity.try(:name)
   end
@@ -109,38 +109,25 @@ class Drive < ApplicationRecord
   #
   # @return [Time] the duration of the drive
   def duration
+    Time.at(duration_seconds).utc
+  end
+
+  def duration_with_empty_drives
+    duration_seconds + empty_drive_duration
+  end
+
+  # Returns the additional time of the empty drives of the tour that will
+  # be applied to this drive for billing to customers
+  def empty_drive_duration
+    tour.try(:avg_empty_drive_time_per_site) || 0
+  end
+
+  def duration_seconds
     if has_attribute? :duration
-      Time.at(read_attribute(:duration)).utc
+      read_attribute(:duration)
     else
-      Time.at(self.end - self.start).utc
+      self.end - self.start
     end
-  end
-
-  def duration_in_hours
-    ( self.end - self.start ) / 3600.0
-  end
-
-  # Returns the duration in as string in the form HH:MM.
-  # Seconds will be rounded.
-  # Can show hours > 24
-  #
-  # @return [String] duration as text
-  def duration_as_string
-    seconds = duration.to_i
-    minutes = (seconds / 60).round #ignore seconds
-    hours = (minutes / 60) # do not round here as we will display minutes
-
-    parts = []
-    parts << "#{hours}h" if hours > 0
-    parts << "#{(minutes % 60)}min"
-
-    parts.join(' ')
-  end
-
-  # TODO: This does not belong here. Extract duration formatting
-  # to some kind of TimeSpan class
-  def justify(hours)
-    hours.to_s.rjust(2, '0')
   end
 
   # Returns the type of rate that should apply for this drive
@@ -159,12 +146,12 @@ class Drive < ApplicationRecord
 
     def stats
       values = Statistic.new
-      drive_stats = select("EXtRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
+      drive_stats = select("EXTRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
 0 as salt,
 COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
 
       values.distance = drive_stats.distance
-      values.duration_as_string = drive_stats.duration_as_string
+      values.duration_seconds = drive_stats.duration_seconds
       values.activity_values = activity_value_summary
       values
     end

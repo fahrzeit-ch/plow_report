@@ -11,7 +11,11 @@
   </div>
 
   <div class="drive-date-times mr-2 p-2">
-    <div><%= drive.duration_as_string %></div>
+    <div><%= seconds_to_h_min(drive.duration_seconds) %>
+      <% if drive.empty_drive_duration > 0 %>
+        <span class="small" data-toggle="tooltip" title="<%= t 'views.company_drives.empty_drive_time_hint' %>"><em>(+ <%= seconds_to_h_min(drive.empty_drive_duration) %>)</em></span>
+      <% end %>
+    </div>
     <div class="text-muted"><small><%= drive.start.strftime('%H:%M') %>-<%= drive.end.strftime('%H:%M') %></small></div>
   </div>
 

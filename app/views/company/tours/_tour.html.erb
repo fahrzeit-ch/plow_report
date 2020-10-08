@@ -10,7 +10,7 @@
   </div>
 
   <div class="drive-date-times mr-2 p-2">
-    <div><%= tour.duration_as_string %></div>
+    <div><%= seconds_to_h_min(tour.duration_seconds) %></div>
     <div class="text-muted"><small><%= tour.start_time.strftime('%H:%M') %>-<%= tour.end_time.strftime('%H:%M') %></small></div>
   </div>
 

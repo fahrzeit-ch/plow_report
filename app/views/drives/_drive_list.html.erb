@@ -1,4 +1,7 @@
 <% week_nr = -1 if local_assigns[:week_nr].nil? %>
+<% if drives.empty? %>
+  <p><%= t'views.company_drives.empty' %></p>
+<% end %>
 <% drives.each do |drive| %>
   <% if drive.week_nr != week_nr %>
     <% week_nr = drive.week_nr %>
