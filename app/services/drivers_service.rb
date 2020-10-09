@@ -9,11 +9,11 @@ class DriversService
       when role.nil?
         Driver.none
       when CompanyMember::OWNER
-        company.drivers
+        Driver.where(company_id: company.id)
       when CompanyMember::ADMINISTRATOR
-        company.drivers
+        Driver.where(company_id: company.id)
       when CompanyMember::DRIVER
-        company.drivers.joins(:driver_login).where(driver_logins: { user_id: user.id})
+        Driver.where(company_id: company.id).joins(:driver_login).where(driver_logins: { user_id: user.id})
       else
         Driver.none
       end
