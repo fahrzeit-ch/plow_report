@@ -33,6 +33,17 @@ RSpec.describe Api::V1::DriversController, type: :controller do
         subject { api_response.attributes[:items] }
 
         its(:count) { is_expected.to eq 1 }
+        describe 'item values' do
+          subject { api_response.attributes[:items][0] }
+          it do
+            is_expected.to contain_hash_values(
+                               id:           company_driver.id,
+                               name:         company_driver.name,
+                               company_name: company_driver.company.name,
+                               company_id:   company_driver.company_id
+                           )
+          end
+        end
       end
 
     end
