@@ -1,0 +1,16 @@
+<div class="card card-default devise-bs">
+  <div class="card-header">
+    <%= t('.demo_login', default: 'Demo Account') %>
+  </div>
+  <div class="card-body">
+    <p>Der Demo-Zugang ermöglicht es Ihnen, viele der Funktionen von Fahrzeit.ch zu testen.</p>
+    <p>Der Account wird jede Nacht um 24:00 Uhr zurückgesetzt.</p>
+    <%= form_for(User.new, as: :user, url: session_path(:user), builder: BootstrapFormBuilder, html: { role: 'form' }) do |f| %>
+      <div class="form-group">
+        <%= f.hidden_field :email, value: ENV["DEMO_ACCOUNT_EMAIL"] %>
+        <%= f.hidden_field :password, value: ENV["DEMO_ACCOUNT_PASSWORD"] %>
+      </div>
+      <%= f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
