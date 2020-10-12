@@ -12,6 +12,7 @@ de-CH:
       company_show: "Zur Firmen Ansicht"
       my_dashboard: "Zur Fahrer Ansicht"
       edit_registration: "Benutzer Einstellungen"
+      demo_login: "Demo Zugang"
     companies:
       drives: "Fahrten"
       settings: "Firmen Einstellungen"

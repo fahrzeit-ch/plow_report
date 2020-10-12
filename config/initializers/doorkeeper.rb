@@ -6,7 +6,11 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    current_user || warden.authenticate!(scope: :user)
+    if params['scope'].split(' ').include?('demo')
+      current_user || redirect_to(demo_login_path)
+    else
+      current_user || warden.authenticate!(scope: :user)
+    end
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb

@@ -1,5 +1,8 @@
 class AuthorizationsController < Doorkeeper::AuthorizationsController
 
+  include Devise::Controllers::StoreLocation
+  prepend_before_action :store_location!
+
   # TODO: Handle raise invalid authorization
   def create
     redirect_or_render authorize_response
@@ -7,6 +10,10 @@ class AuthorizationsController < Doorkeeper::AuthorizationsController
   end
 
   private
+
+  def store_location!
+    store_location_for(:user, request.original_url)
+  end
 
   def render_success
     if skip_authorization? || matching_token?
