@@ -21,27 +21,27 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index_drivers?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def index_members?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def index_sites?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def index_tours?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def index_activities?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def index_standby_dates?
-    company_member? record
+    company_member?(record)
   end
 
   def index_customers?
@@ -49,7 +49,7 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index_hourly_rates?
-    company_admin_or_owner? record
+    company_admin_or_owner?(record) || is_demo(record)
   end
 
   def create?

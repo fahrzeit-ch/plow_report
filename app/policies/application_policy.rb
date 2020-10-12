@@ -63,4 +63,8 @@ class ApplicationPolicy
   def company_member?(company)
     user.company_member?(company)
   end
+
+  def is_demo(company)
+    user.demo_user_for?(company)
+  end
 end

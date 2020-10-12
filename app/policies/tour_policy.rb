@@ -9,19 +9,19 @@ class TourPolicy < ApplicationPolicy
   end
 
   def create?
-    own_record? || company_admin_or_owner?(record.driver.company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company)
   end
 
   def show?
-    own_record? || company_member?(record.driver.company)
+    own_record? || company_member?(company)
   end
 
   def update?
-    own_record? || company_admin_or_owner?(record.driver.company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company)
   end
 
   def destroy?
-    own_record? || company_admin_or_owner?(record.driver.company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company)
   end
 
   # Scopes:
@@ -47,6 +47,11 @@ class TourPolicy < ApplicationPolicy
   end
 
   private
+
+  def company
+    record.driver.company
+  end
+
   def own_record?
     record.driver.user == user
   end

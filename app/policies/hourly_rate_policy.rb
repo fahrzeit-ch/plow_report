@@ -9,7 +9,7 @@ class HourlyRatePolicy < ApplicationPolicy
   end
 
   def show?
-    company_admin_or_owner?(company)
+    company_admin_or_owner?(company) || is_demo(company)
   end
 
   def update?

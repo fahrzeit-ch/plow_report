@@ -31,7 +31,7 @@ namespace :demo_account do
       end
 
       user = User.create(name: "Demo User", email: ENV['DEMO_ACCOUNT_EMAIL'], password: ENV['DEMO_ACCOUNT_PASSWORD'], password_confirmation: ENV['DEMO_ACCOUNT_PASSWORD'])
-      company.company_members.create(user: user, role: CompanyMember::ADMINISTRATOR)
+      company.company_members.create(user: user, role: CompanyMember::DEMO_ACCOUNT)
 
       ActiveRecord::Base.connection.execute(build_customer_query(company.id))
       ActiveRecord::Base.connection.execute(build_sites_insert_query(company.id))
@@ -52,7 +52,25 @@ namespace :demo_account do
       company = Company.find_by(name: ENV['DEMO_ACCOUNT_COMPANY_NAME'])
       Drive.unscoped.joins(:driver).where({drivers: { company_id: company.id}}).destroy_all
       company.tours.with_discarded.delete_all
+      StandbyDate.unscoped.joins(:driver).where({drivers: { company_id: company.id}}).destroy_all
       create_sample_tours company
+      create_sample_standby_dates company
+    end
+  end
+
+  def create_sample_standby_dates(company)
+    from_date = Date.today
+    drivers = company.drivers.all.to_a
+    to_date = from_date + 1.month
+    counter = 0
+    driver = drivers.sample
+    (from_date..to_date).each do |date|
+      counter += 1
+      if counter > 5
+        driver = drivers.sample
+        counter = 0
+      end
+      StandbyDate.create(driver: driver, day: date)
     end
   end
 
