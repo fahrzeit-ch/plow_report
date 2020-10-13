@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   include AcceptsTerms
+  include DemoAccount
 
   validates :name, presence: true
 
@@ -45,12 +46,6 @@ class User < ApplicationRecord
     return false if company.nil?
     return @_company_admin_or_owner if @_company_admin_or_owner
     @_company_admin_or_owner = companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).exists? company.id
-  end
-
-  def demo_user_for?(company)
-    return false if company.nil?
-    return @_demo_member if @_demo_member
-    @_demo_member = companies_for_role([CompanyMember::DEMO_ACCOUNT]).exists? company.id
   end
 
   def company_member?(company)

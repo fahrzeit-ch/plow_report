@@ -65,5 +65,26 @@ RSpec.describe User, type: :model do
 
   end
 
+  describe '#term_acceptance' do
+    let!(:policy_term) { PolicyTerm.create(key: 'agb', description: 'dssd', name: 'nkn', required: true) }
+    before { ENV['DEMO_ACCOUNT_EMAIL'] = 'demo@email.com'}
+    context 'regular' do
+      subject { build(:user) }
+      before { subject.valid? }
+
+      its(:errors) { is_expected.to have_key(:base) }
+    end
+
+    context 'demo account' do
+      subject { build(:user, email: ENV['DEMO_ACCOUNT_EMAIL']) }
+      before { subject.valid? }
+
+      it { is_expected.to be_valid }
+    end
+
+
+
+  end
+
 
 end
