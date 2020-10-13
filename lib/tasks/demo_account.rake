@@ -30,7 +30,7 @@ namespace :demo_account do
         a.company = company
       end
 
-      user = User.create(name: "Demo User", email: ENV['DEMO_ACCOUNT_EMAIL'], password: ENV['DEMO_ACCOUNT_PASSWORD'], password_confirmation: ENV['DEMO_ACCOUNT_PASSWORD'])
+      user = User.build(name: "Demo User", email: ENV['DEMO_ACCOUNT_EMAIL'], password: ENV['DEMO_ACCOUNT_PASSWORD'], password_confirmation: ENV['DEMO_ACCOUNT_PASSWORD'], skip_create_driver: true)
       company.company_members.create(user: user, role: CompanyMember::DEMO_ACCOUNT)
 
       ActiveRecord::Base.connection.execute(build_customer_query(company.id))
