@@ -2,7 +2,7 @@ namespace :demo_account do
 
   desc "Creates a demo company with a basic setup"
   task create_company: :environment do
-
+    Audited.auditing_enabled = false
     Company.transaction do
       company = Company.find_or_create_by(name: ENV["DEMO_ACCOUNT_COMPANY_NAME"]) do |c|
         c.contact_email = "info@fahrzeit.ch"
@@ -43,11 +43,12 @@ namespace :demo_account do
       Driver.find_or_create_by!(name: 'Sven Dachauer', company: company)
       create_sample_tours company
     end
-
+    Audited.auditing_enabled = false
   end
 
   desc "Reset demo company"
   task reset: :environment do
+    Audited.auditing_enabled = false
     ActiveRecord::Base.transaction do
       company = Company.find_by(name: ENV['DEMO_ACCOUNT_COMPANY_NAME'])
       Drive.unscoped.joins(:driver).where({drivers: { company_id: company.id}}).destroy_all
@@ -56,6 +57,7 @@ namespace :demo_account do
       create_sample_tours company
       create_sample_standby_dates company
     end
+    Audited.auditing_enabled = true
   end
 
   def create_sample_standby_dates(company)
