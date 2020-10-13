@@ -10,7 +10,9 @@ class DriversService
         Driver.none
       when CompanyMember::OWNER
         Driver.where(company_id: company.id)
-      when CompanyMember::ADMINISTRATOR || CompanyMember::DEMO_ACCOUNT
+      when CompanyMember::ADMINISTRATOR
+        Driver.where(company_id: company.id)
+      when CompanyMember::DEMO_ACCOUNT
         Driver.where(company_id: company.id)
       when CompanyMember::DRIVER
         Driver.where(company_id: company.id).joins(:driver_login).where(driver_logins: { user_id: user.id})
