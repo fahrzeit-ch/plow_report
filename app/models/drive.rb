@@ -9,6 +9,8 @@ class Drive < ApplicationRecord
   belongs_to :driver
   belongs_to :tour, optional: true
 
+  after_save :update_tour
+
   # A drive may have an activity that was executed during the drive
   has_one :activity_execution, dependent: :destroy
   has_one :activity, through: :activity_execution
@@ -207,6 +209,10 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+
+  def update_tour
+    tour.try(:refresh_times_from_dirves)
+  end
 
   def customer_associated_with_site
     return if customer.nil? || site.nil?
