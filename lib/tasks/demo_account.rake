@@ -26,7 +26,7 @@ namespace :demo_account do
       end
       company.activities.find_or_create_by(name: "Salzen") do |a|
         a.has_value = true
-        a.value_label = "Salmenge (kg)"
+        a.value_label = "Salzmenge (kg)"
         a.company = company
       end
 
