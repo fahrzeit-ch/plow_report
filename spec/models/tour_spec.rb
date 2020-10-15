@@ -84,8 +84,8 @@ RSpec.describe Tour, type: :model do
     subject { tour.reload }
 
     context 'when adding drive' do
-      its(:start_time) { is_expected.to eq drive.start }
-      its(:end_time) { is_expected.to eq drive.end }
+      its(:start_time) { is_expected.to be_within(0.1.seconds).of(drive.start) }
+      its(:end_time) { is_expected.to be_within(0.1.seconds).of(drive.end) }
     end
 
     context 'removing drive' do

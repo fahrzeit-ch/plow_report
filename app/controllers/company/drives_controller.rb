@@ -48,6 +48,7 @@ class Company::DrivesController < ApplicationController
 
   def create
     @drive = Drive.create(drive_params)
+    authorize @drive
     if @drive.valid?
       flash[:success] = I18n.t 'flash.drives.created'
       redirect
@@ -77,7 +78,7 @@ class Company::DrivesController < ApplicationController
     if @drive.tour
       redirect_to edit_company_tour_path(current_company, @drive.tour)
     else
-      company_drives_path(current_company)
+      redirect_to company_drives_path(current_company)
     end
   end
 
