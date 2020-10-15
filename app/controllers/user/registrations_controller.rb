@@ -2,6 +2,8 @@ class User::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
+  before_action :restrict_demo_user, only: [:update, :edit]
+
 
   def create
     super do |resource|
@@ -9,6 +11,14 @@ class User::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+
+  private
+
+  def restrict_demo_user
+    if current_user.demo_user?
+      raise Pundit::NotAuthorizedError
+    end
+  end
 
   protected
 
