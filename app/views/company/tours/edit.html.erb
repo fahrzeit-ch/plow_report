@@ -37,12 +37,23 @@
 </div>
 <div class="card mt-3">
   <div class="card-body">
+    <div class="row mb-3">
+      <div class="col-12">
+        <%= link_to new_company_tour_drife_path(current_company, tour_id: @record),
+                    class: "btn btn-primary pull-right",
+                    title: t('views.company_tours.add_drive_description'),
+                    data_toggle: 'tooltip' do %>
+
+          <i class="fa fa-plus"></i> <%= t 'views.company_tours.add_drive' %>
+        <% end %>
+      </div>
+    </div>
     <div class="row">
       <div class="col-12">
         <% if @record.drives.empty? %>
           <div class="alert alert-info"><%= t('views.tours.empty') %></div>
         <% else %>
-          <%= render partial: '/company/drives/drive', collection: @record.drives, locals: { tools: true } %>
+          <%= render partial: '/company/drives/drive', collection: @record.drives, locals: { tools: true, tour: @record } %>
         <% end %>
       </div>
     </div>

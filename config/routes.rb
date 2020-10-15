@@ -56,7 +56,9 @@ Rails.application.routes.draw do
       resources :hourly_rates
       get :dashboard, to: 'dashboard#index', as: 'dashboard'
       resources :drives, only: %i[index destroy edit update]
-      resources :tours, only: %i[index destroy edit update]
+      resources :tours, only: %i[index destroy edit update] do
+        resources :drives
+      end
       resources :standby_dates, only: %i[index destroy create] do
         collection do
           get :weeks

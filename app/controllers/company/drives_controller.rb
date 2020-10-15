@@ -37,20 +37,56 @@ class Company::DrivesController < ApplicationController
     redirect_to_referral fallback_location: company_drives_path(current_company)
   end
 
-  def edit
+  def new
     store_referral
+    @drive = Drive.new fetch_defaults(params)
+    authorize @drive
+    if tour
+      render 'company/tours/drives/new'
+    end
+  end
+
+  def create
+    @drive = Drive.create(drive_params)
+    if @drive.valid?
+      flash[:success] = I18n.t 'flash.drives.created'
+      redirect
+    else
+      render :edit
+    end
+  end
+
+  def edit
+    if tour
+      render 'company/tours/drives/edit'
+    end
   end
 
   def update
     if @drive.update(drive_params)
       flash[:success] = I18n.t 'flash.drives.updated'
-      redirect_to_referral fallback_location: company_drives_path(current_company)
+      redirect
     else
       render :edit
     end
   end
 
   private
+
+  def redirect
+    if @drive.tour
+      redirect_to edit_company_tour_path(current_company, @drive.tour)
+    else
+      company_drives_path(current_company)
+    end
+  end
+
+  def fetch_defaults(params)
+    if tour
+      start_time = tour.last_drive.try(:end) || tour.start_time
+      { start: start_time, end: start_time + 30.minutes, driver: tour.driver, tour_id: params[:tour_id] }
+    end
+  end
 
   def update_read_status
     new_drives = @drives.reject(&:seen?)
@@ -68,6 +104,12 @@ class Company::DrivesController < ApplicationController
     permitted = policy(Drive).permitted_attributes
     permitted << :driver_id
     params.require(:drive).permit(permitted)
+  end
+
+  def tour
+    if params[:tour_id]
+      @tour ||= Tour.find(params[:tour_id])
+    end
   end
 
   def set_drive
