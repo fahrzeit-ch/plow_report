@@ -17,7 +17,7 @@ class Company::ToursController < ApplicationController
         @records = @records.page(params[:page]).per(30)
       end
       format.js do
-        @records
+        @records = @records.page(params[:page]).per(30)
       end
       format.xlsx do
         @records
