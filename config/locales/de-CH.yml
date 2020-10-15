@@ -269,6 +269,7 @@ de-CH:
     new: "Neu"
     please_wait: "Bitte warten..."
     cancel: "Abbrechen"
+    edit: "Bearbeiten"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -359,6 +360,8 @@ de-CH:
     company_tours:
       edit: "Tour bearbeiten"
       title: "Touren"
+      add_drive_description: "Zusätzlichen Einsatz zu dieser Tour hinzufügen"
+      add_drive: "Einsatz Hinzufügen"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"
@@ -399,7 +402,7 @@ de-CH:
   sidenav:
     section:
       user: "Mein Profil"
-      settings: "Einstallungen"
+      settings: "Einstellungen"
       master_data: "Stammdaten"
   tomorrow: 'Morgen'
   today: 'Heute'

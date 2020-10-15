@@ -1,0 +1,14 @@
+<div class="row bg-white pt-3">
+  <div class="col-12">
+    <h1>Fahrt Erfassen</h1>
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-body">
+    <%= render 'drives/form',
+               back_path: edit_company_tour_path(current_company, @tour),
+               drive: [current_company, @tour, @drive],
+               can_change_driver: true
+    %>
+  </div>
+</div>

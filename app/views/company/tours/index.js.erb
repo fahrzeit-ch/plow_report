@@ -1,5 +1,5 @@
-$('#drives').append('<%= j render partial: 'tour', locals: { tours: @records } %>');
-<% if @drives.next_page %>
+$('#tours').append('<%= j render partial: 'tour', collection: @records, locals: { tools: true} %>');
+<% if @records.next_page %>
 $('.pagination').replaceWith('<%= j paginate(@records) %>');
 <% else %>
 $('.pagination').remove();

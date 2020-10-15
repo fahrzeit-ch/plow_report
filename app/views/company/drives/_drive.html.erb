@@ -37,9 +37,16 @@
 
   <% if local_assigns[:tools] && policy(drive).edit? %>
     <div class="align-self-center ml-auto mr-2 d-print-none">
-      <%= link_to edit_company_drife_path(current_company, drive), class: 'pull-right btn btn-light' do %>
-        <i class="fa fa-edit"></i>
+      <% if tour %>
+        <%= link_to edit_company_tour_drife_path(current_company, tour, drive), title: t('common.edit'), class: 'pull-right btn btn-light' do %>
+          <i class="fa fa-edit"></i>
+        <% end %>
+      <% else %>
+        <%= link_to edit_company_drife_path(current_company, drive), title: t('common.edit'), class: 'pull-right btn btn-light' do %>
+          <i class="fa fa-edit"></i>
+        <% end %>
       <% end %>
+
       <%= link_to company_drife_path(current_company, drive), method: :delete, class: 'pull-right btn btn-danger',
                   data: { confirm: t('confirmation.delete'), disable_with: is_processing(true) } do %>
         <i class="fa fa-trash"></i>

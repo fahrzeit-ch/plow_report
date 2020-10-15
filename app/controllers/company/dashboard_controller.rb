@@ -6,7 +6,7 @@ class Company::DashboardController < ApplicationController
 
     new_drives = @last_drives.reject(&:seen?)
     if new_drives.any?
-      UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id))
+      UpdateReadStatusJob.perform_later(current_user.id, new_drives.pluck(:id), 'Drive')
     end
   end
 

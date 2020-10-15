@@ -77,5 +77,29 @@ RSpec.describe Tour, type: :model do
     it { is_expected.not_to include(old_tour1) }
   end
 
+  describe 'update from drives' do
+    let(:tour) { create(:tour, start_time: 2.minutes.ago, end_time: 1.minute.ago) }
+    let!(:drive) { create(:drive, tour: tour, start: 3.minutes.ago, end: 2.seconds.ago) }
+
+    subject { tour.reload }
+
+    context 'when adding drive' do
+      its(:start_time) { is_expected.to be_within(0.1.seconds).of(drive.start) }
+      its(:end_time) { is_expected.to be_within(0.1.seconds).of(drive.end) }
+    end
+
+    context 'removing drive' do
+      it 'should not update start and end times' do
+        expect { drive.delete }.not_to change(subject, :start_time)
+      end
+    end
+
+    context 'when changing time on drive' do
+      it 'should update end_time' do
+        expect { drive.update_attribute(:end, 1.second.ago) }.to change(tour, :end_time)
+      end
+
+    end
+  end
 
 end

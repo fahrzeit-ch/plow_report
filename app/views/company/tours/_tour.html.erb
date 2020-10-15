@@ -20,7 +20,7 @@
 
   <% if local_assigns[:tools] && policy(tour).edit? %>
     <div class="align-self-center ml-auto mr-2 d-print-none">
-      <%= link_to edit_company_tour_path(current_company, tour), class: 'pull-right btn btn-light' do %>
+      <%= link_to edit_company_tour_path(current_company, tour), class: 'pull-right btn btn-light', title: t('common.edit') do %>
         <i class="fa fa-edit"></i>
       <% end %>
       <%= link_to company_tour_path(current_company, tour), method: :delete, class: 'pull-right btn btn-danger',

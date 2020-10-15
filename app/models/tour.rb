@@ -87,6 +87,22 @@ class Tour < ApplicationRecord
     self.end_time - self.start_time
   end
 
+  def refresh_times_from_dirves
+    reload
+    return unless drives.any?
+    drives_start_time = first_drive.start
+    drives_end_time = last_drive.end
+
+    if self.start_time > drives_start_time
+      self.start_time = drives_start_time
+    end
+
+    if self.end_time < drives_end_time
+      self.end_time = drives_end_time
+    end
+    self.save
+  end
+
   class << self
     # Scope the drives by the given season
     def by_season(season)

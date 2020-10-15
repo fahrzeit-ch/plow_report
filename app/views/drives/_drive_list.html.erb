@@ -8,6 +8,6 @@
     <h4 data-week="<%= week_nr %>">KW <%= week_nr %></h4>
   <% end %>
   <div class="item-group pl-2">
-    <%= render partial: 'drive', locals: { tools: true, drive: drive }%>
+    <%= render partial: 'drive', locals: { tools: true, drive: drive, tour: false }%>
   </div>
 <% end %>
