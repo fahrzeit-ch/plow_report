@@ -63,8 +63,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     ast (2.4.0)
-    audited (4.7.1)
-      activerecord (>= 4.0, < 5.3)
+    audited (4.9.0)
+      activerecord (>= 4.2, < 6.1)
     autoprefixer-rails (10.0.0.2)
       execjs
     axlsx_rails (0.5.2)
@@ -380,7 +380,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
-  audited (~> 4.7)
+  audited (~> 4.9)
   axlsx!
   axlsx_rails
   bootstrap (~> 4.3.1)
