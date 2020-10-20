@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_company_from_driver_or_user
-    if current_driver && current_driver.company
+    if current_driver&.company
       current_driver.company
     else
       current_user.companies.last
@@ -80,6 +80,14 @@ class ApplicationController < ActionController::Base
 
   private
   def determine_layout
-    user_signed_in? ? 'application' : 'public'
+    if user_signed_in?
+      if controller_name == 'static_pages' && params[:action] == 'setup'
+        'setup'
+      else
+        'application'
+      end
+    else
+      'public'
+    end
   end
 end

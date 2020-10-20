@@ -1,11 +1,72 @@
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-12">
-      <div class="alert alert-warning">
-        <p><%= t 'views.setup.instructions' %></p>
-        <%= link_to t('views.setup.create_company'), new_company_path, class: 'btn btn-primary btn-lg' %>
-        <%= link_to t('views.setup.create_driver'), driver_path, method: :post, class: 'btn btn-primary btn-lg' %>
+<div class="card-deck mt-5">
+  <div class="card m-3">
+    <div class="mt-4 p-3 text-center">
+      <h1><i class="fa fa-8x fa-user"></i></h1>
+      <h2>Als Fahrer verwenden</h2>
+    </div>
+    <div class="card-body">
+      <p>Sie Arbeiten für eine Firma die fahrzeit.ch für den Winterdienst nutzt?</p>
+
+      <p>Fragen sie Ihren Administrator an, sie als Fahrer hinzuzufügen und Installieren Sie die Fahrzeit App auf Ihrem Smartphone.</p>
+      <form class="form mt-2 mb-4">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" type="email">
+            <button type="submit" class="btn btn-primary input-group-append input-group-btn">Senden</button>
+          </div>
+        </div>
+      </form>
+      <div class="text-center">
+        <h3>App Installieren</h3>
+        <div class="row">
+          <div class="col-6">
+            <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
+              <%= image_tag 'google_play_btn.png', width: '100%' %>
+            <% end %>
+          </div>
+          <div class="col-6">
+            <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
+              <%= image_tag 'app_store_btn.png', width: '100%' %>
+            <% end %>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+  <div class="card m-3">
+    <div class="mt-4 p-3 text-center">
+      <h1><i class="fa fa-building-o"></i></h1>
+      <h2>Firma Registrieren</h2>
+    </div>
+    <div class="card-body text-center">
+      <h3 class="text-secondary">Preis:</h3>
+      <p>Grundgebühr:  50.- CHF pro Jahr<br>Zuzüglich Preis pro Geräumtes Objekt</p>
+      <%= link_to 'Preis Berechnen', '#' %>
+      <form class="form text-left mt-3">
+        <div class="form-group">
+          <label>Firmen Name</label>
+          <input class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Kontakt Email</label>
+          <input class="form-control">
+        </div>
+        <%= link_to t('views.setup.create_company'), new_company_path, class: 'btn btn-primary form-control' %>
+      </form>
+    </div>
+  </div>
+  <div class="card m-3">
+    <div class="mt-4 p-3 text-center">
+      <h1><i class="fa fa-support"></i></h1>
+      <h2>Ich brauche Unterstützung</h2>
+    </div>
+    <div class="card-body">
+      <p>Wir unterstützen Sie gerne Bei der Einrichtung Ihres Firmen Kontos oder beim Schulen Ihrer Mitarbeiter.</p>
+    </div>
+    <div class="bg-primary text-light card-body">
+      <div class=""><i class="fa fa-phone"></i> +41 44 586 21 26</div>
+      <div class=""><i class="fa fa-map"></i> Schulhausstrasse 8, 8832 Wilen bei Wollerau</div>
+      <div class=""><i class="fa fa-envelope"></i> info@fahrzeit.ch</div>
     </div>
   </div>
 </div>
