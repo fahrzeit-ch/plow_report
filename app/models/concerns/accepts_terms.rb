@@ -9,8 +9,8 @@ module AcceptsTerms
     has_many :terms_with_updates, through: :outdated_acceptances, source: :policy_term
 
     after_save :save_terms
-    validate :required_terms_accepted, if: :term_validation_required?
-    validate :updated_terms_accepted, if: :term_validation_required?
+    validate :validate_required_terms_accepted, if: :term_validation_required?
+    validate :validate_updated_terms_accepted, if: :term_validation_required?
   end
 
   attr_accessor :skip_term_validation
@@ -19,16 +19,13 @@ module AcceptsTerms
     accepted_terms << PolicyTerm.where(key: terms)
   end
 
-  def required_terms_accepted
-    req_terms = PolicyTerm.where(required: true).pluck(:key)
-
-    acceptances = accepted_terms.pluck(:key) + terms
-    unless (req_terms - acceptances).length == 0
+  def validate_required_terms_accepted
+    if unchecked_terms.required.any?
       errors.add(:base, :consent_required)
     end
   end
 
-  def updated_terms_accepted
+  def validate_updated_terms_accepted
     updated_terms = terms_with_updates.required.pluck(:key)
     unless (updated_terms - terms).length == 0
       errors.add(:base, :new_consent_required)
@@ -71,6 +68,15 @@ module AcceptsTerms
     end
   end
 
+  # Checks whether the account is required to be forced to give a consent.
+  # The basic rule is to force a consent, if either one of the following rules apply:
+  # - A required term exists that has not yet been consented.
+  # - A Policy term that was previously accepted has been updated after the consent was given.
+  def force_consent_required?
+    (unchecked_terms.required.any? || outdated_acceptances.any?)
+  end
+
+  # Check whether or not a validation of terms is required
   def term_validation_required?
     return false if skip_term_validation
     new_record? || terms_with_updates.exists? || unchecked_terms.exists?
