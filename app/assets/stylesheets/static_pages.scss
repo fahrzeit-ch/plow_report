@@ -4,3 +4,11 @@
 .bg-blue-dark {
   background-color: $blue-dark;
 }
+
+// make the card deck responsive, so it will break to two or one column
+// depending on screen size
+.card-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: .5rem;
+}
