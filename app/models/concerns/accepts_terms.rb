@@ -20,7 +20,10 @@ module AcceptsTerms
   end
 
   def validate_required_terms_accepted
-    if unchecked_terms.required.any?
+    req_terms = PolicyTerm.where(required: true).pluck(:key)
+
+    acceptances = accepted_terms.pluck(:key) + terms
+    unless (req_terms - acceptances).length == 0
       errors.add(:base, :consent_required)
     end
   end
