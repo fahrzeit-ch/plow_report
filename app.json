@@ -56,7 +56,7 @@
   },
   "name": "plow_report",
   "scripts": {
-    "postdeploy": "rake db:setup demo_account:create_company"
+    "postdeploy": "rake demo_account:create_company"
   },
   "stack": "heroku-18"
 }
