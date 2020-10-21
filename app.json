@@ -1,10 +1,10 @@
 {
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql",
     {
       "plan": "heroku-redis",
       "as": "REDIS_URL"
-    },
+    }
   ],
   "buildpacks": [
     {
