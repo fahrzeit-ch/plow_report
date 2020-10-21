@@ -98,7 +98,6 @@ Rails.application.routes.draw do
   end
 
   get '/setup', to: 'static_pages#setup', as: :setup
-  get '/welcome', to: 'static_pages#welcome', as: :welcome
   get '/demo_login', to: 'static_pages#demo_login', as: :demo_login
 
   devise_scope :user do

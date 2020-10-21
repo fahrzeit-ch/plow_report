@@ -6,6 +6,7 @@ feature 'jump to today in calendar' do
   let(:driver) { user.drivers.first }
 
   before do
+    user.create_personal_driver
     sign_in_with(user.email, user.password)
 
     # assume we are in winter season 2018/2019

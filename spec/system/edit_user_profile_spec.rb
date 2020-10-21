@@ -14,7 +14,7 @@ feature 'edit user profile' do
     end
 
     it  do
-      expect(page).to have_current_path('/')
+      expect(page).to have_current_path('/setup')
       user.reload
       expect(user.name).to eq new_attributes[:name]
     end

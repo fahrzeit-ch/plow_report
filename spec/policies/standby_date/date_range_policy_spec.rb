@@ -5,6 +5,7 @@ RSpec.describe StandbyDate::DateRangePolicy do
 
   let(:date_range) { build(:standby_date_date_range, driver_id: driver.id) }
   let(:user) { create(:user) }
+  before { user.create_personal_driver }
 
   context 'for own driver' do
     let(:driver) { user.drivers.first }

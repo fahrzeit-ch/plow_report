@@ -23,11 +23,6 @@ RSpec.describe CompaniesController, type: :controller do
         post :create, params: {company_registration: valid_attributes}
       }.not_to change(Driver, :count)
     end
-
-    it 'does not transfer driver by default' do
-      post :create, params: {company_registration: valid_attributes}
-      expect(user.drivers.last.company).to be_nil
-    end
   end
 
   describe 'GET #edit' do

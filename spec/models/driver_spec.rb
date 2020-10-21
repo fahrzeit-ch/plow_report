@@ -21,7 +21,7 @@ RSpec.describe Driver, type: :model do
     it 'should create driver_login when assigning user' do
       subject.user = user1
       user1.reload
-      expect(user1.driver_logins.count).to eq 2
+      expect(user1.driver_logins.count).to eq 1
     end
 
     it 'destroys driver login when delete driver' do

@@ -74,7 +74,6 @@ RSpec.describe Company, type: :model do
         end
 
         context 'non existing default driver' do
-          before { user.drivers.first.update_attribute(:company_id, create(:company).id) }
 
           it 'should create a new driver' do
             expect {

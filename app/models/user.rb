@@ -15,7 +15,6 @@ class User < ApplicationRecord
   has_many :driver_logins, dependent: :destroy
   has_many :drivers, through: :driver_logins
   attribute :skip_create_driver, :boolean, default: false
-  after_create :create_driver, unless: :skip_create_driver
 
   has_many :company_members, dependent: :destroy
   has_many :companies, through: :company_members

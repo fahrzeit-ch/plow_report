@@ -8,7 +8,7 @@ module ConstraintRouter
   def check_account!
     return unless current_user
     return if current_user.has_driver? || current_user.companies.any?
-    redirect_to setup_path unless controller_name == 'static_pages'
+    redirect_to setup_path unless controller_name == 'sessions'
   end
 
   # Redirect to company path if user has no driver.
@@ -22,13 +22,11 @@ module ConstraintRouter
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) ||
-        if resource.is_a?(User) && resource.has_driver?
-          super
-        elsif resource.is_a?(User)
-          company_dashboard_path(current_user.companies.first)
-        else
-          super
-        end
+      if resource.is_a?(User) && resource.companies.any?
+        company_dashboard_path(current_user.companies.first)
+      else
+        super
+      end
   end
 
 end

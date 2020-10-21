@@ -37,7 +37,7 @@ class DriverApplication < ApplicationRecord
   def accept(attrs = { accepted_by: nil })
     return unless validate_already_accepted
     transaction do
-      accepted_to.add_driver(user)
+      accepted_to.add_member(user, CompanyMember::DRIVER)
       self.accepted_by = attrs.delete(:accepted_by)
       self.accepted_at = DateTime.current
       save

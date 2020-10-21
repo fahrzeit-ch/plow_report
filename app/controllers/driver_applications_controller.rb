@@ -1,5 +1,6 @@
 class DriverApplicationsController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :check_account!
   layout 'setup'
 
   def create

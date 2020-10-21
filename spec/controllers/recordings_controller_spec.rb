@@ -5,7 +5,10 @@ RSpec.describe RecordingsController, type: :controller do
   let(:current_user) { create(:user) }
   let(:current_driver) { current_user.drivers.last }
 
-  before { sign_in current_user }
+  before do
+    current_user.create_personal_driver
+    sign_in current_user
+  end
 
   describe 'POST #create' do
     subject { current_driver }

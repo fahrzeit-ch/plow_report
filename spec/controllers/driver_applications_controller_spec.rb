@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe DriverApplicationsController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:user) }
+  let(:company) { create(:company) }
+
+  before { company.add_member(admin, CompanyMember::ADMINISTRATOR) }
 
   describe "GET #create" do
     before { sign_in user }
@@ -30,12 +33,14 @@ RSpec.describe DriverApplicationsController, type: :controller do
   end
 
   describe "GET #accept" do
-    before { sign_in admin }
-
     let(:application) { create(:driver_application, user: user) }
-    let(:company) { create(:company) }
 
     context 'without administrator access to company' do
+      let(:non_admin) { create(:user) }
+      before do
+        company.add_member(non_admin, CompanyMember::DRIVER)
+        sign_in(non_admin)
+      end
       it "returns http success" do
         patch :accept, params: { id: application.token, driver_application: { assign_to_id: company.id } }
         expect(response).to redirect_to(root_path)
@@ -43,7 +48,7 @@ RSpec.describe DriverApplicationsController, type: :controller do
     end
 
     context 'with administrator access to company' do
-      before { company.add_member(admin, CompanyMember::ADMINISTRATOR)}
+      before { sign_in admin }
 
       it "returns http success" do
         patch :accept, params: { id: application.token, driver_application: { assign_to_id: company.id }  }

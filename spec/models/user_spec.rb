@@ -17,34 +17,6 @@ RSpec.describe User, type: :model do
 
   end
 
-  describe 'drivers' do
-
-    it 'should create a driver when creating a user' do
-      expect {
-        User.create valid_attributes
-      }.to change(Driver, :count).by 1
-    end
-
-    it 'should skip create_driver when option set' do
-      expect {
-        User.create(valid_attributes.merge(skip_create_driver: true))
-      }.not_to change(Driver, :count)
-    end
-
-    it 'should copy name of user to driver' do
-      u = User.create valid_attributes
-      expect(u.drivers.last.name).to eq u.name
-    end
-
-    it 'should not be possible to assign two drivers with the same company_id' do
-      u = User.create valid_attributes
-      expect {
-        u.drivers << create(:driver)
-      }.not_to raise_error
-    end
-
-  end
-
   describe '#owns_company' do
     let(:company) { create(:company) }
     subject { create(:user) }
