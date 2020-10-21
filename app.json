@@ -3,7 +3,7 @@
     "heroku-postgresql",
     {
       "plan": "heroku-redis",
-      "as": "REDIS_URL"
+      "as": "REDIS"
     }
   ],
   "buildpacks": [
