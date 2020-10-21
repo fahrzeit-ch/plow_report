@@ -1,0 +1,8 @@
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td valign="top" style="padding-top:0;" >
+      <p>Sie wurden von <%= @application.user.name %> angefragt, als Fahrer auf fahrzeit.ch hinzugefügt zu werden.</p>
+      <%= link_to "Anfrage Prüfen", review_driver_application_url(@application) %>
+    </td>
+  </tr>
+</table>

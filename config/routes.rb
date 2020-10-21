@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   use_doorkeeper do
     controllers authorizations: 'authorizations'
   end
@@ -49,6 +50,13 @@ Rails.application.routes.draw do
   resource :driver, only: :create
   resource :recordings, only: %i[create destroy] do
     put :finish
+  end
+
+  resources :driver_applications, only: %i[create show] do
+    member do
+      patch :accept
+      get :review
+    end
   end
 
   resources :companies do

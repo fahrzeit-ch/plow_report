@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200909204054) do
+ActiveRecord::Schema.define(version: 20201020204148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,21 @@ ActiveRecord::Schema.define(version: 20200909204054) do
     t.string "city", default: "", null: false
     t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_customers_on_company_id"
+  end
+
+  create_table "driver_applications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "recipient", null: false
+    t.string "token", null: false
+    t.bigint "accepted_by_id"
+    t.bigint "accepted_to_id"
+    t.datetime "accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accepted_by_id"], name: "index_driver_applications_on_accepted_by_id"
+    t.index ["accepted_to_id"], name: "index_driver_applications_on_accepted_to_id"
+    t.index ["token"], name: "index_driver_applications_on_token"
+    t.index ["user_id"], name: "index_driver_applications_on_user_id"
   end
 
   create_table "driver_logins", force: :cascade do |t|
@@ -314,6 +329,9 @@ ActiveRecord::Schema.define(version: 20200909204054) do
   add_foreign_key "activities", "companies"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
+  add_foreign_key "driver_applications", "companies", column: "accepted_to_id"
+  add_foreign_key "driver_applications", "users"
+  add_foreign_key "driver_applications", "users", column: "accepted_by_id"
   add_foreign_key "driver_logins", "drivers"
   add_foreign_key "driver_logins", "users"
   add_foreign_key "drivers", "companies"

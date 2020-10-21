@@ -13,9 +13,10 @@ feature 'after sign in paths' do
 
   context 'user without driver' do
     before { user.drivers.destroy_all }
-    it 'should show empty dashboard with option to create driver or company' do
+    it 'should redirect to setup page' do
       sign_in_with(user.email, user.password)
-      expect(page).to have_content(I18n.t('views.setup.instructions'))
+      expect(page).to have_current_path(setup_path)
+      expect(page).to have_content(I18n.t('views.setup.use_as_driver_title'))
     end
 
     it 'should be possible to create company from here' do
@@ -25,12 +26,6 @@ feature 'after sign in paths' do
       check('company_registration[add_owner_as_driver]')
       click_button(I18n.t('common.create'))
       expect(page).to have_current_path company_dashboard_path(Company.last)
-    end
-
-    it 'should be possible to crete personal driver' do
-      sign_in_with(user.email, user.password)
-      click_link(I18n.t('views.setup.create_driver'))
-      expect(page).to have_current_path root_path
     end
 
     context 'with company membership' do

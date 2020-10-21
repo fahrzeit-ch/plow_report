@@ -2,22 +2,16 @@
   <div class="card m-3">
     <div class="mt-4 p-3 text-center">
       <h1><i class="fa fa-8x fa-user"></i></h1>
-      <h2>Als Fahrer verwenden</h2>
+      <h2><%= t('views.setup.use_as_driver_title') %></h2>
     </div>
     <div class="card-body">
-      <p>Sie Arbeiten für eine Firma die fahrzeit.ch für den Winterdienst nutzt?</p>
+      <%= t('views.setup.use_as_driver_instructions_html') %>
 
-      <p>Fragen sie Ihren Administrator an, sie als Fahrer hinzuzufügen und Installieren Sie die Fahrzeit App auf Ihrem Smartphone.</p>
-      <form class="form mt-2 mb-4">
-        <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" type="email">
-            <button type="submit" class="btn btn-primary input-group-append input-group-btn">Senden</button>
-          </div>
-        </div>
-      </form>
+      <%= bootstrap_form_with(model: DriverApplication.new, remote: false) do |f| %>
+        <%= f.email_field :recipient, required: true, placeholder: t('forms.placeholders.driver_applications.recipient'), append: f.submit(class: 'btn btn-primary') %>
+      <% end %>
       <div class="text-center">
-        <h3>App Installieren</h3>
+        <h3><%= t 'views.setup.install_app_title' %></h3>
         <div class="row">
           <div class="col-6">
             <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
@@ -36,12 +30,12 @@
   <div class="card m-3">
     <div class="mt-4 p-3 text-center">
       <h1><i class="fa fa-building-o"></i></h1>
-      <h2>Firma Registrieren</h2>
+      <h2><%= t('views.setup.create_company_title') %></h2>
     </div>
     <div class="card-body text-center">
-      <h3 class="text-secondary">Preis: </h3>
-      <p>Grundgebühr: <b>50.- CHF pro Jahr</b><br>Zuzüglich Preis pro Geräumtes Objekt</p>
-      <%= link_to 'Preis Berechnen', '#' %>
+      <h3 class="text-secondary"><%= t('views.setup.price_title') %></h3>
+      <%= t('views.setup.prices_html') %>
+      <%= link_to t('views.setup.calculate_price'), '#' %>
       <form class="form text-left mt-3">
         <div class="form-group">
           <label>Firmen Name</label>
@@ -58,10 +52,10 @@
   <div class="card m-3">
     <div class="mt-4 p-3 text-center">
       <h1><i class="fa fa-support"></i></h1>
-      <h2>Ich brauche Unterstützung</h2>
+      <h2><%= t('views.setup.support_title') %></h2>
     </div>
     <div class="card-body">
-      <p>Wir unterstützen Sie gerne Bei der Einrichtung Ihres Firmen Kontos oder beim Schulen Ihrer Mitarbeiter.</p>
+      <%= t('views.setup.support_content_html') %>
     </div>
     <div class="bg-primary text-light card-body">
       <div class=""><i class="fa fa-phone"></i> +41 44 586 21 26</div>

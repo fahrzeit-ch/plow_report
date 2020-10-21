@@ -38,6 +38,10 @@ class User < ApplicationRecord
     companies_for_role CompanyMember::ADMINISTRATOR
   end
 
+  def administrated_or_owned_companies
+    companies_for_role [CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]
+  end
+
   def companies_for_role(role)
     companies.where(company_members: { role: role })
   end
