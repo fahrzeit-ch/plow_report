@@ -81,11 +81,7 @@ class ApplicationController < ActionController::Base
   private
   def determine_layout
     if user_signed_in?
-      if controller_name == 'static_pages' && params[:action] == 'setup'
-        'setup'
-      else
-        'application'
-      end
+      'application'
     else
       'public'
     end
