@@ -12,7 +12,7 @@ de-CH:
       sign_in: "Anmelden"
       sign_up: "Registrieren"
       signout: "Abmelden"
-      new_company: "Firma Registrieren"
+      new_company: "Firma registrieren"
       company_settings: "Einstellungen"
       company_show: "Zur Firmen Ansicht"
       my_dashboard: "Zur Fahrer Ansicht"
@@ -35,8 +35,8 @@ de-CH:
       customer_to_site_transition:
         assign_to: "Zielkunde"
       company/registration:
-        name: "Firmen Name"
-        contact_email: "Kontakt Email"
+        name: "Firmenname"
+        contact_email: "Kontakt E-Mail-Adresse"
         add_as_driver: "Mich als Fahrer in dieser Firma hinzufügen"
         transfer_private_drives: "Fahrten die als Privat erfasst wurden an die Firma übertragen."
         address: "Adresse"
@@ -105,11 +105,12 @@ de-CH:
         user_email: "Email"
         user_name: "Name"
       company:
-        name: "Firmen Name"
-        contact_email: "Kontakt Email"
+        name: "Namen der Firma"
+        contact_email: "Kontakt E-Mail"
         address: "Adresse"
         zip_code: "PLZ"
         city: "Ort"
+        nr: "Nr."
       customer:
         name: "Name"
         first_name: "Vorname"
@@ -287,18 +288,20 @@ de-CH:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
       create_driver: "Als privater Fahrer anmelden"
       create_company: "Firmen Konto einrichten"
-      install_app_title: "App Installieren"
+      install_app_title: "App installieren"
       use_as_driver_title: "Als Fahrer verwenden"
-      use_as_driver_instructions_html: "<p>Sie Arbeiten für eine Firma die fahrzeit.ch für den Winterdienst nutzt?</p> <p>Fragen sie Ihren Administrator an, sie als Fahrer hinzuzufügen und Installieren Sie die Fahrzeit App auf Ihrem Smartphone.</p>"
+      use_as_driver_instructions_html: "<p>Sie arbeiten für eine Firma, die fahrzeit.ch für den Winterdienst nutzt?</p> <p>Fragen Sie Ihren Administrator an, dass er Sie als Fahrer hinzuzufügen kann, und installieren Sie die Fahrzeit App auf Ihrem Smartphone.</p>"
       create_company_title: "Firma Registrieren"
       price_title: "Preis:"
-      prices_html: "<p>Grundgebühr: <b>50.- CHF pro Jahr</b><br>Zuzüglich Preis pro Geräumtes Objekt</p>"
-      calculate_price: "Preis Berechnen"
+      prices_html: "<p>Grundgebühr: <b>50.- CHF pro Jahr</b><br>+ Preis in Abhängigkeit der Anzahl geräumten Objekte.</p>"
+      calculate_price: "Preis berechnen"
       support_title: "Ich brauche Unterstützung"
-      support_content_html: "<p>Wir unterstützen Sie gerne Bei der Einrichtung Ihres Firmen Kontos oder beim Schulen Ihrer Mitarbeiter.</p>"
+      support_content_html: "<p>Wir unterstützen Sie gerne bei der Einrichtung Ihres Firmen Konto, oder bei der Schulung Ihrer Mitarbeiter.</p>"
     companies:
       new:
         title: "Firmen Konto registrieren"
+        add_me_as_driver_help_text: "Mit dieser Funktion können Sie selber per App Ihre Räumungszeiten erfassen."
+        create: "Jetzt kostenpflichtig Registrieren"
       edit:
         title: "Firmen Einstellungen"
         destroy_company: "Firma Löschen"
@@ -402,7 +405,7 @@ de-CH:
       company_member:
         user_email: "hans.muster@meinefirma.ch"
       driver_applications:
-        recipient: "Firmen Email Adresse"
+        recipient: "Firmen E-Mail-Adresse"
     standby_dates:
       driver_dropdown: "+"
     promt: "%{model} wählen"
