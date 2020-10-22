@@ -4,6 +4,8 @@ class DriverApplication < ApplicationRecord
   belongs_to :accepted_by, class_name: 'User', optional: true
   belongs_to :accepted_to, class_name: 'Company', optional: true
 
+  scope :idle, -> { where(accepted_at: nil) }
+
   validates :recipient, presence: true
   after_create :send_application
 

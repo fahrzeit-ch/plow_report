@@ -1,0 +1,6 @@
+json = {
+    id: record.id,
+    recipient: record.recipient,
+    created_at: record.created_at,
+    updated_at: record.updated_at
+}

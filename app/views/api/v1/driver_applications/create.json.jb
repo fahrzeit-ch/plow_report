@@ -1,0 +1,1 @@
+json = render partial: 'driver_application', locals: { record: @record }

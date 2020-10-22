@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :api do
     defaults format: :json do
       namespace :v1 do
+        resources :driver_applications, only: [:index, :create]
         resources :drivers, only: [:index] do
           resources :activities, only: [:index]
           resources :sites, only: [:index]
