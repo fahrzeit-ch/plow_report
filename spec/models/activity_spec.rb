@@ -8,7 +8,7 @@ RSpec.describe Activity, type: :model do
   end
 
   describe 'relations' do
-    it { is_expected.to belong_to(:company) }
+    it { is_expected.to belong_to(:company).optional }
   end
 
   describe '#destroy' do
