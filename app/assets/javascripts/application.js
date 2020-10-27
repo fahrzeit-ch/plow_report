@@ -24,6 +24,7 @@
 //= require paginate
 //= require map
 //= require bootstrap_features
+//= require print
 
 window.typeIsArray = function(value) {
     obj = {};
