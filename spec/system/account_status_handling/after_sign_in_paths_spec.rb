@@ -25,7 +25,7 @@ feature 'after sign in paths' do
       click_on(I18n.t('views.setup.create_company'))
       fill_form 'company_registration', attributes_for(:company).except(:options)
       check('company_registration[add_owner_as_driver]')
-      click_button(I18n.t('common.create'))
+      click_button(I18n.t('views.companies.new.create'))
       expect(page).to have_current_path company_dashboard_path(Company.last)
     end
 
