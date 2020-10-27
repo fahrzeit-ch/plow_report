@@ -30,6 +30,7 @@ module PlowReport
     config.generators.system_tests = nil
     config.i18n.available_locales = [:'de-CH', :en]
     config.i18n.default_locale = :'de-CH'
+    config.i18n.fallbacks = [I18n.default_locale]
 
     config.time_zone = 'Bern'
     config.active_record.default_timezone = :utc
