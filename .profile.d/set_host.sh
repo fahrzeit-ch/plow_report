@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ -z "${HEROKU_APP_NAME}" ]]; then
+if [[ -z "${HEROKU_APP_NAME}" ]] && [[ -z "${HOST}" ]]; then
   export HOST="app.fahrzeit.ch"
-else
+elif [[ -z "${HOST}" ]]; then
   export HOST=${HEROKU_APP_NAME}.herokuapp.com
 fi
