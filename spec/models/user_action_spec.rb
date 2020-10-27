@@ -5,6 +5,8 @@ RSpec.describe UserAction, type: :model do
   let(:user) { create(:user) }
   let(:records) { create_list(:drive, 2, driver: user.drivers.first)}
 
+  before { user.create_personal_driver }
+
   describe '#track_list' do
     subject { described_class }
 

@@ -1,7 +1,10 @@
 {
   "addons": [
     "heroku-postgresql",
-    "heroku-redis"
+    {
+      "plan": "heroku-redis",
+      "as": "REDIS"
+    }
   ],
   "buildpacks": [
     {
@@ -9,31 +12,37 @@
     }
   ],
   "env": {
-    "HOST": {
-      "required": true
-    },
     "LANG": {
-      "required": true
+      "value": "en_US.UTF-8"
     },
     "MAIL_PW": {
       "required": true
     },
     "RACK_ENV": {
-      "required": true
+      "value": "stage"
     },
     "RAILS_ENV": {
-      "required": true
+      "value": "stage"
     },
     "RAILS_LOG_TO_STDOUT": {
-      "required": true
+      "value": "enabled"
     },
     "RAILS_SERVE_STATIC_FILES": {
+      "value": "enabled"
+    },
+    "DEMO_ACCOUNT_COMPANY_NAME": "Winterdienst AG",
+    "DEMO_ACCOUNT_EMAIL": "demo@fahrzeit.ch",
+    "DEMO_ACCOUNT_PASSWORD": {
       "required": true
     },
-    "REDIS_URL": {
+    "GOOGLE_MAPS_API_KEY": {
       "required": true
     },
     "SECRET_KEY_BASE": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "HEROKU_APP_NAME": {
       "required": true
     }
   },
@@ -47,6 +56,7 @@
   },
   "name": "plow_report",
   "scripts": {
+    "postdeploy": "rake demo_account:create_company"
   },
-  "stack": "heroku-16"
+  "stack": "heroku-18"
 }

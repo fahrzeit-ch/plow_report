@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   before_action :check_company_assigned, only: [:new, :create]
 
   def new
-    @resource = Company::Registration.new
+    @resource = Company::Registration.new name: params[:name], contact_email: params[:contact_email]
     authorize @resource
   end
 

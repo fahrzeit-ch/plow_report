@@ -6,6 +6,7 @@ feature 'record a drive from dashboard' do
   let(:current_driver) { user.drivers.last }
 
   before do
+    user.create_personal_driver
     sign_in_with(user.email, user.password)
   end
 

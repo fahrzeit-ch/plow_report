@@ -1,0 +1,19 @@
+<div class="row justify-content-md-center">
+  <div class="mt-5 col-md-4">
+    <div class="card m-3">
+      <div class="mt-4 p-3 text-center">
+        <h1 class="text-success"><i class="fa fa-8x fa-question-circle-o"></i></h1>
+        <h2><%= t('views.driver_applications.review') %></h2>
+      </div>
+      <div class="card-body">
+        <p><%= t'views.driver_applications.review_description' %></p>
+        <%= bootstrap_form_with(model: @record, url: accept_driver_application_path(@record), local: true) do |f| %>
+          <%= f.static_control name: nil, value: @record.user.name + " (#{@record.user.email})", label: t('views.driver_applications.requested_by') %>
+          <%= f.select :assign_to_id, current_user.administrated_or_owned_companies.map { |c| [c.name, c.id]} %>
+          <%= link_to t('common.back'), root_path, class: 'btn btn-default' %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

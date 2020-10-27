@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe DrivesController, type: :controller do
 
   let(:user) { create(:user) }
-
+  before { user.create_personal_driver }
+  
   describe 'GET #index' do
 
     subject { response }

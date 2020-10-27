@@ -3,6 +3,7 @@ class User::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
 
   before_action :restrict_demo_user, only: [:update, :edit]
+  skip_before_action :check_account!
 
 
   def create
@@ -10,7 +11,6 @@ class User::RegistrationsController < Devise::RegistrationsController
       AdminMailer.signup_notification_mail.deliver
     end
   end
-
 
   private
 
@@ -23,7 +23,7 @@ class User::RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_sign_up_path_for(resource)
-    stored_location_for(:user) || welcome_path
+    stored_location_for(:user) || setup_path
   end
 
   def configure_sign_up_params

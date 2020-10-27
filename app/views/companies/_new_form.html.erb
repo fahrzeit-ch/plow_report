@@ -5,6 +5,7 @@
       <%= form.check_box :add_owner_as_driver, id: :company_registration_add_as_driver, class: 'form-check-input', data: { collapse_on_change: 'transfer-private-drives' }%>
       <%= form.label :add_as_driver, class: 'form-check-label' %>
     </div>
+    <small class="form-text text-muted"><%= t('views.companies.new.add_me_as_driver_help_text') %></small>
     <% if current_user.personal_driver %>
     <div class="form-check collapse" id="transfer-private-drives">
       <%= form.check_box :transfer_private_drives, id: :company_registration_transfer_private_drives, class: 'form-check-input' %>
@@ -14,6 +15,6 @@
   </div>
   <%= link_to t('common.back'), root_path, class: 'btn btn-default' %>
   <%= form.button type: :submit, class: 'btn btn-primary' do %>
-    <i class="fa fa-check"></i> <%= t 'common.create' %>
+    <i class="fa fa-check"></i> <%= t 'views.companies.new.create' %>
   <% end %>
 <% end %>

@@ -1,0 +1,30 @@
+<div class="row justify-content-md-center">
+  <div class="mt-5 col-md-4">
+    <div class="card m-3">
+      <div class="mt-4 p-3 text-center">
+        <h1 class="text-success"><i class="fa fa-8x fa-check-circle-o"></i></h1>
+        <h2><%= t('views.driver_applications.show_title') %></h2>
+      </div>
+      <div class="card-body">
+        <p><%= t'views.driver_applications.application_sent' %></p>
+        <strong><%= t'views.driver_applications.application_sent_to' %></strong>
+        <%= @record.recipient %>
+        <div class="text-center mt-5">
+          <h3><%= t'common.install_app_title' %></h3>
+          <div class="row">
+            <div class="col-6">
+              <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
+                <%= image_tag 'google_play_btn.png', width: '100%' %>
+              <% end %>
+            </div>
+            <div class="col-6">
+              <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
+                <%= image_tag 'app_store_btn.png', width: '100%' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>

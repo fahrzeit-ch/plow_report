@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   use_doorkeeper do
     controllers authorizations: 'authorizations'
   end
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   namespace :api do
     defaults format: :json do
       namespace :v1 do
+        resources :driver_applications, only: [:index, :create]
         resources :drivers, only: [:index] do
           resources :activities, only: [:index]
           resources :sites, only: [:index]
@@ -51,6 +53,13 @@ Rails.application.routes.draw do
     put :finish
   end
 
+  resources :driver_applications, only: %i[create show] do
+    member do
+      patch :accept
+      get :review
+    end
+  end
+
   resources :companies do
     scope module: 'company' do
       resources :hourly_rates
@@ -90,7 +99,6 @@ Rails.application.routes.draw do
   end
 
   get '/setup', to: 'static_pages#setup', as: :setup
-  get '/welcome', to: 'static_pages#welcome', as: :welcome
   get '/demo_login', to: 'static_pages#demo_login', as: :demo_login
 
   devise_scope :user do

@@ -1,4 +1,9 @@
 de-CH:
+  helpers:
+    submit:
+      driver_application:
+        create: "Senden"
+        update: "Fahrer Hinzufügen"
   navbar:
     main:
       dashboard: "Übersicht"
@@ -7,7 +12,7 @@ de-CH:
       sign_in: "Anmelden"
       sign_up: "Registrieren"
       signout: "Abmelden"
-      new_company: "Firma Registrieren"
+      new_company: "Firma registrieren"
       company_settings: "Einstellungen"
       company_show: "Zur Firmen Ansicht"
       my_dashboard: "Zur Fahrer Ansicht"
@@ -30,11 +35,10 @@ de-CH:
       customer_to_site_transition:
         assign_to: "Zielkunde"
       company/registration:
-        name: "Firmen Name"
-        contact_email: "Kontakt Email"
+        name: "Firmenname"
+        contact_email: "Kontakt E-Mail-Adresse"
         add_as_driver: "Mich als Fahrer in dieser Firma hinzufügen"
         transfer_private_drives: "Fahrten die als Privat erfasst wurden an die Firma übertragen."
-        contact_email: "Kontakt Email"
         address: "Adresse"
         zip_code: "PLZ"
         city: "Ort"
@@ -101,11 +105,12 @@ de-CH:
         user_email: "Email"
         user_name: "Name"
       company:
-        name: "Firmen Name"
-        contact_email: "Kontakt Email"
+        name: "Namen der Firma"
+        contact_email: "Kontakt E-Mail"
         address: "Adresse"
         zip_code: "PLZ"
         city: "Ort"
+        nr: "Nr."
       customer:
         name: "Name"
         first_name: "Vorname"
@@ -113,6 +118,9 @@ de-CH:
         nr: "Nr."
         zip: "PLZ"
         city: "Ort"
+      driver_application:
+        assign_to_id: "Hinzufügen zu"
+        recipient: "Empfänger"
       site:
         display_name: "Objektbezeichnung"
         name: "Name"
@@ -256,6 +264,11 @@ de-CH:
       updated: "Tätigkeit erfolgreich aktuallisiert."
       destroyed: "Tätigkeit erfolgreich gelöscht."
       not_destroyed: "Diese Tätigkeit wurde bereits für Fahrten verwendet und kann nicht mehr gelöscht werden."
+    driver_applications:
+      requested: "Die Anfrage wurde erfolgreich versendet"
+      accepted: "Der Benutzer %{username} wurde erfolgreich als Fahrer hinzugefügt"
+      acception_failed: "Die Anfrage konnte nicht akzeptiert werden. Der Benutzer wurde möglicherweise bereits Hinzugefügt."
+      request_failed: "Fehler beim Versenden der Anfrage"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -275,9 +288,20 @@ de-CH:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
       create_driver: "Als privater Fahrer anmelden"
       create_company: "Firmen Konto einrichten"
+      install_app_title: "App installieren"
+      use_as_driver_title: "Als Fahrer verwenden"
+      use_as_driver_instructions_html: "<p>Sie arbeiten für eine Firma, die fahrzeit.ch für den Winterdienst nutzt?</p> <p>Fragen Sie Ihren Administrator an, dass er Sie als Fahrer hinzuzufügen kann, und installieren Sie die Fahrzeit App auf Ihrem Smartphone.</p>"
+      create_company_title: "Firma Registrieren"
+      price_title: "Preis:"
+      prices_html: "<p>Grundgebühr: <b>50.- CHF pro Jahr</b><br>+ Preis in Abhängigkeit der Anzahl geräumten Objekte.</p>"
+      calculate_price: "Preis berechnen"
+      support_title: "Ich brauche Unterstützung"
+      support_content_html: "<p>Wir unterstützen Sie gerne bei der Einrichtung Ihres Firmen Konto, oder bei der Schulung Ihrer Mitarbeiter.</p>"
     companies:
       new:
         title: "Firmen Konto registrieren"
+        add_me_as_driver_help_text: "Mit dieser Funktion können Sie selber per App Ihre Räumungszeiten erfassen."
+        create: "Jetzt kostenpflichtig Registrieren"
       edit:
         title: "Firmen Einstellungen"
         destroy_company: "Firma Löschen"
@@ -365,12 +389,23 @@ de-CH:
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"
+    driver_applications:
+      show_title: "Fahrer Zugriff Beantragt"
+      application_sent: "Ihre Anfrage wurde erfolgreich versendet. Sobald Ihr Administrator Sie als Fahrer hinzugefügt hat, können Sie sich mit der App und Ihrem Login Anmelden und Fahrten für Ihre Firma erfassen.¨"
+      application_sent_to: "Gesendet an:"
+      review: "Anfrage Prüfen"
+      requested_by: "Anfrage von"
+      review_not_allowed_message: "Sie verwalten keinen Firmen Account, dem Sie Fahrer hinzufügen können."
+      review_not_allowed: "Anfrage prüfen nicht möglich"
+      review_description: "Ein Benutzer möchte als Fahrer zu Ihrer Firma hinzugefügt werden. Prüfen Sie die Angaben und klicken sie auf \"Fahrer Hinzufügen\", damit dieser Benutzer Fahrten für Ihre FIrma erfassen kann."
   forms:
     placeholders:
       driver:
         name: "Name"
       company_member:
         user_email: "hans.muster@meinefirma.ch"
+      driver_applications:
+        recipient: "Firmen E-Mail-Adresse"
     standby_dates:
       driver_dropdown: "+"
     promt: "%{model} wählen"

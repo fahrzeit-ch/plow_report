@@ -80,6 +80,7 @@ RSpec.describe Company::Registration do
 
     context 'transfer private drives' do
       before do
+        user.create_personal_driver
         subject.add_owner_as_driver = true
         subject.transfer_private_drives = true
       end

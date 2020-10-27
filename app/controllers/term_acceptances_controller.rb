@@ -1,7 +1,9 @@
 class TermAcceptancesController < ApplicationController
 
   skip_before_action :check_consents
+  skip_before_action :check_account!
   before_action :set_user
+  layout 'setup'
 
   def edit
   end

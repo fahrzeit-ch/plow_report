@@ -16,6 +16,5 @@ FactoryBot.define do
     zip_code '8810'
     city 'Neustadt'
     add_owner_as_driver false
-    transfer_private_drives false
   end
 end

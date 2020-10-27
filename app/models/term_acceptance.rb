@@ -18,7 +18,7 @@ class TermAcceptance < ApplicationRecord
 
   private
   def set_term_version
-    self.term_version = policy_term.revisions.last.version
+    self.term_version = policy_term.revisions.last.audit_version
   end
 
   def invalidate_previous

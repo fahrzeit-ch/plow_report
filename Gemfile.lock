@@ -195,7 +195,7 @@ GEM
     powerpack (0.1.2)
     public_suffix (3.0.1)
     puma (3.12.6)
-    pundit (1.1.0)
+    pundit (2.1.0)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
@@ -404,7 +404,7 @@ DEPENDENCIES
   money-rails (~> 1.12)
   pg (~> 0.18)
   puma (~> 3.12)
-  pundit (~> 1.1.0)
+  pundit (~> 2.1.0)
   pundit-matchers (~> 1.6.0)
   rails (~> 5.1.6)
   rails-controller-testing

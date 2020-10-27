@@ -17,7 +17,7 @@ feature 'create company' do
 
     it 'will create new company' do
       fill_form('company_registration', attributes_for(:company_registration))
-      click_button(I18n.t('common.create'))
+      click_button(I18n.t('views.companies.new.create'))
       expect(page).to have_content(I18n.t('views.companies.dashboard.title'))
     end
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+<%= render 'layouts/head' %>
+<body>
+  <%= render 'navigation/navbar_main' %>
+<div class="wrapper bg-blue-dark">
+  <!-- Page Content -->
+  <div id="content">
+    <div class="container">
+      <%= yield %>
+    </div>
+  </div>
+
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="dynamicModal">
+  <div class="modal-dialog" id="modal-content" role="document">
+
+  </div>
+</div>
+<%= custom_bootstrap_flash %>
+</body>
+</html>
