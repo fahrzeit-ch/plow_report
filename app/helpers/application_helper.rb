@@ -19,6 +19,17 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def label_with_help_for(klass, attribute)
+    help_translation_key =  "#{klass.i18n_scope}.attributes.#{klass.model_name.i18n_key}.#{attribute}_help_html"
+    "#{klass.human_attribute_name(attribute)} #{help_icon(help_translation_key)}".html_safe
+  end
+
+  def help_icon(translation_key)
+    tag.a tabindex: "0", style: 'cursor: help;', data: { toggle: 'popover', trigger: 'focus', html: true, content: t(translation_key), title: t('common.help')} do
+      tag.i class: 'fa fa-question-circle ml-3'
+    end
+  end
+
   def js_flash
     flash.map do |type, message|
       toastr_method = MESSAGE_TYPE_MAP[type] || type

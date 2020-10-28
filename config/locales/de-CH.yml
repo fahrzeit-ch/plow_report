@@ -98,6 +98,11 @@ de-CH:
         day_count: "Tage"
       company_member:
         role: "Rolle"
+        role_help_html: "<dl>
+        <dt>Besitzer</dt><dd>Kann alle Daten verwalten, kann Änderungen an den Firmen-Einstellungen vornehmen.</dd>
+        <dt>Administrator</dt><dd>Kann alle Daten verwalten, ausser Firmen-Einstellungen.</dd>
+        <dt>Fahrer</dt><dd>Kann Fahrten und Touren erfassen und einsehen, sowie eigene Fahrten ändern.</dd>
+        </dl>"
         roles:
           owner: "Besitzer"
           employee: "Mitarbeiter"
@@ -283,6 +288,7 @@ de-CH:
     please_wait: "Bitte warten..."
     cancel: "Abbrechen"
     edit: "Bearbeiten"
+    help: "Hilfe"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
