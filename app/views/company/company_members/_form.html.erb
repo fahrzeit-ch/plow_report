@@ -1,9 +1,19 @@
 <div id="company-member-form">
   <h5><%= t 'views.companies.users.add_new' %></h5>
-  <%= form_with(model: company_member, url: [current_company, company_member], remote: true, builder: BootstrapFormBuilder, class: 'form-inline') do |f| %>
-    <%= f.email_field :user_email, class: 'col-sm-6', placeholder: t('forms.placeholders.company_member.user_email') %>
-    <%= f.select :role, company_member_role_select_options, {}, { class: 'custom-select col-sm-4' }%>
-    <%= f.button type: :submit, class: 'col-sm-2 btn btn-primary', data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
+  <%= bootstrap_form_with(model: company_member, url: [current_company, company_member], remote: true) do |f| %>
+    <div class="form-row">
+      <div class="col">
+        <%= f.email_field :user_email, placeholder: t('forms.placeholders.company_member.user_email') %>
+      </div>
+      <div class="col">
+        <%= f.select :role, company_member_role_select_options, label_class: 'prevent-focus', label: label_with_help_for(CompanyMember, :role) %>
+      </div>
+      <div class="col-1 d-flex align-items-end">
+        <div class="form-group">
+          <%= f.primary nil, data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
+        </div>
+      </div>
+    </div>
   <% end %>
   <% if company_member.errors.added?(:user, :taken) %>
     <div class="form-row">

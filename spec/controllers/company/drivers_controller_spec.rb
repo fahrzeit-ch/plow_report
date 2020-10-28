@@ -8,12 +8,12 @@ RSpec.describe Company::DriversController, type: :controller do
 
   before { sign_in(company_admin) }
 
-  describe 'POST #update' do
+  describe 'PATCH #update' do
     let(:driver) { create(:driver, company: company) }
     let(:other_member) { create(:company_member, company: company, role: :owner) }
     let(:params) { { driver: { user: other_member.user.id }, company_id: company.id, id: driver.id } }
 
-    before { post :update, params: params }
+    before { patch :update, params: params }
 
     context 'to driver without user' do
       it { expect(response).to redirect_to(company_drivers_path(company)) }
@@ -39,6 +39,16 @@ RSpec.describe Company::DriversController, type: :controller do
       it { expect(response.status).to eq 422 }
     end
 
+  end
+
+  describe 'POST #create' do
+    let(:other_member) { create(:company_member, company: company, role: :owner) }
+    let(:params) { { driver: { name: 'Hans' }, company_id: company.id } }
+
+    before { post :create, params: params }
+
+    it { expect(response).to redirect_to company_drivers_path(company) }
+    it { expect(Driver.where(name: 'Hans', company_id: company.id).count).to eq(1) }
   end
 
 
