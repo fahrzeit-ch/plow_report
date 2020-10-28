@@ -21,9 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap', '~> 4.3.1'
-gem 'bootstrap_form',
-    git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
-    branch: 'master'
+gem 'bootstrap_form', '~> 4.5.0'
 gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'rails-i18n'
