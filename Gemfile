@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.2'
+ruby '2.6.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -8,8 +8,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
-gem 'sprockets', '~> 3.7.2'
+gem 'rails', '~> 5.2.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 gem "scenic", '~> 1.5'
@@ -22,9 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap', '~> 4.3.1'
-gem 'bootstrap_form',
-    git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
-    branch: 'master'
+gem 'bootstrap_form', '~> 4.5.0'
 gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'rails-i18n'
@@ -32,9 +29,10 @@ gem 'simple_calendar', '~> 2.0'
 
 gem 'audited', '~> 4.9'
 gem 'discard', '~> 1.0'
-gem 'devise'
+gem 'devise', '~> 4.7.3'
+gem 'devise-i18n'
 gem 'devise-bootstrap-views'
-gem 'devise_invitable', '~> 1.7.0'
+gem 'devise_invitable', '~> 2.0.0'
 gem 'doorkeeper', '~> 5.1.1'
 gem 'pundit', '~> 2.1.0'
 gem 'rollbar'
@@ -100,3 +98,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# Reduces boot times through caching; configured in config/boot.rb
+gem "bootsnap", require: false

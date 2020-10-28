@@ -25,8 +25,8 @@ RSpec.describe Drive, type: :model do
   end
 
   describe 'customer and site' do
-    it { is_expected.to belong_to(:customer) }
-    it { is_expected.to belong_to(:site) }
+    it { is_expected.to belong_to(:customer).optional }
+    it { is_expected.to belong_to(:site).optional }
 
     context 'customer without site' do
       let(:customer) { create(:customer) }

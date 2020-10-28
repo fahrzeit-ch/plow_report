@@ -99,12 +99,12 @@ $body-bg:       #e4e5e6 !default;
 
 // Fonts
 
-$font-family-sans-serif: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial, sans-serif !default;
+$font-family-sans-serif: "Lato", "Source Sans Pro", Calibri, Candara, Arial, sans-serif !default;
 
 $font-size-base: 0.9375rem !default;
-$font-weight-base: 200 !default;
+$font-weight-base: 300 !default;
 
-$headings-font-weight:   200 !default;
+$headings-font-weight:   300 !default;
 
 
 // Navbar
@@ -141,3 +141,5 @@ $card-img-overlay-padding:          1.25rem !default;
 $card-columns-count:                3 !default;
 $card-columns-gap:                  1.25rem !default;
 $card-columns-margin:               $card-spacer-y !default;
+
+$btn-font-weight: 300

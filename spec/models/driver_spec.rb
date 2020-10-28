@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Driver, type: :model do
 
   let(:valid_attributes) { { name: 'Sample Driver' } }
+  subject { create(:driver, valid_attributes)}
 
   describe 'validation' do
     it 'should be valid with valid attributes' do

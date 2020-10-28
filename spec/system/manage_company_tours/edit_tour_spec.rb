@@ -36,8 +36,8 @@ feature 'Edit Tour' do
       before { visit(edit_company_tour_drife_path(company, tour, existing_drive)) }
 
       it 'shows validation errors' do
-        fill_in('drive[start]', with: 1.hour.ago.strftime('%H:%M'))
-        fill_in('drive[end]', with: 2.hours.ago.strftime('%H:%M'))
+        fill_in('drive[start]', with: 1.hour.ago.strftime('%Y-%m-%dT%H:%M'))
+        fill_in('drive[end]', with: 2.hours.ago.strftime('%Y-%m-%dT%H:%M'))
         click_on('OK')
         expect(page).to have_content('darf nicht vor der Start Zeit liegen')
         expect(page).to have_current_path(company_tour_drife_path(company, tour, existing_drive))

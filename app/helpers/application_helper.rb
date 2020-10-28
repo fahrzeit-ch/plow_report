@@ -14,7 +14,9 @@ module ApplicationHelper
   end
 
   def custom_bootstrap_flash
-    "<script>#{js_flash}</script>".html_safe
+    javascript_tag nonce: true do
+      js_flash
+    end.html_safe
   end
 
   def js_flash
