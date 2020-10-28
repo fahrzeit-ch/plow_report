@@ -9,11 +9,11 @@ class Company::DriversController < ApplicationController
   end
 
   # Creates a new driver for this company
-  # assigned to the user
+  # without assigning a user to it
   def create
-    authorize_create_action
-    result = current_company.add_driver user_to_assign, params[:driver][:transfer_private]
-    if result[:driver].persisted?
+    @driver = Driver.new driver_params
+    authorize @driver
+    if @driver.save
       flash[:success] = I18n.t 'flash.drivers.created'
     else
       flash[:error] = I18n.t 'flash.drivers.driver_not_created'
@@ -29,7 +29,7 @@ class Company::DriversController < ApplicationController
   #   user_id: id of the user
   #
   # Responds with 422 Error when driver already has a user assigned.
-  # Respons with 422 Error if the given user is not member of the company
+  # Responds with 422 Error if the given user is not member of the company
   #
   def update
     # check if user
@@ -60,13 +60,8 @@ class Company::DriversController < ApplicationController
     authorize @driver
   end
 
-  def authorize_create_action
-    # Just create a dummy driver to authorize against
-    authorize Driver.new(user: user_to_assign, company: current_company)
-  end
-
   def driver_params
-    params.require(:driver).permit(:name)
+    params.require(:driver).permit(:name).merge(company: current_company)
   end
 
   def driver_update_params
@@ -77,7 +72,7 @@ class Company::DriversController < ApplicationController
   end
 
   def user_to_assign
-    User.find(params[:driver][:user_id])
+    User.find_by(id: params[:driver][:user_id])
   end
 
 end
