@@ -1,134 +1,273 @@
-# Commonly used screens these days easily fit more than 80 characters.
-Metrics/LineLength:
-  Max: 120
+require:
+  - rubocop-performance
+  - rubocop-rails
 
-Metrics/AbcSize:
-  Max: 20
+AllCops:
+  TargetRubyVersion: 2.6
+  # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
+  # to ignore them, so only the ones explicitly set in this file are enabled.
+  DisabledByDefault: true
+  Exclude:
+    - '**/tmp/**/*'
+    - '**/templates/**/*'
+    - '**/vendor/**/*'
+    - 'actionpack/lib/action_dispatch/journey/parser.rb'
+    - 'actionmailbox/test/dummy/**/*'
+    - 'actiontext/test/dummy/**/*'
+    - '**/node_modules/**/*'
 
-# Too short methods lead to extraction of single-use methods, which can make
-# the code easier to read (by naming things), but can also clutter the class
-Metrics/MethodLength: 
-  Max: 20
+Performance:
+  Exclude:
+    - '**/test/**/*'
 
-# The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
-Metrics/ClassLength:
-  Max: 1500
+# Prefer assert_not over assert !
+Rails/AssertNot:
+  Include:
+    - '**/test/**/*'
 
-Style/EmptyMethod:
-  Enabled: false
+# Prefer assert_not_x over refute_x
+Rails/RefuteMethods:
+  Include:
+    - '**/test/**/*'
 
-# No space makes the method definition shorter and differentiates
-# from a regular assignment.
-Layout/SpaceAroundEqualsInParameterDefault:
-  EnforcedStyle: no_space
-
-# Single quotes being faster is hardly measurable and only affects parse time.
-# Enforcing double quotes reduces the times where you need to change them
-# when introducing an interpolation. Use single quotes only if their semantics
-# are needed.
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
-# We do not need to support Ruby 1.9, so this is good to use.
-Style/SymbolArray:
+Rails/IndexBy:
   Enabled: true
 
-# Most readable form.
-Style/AlignHash:
-  EnforcedHashRocketStyle: table
-  EnforcedColonStyle: table
+Rails/IndexWith:
+  Enabled: true
 
-# Mixing the styles looks just silly.
+# Prefer &&/|| over and/or.
+Style/AndOr:
+  Enabled: true
+
+# Align `when` with `case`.
+Layout/CaseIndentation:
+  Enabled: true
+
+Layout/ClosingHeredocIndentation:
+  Enabled: true
+
+# Align comments with method definitions.
+Layout/CommentIndentation:
+  Enabled: true
+
+Layout/ElseAlignment:
+  Enabled: true
+
+# Align `end` with the matching keyword or starting expression except for
+# assignments, where it should be aligned with the LHS.
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+  AutoCorrect: true
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+  EnforcedStyle: only_before
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
+# In a regular class definition, no empty lines around the body.
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+
+# In a regular method definition, no empty lines around the body.
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+# In a regular module definition, no empty lines around the body.
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+
+# Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
 Style/HashSyntax:
-  EnforcedStyle: ruby19_no_mixed_keys
-
-# has_key? and has_value? are far more readable than key? and value?
-Style/PreferredHashMethods:
-  Enabled: false
-
-# String#% is by far the least verbose and only object oriented variant.
-Style/FormatString:
-  EnforcedStyle: percent
-
-Style/CollectionMethods:
-  Enabled: true
-  PreferredMethods:
-    # inject seems more common in the community.
-    reduce: "inject"
-
-
-# Either allow this style or don't. Marking it as safe with parenthesis
-# is silly. Let's try to live without them for now.
-Style/ParenthesesAroundCondition:
-  AllowSafeAssignment: false
-Lint/AssignmentInCondition:
-  AllowSafeAssignment: false
-
-# A specialized exception class will take one or more arguments and construct the message from it.
-# So both variants make sense. 
-Style/RaiseArgs:
-  Enabled: false
-
-# Indenting the chained dots beneath each other is not supported by this cop,
-# see https://github.com/bbatsov/rubocop/issues/1633
-Layout/MultilineOperationIndentation:
-  Enabled: false
-
-# Fail is an alias of raise. Avoid aliases, it's more cognitive load for no gain.
-# The argument that fail should be used to abort the program is wrong too,
-# there's Kernel#abort for that.
-Style/SignalException:
-  EnforcedStyle: only_raise
-
-# Suppressing exceptions can be perfectly fine, and be it to avoid to
-# explicitly type nil into the rescue since that's what you want to return,
-# or suppressing LoadError for optional dependencies
-Lint/HandleExceptions:
-  Enabled: false
-
-Layout/SpaceInsideBlockBraces:
-  # The space here provides no real gain in readability while consuming
-  # horizontal space that could be used for a better parameter name.
-  # Also {| differentiates better from a hash than { | does.
-  SpaceBeforeBlockParameters: false
-
-# { ... } for multi-line blocks is okay, follow Weirichs rule instead:
-# https://web.archive.org/web/20140221124509/http://onestepback.org/index.cgi/Tech/Ruby/BraceVsDoEnd.rdoc
-Style/BlockDelimiters:
-  Enabled: false
-
-# do / end blocks should be used for side effects,
-# methods that run a block for side effects and have
-# a useful return value are rare, assign the return
-# value to a local variable for those cases.
-Style/MethodCalledOnDoEndBlock:
   Enabled: true
 
-# Enforcing the names of variables? To single letter ones? Just no.
-Style/SingleLineBlockParams:
-  Enabled: false
+Layout/FirstArgumentIndentation:
+  Enabled: true
 
-# Shadowing outer local variables with block parameters is often useful
-# to not reinvent a new name for the same thing, it highlights the relation
-# between the outer variable and the parameter. The cases where it's actually
-# confusing are rare, and usually bad for other reasons already, for example
-# because the method is too long.
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false
+# Method definitions after `private` or `protected` isolated calls need one
+# extra level of indentation.
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: indented_internal_methods
 
-# Check with yard instead.
-Style/Documentation:
-  Enabled: false 
+# Two spaces, no tabs (for indentation).
+Layout/IndentationWidth:
+  Enabled: true
 
-# This is just silly. Calling the argument `other` in all cases makes no sense.
-Naming/BinaryOperatorParameterName:
-  Enabled: false 
+Layout/LeadingCommentSpace:
+  Enabled: true
 
-# There are valid cases, for example debugging Cucumber steps,
-# also they'll fail CI anyway
-Lint/Debugger:
-  Enabled: false
+Layout/SpaceAfterColon:
+  Enabled: true
 
-# Style preference
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/SpaceAfterSemicolon:
+  Enabled: true
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+Layout/SpaceAroundKeyword:
+  Enabled: true
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+
+Layout/SpaceBeforeComma:
+  Enabled: true
+
+Layout/SpaceBeforeComment:
+  Enabled: true
+
+Layout/SpaceBeforeFirstArg:
+  Enabled: true
+
+Style/DefWithParentheses:
+  Enabled: true
+
+# Defining a method with parameters needs parentheses.
 Style/MethodDefParentheses:
-  Enabled: false
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+  Exclude:
+    - 'actionview/test/**/*.builder'
+    - 'actionview/test/**/*.ruby'
+    - 'actionpack/test/**/*.builder'
+    - 'actionpack/test/**/*.ruby'
+    - 'activestorage/db/migrate/**/*.rb'
+    - 'activestorage/db/update_migrate/**/*.rb'
+    - 'actionmailbox/db/migrate/**/*.rb'
+    - 'actiontext/db/migrate/**/*.rb'
+
+Style/RedundantFreeze:
+  Enabled: true
+
+# Use `foo {}` not `foo{}`.
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+# Use `foo { bar }` not `foo {bar}`.
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyleForEmptyBraces: space
+
+# Use `{ a: 1 }` not `{a:1}`.
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+
+# Check quotes usage according to lint rule below.
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+# Detect hard tabs, no hard tabs.
+Layout/IndentationStyle:
+  Enabled: true
+
+# Empty lines should not have any spaces.
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+# No trailing whitespace.
+Layout/TrailingWhitespace:
+  Enabled: true
+
+# Use quotes for string literals when they are enough.
+Style/RedundantPercentQ:
+  Enabled: true
+
+Lint/AmbiguousOperator:
+  Enabled: true
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: true
+
+Lint/ErbNewArguments:
+  Enabled: true
+
+# Use my_method(my_arg) not my_method( my_arg ) or my_method my_arg.
+Lint/RequireParentheses:
+  Enabled: true
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: true
+
+Lint/RedundantStringCoercion:
+  Enabled: true
+
+Lint/UriEscapeUnescape:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Lint/DeprecatedClassMethods:
+  Enabled: true
+
+Style/ParenthesesAroundCondition:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantBegin:
+  Enabled: true
+
+Style/RedundantReturn:
+  Enabled: true
+  AllowMultipleReturnValues: true
+
+Style/Semicolon:
+  Enabled: true
+  AllowAsExpressionSeparator: true
+
+# Prefer Foo.method over Foo::method
+Style/ColonMethodCall:
+  Enabled: true
+
+Style/TrivialAccessors:
+  Enabled: true
+
+Performance/FlatMap:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true
+
+Performance/StartWith:
+  Enabled: true
+
+Performance/EndWith:
+  Enabled: true
+
+Performance/RegexpMatch:
+  Enabled: true
+
+Performance/ReverseEach:
+  Enabled: true
+
+Performance/UnfreezeString:
+  Enabled: true
+
+Performance/DeletePrefix:
+  Enabled: true
+
+Performance/DeleteSuffix:
+  Enabled: true

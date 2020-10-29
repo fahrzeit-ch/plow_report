@@ -82,9 +82,12 @@ group :development, :test do
   gem 'rspec-rails', '>= 3.7.2', '< 4.0'
   gem 'rspec-its', '~> 1.2.0'
   gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov'
+  gem 'brakeman'
 end
 
 group :development do
