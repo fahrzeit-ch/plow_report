@@ -1,6 +1,7 @@
-require 'rails_helper'
-RSpec.describe Company::DriversController, type: :controller do
+# frozen_string_literal: true
 
+require "rails_helper"
+RSpec.describe Company::DriversController, type: :controller do
   let(:company) { create(:company) }
   let(:company_admin) { create(:user) }
 
@@ -8,48 +9,45 @@ RSpec.describe Company::DriversController, type: :controller do
 
   before { sign_in(company_admin) }
 
-  describe 'PATCH #update' do
+  describe "PATCH #update" do
     let(:driver) { create(:driver, company: company) }
     let(:other_member) { create(:company_member, company: company, role: :owner) }
     let(:params) { { driver: { user: other_member.user.id }, company_id: company.id, id: driver.id } }
 
     before { patch :update, params: params }
 
-    context 'to driver without user' do
+    context "to driver without user" do
       it { expect(response).to redirect_to(company_drivers_path(company)) }
       it { expect(driver.user).to eq(other_member.user) }
     end
 
-    context 'to driver with assigned user' do
+    context "to driver with assigned user" do
       let(:driver) { create(:driver, company: company, user: create(:user)) }
 
       it { expect(response.status).to eq 422 }
     end
 
-    context 'with user not in company' do
+    context "with user not in company" do
       let(:other_company) { create(:company) }
       let(:other_member) { create(:company_member, company: other_company, role: :owner) }
 
       it { expect(response.status).to eq 422 }
     end
 
-    context 'with user that already is assigned to a driver in company' do
+    context "with user that already is assigned to a driver in company" do
       let(:other_member) { create(:company_member, company: company, role: :driver) }
 
       it { expect(response.status).to eq 422 }
     end
-
   end
 
-  describe 'POST #create' do
+  describe "POST #create" do
     let(:other_member) { create(:company_member, company: company, role: :owner) }
-    let(:params) { { driver: { name: 'Hans' }, company_id: company.id } }
+    let(:params) { { driver: { name: "Hans" }, company_id: company.id } }
 
     before { post :create, params: params }
 
     it { expect(response).to redirect_to company_drivers_path(company) }
-    it { expect(Driver.where(name: 'Hans', company_id: company.id).count).to eq(1) }
+    it { expect(Driver.where(name: "Hans", company_id: company.id).count).to eq(1) }
   end
-
-
 end

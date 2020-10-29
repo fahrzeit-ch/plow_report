@@ -1,24 +1,23 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'edit user profile' do
+require "rails_helper"
 
+feature "edit user profile" do
   let(:user) { create(:user) }
-  let(:new_attributes) { {name: 'My new Name', email: 'new@email.com', current_password: user.password} }
+  let(:new_attributes) { { name: "My new Name", email: "new@email.com", current_password: user.password } }
 
-  context 'Without updating password' do
+  context "Without updating password" do
     before do
       sign_in_with(user.email, user.password)
       visit(edit_user_registration_path)
-      fill_form('user', new_attributes)
-      click_button(I18n.t('devise.registrations.edit.update'))
+      fill_form("user", new_attributes)
+      click_button(I18n.t("devise.registrations.edit.update"))
     end
 
     it  do
-      expect(page).to have_current_path('/setup')
+      expect(page).to have_current_path("/setup")
       user.reload
       expect(user.name).to eq new_attributes[:name]
     end
-
   end
-
 end

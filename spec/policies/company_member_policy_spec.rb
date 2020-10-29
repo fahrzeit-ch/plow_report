@@ -1,10 +1,11 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe CompanyMemberPolicy do
-
   subject { described_class.new(user, member) }
   let(:company) { create(:company) }
-  let(:member) { build(:company_member, company: company)}
+  let(:member) { build(:company_member, company: company) }
 
   let(:resolved_scope) do
     described_class::Scope.new(user, CompanyMember.all).resolve
@@ -12,7 +13,7 @@ RSpec.describe CompanyMemberPolicy do
 
   let(:user) { create(:user) }
 
-  context 'as signed in user' do
+  context "as signed in user" do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:show) }
@@ -21,7 +22,7 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to forbid_new_and_create_actions }
   end
 
-  context 'as company owner' do
+  context "as company owner" do
     before { company.add_member(user, CompanyMember::OWNER) }
 
     it { is_expected.to permit_edit_and_update_actions }
@@ -32,7 +33,7 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to permit_new_and_create_actions }
   end
 
-  context 'as company administrator' do
+  context "as company administrator" do
     before { company.add_member(user, CompanyMember::ADMINISTRATOR) }
 
     it { is_expected.to permit_edit_and_update_actions }
@@ -43,7 +44,7 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to permit_new_and_create_actions }
   end
 
-  context 'as company driver' do
+  context "as company driver" do
     before { company.add_member(user, CompanyMember::DRIVER) }
 
     it { is_expected.to forbid_action(:show) }
@@ -55,7 +56,7 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to forbid_action(:resend_invitation) }
   end
 
-  context 'as other company administrator' do
+  context "as other company administrator" do
     let(:other_company) { create(:company) }
     before { other_company.add_member(user, CompanyMember::ADMINISTRATOR) }
 
@@ -66,5 +67,4 @@ RSpec.describe CompanyMemberPolicy do
     it { is_expected.to forbid_action(:resend_invitation) }
     it { is_expected.to forbid_new_and_create_actions }
   end
-
 end

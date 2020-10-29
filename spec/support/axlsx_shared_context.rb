@@ -1,12 +1,13 @@
-RSpec.shared_context 'axlsx' do
+# frozen_string_literal: true
 
+RSpec.shared_context "axlsx" do
   # all xlsx specs describe must be normalized
   # "folder/view_name.xlsx.axlsx"
   # allow to infer the template path
   template_name = description
 
   let(:template_path) do
-    ['app', 'views', template_name]
+    ["app", "views", template_name]
   end
 
   # This helper will be used in tests

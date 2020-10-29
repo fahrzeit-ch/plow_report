@@ -214,6 +214,8 @@ Lint/UriEscapeUnescape:
 
 Lint/UselessAssignment:
   Enabled: true
+  Exclude:
+    - "app/views/**/*.json.jb"
 
 Lint/DeprecatedClassMethods:
   Enabled: true

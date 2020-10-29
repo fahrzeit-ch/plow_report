@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Customer < ApplicationRecord
-  belongs_to :client_of, foreign_key: :company_id, class_name: 'Company'
-  has_many :drives, class_name: 'Drive'
+  belongs_to :client_of, foreign_key: :company_id, class_name: "Company"
+  has_many :drives, class_name: "Drive"
   has_many :sites, dependent: :destroy
 
   before_destroy :check_existing_drives
@@ -14,7 +16,7 @@ class Customer < ApplicationRecord
   end
 
   def details
-    ["#{street} #{nr}", city].reject(&:blank?).join(', ')
+    ["#{street} #{nr}", city].reject(&:blank?).join(", ")
   end
 
   def as_select_value
@@ -22,10 +24,10 @@ class Customer < ApplicationRecord
   end
 
   private
-  def check_existing_drives
-    if drives.any?
-      errors.add :drives, 'not_empty'
-      throw :abort
+    def check_existing_drives
+      if drives.any?
+        errors.add :drives, "not_empty"
+        throw :abort
+      end
     end
-  end
 end

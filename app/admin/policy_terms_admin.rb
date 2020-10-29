@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Trestle.resource(:policy_terms) do
   menu do
     item :policy_terms, icon: "fa fa-star"

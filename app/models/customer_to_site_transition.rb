@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CustomerToSiteTransition
   include ActiveModel::Model
 
@@ -45,17 +47,16 @@ class CustomerToSiteTransition
   end
 
   private
-
-  def attributes_for_target
-    {
-        display_name: "#{source.name} #{source.first_name}".strip,
-        first_name: source.first_name,
-        name: source.name,
-        street: source.street,
-        customer: assign_to,
-        nr: source.nr,
-        zip: source.zip,
-        city: source.city
-    }
-  end
+    def attributes_for_target
+      {
+          display_name: "#{source.name} #{source.first_name}".strip,
+          first_name: source.first_name,
+          name: source.name,
+          street: source.street,
+          customer: assign_to,
+          nr: source.nr,
+          zip: source.zip,
+          city: source.city
+      }
+    end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DashboardController < ApplicationController
   before_action :check_driver!
 
@@ -8,7 +10,7 @@ class DashboardController < ApplicationController
 
 
   private
-  def load_standby_weeks
-    @standby_weeks = StandbyDate.where(driver: current_driver).by_season(selected_season).weeks
-  end
+    def load_standby_weeks
+      @standby_weeks = StandbyDate.where(driver: current_driver).by_season(selected_season).weeks
+    end
 end

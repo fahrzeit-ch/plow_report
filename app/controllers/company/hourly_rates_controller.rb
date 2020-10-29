@@ -1,5 +1,6 @@
-class Company::HourlyRatesController < ApplicationController
+# frozen_string_literal: true
 
+class Company::HourlyRatesController < ApplicationController
   def index
     authorize(current_company, :index_hourly_rates?)
 
@@ -15,10 +16,10 @@ class Company::HourlyRatesController < ApplicationController
     @hourly_rate = HourlyRate.new(hourly_rate_create_params.merge company: current_company)
     authorize @hourly_rate
     if @hourly_rate.save
-      flash[:success] = t 'flash.common.saved'
+      flash[:success] = t "flash.common.saved"
       redirect_to company_hourly_rates_path current_company
     else
-      flash[:error] = t @hourly_rate.errors.full_messages.join(', ')
+      flash[:error] = t @hourly_rate.errors.full_messages.join(", ")
     end
   end
 
@@ -26,10 +27,10 @@ class Company::HourlyRatesController < ApplicationController
     @hourly_rate = HourlyRate.where(company: current_company).find(params[:id])
     authorize @hourly_rate
     if @hourly_rate.update(hourly_rate_update_params)
-      flash[:success] = t 'flash.common.saved'
+      flash[:success] = t "flash.common.saved"
       redirect_to company_hourly_rates_path current_company
     else
-      flash[:error] = t @hourly_rate.errors.full_messages.join(', ')
+      flash[:error] = t @hourly_rate.errors.full_messages.join(", ")
     end
   end
 
@@ -38,20 +39,19 @@ class Company::HourlyRatesController < ApplicationController
     authorize @hourly_rate
 
     if @hourly_rate.destroy_self_and_children
-      flash[:success] = t 'flash.common.deleted'
+      flash[:success] = t "flash.common.deleted"
       redirect_to company_hourly_rates_path current_company
     else
-      flash[:error] = t @hourly_rate.errors.full_messages.join(', ')
+      flash[:error] = t @hourly_rate.errors.full_messages.join(", ")
     end
   end
 
   private
-  def hourly_rate_create_params
-    params.require(:hourly_rate).permit(:price, :customer_id, :activity_id)
-  end
+    def hourly_rate_create_params
+      params.require(:hourly_rate).permit(:price, :customer_id, :activity_id)
+    end
 
-  def hourly_rate_update_params
-    params.require(:hourly_rate).permit(:price)
-  end
-
+    def hourly_rate_update_params
+      params.require(:hourly_rate).permit(:price)
+    end
 end

@@ -1,5 +1,6 @@
-class CompanyMemberPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class CompanyMemberPolicy < ApplicationPolicy
   def show?
     create?
   end

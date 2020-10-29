@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class CompanyMember < ApplicationRecord
-  OWNER = 'owner'
-  ADMINISTRATOR = 'administrator'
-  EMPLOYEE = 'employee'
-  DRIVER = 'driver'
-  DEMO_ACCOUNT = 'demo_account'
+  OWNER = "owner"
+  ADMINISTRATOR = "administrator"
+  EMPLOYEE = "employee"
+  DRIVER = "driver"
+  DEMO_ACCOUNT = "demo_account"
   ROLES = [OWNER, ADMINISTRATOR, DRIVER, DEMO_ACCOUNT].freeze
 
   belongs_to :user, optional: true # set to true in order for to conditionally validate
@@ -97,26 +97,25 @@ class CompanyMember < ApplicationRecord
   end
 
   private
+    def add_driver
+      company.add_driver user
+    rescue AssignmentError => e
+      Rails.logger.warn(e.message)
+      warnings << e.message
+    end
 
-  def add_driver
-    company.add_driver user
-  rescue AssignmentError => e
-    Rails.logger.warn(e.message)
-    warnings << e.message
-  end
+    def assign_user_by_email
+      return if user_email.blank? || !user.blank?
 
-  def assign_user_by_email
-    return if user_email.blank? || !user.blank?
+      self.user = User.find_by(email: user_email)
+      @new_user = true unless user
+    end
 
-    self.user = User.find_by(email: user_email)
-    @new_user = true unless user
-  end
-
-  def self.role_of(user, company)
-    company.company_members
-           .where(user_id: user.id)
-           .limit(1)
-           .pluck(:role)
-           .first
-  end
+    def self.role_of(user, company)
+      company.company_members
+             .where(user_id: user.id)
+             .limit(1)
+             .pluck(:role)
+             .first
+    end
 end

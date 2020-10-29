@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 module Report
   FIXED_COLUMNS = %i[date start duration site driver distance hourly_rate total_price].freeze
 
   class DriveTableBuilder
-
     HEADER_HEIGHT = 120
 
-    def initialize(drives, row_builder, header_builder, customer=nil)
+    def initialize(drives, row_builder, header_builder, customer = nil)
       @rb = row_builder
       @hb = header_builder
       @drives = drives
@@ -37,7 +38,7 @@ module Report
     end
 
     def table_ref
-      "#{@title_row.cells.first.r}:#{Axlsx::cell_r(@title_row.cells.last.index, @last_row.row_index)}"
+      "#{@title_row.cells.first.r}:#{Axlsx.cell_r(@title_row.cells.last.index, @last_row.row_index)}"
     end
 
     def distance_sum_formula
@@ -55,6 +56,5 @@ module Report
     def column_name_for(key)
       @hb.column_name_for(key)
     end
-
   end
 end

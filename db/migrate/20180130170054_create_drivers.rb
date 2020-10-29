@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Driver < ActiveRecord::Base
 end
 
@@ -9,10 +11,10 @@ class CreateDrivers < ActiveRecord::Migration[5.1]
     end
 
     add_column :drives, :driver_id, :integer, null: false
-    add_foreign_key :drives, :drivers, name: 'fk_drives_driver'
+    add_foreign_key :drives, :drivers, name: "fk_drives_driver"
 
     add_column :standby_dates, :driver_id, :integer, null: false
-    add_foreign_key :standby_dates, :drivers, name: 'fk_standby_dates_driver'
+    add_foreign_key :standby_dates, :drivers, name: "fk_standby_dates_driver"
 
     create_table :driver_logins do |t|
       t.references :driver, foreign_key: true

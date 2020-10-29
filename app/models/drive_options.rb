@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Configures which attributes will be enabled
 # for drives.
 class DriveOptions
@@ -24,13 +26,12 @@ class DriveOptions
   end
 
   private
-
-  def defaults
-    {
-        track_distance: true,
-        track_salt_refill: true,
-        track_plowing: true,
-        track_salting: true
-    }
-  end
+    def defaults
+      {
+          track_distance: true,
+          track_salt_refill: true,
+          track_plowing: true,
+          track_salting: true
+      }
+    end
 end

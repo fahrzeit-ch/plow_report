@@ -20,12 +20,12 @@ class User < ApplicationRecord
   has_many :companies, through: :company_members
 
   has_many :access_grants,
-           class_name:  'Doorkeeper::AccessGrant',
+           class_name:  "Doorkeeper::AccessGrant",
            foreign_key: :resource_owner_id,
            dependent:   :delete_all # or :destroy if you need callbacks
 
   has_many :access_tokens,
-           class_name:  'Doorkeeper::AccessToken',
+           class_name:  "Doorkeeper::AccessToken",
            foreign_key: :resource_owner_id,
            dependent:   :delete_all # or :destroy if you need callbacks
 
@@ -103,9 +103,8 @@ class User < ApplicationRecord
   end
 
   private
-
-  def create_driver
-    raise "Personal driver already exists for user #{id}" unless personal_driver.nil?
-    drivers.create(name: name)
-  end
+    def create_driver
+      raise "Personal driver already exists for user #{id}" unless personal_driver.nil?
+      drivers.create(name: name)
+    end
 end

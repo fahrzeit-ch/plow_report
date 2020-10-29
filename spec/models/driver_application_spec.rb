@@ -1,13 +1,14 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe DriverApplication, type: :model do
-
   it { is_expected.to validate_presence_of(:recipient) }
   it { is_expected.to belong_to(:user) }
 
-  describe 'create' do
+  describe "create" do
     subject { create(:driver_application) }
-    it 'is expected to send a notification mail' do
+    it "is expected to send a notification mail" do
       expect do
         subject
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -16,7 +17,7 @@ RSpec.describe DriverApplication, type: :model do
     it(:token) { is_expected.not_to be_nil }
   end
 
-  describe 'accept' do
+  describe "accept" do
     let(:company_admin) { create(:user) }
     let(:company) { create(:company) }
 
@@ -34,7 +35,7 @@ RSpec.describe DriverApplication, type: :model do
       expect(subject.user.drives_for?(company)).to be_truthy
     end
 
-    it 'add validation error when trying to accept again' do
+    it "add validation error when trying to accept again" do
       subject.accept accepted_by: company_admin
       expect(subject.errors[:base].size).to eq 1
     end

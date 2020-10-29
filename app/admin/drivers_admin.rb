@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 Trestle.resource(:drivers) do
   menu do
-    item :drivers, icon: 'fa fa-star'
+    item :drivers, icon: "fa fa-star"
   end
 
   # Customize the table columns shown on the index view.

@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe CustomerToSiteTransition, type: :model do
-
   let(:source) { create(:customer) }
   let(:assign_to) { create(:customer) }
 
@@ -9,26 +10,26 @@ RSpec.describe CustomerToSiteTransition, type: :model do
 
   let(:transition_object) { described_class.new(assign_to: assign_to, source: source) }
 
-  describe '#affected drives' do
+  describe "#affected drives" do
     subject { transition_object.affected_drives }
 
     it { is_expected.to include(*affected_drives) }
   end
 
-  describe 'save' do
+  describe "save" do
     before { affected_drives }
 
     subject { transition_object.save }
-    it 'persists the target site' do
+    it "persists the target site" do
       expect(subject).to be_persisted
     end
 
-    it 'destroys the source' do
+    it "destroys the source" do
       subject
       expect(source).to be_destroyed
     end
 
-    it 'assigns the drives to the new site' do
+    it "assigns the drives to the new site" do
       subject
       affected_drives.each do |drive|
         drive.reload
@@ -37,14 +38,13 @@ RSpec.describe CustomerToSiteTransition, type: :model do
       end
     end
 
-    context 'with source as target' do
+    context "with source as target" do
       let(:assign_to) { source }
 
-      it 'does not destroy the source' do
+      it "does not destroy the source" do
         subject
         expect(source).not_to be_destroyed
       end
     end
   end
-
 end

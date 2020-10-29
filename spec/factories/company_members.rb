@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :company_member do
     user
@@ -5,8 +7,8 @@ FactoryBot.define do
     role { CompanyMember::OWNER }
   end
 
-  factory :company_member_invite, class: 'CompanyMember' do
-    user_name { 'User1' }
+  factory :company_member_invite, class: "CompanyMember" do
+    user_name { "User1" }
     role { CompanyMember::OWNER }
     company
     user_email { generate(:email) }

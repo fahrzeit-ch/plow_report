@@ -1,5 +1,6 @@
-class DriverApplicationPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class DriverApplicationPolicy < ApplicationPolicy
   def index?
     false
   end
@@ -35,9 +36,7 @@ class DriverApplicationPolicy < ApplicationPolicy
   end
 
   private
-
-  def company
-    record.accepted_to
-  end
-
+    def company
+      record.accepted_to
+    end
 end

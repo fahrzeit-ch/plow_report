@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 {
-    items: render(partial: 'standby_date', collection: @records, as: :standby_date),
+    items: render(partial: "standby_date", collection: @records, as: :standby_date),
 
 }

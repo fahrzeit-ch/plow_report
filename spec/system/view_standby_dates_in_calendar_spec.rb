@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'view standby dates in calendar' do
+require "rails_helper"
 
+feature "view standby dates in calendar" do
   let(:user) { create(:user) }
   let(:driver) { user.drivers.first }
 
@@ -21,34 +22,33 @@ feature 'view standby dates in calendar' do
     travel_back
   end
 
-  it 'shows the calendar of the current month including existing standby date' do
-    visit '/standby_dates'
-    expect(page).to have_content('November 2018')
-    within('.simple-calendar') do
-      expect(page).to have_content(I18n.t('standby_dates.index.standby_label'))
+  it "shows the calendar of the current month including existing standby date" do
+    visit "/standby_dates"
+    expect(page).to have_content("November 2018")
+    within(".simple-calendar") do
+      expect(page).to have_content(I18n.t("standby_dates.index.standby_label"))
     end
   end
 
-  it 'switches to the last standby date of the selected season' do
-    visit '/standby_dates?season=2017_2018'
-    expect(page).to have_content('November 2017')
-    within('.simple-calendar') do
-      expect(page).to have_content(I18n.t('standby_dates.index.standby_label'))
+  it "switches to the last standby date of the selected season" do
+    visit "/standby_dates?season=2017_2018"
+    expect(page).to have_content("November 2017")
+    within(".simple-calendar") do
+      expect(page).to have_content(I18n.t("standby_dates.index.standby_label"))
     end
   end
 
-  context 'navigation outside selected_season' do
-    it 'shows standby dates of other seasons as well' do
-      visit '/standby_dates'
-      expect(page).to have_content('November 2018')
+  context "navigation outside selected_season" do
+    it "shows standby dates of other seasons as well" do
+      visit "/standby_dates"
+      expect(page).to have_content("November 2018")
       12.times do
-        click_link('«')
+        click_link("\u00AB")
       end
-      expect(page).to have_content('November 2017')
-      within('.simple-calendar') do
-        expect(page).to have_content(I18n.t('standby_dates.index.standby_label'))
+      expect(page).to have_content("November 2017")
+      within(".simple-calendar") do
+        expect(page).to have_content(I18n.t("standby_dates.index.standby_label"))
       end
     end
   end
-
 end

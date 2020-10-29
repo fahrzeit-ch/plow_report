@@ -1,5 +1,6 @@
-namespace :demo_account do
+# frozen_string_literal: true
 
+namespace :demo_account do
   desc "Creates a demo company with a basic setup"
   task create_company: :environment do
     Audited.auditing_enabled = false
@@ -30,17 +31,17 @@ namespace :demo_account do
         a.company = company
       end
 
-      user = User.create!(name: "Demo User", email: ENV['DEMO_ACCOUNT_EMAIL'], password: ENV['DEMO_ACCOUNT_PASSWORD'], password_confirmation: ENV['DEMO_ACCOUNT_PASSWORD'], skip_create_driver: true)
+      user = User.create!(name: "Demo User", email: ENV["DEMO_ACCOUNT_EMAIL"], password: ENV["DEMO_ACCOUNT_PASSWORD"], password_confirmation: ENV["DEMO_ACCOUNT_PASSWORD"], skip_create_driver: true)
       company.company_members.create(user: user, role: CompanyMember::DEMO_ACCOUNT)
 
       ActiveRecord::Base.connection.execute(build_customer_query(company.id))
       ActiveRecord::Base.connection.execute(build_sites_insert_query(company.id))
 
-      Driver.find_or_create_by!(name: 'Fritz Baumann', company: company)
-      Driver.find_or_create_by!(name: 'Nicolas Reiter', company: company)
-      Driver.find_or_create_by!(name: 'Ferdinand Stocker', company: company)
-      Driver.find_or_create_by!(name: 'Kurt Frankhauser', company: company)
-      Driver.find_or_create_by!(name: 'Sven Dachauer', company: company)
+      Driver.find_or_create_by!(name: "Fritz Baumann", company: company)
+      Driver.find_or_create_by!(name: "Nicolas Reiter", company: company)
+      Driver.find_or_create_by!(name: "Ferdinand Stocker", company: company)
+      Driver.find_or_create_by!(name: "Kurt Frankhauser", company: company)
+      Driver.find_or_create_by!(name: "Sven Dachauer", company: company)
       create_sample_tours company
     end
     Audited.auditing_enabled = false
@@ -50,10 +51,10 @@ namespace :demo_account do
   task reset: :environment do
     Audited.auditing_enabled = false
     ActiveRecord::Base.transaction do
-      company = Company.find_by(name: ENV['DEMO_ACCOUNT_COMPANY_NAME'])
-      Drive.unscoped.joins(:driver).where({drivers: { company_id: company.id}}).destroy_all
+      company = Company.find_by(name: ENV["DEMO_ACCOUNT_COMPANY_NAME"])
+      Drive.unscoped.joins(:driver).where({ drivers: { company_id: company.id } }).destroy_all
       company.tours.with_discarded.delete_all
-      StandbyDate.unscoped.joins(:driver).where({drivers: { company_id: company.id}}).destroy_all
+      StandbyDate.unscoped.joins(:driver).where({ drivers: { company_id: company.id } }).destroy_all
       create_sample_tours company
       create_sample_standby_dates company
     end
@@ -78,7 +79,7 @@ namespace :demo_account do
 
   def create_sample_tours(company)
     drivers = company.drivers.to_a
-    customer_sites = Site.joins(:customer).where({customers: { company_id: company.id}}).all.to_a
+    customer_sites = Site.joins(:customer).where({ customers: { company_id: company.id } }).all.to_a
     activities = company.activities.all.to_a
 
     from_date = 3.months.ago.to_date
@@ -98,7 +99,7 @@ namespace :demo_account do
         activity_value = activity.has_value? ? rand(0.5..4).round(1) : 0
         km = activity.name == "Räumen Hand" ? 0.0 : rand(1.5..12).round(1)
 
-        Drive.create!(start: start_time, distance_km: km, end: end_time, driver: driver, tour: tour, customer: customer_site.customer, site: customer_site, activity_execution_attributes: { activity_id: activity.id, value: activity_value})
+        Drive.create!(start: start_time, distance_km: km, end: end_time, driver: driver, tour: tour, customer: customer_site.customer, site: customer_site, activity_execution_attributes: { activity_id: activity.id, value: activity_value })
         last_end_time = end_time
       end
       tour.update_attribute(:end_time, last_end_time + rand(2..10).minutes)
@@ -106,8 +107,8 @@ namespace :demo_account do
   end
 
   def build_customer_query(company_id)
-  <<SQL
-INSERT INTO public.customers ("name",company_id,created_at,updated_at,street,nr,zip,city,first_name) VALUES 
+    <<SQL
+INSERT INTO public.customers ("name",company_id,created_at,updated_at,street,nr,zip,city,first_name) VALUES #{}
 ('Gasser',#{company_id},'2020-05-21 16:17:05.876','2020-05-21 16:17:05.876','Bachmattweg','','7270','Davos','Tanja')
 ,('Imholz',#{company_id},'2020-05-21 16:17:50.196','2020-05-21 16:17:50.196','Feusisbergli','12','7270','Davos','Sara')
 ,('Schlegel',#{company_id},'2019-04-22 12:17:37.139','2019-04-22 12:17:37.139','','','','','Rolf')
@@ -221,5 +222,4 @@ INSERT INTO public.sites ("name",street,nr,zip,city,customer_id,active,created_a
 INSERT INTO public.sites ("name",street,nr,zip,city,customer_id,active,created_at,updated_at,display_name,first_name,area_json) SELECT'Stüssi','Bogenweg','7','9200','Gossau',id,TRUE,'2020-05-21 16:9','2020-09-16 14:33','Bogenweg','Franziska','{"type":"LineString","coordinates":[[9.244394754342542,47.417600511234674],[9.24670145409535,47.41844988518541],[9.24945876496266,47.4188999752291],[9.249630426339612,47.41842810653733],[9.24693748848866,47.41799253168376],[9.246615623406873,47.41838454921414]]}'from customers where company_id=#{company_id} and name ='Zimmermann'LIMIT 1;
 SQL
   end
-
 end

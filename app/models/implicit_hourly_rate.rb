@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines the hourly rate for a combination of company, activity and customer.
 #
 # The source is either an explicit match of an +HourlyRate+ with the same combination of
@@ -26,8 +28,7 @@
 # This model is baked by a database view and therefore is readonly.
 #
 class ImplicitHourlyRate < ApplicationRecord
-
-  belongs_to :inherited_from, foreign_key: :hourly_rate_id, class_name: 'HourlyRate'
+  belongs_to :inherited_from, foreign_key: :hourly_rate_id, class_name: "HourlyRate"
   belongs_to :activity
   belongs_to :customer
   monetize :price_cents
@@ -93,7 +94,7 @@ class ImplicitHourlyRate < ApplicationRecord
   # @param [Enumerable] list, A list of ImplicitHourlyRates that.
   # @return [Array] Array with hourly rates having lowest inheritance_level for their target
   def self.best_matches(list)
-    raise ArgumentError, 'Can not apply best matches to nil. Please provide an enumerable' if list.nil?
+    raise ArgumentError, "Can not apply best matches to nil. Please provide an enumerable" if list.nil?
 
     # Groups rates with same customer & activity ids
     # customer_id may be nil.
@@ -108,5 +109,4 @@ class ImplicitHourlyRate < ApplicationRecord
           pr_group[1].min_by(&:inheritance_level)
         end
   end
-
 end

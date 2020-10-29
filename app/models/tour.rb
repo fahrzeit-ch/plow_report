@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A tour combines multiple drives and tracks the overall
 # time spent by a driver.
 class Tour < ApplicationRecord
@@ -6,7 +8,7 @@ class Tour < ApplicationRecord
   default_scope -> { kept }
 
   belongs_to :driver
-  has_many :drives, -> { kept.order(start: :desc) }, class_name: 'Drive', dependent: :nullify
+  has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
   audited
 
   validates :start_time, presence: true
@@ -72,7 +74,7 @@ class Tour < ApplicationRecord
   end
 
   def day_of_week
-    I18n.l self.start_time, format: '%a'
+    I18n.l self.start_time, format: "%a"
   end
 
   # The duration is loaded from attribute (in case it was calculated in the sql query). If
@@ -106,20 +108,18 @@ class Tour < ApplicationRecord
   class << self
     # Scope the drives by the given season
     def by_season(season)
-      where('start_time > ? AND start_time < ?', season.start_date, season.end_date)
+      where("start_time > ? AND start_time < ?", season.start_date, season.end_date)
     end
   end
 
   private
-
-  def set_default_start_time
-    self.start_time ||= first_drive.try(:start)
-  end
-
-  def start_time_not_after_first_drive
-    if start_time && first_drive && first_drive.start < start_time
-      errors.add(:start_time, :after_fist_drive)
+    def set_default_start_time
+      self.start_time ||= first_drive.try(:start)
     end
-  end
 
+    def start_time_not_after_first_drive
+      if start_time && first_drive && first_drive.start < start_time
+        errors.add(:start_time, :after_fist_drive)
+      end
+    end
 end

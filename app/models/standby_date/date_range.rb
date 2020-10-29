@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StandbyDate
   class DateRange
     include ActiveModel::Model
@@ -9,7 +11,7 @@ class StandbyDate
 
     validate :end_date_gt_start_date
 
-    def initialize(attributes={})
+    def initialize(attributes = {})
       @start_date = Date.current
       @end_date = Date.current
       assign_attributes attributes
@@ -32,8 +34,8 @@ class StandbyDate
     end
 
     private
-    def end_date_gt_start_date
-      errors.add(:end_date, :must_be_greater_than_start) if end_date < start_date
-    end
+      def end_date_gt_start_date
+        errors.add(:end_date, :must_be_greater_than_start) if end_date < start_date
+      end
   end
 end

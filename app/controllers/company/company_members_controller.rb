@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company::CompanyMembersController < ApplicationController
   before_action :set_company_from_param
 
@@ -17,7 +19,7 @@ class Company::CompanyMembersController < ApplicationController
     elsif !@company_member.errors.empty?
       render :new
     else
-      flash[:success] = t 'flash.company_member.created'
+      flash[:success] = t "flash.company_member.created"
       render :create
     end
   end
@@ -28,7 +30,7 @@ class Company::CompanyMembersController < ApplicationController
     if !@company_member.errors.empty?
       render :new_member_invitation
     else
-      flash[:success] = t 'flash.company_member.invited'
+      flash[:success] = t "flash.company_member.invited"
       render :create
     end
   end
@@ -36,12 +38,12 @@ class Company::CompanyMembersController < ApplicationController
   def resend_invitation
     begin
       member_resource.resend_invitation!
-      flash[:success] = t 'flash.company_member.invitation_resent'
+      flash[:success] = t "flash.company_member.invitation_resent"
     rescue Pundit::NotAuthorizedError => e
       raise e
     rescue Exception => e
       Rails.logger.error(e)
-      flash[:error] = t 'flash.company_member.invitation_failed'
+      flash[:error] = t "flash.company_member.invitation_failed"
     end
     respond_to do |format|
       format.js { render :resend_invitation }
@@ -54,7 +56,7 @@ class Company::CompanyMembersController < ApplicationController
     if @company_member.destroy_unless_owner
       response_for_destroy(@company_member)
     else
-      flash[:error] = t 'flash.company_member.could_not_destroy'
+      flash[:error] = t "flash.company_member.could_not_destroy"
       respond_to do |format|
         format.js { render js: "window.location = '#{company_company_members_path(current_company)}'" }
         format.html { redirect_to company_company_members_path(current_company) }
@@ -63,42 +65,39 @@ class Company::CompanyMembersController < ApplicationController
   end
 
   private
+    def member_resource
+      resource = CompanyMember.where(company: current_company).find(params[:id])
+      authorize resource
+      resource
+    end
 
-  def member_resource
-    resource = CompanyMember.where(company: current_company).find(params[:id])
-    authorize resource
-    resource
-  end
-
-  def response_for_destroy(member)
-    if member.user == current_user
-      flash[:success] = t 'flash.company_member.destroyed_me'
-      respond_to do |format|
-        format.js { render js: "window.location = '#{root_path}'" }
-        format.html { redirect_to root_path }
-      end
-    else
-      flash[:success] = t 'flash.company_member.destroyed'
-      respond_to do |format|
-        format.js { render :destroy }
-        format.html { redirect_back fallback_location: company_company_members_path(current_company) }
+    def response_for_destroy(member)
+      if member.user == current_user
+        flash[:success] = t "flash.company_member.destroyed_me"
+        respond_to do |format|
+          format.js { render js: "window.location = '#{root_path}'" }
+          format.html { redirect_to root_path }
+        end
+      else
+        flash[:success] = t "flash.company_member.destroyed"
+        respond_to do |format|
+          format.js { render :destroy }
+          format.html { redirect_back fallback_location: company_company_members_path(current_company) }
+        end
       end
     end
 
-  end
+    def build_member
+      @company_member = CompanyMember.new create_params
+      @company_member.company = current_company
+      authorize @company_member
+    end
 
-  def build_member
-    @company_member = CompanyMember.new create_params
-    @company_member.company = current_company
-    authorize @company_member
-  end
+    def create_params
+      params.require(:company_member).permit(:user_email, :role, :user_name)
+    end
 
-  def create_params
-    params.require(:company_member).permit(:user_email, :role, :user_name)
-  end
-
-  def update_params
-    params.require(:company_member).permit(:role)
-  end
-
+    def update_params
+      params.require(:company_member).permit(:role)
+    end
 end

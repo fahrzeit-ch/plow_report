@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
     id: site.id,
     display_name: site.display_name,

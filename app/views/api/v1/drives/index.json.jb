@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
-    items: render(partial: 'drive', collection: @records, as: :drive),
-}.merge! render('api/v1/shared/pagination', pagination_source: @records)
+    items: render(partial: "drive", collection: @records, as: :drive),
+}.merge! render("api/v1/shared/pagination", pagination_source: @records)

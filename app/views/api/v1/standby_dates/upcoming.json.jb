@@ -1,1 +1,3 @@
-render(partial: 'standby_date', collection: @records, as: :standby_date)
+# frozen_string_literal: true
+
+render(partial: "standby_date", collection: @records, as: :standby_date)

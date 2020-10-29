@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Describes a possible activity that can be selected when
 # creating a drive.
 #
@@ -40,5 +42,4 @@ class Activity < ApplicationRecord
   def same?(other)
     has_value? == other.has_value? && name == other.name && value_label == other.value_label
   end
-
 end
