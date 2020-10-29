@@ -26,6 +26,8 @@ class Activity < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
 
+  audited
+
   # Create a clone of this activity for the given company
   # This will raise an error if validation fails.
   def clone_to!(company)

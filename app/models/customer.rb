@@ -9,6 +9,8 @@ class Customer < ApplicationRecord
 
   default_scope { order(:name) }
 
+  audited
+
   def display_name
     "#{name} #{first_name}"
   end
