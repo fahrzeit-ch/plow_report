@@ -9,6 +9,8 @@ class ActivityExecution < ApplicationRecord
 
   validates_presence_of :value, if: :value_required?
 
+  audited
+
   # Moves this execution to a corresponding activity on the given company
   # @raise [StandardError] When no matching activity could be found and activity could not cloned to the target company
   # @param [Company] company

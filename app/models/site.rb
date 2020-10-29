@@ -13,6 +13,8 @@ class Site < ApplicationRecord
   attribute :city, :string, default: ''
   attribute :zip, :string, default: ''
 
+  audited
+
   def details
     ["#{name} #{first_name}", "#{street} #{nr}", "#{zip} #{city}"].reject(&:blank?).join(', ')
   end
