@@ -362,6 +362,7 @@ de-CH:
         activation_status_info: "Einsätze und Touren können nur für aktive Objekte erstellt werden."
         location_panel_header: "Standort"
         edit: "Objekt bearbeiten"
+        show_inactive: "Inaktive anzeigen"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"

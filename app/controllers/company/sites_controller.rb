@@ -9,6 +9,9 @@ class Company::SitesController < ApplicationController
   def index
     authorize current_company, :index_sites?
     @sites = @customer.sites.order(:name)
+    unless params[:show_inactive]
+      @sites = @sites.active
+    end
   end
 
   # Creates a new site for the current company and the given customer
