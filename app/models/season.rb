@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A season is a date range described by a start and end date. Currently
 # Only winter season are supported. As they span across two different years
 # they are identified by :year1_year2
@@ -8,7 +10,6 @@ class Season
   @@winter_season_end_day = { day: 30, month: 6, hash: 630 }
 
   class << self
-
     def start_day
       @@winter_season_start_day
     end
@@ -26,7 +27,7 @@ class Season
     # This currently only supports winter seasons that are
     # identified by two year numbers. For example: :2017_2018
     def from_sym(symbol)
-      years = symbol.to_s.split '_'
+      years = symbol.to_s.split "_"
       s = Season.new
       s.start_date = Date.new years[0].to_i, Season.start_day[:month], Season.start_day[:day]
       s.end_date = Date.new years[1].to_i, Season.end_day[:month], Season.end_day[:day]
@@ -40,8 +41,8 @@ class Season
 
     # Returns an array with the last {n} seasons, including current. Oldest first.
     # Be aware that Season.last(1) is equal to Season.current
-    def last(num=1)
-      range = (num-1..0)
+    def last(num = 1)
+      range = (num - 1..0)
       (range.first).downto(range.last).map { |i| from_date(Season.new.start_date - i.years + 1.day) }
     end
 
@@ -69,7 +70,6 @@ class Season
         date.year
       end
     end
-
   end
 
   attr_accessor :start_date
@@ -91,5 +91,4 @@ class Season
   def ==(other)
     self.start_date == other.start_date
   end
-
 end

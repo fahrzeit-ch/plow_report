@@ -1,5 +1,6 @@
-class CompanyPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class CompanyPolicy < ApplicationPolicy
   def show?
     company_member? record
   end
@@ -58,7 +59,6 @@ class CompanyPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-
     end
   end
 end

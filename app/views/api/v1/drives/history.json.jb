@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 {
-    items: render(partial: 'history_entry', collection: @records, as: :history),
+    items: render(partial: "history_entry", collection: @records, as: :history),
     changes_since: @since
-}.merge! render('api/v1/shared/pagination', pagination_source: @records)
+}.merge! render("api/v1/shared/pagination", pagination_source: @records)

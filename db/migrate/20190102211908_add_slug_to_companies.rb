@@ -1,4 +1,6 @@
-#class Company < ActiveRecord::Base; end # In case the company model was dropped this prevents the migration from failing.
+# frozen_string_literal: true
+
+# class Company < ActiveRecord::Base; end # In case the company model was dropped this prevents the migration from failing.
 
 class AddSlugToCompanies < ActiveRecord::Migration[5.1]
   def change

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError, I18n.t('pundit.not_logged_in') unless user
+    raise Pundit::NotAuthorizedError, I18n.t("pundit.not_logged_in") unless user
     @user = user
     @record = record
   end
@@ -12,7 +14,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    scope.where(id: record.id).exists?
   end
 
   def create?
@@ -43,7 +45,7 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      raise Pundit::NotAuthorizedError, I18n.t('pundit.not_logged_in') unless user
+      raise Pundit::NotAuthorizedError, I18n.t("pundit.not_logged_in") unless user
 
       @user = user
       @scope = scope
@@ -55,16 +57,15 @@ class ApplicationPolicy
   end
 
   protected
+    def company_admin_or_owner?(company)
+      user.company_admin_or_owner?(company)
+    end
 
-  def company_admin_or_owner?(company)
-    user.company_admin_or_owner?(company)
-  end
+    def company_member?(company)
+      user.company_member?(company)
+    end
 
-  def company_member?(company)
-    user.company_member?(company)
-  end
-
-  def is_demo(company)
-    user.demo_user_for?(company)
-  end
+    def is_demo(company)
+      user.demo_user_for?(company)
+    end
 end

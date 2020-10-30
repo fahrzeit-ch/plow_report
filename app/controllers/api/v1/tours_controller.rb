@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ToursController < Api::V1::ApiController
   def index
     since = params[:changed_since] || 6.months.ago
@@ -13,7 +15,7 @@ class Api::V1::ToursController < Api::V1::ApiController
     @since = params[:changes_since] || 1.week.ago
     @records = Audited::Audit
                    .where(auditable_type: Tour.model_name.to_s)
-                   .where('created_at >= ?', @since)
+                   .where("created_at >= ?", @since)
                    .order(created_at: :asc).page(params[:page]).per(params[:per_page] || 500)
   end
 
@@ -48,17 +50,16 @@ class Api::V1::ToursController < Api::V1::ApiController
   end
 
   private
+    def handle_param_missing(e)
+      render json: { error: e.message }, status: :bad_request
+    end
 
-  def handle_param_missing(e)
-    render json: { error: e.message }, status: :bad_request
-  end
+    def update_attributes
+      params.permit(policy(Tour).permitted_attributes(:api_update))
+    end
 
-  def update_attributes
-    params.permit(policy(Tour).permitted_attributes(:api_update))
-  end
-
-  def create_attributes
-    params.require([:driver_id, :start_time, :created_at])
-    params.permit(policy(Tour).permitted_attributes(:api_create))
-  end
+    def create_attributes
+      params.require([:driver_id, :start_time, :created_at])
+      params.permit(policy(Tour).permitted_attributes(:api_create))
+    end
 end

@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'view standby dates in calendar' do
+require "rails_helper"
 
+feature "view standby dates in calendar" do
   let(:user) { create(:user) }
   let(:company) { create(:company) }
   let(:driver) { create(:driver, company: company) }
@@ -22,34 +23,33 @@ feature 'view standby dates in calendar' do
     travel_back
   end
 
-  it 'shows the calendar of the current month including existing standby date' do
+  it "shows the calendar of the current month including existing standby date" do
     visit company_standby_dates_path(company)
-    expect(page).to have_content('November 2018')
-    within('.simple-calendar') do
+    expect(page).to have_content("November 2018")
+    within(".simple-calendar") do
       expect(page).to have_content(driver.name)
     end
   end
 
-  it 'switches to the last standby date of the selected season' do
-    visit company_standby_dates_path(company, season: '2017_2018')
-    expect(page).to have_content('November 2017')
-    within('.simple-calendar') do
+  it "switches to the last standby date of the selected season" do
+    visit company_standby_dates_path(company, season: "2017_2018")
+    expect(page).to have_content("November 2017")
+    within(".simple-calendar") do
       expect(page).to have_content(driver.name)
     end
   end
 
-  context 'navigation outside selected_season' do
-    it 'shows standby dates of other seasons as well' do
+  context "navigation outside selected_season" do
+    it "shows standby dates of other seasons as well" do
       visit company_standby_dates_path(company)
-      expect(page).to have_content('November 2018')
+      expect(page).to have_content("November 2018")
       12.times do
-        click_link('«')
+        click_link("\u00AB")
       end
-      expect(page).to have_content('November 2017')
-      within('.simple-calendar') do
+      expect(page).to have_content("November 2017")
+      within(".simple-calendar") do
         expect(page).to have_content(driver.name)
       end
     end
   end
-
 end

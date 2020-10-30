@@ -1,1 +1,3 @@
-render 'drive', drive: @record
+# frozen_string_literal: true
+
+render "drive", drive: @record

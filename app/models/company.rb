@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AssignmentError < StandardError
 end
 
@@ -24,7 +26,7 @@ class Company < ApplicationRecord
   attribute :options, Company::Settings::Type.new
 
   def add_member(user, role)
-    company_members.create(user: user, role: role )
+    company_members.create(user: user, role: role)
   end
 
   # Add a user as driver to the company. if transfer_private is set, the
@@ -38,7 +40,7 @@ class Company < ApplicationRecord
   # @raise [AssignmentError] Raises error if the user already has a driver assigned to the company
   # @return [Hash] Result hash with :driver and :action, where :action is a symbol can be one of :new, :transferred
   def add_driver(user, transfer_private = false)
-    raise AssignmentError, I18n.t('errors.drivers.already_assigned') if user.drives_for?(self)
+    raise AssignmentError, I18n.t("errors.drivers.already_assigned") if user.drives_for?(self)
 
     if transfer_private && !user.personal_driver.nil?
       transfered_driver = transfer_from_private(user)
@@ -57,7 +59,7 @@ class Company < ApplicationRecord
   # @param [Driver] user The private driver that should be moved to this company
   def transfer_from_private(user)
     driver = user.personal_driver
-    raise AssignmentError, 'User has no personal driver' if driver.nil?
+    raise AssignmentError, "User has no personal driver" if driver.nil?
     driver.company = self
     driver.save
     driver
@@ -65,7 +67,7 @@ class Company < ApplicationRecord
 
   # Returns companies that the given user_id has a membership with
   def self.with_member(user_id)
-    joins(:company_members).where(company_members: {user_id: user_id})
+    joins(:company_members).where(company_members: { user_id: user_id })
   end
 
   def statistics(season)
@@ -86,9 +88,7 @@ class Company < ApplicationRecord
   end
 
   private
-
-  def default_values
-    self.options ||= {}
-  end
-
+    def default_values
+      self.options ||= {}
+    end
 end

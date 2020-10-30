@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StandbyDatesController < ApplicationController
   before_action :check_driver!
   before_action :set_standby_date, only: [:show, :edit, :update, :destroy]
@@ -16,7 +18,7 @@ class StandbyDatesController < ApplicationController
     show_drivers = params[:show_others] ? current_company.driver_ids : current_driver.id
     @standby_dates = StandbyDate.joins(:driver)
                          .where(driver_id: show_drivers)
-                         .select('standby_dates.*, drivers.name')
+                         .select("standby_dates.*, drivers.name")
                          .by_calendar_month(calendar_start_date)
   end
 
@@ -38,11 +40,11 @@ class StandbyDatesController < ApplicationController
   # POST /standby_dates
   # POST /standby_dates.json
   def create
-    @standby_date = StandbyDate.new({driver_id: current_driver.id}.merge(standby_date_params))
+    @standby_date = StandbyDate.new({ driver_id: current_driver.id }.merge(standby_date_params))
     authorize @standby_date
     respond_to do |format|
       if @standby_date.save
-        format.html { redirect_back fallback_location: standby_dates_path, notice: t('flash.standby_dates.created') }
+        format.html { redirect_back fallback_location: standby_dates_path, notice: t("flash.standby_dates.created") }
         format.json { render :show, status: :created, location: @standby_date }
       else
         format.html { render :new }
@@ -56,7 +58,7 @@ class StandbyDatesController < ApplicationController
   def update
     respond_to do |format|
       if @standby_date.update(standby_date_params)
-        format.html { redirect_back fallback_location: @standby_date, notice: t('flash.standby_dates.updated') }
+        format.html { redirect_back fallback_location: @standby_date, notice: t("flash.standby_dates.updated") }
         format.json { render :show, status: :ok, location: @standby_date }
       else
         format.html { render :edit }
@@ -70,7 +72,7 @@ class StandbyDatesController < ApplicationController
   def destroy
     @standby_date.destroy
     respond_to do |format|
-      format.html { redirect_back fallback_location: standby_dates_path, notice: t('flash.standby_dates.destroyed') }
+      format.html { redirect_back fallback_location: standby_dates_path, notice: t("flash.standby_dates.destroyed") }
       format.json { head :no_content }
     end
   end

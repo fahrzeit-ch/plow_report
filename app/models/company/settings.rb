@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Company
   class Settings
     attr_accessor :drive_options
 
-    def initialize(attributes=nil)
+    def initialize(attributes = nil)
       attributes ||= {}
       attributes.symbolize_keys!
       self.drive_options = DriveOptions.new(attributes[:drive_options])

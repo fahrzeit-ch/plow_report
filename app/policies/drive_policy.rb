@@ -1,5 +1,6 @@
-class DrivePolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class DrivePolicy < ApplicationPolicy
   def index?
     true
   end
@@ -51,13 +52,11 @@ class DrivePolicy < ApplicationPolicy
   end
 
   private
+    def company
+      record.driver.company
+    end
 
-  def company
-    record.driver.company
-  end
-
-  def own_record?
-    record.driver.user == user
-  end
-
+    def own_record?
+      record.driver.user == user
+    end
 end

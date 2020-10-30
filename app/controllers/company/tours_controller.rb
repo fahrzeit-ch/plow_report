@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company::ToursController < ApplicationController
   before_action :set_company_from_param
   before_action :set_tour, only: [:destroy, :edit, :update]
@@ -27,9 +29,9 @@ class Company::ToursController < ApplicationController
 
   def destroy
     if @record.discard
-      flash[:success] = I18n.t 'flash.tours.destroyed'
+      flash[:success] = I18n.t "flash.tours.destroyed"
     else
-      flash[:error] = I18n.t 'flash.tours.not_destroyed'
+      flash[:error] = I18n.t "flash.tours.not_destroyed"
     end
     redirect_to company_tours_path current_company
   end
@@ -39,7 +41,7 @@ class Company::ToursController < ApplicationController
 
   def update
     if @record.update(tour_params)
-      flash[:success] = I18n.t 'flash.tours.updated'
+      flash[:success] = I18n.t "flash.tours.updated"
       redirect_to company_drives_path current_company
     else
       render :edit
@@ -47,21 +49,20 @@ class Company::ToursController < ApplicationController
   end
 
   private
+    def apply_scopes(tours)
+      tours = tours.by_season(selected_season)
+      tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
+      tours
+    end
 
-  def apply_scopes(tours)
-    tours = tours.by_season(selected_season)
-    tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
-    tours
-  end
+    def tours_params
+      permitted = policy(Tour).permitted_attributes
+      permitted << :driver_id
+      params.require(:tour).permit(permitted)
+    end
 
-  def tours_params
-    permitted = policy(Tour).permitted_attributes
-    permitted << :driver_id
-    params.require(:tour).permit(permitted)
-  end
-
-  def set_tour
-    @record = current_company.tours.find(params[:id])
-    authorize @record
-  end
+    def set_tour
+      @record = current_company.tours.find(params[:id])
+      authorize @record
+    end
 end

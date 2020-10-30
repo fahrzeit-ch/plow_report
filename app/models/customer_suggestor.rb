@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 # Responsible to get the best sugestion for the next customer/site
 class CustomerSuggestor
-
   # Fetches a list of samples for the given driver. The length of the
   # samples list depends on the number of customers the driver works for.
   #

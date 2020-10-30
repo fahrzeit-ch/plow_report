@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RateAssocType
-  CUSTOMER_ACTIVITY_RATE = 'customer_activity_rate'.freeze
-  CUSTOMER_BASE_RATE = 'customer_base_rate'.freeze
-  ACTIVITY_RATE = 'activity_rate'.freeze
-  BASE_RATE = 'base_rate'.freeze
+  CUSTOMER_ACTIVITY_RATE = "customer_activity_rate"
+  CUSTOMER_BASE_RATE = "customer_base_rate"
+  ACTIVITY_RATE = "activity_rate"
+  BASE_RATE = "base_rate"
 
   # Returns the type of rate definition based on its associations. Those can be one
   # of the following:

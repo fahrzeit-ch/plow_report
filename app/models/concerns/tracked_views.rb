@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TrackedViews
   extend ActiveSupport::Concern
 
@@ -10,7 +12,6 @@ module TrackedViews
   end
 
   module ClassMethods
-
     def with_viewstate(user)
       join_statement = <<END
   LEFT OUTER JOIN user_actions ON

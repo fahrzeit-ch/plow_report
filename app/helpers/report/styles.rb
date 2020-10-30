@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Report
   class Styles
     attr_accessor :header
@@ -19,11 +21,11 @@ module Report
       @h1 = styles.add_style(sz: 15, b: true, u: true)
       @h1 = styles.add_style(sz: 13, b: true, u: true)
 
-      @header = styles.add_style(bg_color: '1a6ba2', fg_color: 'FF', b: true)
-      @header_vertical = styles.add_style(b: true, alignment: { textRotation: 90 }, bg_color: '1a6ba2', fg_color: 'FF')
+      @header = styles.add_style(bg_color: "1a6ba2", fg_color: "FF", b: true)
+      @header_vertical = styles.add_style(b: true, alignment: { textRotation: 90 }, bg_color: "1a6ba2", fg_color: "FF")
 
-      @time = styles.add_style format_code: 'hh:mm'
-      @duration = styles.add_style format_code: '[h]:mm'
+      @time = styles.add_style format_code: "hh:mm"
+      @duration = styles.add_style format_code: "[h]:mm"
       @date = Axlsx::STYLE_DATE
       @checked = styles.add_style alignment: { horizontal: :center }
     end

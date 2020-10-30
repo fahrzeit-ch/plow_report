@@ -6,7 +6,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    if params['scope'].split(' ').include?('demo')
+    if params["scope"].split(" ").include?("demo")
       current_user || redirect_to(demo_login_path)
     else
       current_user || warden.authenticate!(scope: :user)
@@ -24,7 +24,7 @@ Doorkeeper.configure do
 
     if current_user
       # TODO: Replace this with a serious authentication for managing apps
-      head :forbidden unless current_user && current_user.email == 'ste.staub@gmail.com'
+      head :forbidden unless current_user && current_user.email == "ste.staub@gmail.com"
     else
       warden.authenticate!(scope: :user)
     end

@@ -1,5 +1,6 @@
-class HourlyRatePolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class HourlyRatePolicy < ApplicationPolicy
   def new?
     company_admin_or_owner?(company)
   end
@@ -37,5 +38,4 @@ class HourlyRatePolicy < ApplicationPolicy
       scope
     end
   end
-
 end

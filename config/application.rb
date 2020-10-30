@@ -1,6 +1,8 @@
-require_relative 'boot'
+# frozen_string_literal: true
 
-require 'rails/all'
+require_relative "boot"
+
+require "rails/all"
 
 
 # Require the gems listed in Gemfile, including any gems
@@ -22,7 +24,7 @@ module PlowReport
     config.i18n.default_locale = :'de-CH'
     config.i18n.fallbacks = [I18n.default_locale]
 
-    config.time_zone = 'Bern'
+    config.time_zone = "Bern"
     config.active_record.default_timezone = :utc
 
     # Use resqueue as Job Queue Processor
@@ -30,15 +32,15 @@ module PlowReport
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-        address:              'smtp.sendgrid.net',
+        address:              "smtp.sendgrid.net",
         port:                 587,
-        domain:               'fahrzeit.ch',
-        user_name:            'apikey',
-        password:             ENV['MAIL_PW'],
-        authentication:       'plain',
+        domain:               "fahrzeit.ch",
+        user_name:            "apikey",
+        password:             ENV["MAIL_PW"],
+        authentication:       "plain",
         enable_starttls_auto: true
     }
 
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("lib")
   end
 end

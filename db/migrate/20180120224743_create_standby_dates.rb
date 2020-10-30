@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateStandbyDates < ActiveRecord::Migration[5.1]
   def change
     create_table :standby_dates do |t|

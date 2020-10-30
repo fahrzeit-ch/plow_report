@@ -1,5 +1,6 @@
-class SitePolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class SitePolicy < ApplicationPolicy
   def new?
     company_admin_or_owner?(company)
   end
@@ -41,5 +42,4 @@ class SitePolicy < ApplicationPolicy
       scope
     end
   end
-
 end
