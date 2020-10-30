@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class DriverApplication < ApplicationRecord
   has_secure_token
   belongs_to :user
-  belongs_to :accepted_by, class_name: 'User', optional: true
-  belongs_to :accepted_to, class_name: 'Company', optional: true
+  belongs_to :accepted_by, class_name: "User", optional: true
+  belongs_to :accepted_to, class_name: "Company", optional: true
 
   scope :idle, -> { where(accepted_at: nil) }
 

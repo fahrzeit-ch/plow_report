@@ -1,8 +1,8 @@
-module Report
+# frozen_string_literal: true
 
+module Report
   # Builds header columns a drive table.
   class HeaderBuilder
-
     attr_reader :activity_index_map
 
     # @param [Activities] activities
@@ -29,7 +29,7 @@ module Report
       @fixed_headers.map { :auto } + @activity_headers.map { 6 }
     end
 
-    def column_name_for(attr, activity_id=nil)
+    def column_name_for(attr, activity_id = nil)
       if activity_id
         column_name_for_activity(attr, activity_id)
       else
@@ -40,44 +40,43 @@ module Report
     def column_name_for_activity(attr, activity_id)
       case attr
       when :name
-        @activities.to_a.first {|a| a.id == activity_id }.name
+        @activities.to_a.first { |a| a.id == activity_id }.name
       when :value, :value_label
-        @activities.to_a.first {|a| a.id == activity_id }.value_label
+        @activities.to_a.first { |a| a.id == activity_id }.value_label
       else
         raise "Activity for id #{activity_id} not found."
       end
     end
 
     private
+      def build_activity_headers
+        idx = @fixed_headers.length
 
-    def build_activity_headers
-      idx = @fixed_headers.length
-
-      @activities.flat_map do |activity|
-        @activity_index_map[activity.id] = idx
-        idx += 1
-
-        res = [activity.name]
-        if activity.has_value?
-          res << activity.value_label
+        @activities.flat_map do |activity|
+          @activity_index_map[activity.id] = idx
           idx += 1
+
+          res = [activity.name]
+          if activity.has_value?
+            res << activity.value_label
+            idx += 1
+          end
+
+          res
         end
-
-        res
       end
-    end
 
-    def build_fixed_headers
-      [
-          I18n.t('reports.drives.drive_date_title'),
-          I18n.t('reports.drives.drive_start_time_title'),
-          I18n.t('reports.drives.drive_duration_title'),
-          I18n.t('reports.drives.drive_site_title'),
-          I18n.t('reports.drives.drive_driver_title'),
-          I18n.t('reports.drives.drive_distance_title'),
-          I18n.t('reports.drives.drive_hourly_rate'),
-          I18n.t('reports.drives.drive_total_price')
-      ]
-    end
+      def build_fixed_headers
+        [
+            I18n.t("reports.drives.drive_date_title"),
+            I18n.t("reports.drives.drive_start_time_title"),
+            I18n.t("reports.drives.drive_duration_title"),
+            I18n.t("reports.drives.drive_site_title"),
+            I18n.t("reports.drives.drive_driver_title"),
+            I18n.t("reports.drives.drive_distance_title"),
+            I18n.t("reports.drives.drive_hourly_rate"),
+            I18n.t("reports.drives.drive_total_price")
+        ]
+      end
   end
 end

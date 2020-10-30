@@ -1,14 +1,15 @@
-require 'active_support/concern'
+# frozen_string_literal: true
+
+require "active_support/concern"
 
 module ConstraintRouter
-
   extend ActiveSupport::Concern
 
   # Check account for sufficient setup, or redirect accordingly
   def check_account!
     return unless current_user
     return if current_user.has_driver? || current_user.companies.any?
-    redirect_to setup_path unless controller_name == 'sessions'
+    redirect_to setup_path unless controller_name == "sessions"
   end
 
   # Redirect to company path if user has no driver.
@@ -28,5 +29,4 @@ module ConstraintRouter
         super
       end
   end
-
 end

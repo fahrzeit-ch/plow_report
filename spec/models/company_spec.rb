@@ -1,116 +1,109 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Company, type: :model do
-
   let(:valid_attributes) { attributes_for(:company) }
 
-  describe 'validation' do
-
-    context 'valid attributes' do
+  describe "validation" do
+    context "valid attributes" do
       subject { described_class.new valid_attributes }
 
-      it 'should be valid' do
+      it "should be valid" do
         expect(subject).to be_valid
       end
 
-      it 'should not be valid without an email address' do
-        subject.contact_email = ''
+      it "should not be valid without an email address" do
+        subject.contact_email = ""
         expect(subject).not_to be_valid
       end
 
-      it 'should not be valid with blank name' do
-        subject.name = ''
+      it "should not be valid with blank name" do
+        subject.name = ""
         expect(subject).not_to be_valid
       end
 
-      it 'should not be valid with a company name that already exists' do
+      it "should not be valid with a company name that already exists" do
         create(:company, valid_attributes)
         expect(subject).not_to be_valid
       end
 
-      it 'should be valid when options are set to nil' do
+      it "should be valid when options are set to nil" do
         subject.options = nil
         expect(subject).to be_valid
       end
-
     end
-
   end
 
-  describe 'activities' do
+  describe "activities" do
     it { is_expected.to have_many(:activities).dependent(:destroy) }
   end
 
-  describe 'drivers' do
-
+  describe "drivers" do
     subject { create(:company) }
 
     let(:driver) { create(:driver) }
 
-    it 'should be possible to associate a driver' do
+    it "should be possible to associate a driver" do
       expect {
         subject.drivers << driver
       }.to change(driver, :company)
     end
 
-    describe '#add_driver' do
+    describe "#add_driver" do
       let(:company) { create(:company) }
       let(:user) { create(:user) }
 
-      context 'with transfer default' do
+      context "with transfer default" do
         subject { company.add_driver(user, true)[:driver] }
 
-        it 'should return the result hash' do
+        it "should return the result hash" do
           expect(subject).to be_a Driver
         end
 
-        it 'should not create a new driver' do
+        it "should not create a new driver" do
           subject
           expect(user.drivers.count).to eq 1
         end
 
-        it 'should assign the driver to the company' do
+        it "should assign the driver to the company" do
           expect(subject.company).to eq company
         end
 
-        context 'non existing default driver' do
-
-          it 'should create a new driver' do
+        context "non existing default driver" do
+          it "should create a new driver" do
             expect {
               subject
             }.to change(user.drivers, :count).by 1
           end
         end
-
       end
 
-      context 'without transfer_default' do
+      context "without transfer_default" do
         subject { company.add_driver(user, false) }
 
-        it 'should create a new driver' do
+        it "should create a new driver" do
           expect {
             subject
           }.to change(user.drivers, :count).by 1
         end
-
       end
     end
-
   end
 
-  describe 'customers' do
+  describe "customers" do
     it { is_expected.to have_many(:customers) }
   end
 
-  describe 'create_slug' do
-    let(:company) { build(:company, name: 'Some name AG') }
+  describe "create_slug" do
+    let(:company) { build(:company, name: "Some name AG") }
     before { company.create_slug }
     subject { company.slug }
 
-    it { is_expected.to eq 'Some name AG'.parameterize }
+    it { is_expected.to eq "Some name AG".parameterize }
   end
 
-  describe '#drives' do
+  describe "#drives" do
     subject { create(:company) }
     # create driver associated to the company
     let(:company_driver) { create(:driver, company: subject) }
@@ -121,19 +114,19 @@ RSpec.describe Company, type: :model do
     let(:other_drive) { create(:drive, driver: other_driver) }
     let(:private_drive) { create(:drive, driver: private_driver) }
 
-    it 'should include only drives of drivers associated to the company' do
+    it "should include only drives of drivers associated to the company" do
       expect(subject.drives).to include(company_drive)
       expect(subject.drives).not_to include(other_drive, private_drive)
     end
   end
 
-  describe 'options' do
+  describe "options" do
     subject { described_class.new(valid_attributes).options }
 
     it { is_expected.to be_a(Company::Settings) }
   end
 
-  describe 'with_member' do
+  describe "with_member" do
     let(:user) { create(:user) }
     let(:company1) { create(:company) }
     let(:company2) { create(:company) }
@@ -148,17 +141,16 @@ RSpec.describe Company, type: :model do
       create(:company_member, company: company3)
     end
 
-    it 'scopes to all companies containing a membership for the given user id' do
+    it "scopes to all companies containing a membership for the given user id" do
       expect(subject).to include(company1, company2)
     end
 
-    it 'does not include companies the user is not a member of' do
+    it "does not include companies the user is not a member of" do
       expect(subject).not_to include(company3)
     end
   end
 
-  describe 'destroy' do
-
+  describe "destroy" do
     let(:company) { create(:company) }
 
     before do
@@ -172,31 +164,31 @@ RSpec.describe Company, type: :model do
 
     subject { company.destroy }
 
-    it 'destroys all drivers' do
+    it "destroys all drivers" do
       expect {
         subject
       }.to change(Driver, :count).by(-2)
     end
 
-    it 'destroys activity' do
+    it "destroys activity" do
       expect {
         subject
       }.to change(Activity, :count).by(-1)
     end
 
-    it 'destroys customer' do
+    it "destroys customer" do
       expect {
         subject
       }.to change(Customer, :count).by(-1)
     end
 
-    it 'destroys site' do
+    it "destroys site" do
       expect {
         subject
       }.to change(Site, :count).by(-1)
     end
 
-    it 'destroys drive' do
+    it "destroys drive" do
       expect {
         subject
       }.to change(Drive, :count).by(-1)

@@ -1,5 +1,6 @@
-class Api::V1::DrivesController < Api::V1::ApiController
+# frozen_string_literal: true
 
+class Api::V1::DrivesController < Api::V1::ApiController
   rescue_from ActionController::ParameterMissing, with: :handle_param_missing
 
   def index
@@ -17,8 +18,8 @@ class Api::V1::DrivesController < Api::V1::ApiController
   def history
     @since = params[:changes_since] || 1.week.ago
     @records = Audited::Audit
-                .where(auditable_type: 'Drive')
-                .where('created_at >= ?', @since)
+                .where(auditable_type: "Drive")
+                .where("created_at >= ?", @since)
                 .order(created_at: :asc).page(params[:page]).per(params[:per_page] || 500)
   end
 
@@ -56,17 +57,16 @@ class Api::V1::DrivesController < Api::V1::ApiController
   end
 
   private
+    def handle_param_missing(e)
+      render json: { error: e.message }, status: :bad_request
+    end
 
-  def handle_param_missing(e)
-    render json: { error: e.message }, status: :bad_request
-  end
+    def update_attributes
+      params.permit(policy(Drive).permitted_attributes(:api_update))
+    end
 
-  def update_attributes
-    params.permit(policy(Drive).permitted_attributes(:api_update))
-  end
-
-  def create_attributes
-    params.require([:driver_id, :start, :end, :created_at])
-    params.permit(policy(Drive).permitted_attributes(:api_create))
-  end
+    def create_attributes
+      params.require([:driver_id, :start, :end, :created_at])
+      params.permit(policy(Drive).permitted_attributes(:api_create))
+    end
 end

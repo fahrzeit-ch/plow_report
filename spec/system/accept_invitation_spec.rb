@@ -1,6 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'accept invitation' do
+require "rails_helper"
+
+feature "accept invitation" do
   let(:invited_by) { u = build(:user); u.save!(validate: false); u }
   let(:company_member) { build(:company_member_invite, role: :driver).save_and_invite!(invited_by) }
   let(:invitation_token) { company_member.user.raw_invitation_token }
@@ -9,15 +11,14 @@ feature 'accept invitation' do
 
   before { gtc }
 
-  it 'should be possible to sign up by invite' do
+  it "should be possible to sign up by invite" do
     visit "/users/invitation/accept?invitation_token=#{invitation_token}"
-    fill_in('user[password]', with: 'password')
-    fill_in('user[password_confirmation]', with: 'password')
+    fill_in("user[password]", with: "password")
+    fill_in("user[password_confirmation]", with: "password")
 
-    check('user[terms][agb]')
+    check("user[terms][agb]")
 
-    click_button(I18n.t'devise.invitations.edit.submit_button')
-    expect(page).to have_current_path('/')
+    click_button(I18n.t "devise.invitations.edit.submit_button")
+    expect(page).to have_current_path("/")
   end
-
 end

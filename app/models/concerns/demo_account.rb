@@ -1,5 +1,6 @@
-module DemoAccount
+# frozen_string_literal: true
 
+module DemoAccount
   extend ActiveSupport::Concern
 
   def demo_user_for?(company)
@@ -25,5 +26,4 @@ module DemoAccount
   def demo_user?
     email == ENV["DEMO_ACCOUNT_EMAIL"]
   end
-
 end

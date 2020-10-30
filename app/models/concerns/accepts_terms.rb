@@ -1,11 +1,12 @@
-module AcceptsTerms
+# frozen_string_literal: true
 
+module AcceptsTerms
   extend ActiveSupport::Concern
 
   included do
     has_many :term_acceptances, dependent: :destroy
-    has_many :accepted_terms, class_name: 'PolicyTerm', through: :term_acceptances, source: :policy_term
-    has_many :outdated_acceptances, -> { require_update }, class_name: 'TermAcceptance'
+    has_many :accepted_terms, class_name: "PolicyTerm", through: :term_acceptances, source: :policy_term
+    has_many :outdated_acceptances, -> { require_update }, class_name: "TermAcceptance"
     has_many :terms_with_updates, through: :outdated_acceptances, source: :policy_term
 
     after_save :save_terms
@@ -41,7 +42,7 @@ module AcceptsTerms
       PolicyTerm.joins("LEFT JOIN term_acceptances as ta
                         ON policy_terms.id = ta.policy_term_id
                         AND ta.user_id = '#{self.id}'
-                        AND ta.invalidated_at is NULL").where('ta.policy_term_id is null')
+                        AND ta.invalidated_at is NULL").where("ta.policy_term_id is null")
     else
       PolicyTerm.all
     end
@@ -84,5 +85,4 @@ module AcceptsTerms
     return false if skip_term_validation
     new_record? || terms_with_updates.exists? || unchecked_terms.exists?
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PolicyTerm < ApplicationRecord
   scope :required, -> { where(required: true) }
   scope :optional, -> { where(required: false) }

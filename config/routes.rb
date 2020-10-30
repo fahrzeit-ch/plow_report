@@ -1,9 +1,10 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   use_doorkeeper do
-    controllers authorizations: 'authorizations'
+    controllers authorizations: "authorizations"
   end
-  get 'static_pages/home'
+  get "static_pages/home"
 
   namespace :api do
     defaults format: :json do
@@ -33,13 +34,13 @@ Rails.application.routes.draw do
     end
   end
 
-  scope path: '/users' do
+  scope path: "/users" do
     resource :term_acceptances, only: %i[edit update]
   end
 
   devise_for :users, controllers: {
-      registrations: 'user/registrations',
-      invitations: 'user/invitations'
+      registrations: "user/registrations",
+      invitations: "user/invitations"
   }
   resources :drives do
     collection do
@@ -61,9 +62,9 @@ Rails.application.routes.draw do
   end
 
   resources :companies do
-    scope module: 'company' do
+    scope module: "company" do
       resources :hourly_rates
-      get :dashboard, to: 'dashboard#index', as: 'dashboard'
+      get :dashboard, to: "dashboard#index", as: "dashboard"
       resources :drives, only: %i[index destroy edit update]
       resources :tours, only: %i[index destroy edit update] do
         resources :drives
@@ -95,15 +96,15 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    root 'dashboard#index', as: :authenticated_root
+    root "dashboard#index", as: :authenticated_root
   end
 
-  get '/setup', to: 'static_pages#setup', as: :setup
-  get '/demo_login', to: 'static_pages#demo_login', as: :demo_login
+  get "/setup", to: "static_pages#setup", as: :setup
+  get "/demo_login", to: "static_pages#demo_login", as: :demo_login
 
   devise_scope :user do
-    get "/", :to => "devise/sessions#new"
+    get "/", to: "devise/sessions#new"
   end
 
-  root :to => "devise/sessions#new"
+  root to: "devise/sessions#new"
 end

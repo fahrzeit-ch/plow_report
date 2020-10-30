@@ -1,5 +1,6 @@
-class TourPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class TourPolicy < ApplicationPolicy
   def index?
     true
   end
@@ -47,13 +48,11 @@ class TourPolicy < ApplicationPolicy
   end
 
   private
+    def company
+      record.driver.company
+    end
 
-  def company
-    record.driver.company
-  end
-
-  def own_record?
-    record.driver.user == user
-  end
-
+    def own_record?
+      record.driver.user == user
+    end
 end

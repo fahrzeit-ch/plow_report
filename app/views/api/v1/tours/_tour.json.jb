@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
     id: tour.id,
     start_time: tour.start_time,

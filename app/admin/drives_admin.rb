@@ -1,6 +1,8 @@
-Trestle.resource(:drives,model: Drive) do
+# frozen_string_literal: true
+
+Trestle.resource(:drives, model: Drive) do
   menu do
-    item :drives, icon: 'fa fa-star'
+    item :drives, icon: "fa fa-star"
   end
 
   # Customize the table columns shown on the index view.

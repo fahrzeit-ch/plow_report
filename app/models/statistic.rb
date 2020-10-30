@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Statistic
   attr_accessor :distance
   attr_accessor :activity_values

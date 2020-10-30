@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe DriverApplicationsController, type: :controller do
   let(:user) { create(:user) }
@@ -11,12 +13,12 @@ RSpec.describe DriverApplicationsController, type: :controller do
     before { sign_in user }
 
     it "returns http success" do
-      post :create, params: { driver_application: {recipient: admin.email} }
+      post :create, params: { driver_application: { recipient: admin.email } }
       expect(response).to redirect_to(driver_application_path(DriverApplication.last))
     end
 
     it "creates a driver application" do
-      post :create, params: { driver_application: { recipient: admin.email} }
+      post :create, params: { driver_application: { recipient: admin.email } }
       expect(DriverApplication.count).to eq(1)
     end
   end
@@ -29,13 +31,12 @@ RSpec.describe DriverApplicationsController, type: :controller do
       get :review, params: { id: application.token }
       expect(response).to have_http_status(:success)
     end
-
   end
 
   describe "GET #accept" do
     let(:application) { create(:driver_application, user: user) }
 
-    context 'without administrator access to company' do
+    context "without administrator access to company" do
       let(:non_admin) { create(:user) }
       before do
         company.add_member(non_admin, CompanyMember::DRIVER)
@@ -47,7 +48,7 @@ RSpec.describe DriverApplicationsController, type: :controller do
       end
     end
 
-    context 'with administrator access to company' do
+    context "with administrator access to company" do
       before { sign_in admin }
 
       it "returns http success" do
@@ -62,5 +63,4 @@ RSpec.describe DriverApplicationsController, type: :controller do
       end
     end
   end
-
 end

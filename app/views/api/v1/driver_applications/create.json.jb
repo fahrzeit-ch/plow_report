@@ -1,1 +1,3 @@
-json = render partial: 'driver_application', locals: { record: @record }
+# frozen_string_literal: true
+
+json = render partial: "driver_application", locals: { record: @record }

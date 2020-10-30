@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
-    items: render(partial: 'driver_application', collection: @records, as: :record),
+    items: render(partial: "driver_application", collection: @records, as: :record),
 }

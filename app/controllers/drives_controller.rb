@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DrivesController < ApplicationController
   before_action :check_driver!
   before_action :set_drive, only: [:show, :edit, :update, :destroy]
@@ -11,7 +13,7 @@ class DrivesController < ApplicationController
   # GET /drives/suggested_values?activity_id=23
   def suggested_values
     opts = params.permit(:activity_id)
-    opts.each { |k,v| opts[k] = ActiveModel::Type::Integer.new.cast(v) }
+    opts.each { |k, v| opts[k] = ActiveModel::Type::Integer.new.cast(v) }
     @suggested_values = Drive.suggested_values(current_driver, opts)
 
     respond_to do |format|
@@ -37,11 +39,11 @@ class DrivesController < ApplicationController
   # POST /drives
   # POST /drives.json
   def create
-    @drive = Drive.new({driver_id: current_driver.id}.merge(drive_params))
+    @drive = Drive.new({ driver_id: current_driver.id }.merge(drive_params))
     authorize @drive
     respond_to do |format|
       if @drive.save
-        format.html { redirect_to drives_path, notice: t('flash.drives.created') }
+        format.html { redirect_to drives_path, notice: t("flash.drives.created") }
         format.json { render :show, status: :created, location: :index }
       else
         format.html { render :new }
@@ -55,7 +57,7 @@ class DrivesController < ApplicationController
   def update
     respond_to do |format|
       if @drive.update(drive_params)
-        format.html { redirect_to drives_path, notice: t('flash.drives.updated') }
+        format.html { redirect_to drives_path, notice: t("flash.drives.updated") }
         format.json { render :show, status: :ok, location: :index }
       else
         format.html { render :edit }
@@ -69,21 +71,20 @@ class DrivesController < ApplicationController
   def destroy
     @drive.discard
     respond_to do |format|
-      format.html { redirect_to drives_path, notice: t('flash.drives.destroyed') }
+      format.html { redirect_to drives_path, notice: t("flash.drives.destroyed") }
       format.json { head :no_content }
     end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_drive
+      @drive = Drive.find(params[:id])
+      authorize @drive
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_drive
-    @drive = Drive.find(params[:id])
-    authorize @drive
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def drive_params
-    params.require(:drive).permit(policy(Drive).permitted_attributes)
-  end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def drive_params
+      params.require(:drive).permit(policy(Drive).permitted_attributes)
+    end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StandbyDate
   class DateRangePolicy < ApplicationPolicy
     def create?
@@ -5,13 +7,12 @@ class StandbyDate
     end
 
     private
+      def company
+        @company ||= Driver.find(record.driver_id).company
+      end
 
-    def company
-      @company ||= Driver.find(record.driver_id).company
-    end
-
-    def own_record?
-      user.drivers.exists? record.driver_id
-    end
+      def own_record?
+        user.drivers.exists? record.driver_id
+      end
   end
 end
