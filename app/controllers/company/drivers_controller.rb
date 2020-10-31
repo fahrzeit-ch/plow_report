@@ -1,5 +1,6 @@
-class Company::DriversController < ApplicationController
+# frozen_string_literal: true
 
+class Company::DriversController < ApplicationController
   before_action :set_company_from_param
   before_action :set_driver, only: [:destroy, :edit, :update]
 
@@ -14,9 +15,9 @@ class Company::DriversController < ApplicationController
     @driver = Driver.new driver_params
     authorize @driver
     if @driver.save
-      flash[:success] = I18n.t 'flash.drivers.created'
+      flash[:success] = I18n.t "flash.drivers.created"
     else
-      flash[:error] = I18n.t 'flash.drivers.driver_not_created'
+      flash[:error] = I18n.t "flash.drivers.driver_not_created"
     end
     redirect_to company_drivers_path(current_company)
   end
@@ -36,7 +37,7 @@ class Company::DriversController < ApplicationController
     return head :unprocessable_entity if @driver.user
 
     if @driver.update(driver_update_params)
-      flash[:success] = I18n.t 'flash.drivers.updated'
+      flash[:success] = I18n.t "flash.drivers.updated"
       redirect_to company_drivers_path(current_company)
     else
       render :edit
@@ -47,32 +48,31 @@ class Company::DriversController < ApplicationController
 
   def destroy
     if @driver.destroy
-      flash[:success] = I18n.t 'flash.drivers.destroyed'
+      flash[:success] = I18n.t "flash.drivers.destroyed"
     else
-      flash[:error] = I18n.t 'flash.drivers.not_destroyed'
+      flash[:error] = I18n.t "flash.drivers.not_destroyed"
     end
     redirect_to company_drivers_path(current_company)
   end
 
   private
-  def set_driver
-    @driver = current_company.drivers.find(params[:id])
-    authorize @driver
-  end
+    def set_driver
+      @driver = current_company.drivers.find(params[:id])
+      authorize @driver
+    end
 
-  def driver_params
-    params.require(:driver).permit(:name).merge(company: current_company)
-  end
+    def driver_params
+      params.require(:driver).permit(:name).merge(company: current_company)
+    end
 
-  def driver_update_params
-    p = params.require(:driver).permit(:user)
-    user = User.available_as_driver(current_company).find(p[:user])
-    p[:user] = user
-    p
-  end
+    def driver_update_params
+      p = params.require(:driver).permit(:user)
+      user = User.available_as_driver(current_company).find(p[:user])
+      p[:user] = user
+      p
+    end
 
-  def user_to_assign
-    User.find_by(id: params[:driver][:user_id])
-  end
-
+    def user_to_assign
+      User.find_by(id: params[:driver][:user_id])
+    end
 end

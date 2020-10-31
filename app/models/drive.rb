@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 # TODO: This model should be renamed to amore abstract entity so it cannot only
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
-
   after_initialize :defaults
   validates :end, date: { after: :start }
 
@@ -73,7 +74,7 @@ class Drive < ApplicationRecord
   end
 
   def day_of_week
-    I18n.l self.start, format: '%a'
+    I18n.l self.start, format: "%a"
   end
 
   # @return The hourly rate applicable for this drive.
@@ -96,11 +97,11 @@ class Drive < ApplicationRecord
   end
 
   def customer_name
-    customer ? "#{customer.name} #{customer.first_name}" : ''
+    customer ? "#{customer.name} #{customer.first_name}" : ""
   end
 
   def site_name
-    site ? site.display_name : ''
+    site ? site.display_name : ""
   end
 
   # returns the name of the activity performed on this drive
@@ -147,7 +148,6 @@ class Drive < ApplicationRecord
 
   # Class Methods
   class << self
-
     def stats
       values = Statistic.new
       drive_stats = select("EXTRACT(epoch FROM COALESCE(SUM(drives.end - drives.start), '00:00:00'::interval)) as duration,
@@ -161,21 +161,21 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     end
 
     def activity_value_summary
-      select('activities.value_label as title, SUM(activity_executions.value) as total')
+      select("activities.value_label as title, SUM(activity_executions.value) as total")
           .joins(:activity)
           .where(activities: { has_value: true })
           .group(:value_label)
-          .sort_by{|item| item[:title]}
+          .sort_by { |item| item[:title] }
     end
 
     # Scope the drives by the given season
     def by_season(season)
-      where('start > ? AND start < ?', season.start_date, season.end_date)
+      where("start > ? AND start < ?", season.start_date, season.end_date)
     end
 
     # sum the hours of all drives in the current scope
     def total_hrs
-      sum('drives.end - drives.start')
+      sum("drives.end - drives.start")
     end
 
     # Returns the last recorded distance and activity_value used by the driver depending on the drive options.
@@ -209,19 +209,17 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+    def update_tour
+      tour.try(:refresh_times_from_dirves)
+    end
 
-  def update_tour
-    tour.try(:refresh_times_from_dirves)
-  end
+    def customer_associated_with_site
+      return if customer.nil? || site.nil?
+      errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
+    end
 
-  def customer_associated_with_site
-    return if customer.nil? || site.nil?
-    errors.add(:associated_to_as_json, :not_associated_to_customer) if customer != site.customer
-  end
-
-  def defaults
-    self.start ||= Time.current if self.has_attribute? :start
-    self.end ||= Time.current if self.has_attribute? :end
-  end
-
+    def defaults
+      self.start ||= Time.current if self.has_attribute? :start
+      self.end ||= Time.current if self.has_attribute? :end
+    end
 end

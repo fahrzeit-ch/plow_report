@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines the hourly rate used for price calculation of
 # drives.
 #
@@ -14,8 +16,8 @@ class HourlyRate < ApplicationRecord
   attribute :valid_from, :date, default: Date.new(2000, 1, 1)
   attribute :valid_until, :date, default: Date.new(2100, 1, 1)
 
-  scope :active, -> { where('? BETWEEN valid_from AND valid_until', Time.current) }
-  scope :overlapping, ->(other) { where('(valid_from, valid_until) OVERLAPS (?, ?)',
+  scope :active, -> { where("? BETWEEN valid_from AND valid_until", Time.current) }
+  scope :overlapping, ->(other) { where("(valid_from, valid_until) OVERLAPS (?, ?)",
                                          other.valid_from, other.valid_until) }
   scope :same_scope, ->(other) { where(customer: other.customer, activity: other.activity,
                                         company: other.company).where.not(id: other.id) }
@@ -57,9 +59,8 @@ class HourlyRate < ApplicationRecord
   end
 
   private
-
-  def uniqueness_of_scope
-    return unless self.class.same_scope(self).overlapping(self).exists?
-    self.errors.add(:base, :already_exists_in_time_range)
-  end
+    def uniqueness_of_scope
+      return unless self.class.same_scope(self).overlapping(self).exists?
+      self.errors.add(:base, :already_exists_in_time_range)
+    end
 end

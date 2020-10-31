@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 {
     id: standby_date.id,
     day: standby_date.day,

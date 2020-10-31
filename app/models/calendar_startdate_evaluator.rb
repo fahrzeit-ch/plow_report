@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Evalute start dates for calendarview based on season
 # and parms
 class CalendarStartdateEvaluator

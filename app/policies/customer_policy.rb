@@ -1,5 +1,6 @@
-class CustomerPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class CustomerPolicy < ApplicationPolicy
   def index?
     true
   end
@@ -30,5 +31,4 @@ class CustomerPolicy < ApplicationPolicy
       scope
     end
   end
-
 end

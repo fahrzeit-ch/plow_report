@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include ConstraintRouter
   include Pundit
@@ -35,8 +37,8 @@ class ApplicationController < ActionController::Base
 
   # @param [Company | NilClass] company
   def current_company=(company)
-    raise 'must be a company' unless company.nil? || company.is_a?(Company)
-    raise 'company must be persisted' unless company.nil? || company.persisted?
+    raise "must be a company" unless company.nil? || company.is_a?(Company)
+    raise "company must be persisted" unless company.nil? || company.persisted?
 
     @current_company = company
   end
@@ -58,30 +60,29 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-
-  def user_not_authorized
-    flash[:alert] = t('pundit.default')
-    redirect_back(fallback_location: root_path)
-  end
-
-  def set_company_from_param
-    self.current_company = Company.find_by(slug: params[:company_id])
-  end
-
-  def default_company_from_driver_or_user
-    if current_driver&.company
-      current_driver.company
-    else
-      current_user.companies.last
+    def user_not_authorized
+      flash[:alert] = t("pundit.default")
+      redirect_back(fallback_location: root_path)
     end
-  end
+
+    def set_company_from_param
+      self.current_company = Company.find_by(slug: params[:company_id])
+    end
+
+    def default_company_from_driver_or_user
+      if current_driver&.company
+        current_driver.company
+      else
+        current_user.companies.last
+      end
+    end
 
   private
-  def determine_layout
-    if user_signed_in?
-      'application'
-    else
-      'public'
+    def determine_layout
+      if user_signed_in?
+        "application"
+      else
+        "public"
+      end
     end
-  end
 end

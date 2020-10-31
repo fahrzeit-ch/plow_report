@@ -1,5 +1,6 @@
-class Api::V1::ActivitiesController < Api::V1::ApiController
+# frozen_string_literal: true
 
+class Api::V1::ActivitiesController < Api::V1::ApiController
   rescue_from ActionController::ParameterMissing, with: :handle_param_missing
 
   def index

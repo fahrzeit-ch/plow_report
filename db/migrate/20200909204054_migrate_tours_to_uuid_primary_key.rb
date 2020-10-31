@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class MigrateToursToUuidPrimaryKey < ActiveRecord::Migration[5.1]
   def change
-    enable_extension 'pgcrypto'
+    enable_extension "pgcrypto"
 
     remove_column :drives, :tour_id
     drop_table :tours

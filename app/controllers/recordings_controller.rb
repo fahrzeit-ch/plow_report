@@ -1,5 +1,6 @@
-class RecordingsController < ApplicationController
+# frozen_string_literal: true
 
+class RecordingsController < ApplicationController
   def create
     return already_recording_response if current_driver.recording?
 
@@ -18,26 +19,25 @@ class RecordingsController < ApplicationController
     return not_recording_response unless current_driver.recording?
 
     current_driver.finish_recording
-    @drive = Drive.new({driver: current_driver}.merge(drive_params))
+    @drive = Drive.new({ driver: current_driver }.merge(drive_params))
     authorize @drive
     if @drive.save
-      redirect_to root_path, flash: { success: I18n.t('flash.drives.created') }
+      redirect_to root_path, flash: { success: I18n.t("flash.drives.created") }
     else
-      render 'drives/new'
+      render "drives/new"
     end
   end
 
   private
+    def drive_params
+      params.require(:drive).permit(policy(Drive).permitted_attributes)
+    end
 
-  def drive_params
-    params.require(:drive).permit(policy(Drive).permitted_attributes)
-  end
+    def already_recording_response
+      redirect_to root_path, flash: { error: I18n.t("flash.drives.already_recording") }
+    end
 
-  def already_recording_response
-    redirect_to root_path, flash: { error: I18n.t('flash.drives.already_recording') }
-  end
-
-  def not_recording_response
-    redirect_to root_path, flash: { error: I18n.t('flash.drives.not_recording') }
-  end
+    def not_recording_response
+      redirect_to root_path, flash: { error: I18n.t("flash.drives.not_recording") }
+    end
 end

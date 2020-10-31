@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StandbyDate
   class WeekView
     include ActiveModel::Model
@@ -6,13 +8,12 @@ class StandbyDate
     attr_accessor :day_count
 
     def initialize(date, count)
-      self.start_date = StandbyDate.select(:day).where('day >= ?', date).order(day: :asc).first.day
+      self.start_date = StandbyDate.select(:day).where("day >= ?", date).order(day: :asc).first.day
       self.day_count = count
     end
 
     def week_nr
       self.start_date.cweek
     end
-
   end
 end

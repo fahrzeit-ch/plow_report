@@ -1,7 +1,8 @@
-require 'rspec/expectations'
+# frozen_string_literal: true
+
+require "rspec/expectations"
 
 module HashHelpers
-
   def self.normalize(actual)
     actual.with_indifferent_access
   end
@@ -31,7 +32,7 @@ RSpec::Matchers.define :have_default_value do |attribute, value|
   end
 end
 
-RSpec::Matchers.define :have_sorting_on do |attr, dir=:asc|
+RSpec::Matchers.define :have_sorting_on do |attr, dir = :asc|
   match do |list|
     comp_asc = lambda { |pair| pair[0] < pair[1] }
     comp_desc = lambda { |pair| pair[0] > pair[1] }
@@ -63,7 +64,7 @@ RSpec::Matchers.define :contain_hash_values do |expected|
   end
 end
 
-RSpec::Matchers.define :have_sorting do |dir=:asc|
+RSpec::Matchers.define :have_sorting do |dir = :asc|
   match do |list|
     comp_asc = lambda { |pair| pair[0] < pair[1] }
     comp_desc = lambda { |pair| pair[0] > pair[1] }

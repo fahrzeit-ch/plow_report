@@ -1,8 +1,9 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-feature 'Edit Drive' do
+require "rails_helper"
 
-  context 'as compnay admin' do
+feature "Edit Drive" do
+  context "as compnay admin" do
     let(:company_admin) { create(:user, skip_create_driver: true) }
     let(:company) { create(:company) }
     let(:driver) { create(:driver, company: company) }
@@ -17,9 +18,9 @@ feature 'Edit Drive' do
     let(:old_value) { existing_drive.distance_km }
     let(:new_value) { old_value + 1 }
 
-    it 'updates the drive and redirects back to drive list' do
-      fill_in('drive[distance_km]', with: new_value)
-      click_on('OK')
+    it "updates the drive and redirects back to drive list" do
+      fill_in("drive[distance_km]", with: new_value)
+      click_on("OK")
       expect(page).to have_current_path(company_drives_path(company))
       existing_drive.reload
       expect(existing_drive.distance_km).to eq(new_value)

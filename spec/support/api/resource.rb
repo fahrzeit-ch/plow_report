@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 module Api
   module SpecHelpers
-
     class Resource
-
       attr_reader :response
       attr_accessor :resource_data
 
@@ -28,6 +28,5 @@ module Api
         @resource_data[:id]
       end
     end
-
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tracks actions of a user on a record. This
 # is primarilly to track views of a record, not to
 # track changes!

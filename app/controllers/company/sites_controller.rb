@@ -1,5 +1,6 @@
-class Company::SitesController < ApplicationController
+# frozen_string_literal: true
 
+class Company::SitesController < ApplicationController
   before_action :set_company_from_param
   before_action :set_customer
   before_action :set_site, only: [:edit, :update, :destroy, :activate, :deactivate, :area]
@@ -19,10 +20,10 @@ class Company::SitesController < ApplicationController
     @site.customer = @customer
     authorize @site
     if @site.save
-      flash[:success] = I18n.t 'flash.site.created'
+      flash[:success] = I18n.t "flash.site.created"
       redirect_to edit_company_customer_path(current_company, @customer)
     else
-      flash[:error] = I18n.t 'flash.site.not_created'
+      flash[:error] = I18n.t "flash.site.not_created"
       render :new
     end
   end
@@ -38,10 +39,10 @@ class Company::SitesController < ApplicationController
   # Update a site
   def update
     if @site.update(site_update_params)
-      flash[:success] = I18n.t 'flash.site.updated'
+      flash[:success] = I18n.t "flash.site.updated"
       redirect_to edit_company_customer_path(company_id: current_company.to_param, id: @customer.to_param)
     else
-      flash[:error] = I18n.t 'flash.site.error'
+      flash[:error] = I18n.t "flash.site.error"
       render :edit
     end
   end
@@ -61,30 +62,28 @@ class Company::SitesController < ApplicationController
   # destroyed.
   def destroy
     if @site.destroy
-      flash[:success] = I18n.t 'flash.site.destroyed'
+      flash[:success] = I18n.t "flash.site.destroyed"
     else
-      flash[:error] = I18n.t 'flash.site.not_destroyed'
+      flash[:error] = I18n.t "flash.site.not_destroyed"
     end
     redirect_to edit_company_customer_path(company_id: current_company.to_param, id: @customer.to_param)
   end
 
   private
+    def set_customer
+      @customer = current_company.customers.find(params[:customer_id])
+    end
 
-  def set_customer
-    @customer = current_company.customers.find(params[:customer_id])
-  end
+    def set_site
+      @site = @customer.sites.find(params[:id])
+      authorize @site
+    end
 
-  def set_site
-    @site = @customer.sites.find(params[:id])
-    authorize @site
-  end
+    def site_params
+      params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :area_features)
+    end
 
-  def site_params
-    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :area_features)
-  end
-
-  def site_update_params
-    params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features)
-  end
-
+    def site_update_params
+      params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features)
+    end
 end

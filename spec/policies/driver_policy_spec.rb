@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe DriverPolicy, type: :model do
   subject { described_class.new(user, driver) }
@@ -13,15 +15,15 @@ RSpec.describe DriverPolicy, type: :model do
 
   let(:user) { create(:user) }
 
-  describe 'scope' do
+  describe "scope" do
     subject { resolved_scope }
 
-    context 'without company assignement' do
+    context "without company assignement" do
       it { is_expected.to include(personal_driver) }
       it { is_expected.not_to include(driver) }
     end
 
-    context 'with company assignment as admin' do
+    context "with company assignment as admin" do
       before do
         company.add_member(user, CompanyMember::ADMINISTRATOR)
       end
@@ -30,7 +32,7 @@ RSpec.describe DriverPolicy, type: :model do
       it { is_expected.to include(driver) }
     end
 
-    context 'with company assignment as admin' do
+    context "with company assignment as admin" do
       before do
         company.add_member(user, CompanyMember::OWNER)
       end
@@ -39,7 +41,7 @@ RSpec.describe DriverPolicy, type: :model do
       it { is_expected.to include(driver) }
     end
 
-    context 'with company assignment as admin' do
+    context "with company assignment as admin" do
       let!(:own_company_driver) { company.add_driver(user)[:driver] }
 
       before do
@@ -49,18 +51,17 @@ RSpec.describe DriverPolicy, type: :model do
       it { is_expected.to include(personal_driver) }
       it { is_expected.not_to include(driver) }
       it { is_expected.to include(own_company_driver) }
-
     end
   end
 
-  context 'as signed in user' do
+  context "as signed in user" do
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to forbid_new_and_create_actions }
   end
 
-  context 'as personal driver' do
+  context "as personal driver" do
     before { driver.company = nil }
     it { is_expected.to permit_edit_and_update_actions }
     it { is_expected.to permit_action(:destroy) }
@@ -68,7 +69,7 @@ RSpec.describe DriverPolicy, type: :model do
     it { is_expected.to permit_new_and_create_actions }
   end
 
-  context 'as company owner' do
+  context "as company owner" do
     before { company.add_member(user, CompanyMember::OWNER) }
 
     it { is_expected.to permit_edit_and_update_actions }
@@ -77,7 +78,7 @@ RSpec.describe DriverPolicy, type: :model do
     it { is_expected.to permit_new_and_create_actions }
   end
 
-  context 'as company administrator' do
+  context "as company administrator" do
     before { company.add_member(user, CompanyMember::ADMINISTRATOR) }
 
     it { is_expected.to permit_edit_and_update_actions }
@@ -86,7 +87,7 @@ RSpec.describe DriverPolicy, type: :model do
     it { is_expected.to permit_new_and_create_actions }
   end
 
-  context 'as company driver' do
+  context "as company driver" do
     before { company.add_member(user, CompanyMember::DRIVER) }
 
     it { is_expected.to forbid_edit_and_update_actions }
@@ -95,7 +96,7 @@ RSpec.describe DriverPolicy, type: :model do
     it { is_expected.to forbid_new_and_create_actions }
   end
 
-  context 'as other company administrator' do
+  context "as other company administrator" do
     let(:other_company) { create(:company) }
     before { other_company.add_member(user, CompanyMember::ADMINISTRATOR) }
 

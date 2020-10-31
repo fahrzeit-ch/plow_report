@@ -1,5 +1,6 @@
-class Api::V1::DriverApplicationsController < Api::V1::ApiController
+# frozen_string_literal: true
 
+class Api::V1::DriverApplicationsController < Api::V1::ApiController
   def index
     @records = DriverApplication.idle.where(user: current_resource_owner)
   end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Report
   class DriveRowBuilder
-    ACTIVITY_EXECUTION_INDICATOR_VALUE = 'x'
+    ACTIVITY_EXECUTION_INDICATOR_VALUE = "x"
 
     # @param [Report::Styles] styles
     # @param [Hash] activity_index_map
@@ -34,10 +36,9 @@ module Report
     end
 
     private
-
-    def seconds_to_excel_time(duration)
-      seconds_per_day = 86_400.0
-      duration.to_f/seconds_per_day
-    end
+      def seconds_to_excel_time(duration)
+        seconds_per_day = 86_400.0
+        duration.to_f / seconds_per_day
+      end
   end
 end

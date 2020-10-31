@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Allows to autofill in forms based on types
 # of the given attributes
 class FormFiller
@@ -16,22 +18,22 @@ class FormFiller
 
   def infer_method_from_type(val)
     case val
-      when Time
-        :fill_in_time
-      when DateTime
-        :fill_in_time
-      when TrueClass
-        :check
-      when FalseClass
-        :check
-      when ApplicationRecord
-        :select
-      else
-        :fill_in
+    when Time
+      :fill_in_time
+    when DateTime
+      :fill_in_time
+    when TrueClass
+      :check
+    when FalseClass
+      :check
+    when ApplicationRecord
+      :select
+    else
+      :fill_in
     end
   end
 
-  def try_fill(key, method=:fill_in)
+  def try_fill(key, method = :fill_in)
     if method == :check
       try_check key
     elsif method == :fill_in_time
@@ -48,11 +50,11 @@ class FormFiller
   end
 
   def fill_in_time(key)
-    fill_in field_name(key), with: @values[key].strftime('%H:%M')
+    fill_in field_name(key), with: @values[key].strftime("%H:%M")
   end
 
   def try_select_option(key)
-    within '[name="' + field_name(key.to_s + '_id') + '"]' do
+    within '[name="' + field_name(key.to_s + "_id") + '"]' do
       find('option[value="' + @values[key].id.to_s + '"]').select_option
     end
   end
@@ -63,34 +65,33 @@ class FormFiller
 end
 
 module SystemScenarios
-
   # Sign in a user by visiting sign in form and fill in
   # email address and password
   def sign_in_with(email, password)
-    visit '/users/sign_in'
-    fill_form 'user', { email: email, password: password }
-    click_button I18n.t('devise.sign_in')
+    visit "/users/sign_in"
+    fill_form "user", { email: email, password: password }
+    click_button I18n.t("devise.sign_in")
   end
 
   # Sign up a new user
   def sign_up(attrs)
-    visit '/users/sign_in'
-    fill_form'user', attrs.slice(:email, :password, :password_confirmation)
-    click_button I18n.t('devise.sign_up')
+    visit "/users/sign_in"
+    fill_form "user", attrs.slice(:email, :password, :password_confirmation)
+    click_button I18n.t("devise.sign_up")
   end
 
   # Start recording a new drive (expects be signed in and have no active recording)
   def start_recording_drive
-    visit '/'
+    visit "/"
     yield if block_given?
-    click_link_or_button I18n.t('dashboard.cards.new_drive.start_recording')
+    click_link_or_button I18n.t("dashboard.cards.new_drive.start_recording")
   end
 
   def finish_recording_drive
-    visit '/'
+    visit "/"
     yield if block_given?
 
-    click_link_or_button I18n.t('dashboard.cards.new_drive.finish_recording')
+    click_link_or_button I18n.t("dashboard.cards.new_drive.finish_recording")
   end
 
   def fill_form(name, values)
@@ -103,7 +104,7 @@ module SystemScenarios
   #   * except: array of attributes that should not be filled
   #   * only: array with keys, only fill in given keys
   #   * attributes: overwrite the defaults
-  def fill_drive_form(options={})
+  def fill_drive_form(options = {})
     opts = { attributes: {}, except: [], only: [] }.merge options
 
     values = attributes_for(:drive, opts[:attributes]) # default values from factory
@@ -112,9 +113,6 @@ module SystemScenarios
     values.except!(options[:except]) unless options[:except].blank?
     values.slice!(options[:only]) unless options[:only].blank?
 
-    fill_form 'drive', values
+    fill_form "drive", values
   end
-
-
 end
-

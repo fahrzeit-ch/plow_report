@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompaniesController < ApplicationController
   skip_before_action :check_account!, only: [:new, :create]
   before_action :check_company_assigned, only: [:new, :create]
@@ -17,7 +19,7 @@ class CompaniesController < ApplicationController
       if result.has_errors
         format.html { render :new }
       else
-        format.html { redirect_to company_dashboard_path(result.company), notice: t('flash.company.created') }
+        format.html { redirect_to company_dashboard_path(result.company), notice: t("flash.company.created") }
       end
     end
   end
@@ -38,7 +40,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @resource.update_attributes(company_attributes)
-        flash[:notice] = t('flash.company.updated')
+        flash[:notice] = t("flash.company.updated")
         format.html { redirect_back(fallback_location: company_dashboard_path(@resource)) }
       else
         format.html { render :edit }
@@ -51,29 +53,28 @@ class CompaniesController < ApplicationController
     authorize @resource
     @resource.destroy
     if @resource.destroyed?
-      flash[:success] = t 'flash.company.destroyed'
+      flash[:success] = t "flash.company.destroyed"
       redirect_to root_path
     else
-      flash[:error] = t 'flash.company.not_destroyed'
+      flash[:error] = t "flash.company.not_destroyed"
       render :edit
     end
   end
 
   private
-  def company_attributes
-    params.require(:company).permit(:name, :contact_email, :address, :nr, :zip_code, :city)
-  end
-
-  def registration_attributes
-    params.require(:company_registration).permit(:name, :contact_email, :add_owner_as_driver, :transfer_private_drives, :address, :nr, :zip_code, :city)
-  end
-
-  def check_company_assigned
-    if current_user.companies.any?
-      flash[:error] = I18n.t('flash.company.already_assigned')
-      redirect_back fallback_location: root_path
-      false
+    def company_attributes
+      params.require(:company).permit(:name, :contact_email, :address, :nr, :zip_code, :city)
     end
-  end
 
+    def registration_attributes
+      params.require(:company_registration).permit(:name, :contact_email, :add_owner_as_driver, :transfer_private_drives, :address, :nr, :zip_code, :city)
+    end
+
+    def check_company_assigned
+      if current_user.companies.any?
+        flash[:error] = I18n.t("flash.company.already_assigned")
+        redirect_back fallback_location: root_path
+        false
+      end
+    end
 end

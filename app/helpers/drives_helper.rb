@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DrivesHelper
   # The drive customer select option creates nested options for customers
   # and sites. Customers that do not have sites are on toplevel.
@@ -23,7 +25,7 @@ module DrivesHelper
   def build_drive(attrs = {})
     drive = Drive.new(attrs)
     assoc_suggestion = CustomerSuggestor.suggest(
-        CustomerSuggestor.samples_for(current_driver, 20)
+      CustomerSuggestor.samples_for(current_driver, 20)
     )
     drive.customer_association = assoc_suggestion
     drive
@@ -51,30 +53,28 @@ module DrivesHelper
   end
 
   private
-
-  def build_options(options, selected, prompt)
-    # Ungroup if one default group exists
-    add_selection_if_missing(options, selected)
-    options_for_select [[prompt, nil]] + options, selected
-  end
-
-  # Checks if the selected value is contained in the given grouped options
-  def contains_selection?(options, selected)
-    return true if selected.nil?
-    contained = false
-
-    options.each do |label_value_pair|
-      contained = true if label_value_pair[1] == selected
+    def build_options(options, selected, prompt)
+      # Ungroup if one default group exists
+      add_selection_if_missing(options, selected)
+      options_for_select [[prompt, nil]] + options, selected
     end
 
-    contained
-  end
+    # Checks if the selected value is contained in the given grouped options
+    def contains_selection?(options, selected)
+      return true if selected.nil?
+      contained = false
 
-  def add_selection_if_missing(options, selected)
-    unless contains_selection?(options, selected)
-      assoc = CustomerAssociation.from_json(selected)
-      options << [assoc.display_name, assoc.to_json]
+      options.each do |label_value_pair|
+        contained = true if label_value_pair[1] == selected
+      end
+
+      contained
     end
-  end
 
+    def add_selection_if_missing(options, selected)
+      unless contains_selection?(options, selected)
+        assoc = CustomerAssociation.from_json(selected)
+        options << [assoc.display_name, assoc.to_json]
+      end
+    end
 end

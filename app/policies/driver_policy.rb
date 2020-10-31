@@ -1,5 +1,6 @@
-class DriverPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class DriverPolicy < ApplicationPolicy
   def show?
     create?
   end
