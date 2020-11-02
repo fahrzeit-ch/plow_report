@@ -22,6 +22,6 @@ on_worker_boot do
   ActiveRecord::Base.establish_connection
 end
 
-worker_timeout 10000000 if ENV['RAILS_ENV'] == 'development'
+worker_timeout 10000000 if ENV["RAILS_ENV"] == "development"
 
 plugin :tmp_restart
