@@ -19,7 +19,7 @@
             <% end %>
           </div>
           <div class="col-6">
-            <%= link_to 'https://play.google.com/store/apps/details?id=ch.innodrive.fahrzeit' do %>
+            <%= link_to 'https://apps.apple.com/us/app/fahrzeit/id1485173488' do %>
               <%= image_tag 'app_store_btn.png', width: '100%' %>
             <% end %>
           </div>
@@ -35,7 +35,7 @@
     <div class="card-body text-center">
       <h3 class="text-secondary"><%= t('views.setup.price_title') %></h3>
       <%= t('views.setup.prices_html') %>
-      <%= link_to t('views.setup.calculate_price'), '#' %>
+      <%= link_to t('views.setup.calculate_price'), 'https://www.fahrzeit.ch/preis-kalkulieren/', target: '_blank' %>
       <form method="get" action="<%= new_company_path %>" class="form text-left mt-3">
         <div class="form-group">
           <label for="name"><%= Company.human_attribute_name(:name) %></label>

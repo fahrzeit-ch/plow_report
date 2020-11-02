@@ -11,7 +11,7 @@ class TermAcceptancesController < ApplicationController
 
   def update
     if @user.update(term_params)
-      redirect_to root_path
+      redirect_to stored_location_for(:user) || root_path
     else
       render :edit
     end
