@@ -18,7 +18,7 @@ module DrivesHelper
 
   def customer_site_display(site)
     text = "#{site.display_name}"
-    text << " (#{site.street})" unless site.street.blank?
+    text = text + " (#{site.street})" unless site.street.blank?
     text
   end
 
