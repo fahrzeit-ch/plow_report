@@ -52,8 +52,8 @@ gem "resque", "~> 2.0.0"
 gem "resque-rollbar"
 
 # Excel export
-gem "axlsx", git: "https://github.com/randym/axlsx.git", ref: "c8ac844"
-gem "axlsx_rails"
+gem "caxlsx"
+gem "caxlsx_rails"
 
 gem "trestle"
 gem "trestle-auth"

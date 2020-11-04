@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/randym/axlsx.git
-  revision: c8ac844572b25fda358cc01d2104720c4c42f450
-  ref: c8ac844
-  specs:
-    axlsx (2.1.0.pre)
-      htmlentities (~> 4.3.4)
-      mimemagic (~> 0.3)
-      nokogiri (>= 1.6.6)
-      rubyzip (>= 1.2.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,9 +52,6 @@ GEM
       activerecord (>= 4.2, < 6.1)
     autoprefixer-rails (10.0.1.0)
       execjs
-    axlsx_rails (0.6.1)
-      actionpack (>= 3.1)
-      caxlsx (>= 3.0)
     bcrypt (3.1.16)
     benchmark-malloc (0.2.0)
     benchmark-perf (0.6.0)
@@ -99,6 +85,9 @@ GEM
       mimemagic (~> 0.3)
       nokogiri (~> 1.10, >= 1.10.4)
       rubyzip (>= 1.3.0, < 3)
+    caxlsx_rails (0.6.2)
+      actionpack (>= 3.1)
+      caxlsx (>= 3.0)
     childprocess (3.0.0)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -402,8 +391,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord-import
   audited (~> 4.9)
-  axlsx!
-  axlsx_rails
   bootsnap
   bootstrap (~> 4.3.1)
   bootstrap_form (~> 4.5.0)
@@ -411,6 +398,8 @@ DEPENDENCIES
   byebug
   capybara
   capybara-screenshot
+  caxlsx
+  caxlsx_rails
   coffee-rails (> 4.2)
   date_validator
   devise (~> 4.7.3)
