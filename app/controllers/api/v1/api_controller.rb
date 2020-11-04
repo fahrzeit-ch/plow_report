@@ -32,14 +32,7 @@ class Api::V1::ApiController < ActionController::API
     end
 
     def current_company
-      @current_company ||= if params[:company_id].nil?
-        current_driver.try(:company)
-      else
-        current_resource_owner
-          .companies
-          .select(:id)
-          .find(params[:company_id])
-      end
+      @current_company ||= resolve_company
     end
 
     def driver_id
@@ -56,6 +49,23 @@ class Api::V1::ApiController < ActionController::API
       else
         current_resource_owner.drivers.last
       end
+    end
+
+    def resolve_company
+      if params[:company_id]
+        company_from_params
+      elsif current_driver
+        current_driver.try(:company)
+      else
+        current_resource_owner.companies.last
+      end
+    end
+
+    def company_from_params
+      current_resource_owner
+          .companies
+          .select(:id)
+          .find(params[:company_id])
     end
 
     def pundit_user
