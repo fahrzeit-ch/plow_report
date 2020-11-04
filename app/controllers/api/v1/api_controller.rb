@@ -54,8 +54,6 @@ class Api::V1::ApiController < ActionController::API
     def resolve_company
       if params[:company_id]
         company_from_params
-      elsif current_driver
-        current_driver.try(:company)
       else
         current_resource_owner.companies.last
       end
