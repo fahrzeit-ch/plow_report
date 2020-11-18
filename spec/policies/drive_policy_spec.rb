@@ -3,13 +3,14 @@
 require "rails_helper"
 
 RSpec.describe DrivePolicy do
-  subject { described_class.new(user, drive) }
+  subject { described_class.new(auth_context, drive) }
   let(:company) { create(:company) }
 
   let(:resolved_scope) do
     described_class::Scope.new(user, Drive.all).resolve
   end
 
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:user) { create(:user) }
 
   describe "own drives" do

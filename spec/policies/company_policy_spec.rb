@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe CompanyPolicy do
-  subject { described_class.new(user, company) }
+  subject { described_class.new(AuthContext.new(user, nil, nil), company) }
   let(:company) { create(:company) }
 
   let(:resolved_scope) do

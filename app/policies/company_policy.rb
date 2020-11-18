@@ -53,6 +53,10 @@ class CompanyPolicy < ApplicationPolicy
     company_admin_or_owner?(record) || is_demo(record)
   end
 
+  def index_vehicles?
+    company_admin_or_owner?(record) || is_demo(record)
+  end
+
   def create?
     true
   end

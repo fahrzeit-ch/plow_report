@@ -45,7 +45,7 @@ class Api::V1::ApiController < ActionController::API
 
     def resolve_driver
       if params[:driver_id]
-        DriverPolicy::Scope.new(pundit_user, Driver.all).resolve.find(params[:driver_id])
+        DriversService.driver_scope(current_resource_owner).find(params[:driver_id])
       else
         current_resource_owner.drivers.last
       end
@@ -67,7 +67,7 @@ class Api::V1::ApiController < ActionController::API
     end
 
     def pundit_user
-      @authorization_context ||= current_resource_owner
+      @authorization_context ||= AuthContext.new(current_resource_owner, current_company, current_driver)
     end
 
     # Find the user that owns the access token

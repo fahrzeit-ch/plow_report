@@ -60,6 +60,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+    def pundit_user
+      @auth_context || AuthContext.new(current_user, current_company, current_driver)
+    end
+
     def user_not_authorized
       flash[:alert] = t("pundit.default")
       redirect_back(fallback_location: root_path)

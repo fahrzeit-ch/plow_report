@@ -3,13 +3,14 @@
 require "rails_helper"
 
 RSpec.describe StandbyDatePolicy do
-  subject { described_class.new(user, standby_date) }
+  subject { described_class.new(auth_context, standby_date) }
   let(:company) { create(:company) }
 
   let(:resolved_scope) do
     described_class::Scope.new(user, Drive.all).resolve
   end
 
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:user) { create(:user) }
 
   describe "own standby dates" do

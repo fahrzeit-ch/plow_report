@@ -10,19 +10,19 @@ class DrivePolicy < ApplicationPolicy
   end
 
   def create?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
   end
 
   def show?
-    own_record? || company_member?(company) || is_demo(company)
+    own_record? || company_member?(record_company) || is_demo(record_company)
   end
 
   def update?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
   end
 
   def destroy?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
   end
 
   def finish?
@@ -52,7 +52,7 @@ class DrivePolicy < ApplicationPolicy
   end
 
   private
-    def company
+    def record_company
       record.driver.company
     end
 

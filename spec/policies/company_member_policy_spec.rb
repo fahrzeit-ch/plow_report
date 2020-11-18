@@ -3,14 +3,15 @@
 require "rails_helper"
 
 RSpec.describe CompanyMemberPolicy do
-  subject { described_class.new(user, member) }
+  subject { described_class.new(auth_context, member) }
   let(:company) { create(:company) }
   let(:member) { build(:company_member, company: company) }
 
   let(:resolved_scope) do
-    described_class::Scope.new(user, CompanyMember.all).resolve
+    described_class::Scope.new(auth_context, CompanyMember.all).resolve
   end
 
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:user) { create(:user) }
 
   context "as signed in user" do
