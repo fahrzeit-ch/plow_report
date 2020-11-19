@@ -1,0 +1,16 @@
+<li class="list-group-item d-flex flex-row align-items-center">
+  <div class="p-2">
+    <div><%= vehicle.name %></div>
+  </div>
+  <% if local_assigns[:tools] && policy(vehicle).edit? %>
+    <div class="align-self-center ml-auto mr-2 d-print-none">
+      <%= link_to edit_company_vehicle_path(current_company, vehicle), class: 'pull-right btn btn-light', title: t('common.edit') do %>
+        <i class="fa fa-edit"></i>
+      <% end %>
+      <%= link_to [current_company, vehicle], method: :delete, class: 'pull-right btn btn-danger',
+                  data: { confirm: t('confirmation.delete'), disable_with: is_processing(true) } do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    </div>
+  <% end %>
+</li>

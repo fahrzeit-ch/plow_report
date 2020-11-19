@@ -334,6 +334,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_131630) do
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_vehicles_on_company_id"
     t.index ["discarded_at"], name: "index_vehicles_on_discarded_at"
+    t.index ["name"], name: "index_vehicles_on_name"
   end
 
   add_foreign_key "activities", "companies"

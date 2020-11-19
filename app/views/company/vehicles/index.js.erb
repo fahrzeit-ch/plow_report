@@ -1,0 +1,6 @@
+$('#vehicles').append('<%= j render partial: 'vehicle', collection: @records, locals: { tools: true} %>');
+<% if @records.next_page %>
+$('.pagination').replaceWith('<%= j paginate(@records) %>');
+<% else %>
+$('.pagination').remove();
+<% end %>

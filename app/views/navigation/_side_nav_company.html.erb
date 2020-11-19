@@ -32,7 +32,12 @@
   </li>
   <li class="nav-item <%= (controller_name == 'drivers') ? 'active' : '' %>">
     <%= link_to company_drivers_path(current_company), class: "nav-link" do %>
-      <i class="fa fa-truck"></i> <%= t'views.companies.nav.drivers.title' %>
+      <i class="fa fa-user"></i> <%= t'views.companies.nav.drivers.title' %>
+    <% end %>
+  </li>
+  <li class="nav-item <%= (controller_name == 'vehicles') ? 'active' : '' %>">
+    <%= link_to company_vehicles_path(current_company), class: "nav-link" do %>
+      <i class="fa fa-truck"></i> <%= t'views.companies.nav.vehicles.title' %>
     <% end %>
   </li>
   <li class="nav-item <%= (controller_name == 'activities') ? 'active' : '' %>">

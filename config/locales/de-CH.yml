@@ -87,6 +87,9 @@ de-CH:
       customer:
         one: "Kunde"
         other: "Kunden"
+      vehicle:
+        one: "Fahrzeug"
+        other: "Fahrzeuge"
     attributes:
       activity:
         name: "Name"
@@ -161,6 +164,8 @@ de-CH:
         inheritance_types:
           base_rate: "Basis Stundensatz"
           activity_rate: "Stundensatz - Tätigkeit"
+      vehicle:
+        name: "Bezeichnung"
   dashboard:
     cards:
       standby_dates:
@@ -274,6 +279,11 @@ de-CH:
       accepted: "Der Benutzer %{username} wurde erfolgreich als Fahrer hinzugefügt"
       acception_failed: "Die Anfrage konnte nicht akzeptiert werden. Der Benutzer wurde möglicherweise bereits Hinzugefügt."
       request_failed: "Fehler beim Versenden der Anfrage"
+    vehicles:
+      not_destroyed: "Fehler beim löschen des Fahrzeugs"
+      updated: "Fahrzeug wurde aktuallisiert"
+      record_not_saved: "Fehler beim Speichern der Änderungen"
+      created: "Fahrzeug wurde erfolgreich angelegt"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -335,6 +345,8 @@ de-CH:
           title: "Tätigkeiten"
         hourly_rates:
           title: "Preise"
+        vehicles:
+          title: "Fahrzeuge"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
@@ -348,6 +360,8 @@ de-CH:
         create: "Neuen Kunden anlegen"
         title: "Kunden"
         new: "Neuer Kunde erstellen"
+        empty_info_title: "Noch keine Kunden"
+        empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         convert_to_site: "In Objekt umwandeln"
         convert_to_site_info:
           one: "Ein Einsatz wird auf das neue Objekt umgehängt."
@@ -405,6 +419,13 @@ de-CH:
       review_not_allowed_message: "Sie verwalten keinen Firmen Account, dem Sie Fahrer hinzufügen können."
       review_not_allowed: "Anfrage prüfen nicht möglich"
       review_description: "Ein Benutzer möchte als Fahrer zu Ihrer Firma hinzugefügt werden. Prüfen Sie die Angaben und klicken sie auf \"Fahrer Hinzufügen\", damit dieser Benutzer Fahrten für Ihre FIrma erfassen kann."
+    vehicles:
+      title: "Fahrzeuge"
+      new_title: "Neues Fahrzeug"
+      create_new: "Neues Fahrzeug anlegen"
+      edit_title: "Fahrzeug bearbeiten"
+      empty_info: "Wenn Sie mehrere Fahrzeuge im Einsatz haben, können Sie diese hier erfassen und fahrzeugspezifische Tätigkeiten zuordnen."
+      empty_info_title: "Noch keine Fahrzeuge"
   forms:
     placeholders:
       driver:

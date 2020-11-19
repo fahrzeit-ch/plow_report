@@ -65,22 +65,7 @@ Rails.application.routes.draw do
     scope module: "company" do
       resources :hourly_rates
       get :dashboard, to: "dashboard#index", as: "dashboard"
-      resources :drives, only: %i[index destroy edit update]
-      resources :tours, only: %i[index destroy edit update] do
-        resources :drives
-      end
-      resources :standby_dates, only: %i[index destroy create] do
-        collection do
-          get :weeks
-        end
-      end
-      resources :company_members, only: %i[create index destroy update] do
-        collection do
-          post :invite
-          post :resend_invitation
-        end
-      end
-      resources :drivers, only: %i[index create destroy edit update]
+      resources :activities
       resources :customer_to_site_transitions, only: %i[new create]
       resources :customers do
         resources :sites do
@@ -91,7 +76,23 @@ Rails.application.routes.draw do
           end
         end
       end
-      resources :activities
+      resources :company_members, only: %i[create index destroy update] do
+        collection do
+          post :invite
+          post :resend_invitation
+        end
+      end
+      resources :drivers, only: %i[index create destroy edit update]
+      resources :drives, only: %i[index destroy edit update]
+      resources :standby_dates, only: %i[index destroy create] do
+        collection do
+          get :weeks
+        end
+      end
+      resources :tours, only: %i[index destroy edit update] do
+        resources :drives
+      end
+      resources :vehicles
     end
   end
 

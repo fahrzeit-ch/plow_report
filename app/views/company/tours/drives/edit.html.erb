@@ -1,23 +1,17 @@
-<div class="row pt-3 bg-white">
-  <div class="col-12">
-    <h1><%= t 'views.company_drives.edit' %></h1>
-  </div>
-</div>
+<%= title_row t('views.company_drives.edit') %>
 <div class="row toolbar border-top bg-light d-print-none">
   <div class="col-12">
     <h4><%= Drive.model_name.human %> #<%= @drive.id %></h4>
   </div>
 </div>
-<div class="card mt-3">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-12">
-        <%= render 'drives/form',
-                   back_path: edit_company_tour_path(current_company, @tour),
-                   drive: [current_company, @tour, @drive],
-                   can_change_driver: true
-        %>
-      </div>
+<%= content_card do %>
+  <div class="row">
+    <div class="col-12">
+      <%= render 'drives/form',
+                 back_path: edit_company_tour_path(current_company, @tour),
+                 drive: [current_company, @tour, @drive],
+                 can_change_driver: true
+      %>
     </div>
   </div>
-</div>
+<% end %>

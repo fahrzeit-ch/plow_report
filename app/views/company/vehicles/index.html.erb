@@ -1,0 +1,19 @@
+<%= title_row t('views.vehicles.title') %>
+<%= toolbar_row do %>
+  <div class="col">
+  </div>
+  <div class="col-3 button-group">
+    <%= link_to t("views.vehicles.create_new"), new_company_vehicle_path(current_company), class: "btn btn-primary pull-right" %>
+  </div>
+<% end %>
+
+<% if @records.empty? %>
+  <%= empty_message("vehicles") %>
+<% else %>
+  <%= content_card do %>
+    <ul id="vehicles" class="list-group list-group-flush">
+      <%= render partial: 'vehicle', collection: @records, locals: { tools: true} %>
+    </ul>
+    <%= paginate @records %>
+  <% end %>
+<% end %>

@@ -1,0 +1,8 @@
+<div class="card-body">
+  <%= bootstrap_form_with(model: [current_company, @record], local: true) do |f| %>
+    <%= f.text_field :name %>
+    <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
+      <i class="fa fa-check"></i> <%= t('actions.save') %>
+    <% end %>
+  <% end %>
+</div>
