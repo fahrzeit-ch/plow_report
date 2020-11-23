@@ -1,0 +1,4 @@
+<div class="nested-fields mb-3">
+  <%= f.select :activity_id, current_company.activities.pluck(:name, :id), hide_label: true, include_blank: true,
+               append: link_to_remove_association( t("views.vehicles.remove_activity"), f, class: "btn btn-outline-danger") %>
+</div>

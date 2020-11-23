@@ -431,6 +431,7 @@ de-CH:
       empty_info: "Wenn Sie mehrere Fahrzeuge im Einsatz haben, können Sie diese hier erfassen und fahrzeugspezifische Tätigkeiten zuordnen."
       empty_info_title: "Noch keine Fahrzeuge"
       remove_activity: "X"
+      add_activity: "Tätigkeit zuweisen"
   forms:
     placeholders:
       driver:

@@ -13,7 +13,7 @@ class Vehicle < ApplicationRecord
   has_many :activities_vehicles, dependent: :destroy
   has_many :activities, through: :activities_vehicles
 
-  accepts_nested_attributes_for :activities, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :activities_vehicles, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
 
   private
