@@ -3,11 +3,11 @@
     <%= f.text_field :name %>
     <%= f.label :activities %>
     <div id="activities" class="">
-      <%= f.fields_for :activities_vehicles do |af| %>
+      <%= f.fields_for :vehicle_activity_assignments do |af| %>
         <%= render "activities_vehicle_fields", f: af %>
       <% end %>
       <div class="links form-group">
-        <%= link_to_add_association t("views.vehicles.add_activity"), f, :activities_vehicles, class: 'btn btn-outline-secondary' %>
+        <%= link_to_add_association t("views.vehicles.add_activity"), f, :vehicle_activity_assignments, class: 'btn btn-outline-secondary' %>
       </div>
     </div>
     <hr>

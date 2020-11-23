@@ -19,7 +19,7 @@ class VehiclePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, activities_vehicles_attributes: [:id, :_destroy, :activity_id, activities_attributes: [:_destroy, :id, :name, :has_value, :value_label]]]
+    [:name, vehicle_activity_assignments_attributes: [:id, :_destroy, :activity_id, activities_attributes: [:_destroy, :id, :name, :has_value, :value_label]]]
   end
 
   class Scope < Scope
