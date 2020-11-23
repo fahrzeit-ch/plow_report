@@ -1,8 +1,20 @@
 <div class="card-body">
-  <%= bootstrap_form_with(model: [current_company, @record], local: true) do |f| %>
+  <%= bootstrap_form_for([current_company, @record], local: true) do |f| %>
     <%= f.text_field :name %>
-    <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
-      <i class="fa fa-check"></i> <%= t('actions.save') %>
+    <%= f.label :activities %>
+    <div id="activities" class="">
+      <%= f.fields_for :activities do |af| %>
+        <%= render "activity_fields", f: af %>
+      <% end %>
+      <div class="links form-group">
+        <%= link_to_add_association 'Tätigkeit hinzufügen', f, :activities, class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+    <hr>
+    <%= f.form_group do %>
+      <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
+        <i class="fa fa-check"></i> <%= t('actions.save') %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

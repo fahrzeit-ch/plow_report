@@ -66,6 +66,9 @@ de-CH:
             user:
               taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
     models:
+      activity:
+        one: "Tätigkeit"
+        other: "Tätigkeiten"
       site:
         one: "Objekt"
         other: "Objekte"
@@ -166,6 +169,7 @@ de-CH:
           activity_rate: "Stundensatz - Tätigkeit"
       vehicle:
         name: "Bezeichnung"
+        activities: "Tätigkeiten"
   dashboard:
     cards:
       standby_dates:
@@ -426,6 +430,7 @@ de-CH:
       edit_title: "Fahrzeug bearbeiten"
       empty_info: "Wenn Sie mehrere Fahrzeuge im Einsatz haben, können Sie diese hier erfassen und fahrzeugspezifische Tätigkeiten zuordnen."
       empty_info_title: "Noch keine Fahrzeuge"
+      remove_activity: "X"
   forms:
     placeholders:
       driver:

@@ -25,6 +25,7 @@
 //= require map
 //= require bootstrap_features
 //= require print
+//= require cocoon
 
 window.typeIsArray = function(value) {
     obj = {};

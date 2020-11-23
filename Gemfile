@@ -30,6 +30,7 @@ gem "rails-i18n"
 gem "simple_calendar", "~> 2.0"
 
 gem "memoist"
+gem "cocoon"
 
 gem "audited", "~> 4.9"
 gem "discard", "~> 1.0"

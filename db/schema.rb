@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_131630) do
+ActiveRecord::Schema.define(version: 2020_11_19_153338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 2020_11_17_131630) do
     t.index ["company_id", "name"], name: "index_activities_on_company_id_and_name", unique: true
     t.index ["company_id"], name: "index_activities_on_company_id"
     t.index ["name"], name: "index_activities_on_name"
+  end
+
+  create_table "activities_vehicles", force: :cascade do |t|
+    t.bigint "vehicle_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_activities_vehicles_on_activity_id"
+    t.index ["vehicle_id"], name: "index_activities_vehicles_on_vehicle_id"
   end
 
   create_table "activity_executions", force: :cascade do |t|
@@ -338,6 +347,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_131630) do
   end
 
   add_foreign_key "activities", "companies"
+  add_foreign_key "activities_vehicles", "activities"
+  add_foreign_key "activities_vehicles", "vehicles"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
   add_foreign_key "driver_applications", "companies", column: "accepted_to_id"

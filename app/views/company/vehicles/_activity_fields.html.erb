@@ -1,0 +1,14 @@
+<div class="card nested-fields mb-3">
+  <div class="card-body">
+    <%= link_to_remove_association t("views.vehicles.remove_activity"), f, class: "btn btn-outline-danger position-absolute", style: "top: 0; right: 0" %>
+    <% if  f.object.persisted? %>
+      <div class="p-2"><%= f.object.name %> <br><small><%= f.object.value_label %></small></div>
+    <% else %>
+      <%= f.text_field :name %>
+      <%= f.form_group do %>
+        <%= f.check_box :has_value %>
+      <% end %>
+      <%= f.text_field :value_label %>
+    <% end %>
+  </div>
+</div>
