@@ -26,7 +26,7 @@ module ApplicationHelper
   end
 
   def help_icon(translation_key)
-    tag.a tabindex: "0", style: "cursor: help;", data: { toggle: "popover", trigger: "focus", html: true, content: t(translation_key), title: t("common.help") } do
+    tag.a tabindex: "0", class: "no-propagation", style: "cursor: help;", data: { toggle: "popover", trigger: "focus", html: true, content: t(translation_key), title: t("common.help") } do
       tag.i class: "fa fa-question-circle ml-3"
     end
   end
