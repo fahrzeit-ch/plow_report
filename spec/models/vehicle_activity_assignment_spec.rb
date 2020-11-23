@@ -4,9 +4,11 @@ require "rails_helper"
 
 RSpec.describe VehicleActivityAssignment, type: :model do
 
-  subject { create(:vehicle) }
+  let(:vehicle) { create(:vehicle) }
   let(:activity) { create(:activity) }
   let(:company) { create(:company) }
+
+  subject { vehicle }
 
   it "is possible to assign an activity" do
     expect {
@@ -57,6 +59,12 @@ RSpec.describe VehicleActivityAssignment, type: :model do
     it "delete activity deletes ActivitiesVehicle relationsships" do
       expect { vehicle.destroy }.to change(VehicleActivityAssignment, :count).by(-1)
     end
+  end
+
+  describe "#activity_ids" do
+    before { described_class.create(vehicle_id: vehicle.id, activity_id: activity.id) }
+    subject { vehicle.activity_ids }
+    it { is_expected.to include(activity.id) }
   end
 
 end

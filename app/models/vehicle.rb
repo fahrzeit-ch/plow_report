@@ -5,6 +5,7 @@
 # Additionally, vehicles can later have different prices assigned for the same activities
 class Vehicle < ApplicationRecord
   include Discard::Model
+  include ChangedSince
 
   validates :name, presence: true, length: { maximum: 50 }
   validates_uniqueness_of :name, scope: [:company_id, :discarded_at], unless: :discarded?
@@ -15,6 +16,10 @@ class Vehicle < ApplicationRecord
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
+
+  def activity_ids
+    vehicle_activity_assignments.pluck(:activity_id)
+  end
 
   private
     # Make sure, all activities have the company id set.

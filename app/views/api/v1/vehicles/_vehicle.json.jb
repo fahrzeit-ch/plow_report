@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+{
+    id: vehicle.id,
+    name: vehicle.name,
+    company_id: vehicle.company_id,
+    activity_ids: vehicle.activity_ids,
+    created_at: vehicle.created_at,
+    updated_at: vehicle.updated_at,
+    discarded_at: vehicle.discarded_at
+}
