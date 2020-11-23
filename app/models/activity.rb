@@ -23,7 +23,7 @@
 class Activity < ApplicationRecord
   belongs_to :company, optional: true
 
-  has_many :activities_vehicles, dependent: :destroy
+  has_many :vehicle_activity_assignments, dependent: :destroy
   has_many :vehicles, through: :activities_vehicles
 
   has_many :activity_executions, dependent: :restrict_with_exception

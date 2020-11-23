@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :activities_vehicle do
+  factory :vehicle_activity_assignment do
     vehicle { nil }
     activity { nil }
   end

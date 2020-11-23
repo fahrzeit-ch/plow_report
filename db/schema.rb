@@ -26,15 +26,6 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
     t.index ["name"], name: "index_activities_on_name"
   end
 
-  create_table "activities_vehicles", force: :cascade do |t|
-    t.bigint "vehicle_id"
-    t.bigint "activity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["activity_id"], name: "index_activities_vehicles_on_activity_id"
-    t.index ["vehicle_id"], name: "index_activities_vehicles_on_vehicle_id"
-  end
-
   create_table "activity_executions", force: :cascade do |t|
     t.bigint "activity_id"
     t.bigint "drive_id"
@@ -335,6 +326,15 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vehicle_activity_assignments", force: :cascade do |t|
+    t.bigint "vehicle_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_vehicle_activity_assignments_on_activity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_activity_assignments_on_vehicle_id"
+  end
+
   create_table "vehicles", force: :cascade do |t|
     t.string "name"
     t.datetime "discarded_at"
@@ -347,8 +347,6 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
   end
 
   add_foreign_key "activities", "companies"
-  add_foreign_key "activities_vehicles", "activities"
-  add_foreign_key "activities_vehicles", "vehicles"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
   add_foreign_key "driver_applications", "companies", column: "accepted_to_id"
@@ -374,6 +372,8 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "tours", "drivers"
   add_foreign_key "user_actions", "users"
+  add_foreign_key "vehicle_activity_assignments", "activities"
+  add_foreign_key "vehicle_activity_assignments", "vehicles"
 
   create_view "implicit_hourly_rates", sql_definition: <<-SQL
       SELECT q1.hourly_rate_id,

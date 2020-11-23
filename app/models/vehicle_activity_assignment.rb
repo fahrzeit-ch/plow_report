@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivitiesVehicle < ApplicationRecord
+class VehicleActivityAssignment < ApplicationRecord
   belongs_to :vehicle
   belongs_to :activity
 

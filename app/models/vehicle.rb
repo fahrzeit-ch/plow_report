@@ -10,10 +10,10 @@ class Vehicle < ApplicationRecord
   validates_uniqueness_of :name, scope: [:company_id, :discarded_at], unless: :discarded?
   belongs_to :company
 
-  has_many :activities_vehicles, dependent: :destroy
-  has_many :activities, through: :activities_vehicles
+  has_many :vehicle_activity_assignments, dependent: :destroy
+  has_many :activities, through: :vehicle_activity_assignments
 
-  accepts_nested_attributes_for :activities_vehicles, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
 
   private
