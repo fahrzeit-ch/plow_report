@@ -3,7 +3,7 @@
 module CalendarHelper
   def calendar_url_for_today
     p = params.merge!({ start_date: Date.current })
-    p.permit!
+    p = p.permit [:season, :start_date, :show_others]
     url_for(p)
   end
 

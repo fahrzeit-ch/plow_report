@@ -10,7 +10,7 @@ de-CH:
       standby_dates: "Pikett"
       drives: "Fahrten"
       sign_in: "Anmelden"
-      sign_up: "Registrieren"
+      sign_up: "Benutzerkonto Erstellen"
       signout: "Abmelden"
       new_company: "Firma registrieren"
       company_settings: "Einstellungen"
@@ -87,6 +87,11 @@ de-CH:
       customer:
         one: "Kunde"
         other: "Kunden"
+    help:
+      user:
+        name: "Ihr vollständiger Name"
+        email: "Die E-Mail Adresse benötigen Sie um sich anzumelden, sowie um Ihr Passwort zurückzusetzen."
+        password: "Das Passwort muss mindestens 6 Zeichen lang sein."
     attributes:
       activity:
         name: "Name"
@@ -433,7 +438,7 @@ de-CH:
     delete_base_rate: "Das Löschen des Basis Stundensatzes entfernt auch ALLE anderen Stundensätze. Möchten Sie trotzdem fortfahren?"
   devise:
     sign_in: "Anmelden"
-    sign_up: "Registrieren"
+    sign_up: "Benutzerkonto erstellen"
   static_pages:
     welcome:
       start: "Jetzt loslegen"

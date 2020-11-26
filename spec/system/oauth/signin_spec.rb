@@ -47,17 +47,17 @@ feature "authenticate via oauth" do
     it "will show signin page" do
       query = URI.encode_www_form({ response_type: "code", state: "", client_id: app.uid, scope: "profile email phone address", redirect_uri: app.redirect_uri })
       visit "/oauth/authorize?#{query}"
-      expect(page).to have_link(I18n.t("devise.sign_up"))
+      expect(page).to have_link(I18n.t("devise.shared.links.sign_up"))
     end
 
     it "signing in will redirect to redirect_uri" do
       query = URI.encode_www_form({ response_type: "code", state: "", client_id: app.uid, scope: "profile email phone address", redirect_uri: app.redirect_uri })
       visit "/oauth/authorize?#{query}"
       within "#navbarSupportedContent" do
-        click_link I18n.t("devise.sign_up")
+        click_link I18n.t("devise.shared.links.sign_up")
       end
       fill_form "user", { name: user[:name], email: user[:email], password: password, password_confirmation: password }
-      click_button I18n.t("devise.sign_up")
+      click_button I18n.t("devise.shared.links.sign_up")
       expect(current_url).to start_with(app.redirect_uri)
     end
   end
