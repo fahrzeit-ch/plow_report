@@ -8,7 +8,7 @@ feature "sign up as new user" do
 
     it "will successfully create the user" do
       fill_form("user", attributes_for(:user))
-      click_button(I18n.t("devise.sign_up"))
+      click_button(I18n.t("devise.registrations.new.sign_up"))
       expect(User.count).to eq 1
     end
   end
@@ -23,11 +23,11 @@ feature "sign up as new user" do
 
     it "forces the user to accept the policy" do
       fill_form("user", attributes_for(:user))
-      click_button(I18n.t("devise.sign_up"))
+      click_button(I18n.t("devise.registrations.new.sign_up"))
       expect(page).to have_content(I18n.t("errors.attributes.base.consent_required"))
       fill_form("user", attributes_for(:user))
       check("user[terms][agb]")
-      click_button(I18n.t("devise.sign_up"))
+      click_button(I18n.t("devise.registrations.new.sign_up"))
       expect(User.count).to eq 1
     end
   end
@@ -42,7 +42,7 @@ feature "sign up as new user" do
 
     it "does not require the user to accept policy" do
       fill_form("user", attributes_for(:user))
-      click_button(I18n.t("devise.sign_up"))
+      click_button(I18n.t("devise.registrations.new.sign_up"))
       expect(User.count).to eq 1
     end
   end
