@@ -7,7 +7,8 @@ RSpec.describe Api::V1::ToursController, type: :controller do
   render_views
 
   let(:user) { create(:user) }
-  let(:driver) { create(:driver, user: user) }
+  let(:company) { create(:company) }
+  let(:driver) { create(:driver, user: user, company: company) }
   let!(:tour) { create(:tour, driver: driver) }
 
   before do
@@ -103,6 +104,20 @@ RSpec.describe Api::V1::ToursController, type: :controller do
     describe "return values" do
       subject { api_response.attributes }
       it { is_expected.to contain_hash_values(expected) }
+    end
+
+    context "with vehicle id" do
+      let(:vehicle) { create(:vehicle, company: driver.company )}
+      let(:minimal_params) { {
+          id: SecureRandom.uuid,
+          start_time: 1.hour.ago.utc.as_json,
+          end_time: 1.minute.ago.utc.as_json,
+          created_at: Time.current.utc.as_json,
+          vehicle_id: vehicle.id }
+      }
+
+      subject { api_response.attributes }
+      it { is_expected.to contain_hash_values({ vehicle_id: vehicle.id }) }
     end
   end
 
