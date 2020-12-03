@@ -48,6 +48,15 @@ RSpec.describe Api::V1::VehiclesController, type: :controller do
         end
       end
 
+      context "with multiple activities assigned" do
+        let(:activity2) { create(:activity, company: company) }
+        before { vehicle.activities << activity2 }
+        before { get :index, params: { format: :json, company_id: company.id } }
+
+        subject { api_response.attributes[:items] }
+        its(:count) { is_expected.to eq 1 }
+      end
+
       describe "discarded vehicles" do
         before { vehicle.discard }
         before { get :index, params: { format: :json, company_id: company.id } }
