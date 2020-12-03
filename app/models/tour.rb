@@ -15,6 +15,7 @@ class Tour < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, date: { after: :start_time }, allow_nil: true
   validate :start_time_not_after_first_drive
+  validate :vehicle_same_company_as_driver
 
   before_validation :set_default_start_time
 
@@ -114,6 +115,12 @@ class Tour < ApplicationRecord
   end
 
   private
+    def vehicle_same_company_as_driver
+      if (vehicle && driver) && (vehicle.company_id != driver.company_id)
+        errors.add(:vehicle, :not_found)
+      end
+    end
+
     def set_default_start_time
       self.start_time ||= first_drive.try(:start)
     end

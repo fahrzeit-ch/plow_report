@@ -102,4 +102,16 @@ RSpec.describe Tour, type: :model do
       end
     end
   end
+
+  describe "vehicle assignment" do
+    let(:driver) { create(:driver, company: create(:company)) }
+    let(:vehicle) { create(:vehicle, company: create(:company)) }
+
+    subject { described_class.new(vehicle: vehicle, driver: driver, start_time: 4.hours.ago) }
+
+    it "is expected not to have errors when vehicle is not in same company as driver" do
+      subject.valid?
+      expect(subject.errors[:vehicle].count).to be > 0
+    end
+  end
 end
