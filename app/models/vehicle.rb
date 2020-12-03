@@ -13,6 +13,7 @@ class Vehicle < ApplicationRecord
 
   has_many :vehicle_activity_assignments, dependent: :destroy
   has_many :activities, through: :vehicle_activity_assignments
+  has_many :tours, dependent: :nullify
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities

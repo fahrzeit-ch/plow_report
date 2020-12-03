@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_153338) do
+ActiveRecord::Schema.define(version: 2020_12_03_130517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -280,9 +280,11 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "vehicle_id"
     t.index ["discarded_at"], name: "index_tours_on_discarded_at"
     t.index ["driver_id"], name: "index_tours_on_driver_id"
     t.index ["start_time"], name: "index_tours_on_start_time"
+    t.index ["vehicle_id"], name: "index_tours_on_vehicle_id"
   end
 
   create_table "user_actions", force: :cascade do |t|
@@ -371,6 +373,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_153338) do
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "tours", "drivers"
+  add_foreign_key "tours", "vehicles"
   add_foreign_key "user_actions", "users"
   add_foreign_key "vehicle_activity_assignments", "activities"
   add_foreign_key "vehicle_activity_assignments", "vehicles"

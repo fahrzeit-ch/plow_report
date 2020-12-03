@@ -10,6 +10,8 @@ RSpec.describe Tour, type: :model do
     it { is_expected.to_not allow_value(subject.start_time - 1.minute).for(:end_time) }
   end
 
+  it { is_expected.to belong_to(:vehicle).optional }
+
   describe "#drives" do
     let(:tour) { build(:tour) }
 

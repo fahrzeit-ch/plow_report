@@ -8,6 +8,7 @@ class Tour < ApplicationRecord
   default_scope -> { kept }
 
   belongs_to :driver
+  belongs_to :vehicle, optional: true
   has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
   audited
 
