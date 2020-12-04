@@ -114,4 +114,20 @@ RSpec.describe Tour, type: :model do
       expect(subject.errors[:vehicle].count).to be > 0
     end
   end
+
+  describe "active tour" do
+    context "end_time set" do
+      subject { create(:tour, end_time: 1.minute.from_now) }
+      it { is_expected.not_to be_active }
+    end
+
+    context "end_time not set" do
+      subject { create(:tour, end_time: nil) }
+      it { is_expected.to be_active }
+
+      its(:duration_seconds) { is_expected.to be 0 }
+    end
+
+
+  end
 end

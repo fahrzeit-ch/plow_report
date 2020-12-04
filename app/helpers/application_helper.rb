@@ -85,11 +85,18 @@ module ApplicationHelper
     end
   end
 
-  def content_card
+  def content_card(opts = {})
+    body = opts.delete(:body)
     content_tag("div", class: "row mt-3") do
       content_tag("div", class: "col-12") do
         content_tag("div", class: "card") do
-          yield if block_given?
+          if body
+            content_tag("div", class: "card-body") do
+              yield if block_given?
+            end
+          else
+            yield if block_given?
+          end
         end
       end
     end

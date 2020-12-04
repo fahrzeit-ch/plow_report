@@ -52,7 +52,7 @@ class Tour < ApplicationRecord
   end
 
   def empty_drive_time
-    @empty_drive_time ||= (self.end_time - self.start_time).seconds - drives_duration
+    @empty_drive_time ||= duration_seconds - drives_duration
   end
 
   def drives_count
@@ -60,7 +60,7 @@ class Tour < ApplicationRecord
   end
 
   def drives_duration
-    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds)
+    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds) || 0
   end
 
   def empty_drive_percentage
@@ -68,7 +68,11 @@ class Tour < ApplicationRecord
   end
 
   def drives_percentage
-    100 / duration_seconds * drives_duration
+    if self.finished?
+      100 / duration_seconds * drives_duration
+    else
+      0
+    end
   end
 
   def week_nr
@@ -87,8 +91,21 @@ class Tour < ApplicationRecord
     Time.at(duration_seconds).utc
   end
 
+  def active?
+    !self.end_time
+  end
+
+  def finished?
+    !active?
+  end
+
+
   def duration_seconds
-    self.end_time - self.start_time
+    if active?
+      0
+    else
+      self.end_time - self.start_time
+    end
   end
 
   def refresh_times_from_dirves

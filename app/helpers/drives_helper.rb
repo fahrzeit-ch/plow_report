@@ -37,6 +37,10 @@ module DrivesHelper
     end
   end
 
+  def vehicle_select_options
+    Vehicle.where(company_id: current_company.id).kept.all.map { |v| [v.name, v.id] }
+  end
+
   def customer_enabled?
     current_company && current_company.customers.any?
   end

@@ -4,8 +4,6 @@ class Company::ToursController < ApplicationController
   before_action :set_company_from_param
   before_action :set_tour, only: [:destroy, :edit, :update]
 
-  helper_method :selected_driver
-
   def index
     authorize current_company, :index_tours?
     scope = apply_scopes(current_company.tours
@@ -40,9 +38,9 @@ class Company::ToursController < ApplicationController
   end
 
   def update
-    if @record.update(tour_params)
+    if @record.update(tours_params)
       flash[:success] = I18n.t "flash.tours.updated"
-      redirect_to company_drives_path current_company
+      redirect_to edit_company_tour_path(current_company, @record)
     else
       render :edit
     end

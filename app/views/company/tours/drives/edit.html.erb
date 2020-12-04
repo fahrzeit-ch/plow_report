@@ -4,7 +4,7 @@
     <h4><%= Drive.model_name.human %> #<%= @drive.id %></h4>
   </div>
 </div>
-<%= content_card do %>
+<%= content_card body: true do %>
   <div class="row">
     <div class="col-12">
       <%= render 'drives/form',

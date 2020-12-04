@@ -175,6 +175,13 @@ de-CH:
       vehicle:
         name: "Bezeichnung"
         activities: "Tätigkeiten"
+      tour:
+        driver: "Fahrer"
+        vehicle: "Fahrzeug"
+        driver_id: "Fahrer"
+        vehicle_id: "Fahrzeug"
+        start_time: "Start"
+        end_time: "Ende"
   dashboard:
     cards:
       standby_dates:
@@ -293,6 +300,9 @@ de-CH:
       updated: "Fahrzeug wurde aktuallisiert"
       record_not_saved: "Fehler beim Speichern der Änderungen"
       created: "Fahrzeug wurde erfolgreich angelegt"
+    tours:
+      updated: "Tour wurde aktuallisiert"
+      destroyed: "Die Tour wurde erfolgreich gelöscht"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -308,6 +318,7 @@ de-CH:
     cancel: "Abbrechen"
     edit: "Bearbeiten"
     help: "Hilfe"
+    none: "-"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
