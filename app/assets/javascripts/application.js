@@ -26,6 +26,7 @@
 //= require bootstrap_features
 //= require print
 //= require cocoon
+//= require turbolinks_csp
 
 window.typeIsArray = function(value) {
     obj = {};
