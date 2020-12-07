@@ -1,19 +1,21 @@
 <li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= activity.id %>">
   <div class="p-2"><%= activity.name %> <br><small><%= activity.value_label %></small></div>
+  <div class="p-2">
+    <% activity.vehicles.pluck(:name).each do |name| %>
+      <span class="badge badge-pill badge-secondary"><%= name %></span>
+    <% end %>
+  </div>
   <div class="align-self-center ml-auto mr-2 d-print-none">
-    <%= link_to edit_company_activity_path(company_id: current_company.id, id: activity), class: 'pull-right btn btn-light', title: t('views.companies.activities.edit') do %>
+    <%= link_to edit_company_activity_path(current_company, activity), class: 'pull-right btn btn-light', title: t('views.companies.activities.edit') do %>
       <i class="fa fa-edit"></i>
     <% end %>
     <% unless activity.activity_executions.any? %>
-      <%=  link_to company_activity_path(company_id: current_company.id, id: activity),
+      <%=  link_to company_activity_path(current_company, activity),
                    method: :delete,
                    data: { disable_with: is_processing(true) },
                    class: 'pull-right btn btn-danger' do  %>
         <i class="fa fa-trash"></i>
       <%  end  %>
-    <%  end %>
-  </div>
-  <div>
-
+    <% end %>
   </div>
 </li>

@@ -3,10 +3,12 @@
 require "rails_helper"
 
 RSpec.describe StandbyDate::DateRangePolicy do
-  subject { described_class.new(user, date_range) }
+  subject { described_class.new(auth_context, date_range) }
 
   let(:date_range) { build(:standby_date_date_range, driver_id: driver.id) }
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:user) { create(:user) }
+
   before { user.create_personal_driver }
 
   context "for own driver" do

@@ -3,16 +3,17 @@
 require "rails_helper"
 
 RSpec.describe DriverPolicy, type: :model do
-  subject { described_class.new(user, driver) }
+  subject { described_class.new(auth_context, driver) }
   let(:company) { create(:company) }
 
   let!(:driver) { create(:driver, company: company) }
   let!(:personal_driver) { create(:driver, user: user) }
 
   let(:resolved_scope) do
-    described_class::Scope.new(user, Driver.all).resolve
+    described_class::Scope.new(auth_context, Driver.all).resolve
   end
 
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:user) { create(:user) }
 
   describe "scope" do

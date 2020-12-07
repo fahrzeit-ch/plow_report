@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class DriversService
+
+  def self.driver_scope(user)
+    full_permitted_companies = user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER, CompanyMember::DEMO_ACCOUNT]).select(:id)
+    own_drivers = user.drivers.select(:id)
+
+    Driver.where(id: own_drivers).or(Driver.where(company_id: full_permitted_companies))
+  end
+
   def drivers_for(user, company)
     if company.nil?
       user.drivers

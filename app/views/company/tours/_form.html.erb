@@ -1,0 +1,11 @@
+<%= bootstrap_form_with(model: [current_company, tour], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |form| %>
+  <%= form.select :driver_id, drive_driver_select_options %>
+  <%= form.select :vehicle_id, vehicle_select_options, include_blank: true %>
+  <%= form.text_field :start_time, value: form.object.start_time.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>
+  <% if form.object.end_time %>
+    <%= form.text_field :end_time, value: form.object.end_time.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>
+  <% end %>
+  <%= form.button type: :submit, class: 'btn btn-primary', data: {disable_with: is_processing} do %>
+    <i class="fa fa-check"></i> <%= t('common.update') %>
+  <% end %>
+<% end %>

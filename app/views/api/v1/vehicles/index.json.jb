@@ -1,0 +1,5 @@
+# frozen_string_literal: true
+
+{
+    items: render(partial: "vehicle", collection: @records, as: :vehicle),
+}.merge! render("api/v1/shared/pagination", pagination_source: @records)

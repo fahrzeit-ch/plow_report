@@ -8,12 +8,14 @@ class Tour < ApplicationRecord
   default_scope -> { kept }
 
   belongs_to :driver
+  belongs_to :vehicle, optional: true
   has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
   audited
 
   validates :start_time, presence: true
   validates :end_time, date: { after: :start_time }, allow_nil: true
   validate :start_time_not_after_first_drive
+  validate :vehicle_same_company_as_driver
 
   before_validation :set_default_start_time
 
@@ -50,7 +52,7 @@ class Tour < ApplicationRecord
   end
 
   def empty_drive_time
-    @empty_drive_time ||= (self.end_time - self.start_time).seconds - drives_duration
+    @empty_drive_time ||= duration_seconds - drives_duration
   end
 
   def drives_count
@@ -58,7 +60,7 @@ class Tour < ApplicationRecord
   end
 
   def drives_duration
-    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds)
+    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds) || 0
   end
 
   def empty_drive_percentage
@@ -66,7 +68,11 @@ class Tour < ApplicationRecord
   end
 
   def drives_percentage
-    100 / duration_seconds * drives_duration
+    if self.finished?
+      100 / duration_seconds * drives_duration
+    else
+      0
+    end
   end
 
   def week_nr
@@ -85,8 +91,21 @@ class Tour < ApplicationRecord
     Time.at(duration_seconds).utc
   end
 
+  def active?
+    !self.end_time
+  end
+
+  def finished?
+    !active?
+  end
+
+
   def duration_seconds
-    self.end_time - self.start_time
+    if active?
+      0
+    else
+      self.end_time - self.start_time
+    end
   end
 
   def refresh_times_from_dirves
@@ -113,6 +132,12 @@ class Tour < ApplicationRecord
   end
 
   private
+    def vehicle_same_company_as_driver
+      if (vehicle && driver) && (vehicle.company_id != driver.company_id)
+        errors.add(:vehicle, :not_found)
+      end
+    end
+
     def set_default_start_time
       self.start_time ||= first_drive.try(:start)
     end

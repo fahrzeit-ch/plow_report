@@ -6,7 +6,7 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def new?
-    company_admin_or_owner?(record.company)
+    auth_context.company_admin_or_owner?
   end
 
   def create?
@@ -25,6 +25,9 @@ class ActivityPolicy < ApplicationPolicy
     company_admin_or_owner?(record.company)
   end
 
+  def permitted_attributes
+    [:name, :has_value, :value_label]
+  end
 
   class Scope < Scope
     def resolve

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201020204148) do
+ActiveRecord::Schema.define(version: 2020_12_03_130517) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
     t.bigint "company_id"
@@ -281,9 +280,11 @@ ActiveRecord::Schema.define(version: 20201020204148) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "vehicle_id"
     t.index ["discarded_at"], name: "index_tours_on_discarded_at"
     t.index ["driver_id"], name: "index_tours_on_driver_id"
     t.index ["start_time"], name: "index_tours_on_start_time"
+    t.index ["vehicle_id"], name: "index_tours_on_vehicle_id"
   end
 
   create_table "user_actions", force: :cascade do |t|
@@ -327,6 +328,26 @@ ActiveRecord::Schema.define(version: 20201020204148) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vehicle_activity_assignments", force: :cascade do |t|
+    t.bigint "vehicle_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_vehicle_activity_assignments_on_activity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_activity_assignments_on_vehicle_id"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "discarded_at"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_vehicles_on_company_id"
+    t.index ["discarded_at"], name: "index_vehicles_on_discarded_at"
+    t.index ["name"], name: "index_vehicles_on_name"
+  end
+
   add_foreign_key "activities", "companies"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
@@ -352,7 +373,10 @@ ActiveRecord::Schema.define(version: 20201020204148) do
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "tours", "drivers"
+  add_foreign_key "tours", "vehicles"
   add_foreign_key "user_actions", "users"
+  add_foreign_key "vehicle_activity_assignments", "activities"
+  add_foreign_key "vehicle_activity_assignments", "vehicles"
 
   create_view "implicit_hourly_rates", sql_definition: <<-SQL
       SELECT q1.hourly_rate_id,

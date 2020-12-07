@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Company::RegistrationPolicy do
-  subject { described_class.new(user, company_registration) }
+  subject { described_class.new(auth_context, company_registration) }
+  let(:auth_context) { AuthContext.new(user, nil, nil) }
   let(:company_registration) { build(:company_registration) }
 
   let(:user) { create(:user) }

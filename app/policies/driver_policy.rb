@@ -11,7 +11,7 @@ class DriverPolicy < ApplicationPolicy
 
   def create?
     return true if record.company.nil?
-    user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).exists? record.company.id
+    company_admin_or_owner?(record.company) || is_demo(record.company)
   end
 
   def destroy?
@@ -20,10 +20,7 @@ class DriverPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      full_permitted_companies = user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER, CompanyMember::DEMO_ACCOUNT]).select(:id)
-      own_drivers = user.drivers.select(:id)
-
-      scope.where(id: own_drivers).or(Driver.where(company_id: full_permitted_companies))
+      DriversService.driver_scope(user)
     end
   end
 end

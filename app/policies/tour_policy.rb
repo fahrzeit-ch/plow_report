@@ -32,11 +32,11 @@ class TourPolicy < ApplicationPolicy
   def permitted_attributes(scope = :default)
     case scope
     when :default
-      [:start_time, :end_time]
+      [:start_time, :end_time, :vehicle_id]
     when :api_create
-      [:id, :driver_id, :start_time, :end_time, :created_at, :updated_at, :discarded_at]
+      [:id, :driver_id, :start_time, :end_time, :created_at, :updated_at, :discarded_at, :vehicle_id]
     when :api_update
-      [:driver_id, :start_time, :end_time, :updated_at, :discarded_at]
+      [:driver_id, :start_time, :end_time, :updated_at, :discarded_at, :vehicle_id]
     end
   end
 

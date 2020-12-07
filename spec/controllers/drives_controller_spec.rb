@@ -21,7 +21,7 @@ RSpec.describe DrivesController, type: :controller do
 
       it "should be successful" do
         get :index
-        expect(subject).to be_success
+        expect(subject).to be_successful
       end
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe DrivesController, type: :controller do
       context "no similar drives" do
         it "be successful" do
           get :suggested_values, params: { format: :json }
-          expect(subject).to be_success
+          expect(subject).to be_successful
         end
       end
     end

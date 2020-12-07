@@ -18,7 +18,7 @@ class Company::ActivitiesController < ApplicationController
   end
 
   def create
-    @activity = current_company.activities.build(activity_params)
+    @activity = current_company.activities.build(permitted_attributes(Activity))
     authorize @activity
     if @activity.save
       flash[:success] = I18n.t "flash.activities.created"
@@ -31,7 +31,7 @@ class Company::ActivitiesController < ApplicationController
   def update
     @activity = current_company.activities.find(params[:id])
     authorize(@activity)
-    if @activity.update(activity_params)
+    if @activity.update(permitted_attributes(@activity))
       flash[:success] = I18n.t "flash.activities.updated"
       redirect_to company_activities_path(current_company)
     else
@@ -51,8 +51,4 @@ class Company::ActivitiesController < ApplicationController
     redirect_to company_activities_path(current_company)
   end
 
-  private
-    def activity_params
-      params.require(:activity).permit(:name, :has_value, :value_label)
-    end
 end

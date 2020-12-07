@@ -14,12 +14,12 @@
   </div>
 </div>
 
-<div class="row mt-3">
-  <div class="col-12">
-    <div class="card">
-      <ul class="list-group list-group-flush">
-        <%= render @customers %>
-      </ul>
-    </div>
-  </div>
-</div>
+<% if @customers.empty? %>
+  <%= empty_message('companies.customers') %>
+<% else %>
+  <%= content_card do %>
+    <ul class="list-group list-group-flush">
+      <%= render @customers %>
+    </ul>
+  <% end %>
+<% end %>

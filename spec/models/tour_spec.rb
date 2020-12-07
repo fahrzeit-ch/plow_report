@@ -10,6 +10,8 @@ RSpec.describe Tour, type: :model do
     it { is_expected.to_not allow_value(subject.start_time - 1.minute).for(:end_time) }
   end
 
+  it { is_expected.to belong_to(:vehicle).optional }
+
   describe "#drives" do
     let(:tour) { build(:tour) }
 
@@ -99,5 +101,33 @@ RSpec.describe Tour, type: :model do
         expect { drive.update_attribute(:end, 1.second.ago) }.to change(tour, :end_time)
       end
     end
+  end
+
+  describe "vehicle assignment" do
+    let(:driver) { create(:driver, company: create(:company)) }
+    let(:vehicle) { create(:vehicle, company: create(:company)) }
+
+    subject { described_class.new(vehicle: vehicle, driver: driver, start_time: 4.hours.ago) }
+
+    it "is expected not to have errors when vehicle is not in same company as driver" do
+      subject.valid?
+      expect(subject.errors[:vehicle].count).to be > 0
+    end
+  end
+
+  describe "active tour" do
+    context "end_time set" do
+      subject { create(:tour, end_time: 1.minute.from_now) }
+      it { is_expected.not_to be_active }
+    end
+
+    context "end_time not set" do
+      subject { create(:tour, end_time: nil) }
+      it { is_expected.to be_active }
+
+      its(:duration_seconds) { is_expected.to be 0 }
+    end
+
+
   end
 end

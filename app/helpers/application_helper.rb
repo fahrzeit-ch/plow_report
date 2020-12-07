@@ -58,4 +58,49 @@ module ApplicationHelper
     content << " #{t('common.please_wait')}".html_safe unless icon_only
     content
   end
+
+  def title_row(title)
+    content_tag("div", class: "row bg-white pt-3") do
+      content_tag("div", class: "col-sm-6") do
+        capture do
+          concat content_tag("h1", title)
+          concat(yield) if block_given?
+        end
+      end
+    end
+  end
+
+  def empty_message(locale_key)
+    content_tag("div", class: "row mt-5") do
+      content_tag("div", class: "col-6 m-auto text-center") do
+        concat content_tag("h3", t("views.#{locale_key}.empty_info_title"))
+        concat content_tag("p", t("views.#{locale_key}.empty_info"), class: "lead")
+      end
+    end
+  end
+
+  def toolbar_row
+    content_tag("div", class: "row toolbar border-top bg-light p-2 d-print-none") do
+      yield if block_given?
+    end
+  end
+
+  def content_card(opts = {})
+    body = opts.delete(:body)
+    content_tag("div", class: "row mt-3") do
+      content_tag("div", class: "col-12") do
+        content_tag("div", class: "card") do
+          if body
+            content_tag("div", class: "card-body") do
+              yield if block_given?
+            end
+          else
+            yield if block_given?
+          end
+        end
+      end
+    end
+  end
+
 end
+
