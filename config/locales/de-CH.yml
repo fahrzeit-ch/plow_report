@@ -49,10 +49,13 @@ de-CH:
     attributes:
       base:
         consent_required: "Bitte akzeptieren sie die mit * gekennzeichneten Bedingungen."
+        total_time_gt_tour_time: "Die total Zeit aller Fahrten ist mehr als die dauer der Tour."
       end:
         date_after: "darf nicht vor der Start Zeit liegen"
       end_date:
         must_be_greater_than_start: "darf nicht vor dem Start Datum liegen"
+      end_time:
+        before_last_drive: "Die Endzeit darf nicht vor der Endzeit der Letzten Fahrt liegen."
     drivers:
       already_assigned: "Der Benutzer ist bereits als Fahrer für diese Firma erfasst."
       could_not_create: "Fahrer konnte nicht erstellt werden: %{error}"

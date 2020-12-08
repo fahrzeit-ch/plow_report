@@ -35,6 +35,8 @@ class Company::ToursController < ApplicationController
   end
 
   def edit
+    @record.full_validation = true
+    @record.validate
   end
 
   def update

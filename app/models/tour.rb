@@ -7,6 +7,8 @@ class Tour < ApplicationRecord
   include ChangedSince
   default_scope -> { kept }
 
+  attribute :full_validation, :boolean, default: false
+
   belongs_to :driver
   belongs_to :vehicle, optional: true
   has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
@@ -15,6 +17,8 @@ class Tour < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, date: { after: :start_time }, allow_nil: true
   validate :start_time_not_after_first_drive
+  validate :end_time_not_before_last_drive, if: :full_validation
+  validate :drive_time_not_more_than_tour_time, if: :full_validation
   validate :vehicle_same_company_as_driver
 
   before_validation :set_default_start_time
@@ -132,6 +136,18 @@ class Tour < ApplicationRecord
   end
 
   private
+    def drive_time_not_more_than_tour_time
+      if duration_seconds - drives_duration < 1
+        errors.add(:base, :total_time_gt_tour_time)
+      end
+    end
+
+    def end_time_not_before_last_drive
+      if last_drive&.end && (last_drive.end > end_time)
+        errors.add(:end_time, :before_last_drive)
+      end
+    end
+
     def vehicle_same_company_as_driver
       if (vehicle && driver) && (vehicle.company_id != driver.company_id)
         errors.add(:vehicle, :not_found)
