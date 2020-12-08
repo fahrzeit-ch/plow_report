@@ -14,7 +14,14 @@ module Report
     # @param [Drive] drive
     def columns_for(drive)
       columns = [
-        drive.start, drive.start, seconds_to_excel_time(drive.duration_with_empty_drives), drive.site_name, drive.driver.name, drive.distance_km, drive.hourly_rate, get_price(drive)
+        drive.start,
+        drive.start,
+        seconds_to_excel_time(drive.duration_seconds),
+        drive.site_name,
+        drive.driver.name,
+        drive.distance_km,
+        drive.hourly_rate,
+        get_price(drive)
       ]
       return columns unless drive.activity_execution
 
@@ -23,6 +30,10 @@ module Report
       values = [ACTIVITY_EXECUTION_INDICATOR_VALUE]
       values << ae.value if ae.activity.has_value?
       columns.insert(idx, *values)
+    end
+
+    def empty_drive_columns_for(drive)
+      [ nil, nil, seconds_to_excel_time(drive.empty_drive_duration), I18n.t("reports.drives.label_empty_drive_time") ]
     end
 
     def styles
