@@ -9,6 +9,7 @@ class Company::CustomersController < ApplicationController
     authorize current_company, :index_customers?
     @customers = current_company.customers
                                 .search(params[:q])
+                                .with_site_names
                                 .order(:name)
                                 .page(params[:page])
                                 .per(30)
