@@ -3,18 +3,10 @@
   <div class="my-3 p-2">
     <%= customer.site_names %>
   </div>
-  <div class="align-self-center ml-auto mr-2 d-print-none">
-    <%= link_to edit_company_customer_path(current_company, customer), class: 'pull-right btn btn-light', title: t('views.companies.customers.edit') do %>
-      <i class="fa fa-edit"></i>
-    <% end %>
+  <%= item_tools do %>
+    <%= edit_button([current_company, customer]) %>
     <% unless customer.drives.any? %>
-      <%= link_to company_customer_path(current_company, customer),
-                  method: :delete,
-                  data: { disable_with: is_processing(true) },
-                  remote: true,
-                  class: 'pull-right btn btn-danger' do %>
-        <i class="fa fa-trash"></i>
-      <% end %>
+      <%= delete_button([current_company, customer]) %>
     <% end %>
-  </div>
+  <% end %>
 </li>

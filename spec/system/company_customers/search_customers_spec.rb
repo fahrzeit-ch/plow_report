@@ -27,7 +27,7 @@ feature "Search Customers" do
       click_on("search")
 
       # It has one result item
-      expect(page).to have_link(I18n.t('views.companies.customers.edit'), href: edit_company_customer_path(company, customers.last))
+      expect(page).to have_link(I18n.t('common.edit'), href: edit_company_customer_path(company, customers.last))
       expect(page).to have_selector('ul#customers > li', count: 1)
 
       # clear search will show all 30 items again
