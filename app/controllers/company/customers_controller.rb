@@ -7,7 +7,11 @@ class Company::CustomersController < ApplicationController
   # List all customers of the current company
   def index
     authorize current_company, :index_customers?
-    @customers = current_company.customers.order(:name)
+    @customers = current_company.customers
+                                .search(params[:q])
+                                .order(:name)
+                                .page(params[:page])
+                                .per(30)
   end
 
   # Creates a new customer for the current company

@@ -13,6 +13,8 @@ class Customer < ApplicationRecord
 
   audited
 
+  include AddressSearch
+
   def display_name
     "#{name} #{first_name}"
   end
