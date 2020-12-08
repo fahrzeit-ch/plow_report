@@ -319,6 +319,9 @@ de-CH:
     edit: "Bearbeiten"
     help: "Hilfe"
     none: "-"
+    search: "Suchen"
+    search_results_for: "Suchresultate für: '%{query}'"
+    clear_search: "Alle anzeigen"
   views:
     setup:
       instructions: "Sie sind momentan keiner Firma zugeordnet und sind nicht als Fahrer registriert. Erstellen Sie einen Fahrer oder eine Firma um fortzufahren"
@@ -381,6 +384,8 @@ de-CH:
         title: "Kunden"
         new: "Neuer Kunde erstellen"
         empty_info_title: "Noch keine Kunden"
+        empty_info_title_search: "Keine Ergebnisse gefunden"
+        empty_info_search: ""
         empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         convert_to_site: "In Objekt umwandeln"
         convert_to_site_info:

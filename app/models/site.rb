@@ -17,6 +17,8 @@ class Site < ApplicationRecord
 
   audited
 
+  include AddressSearch
+
   def details
     ["#{name} #{first_name}", "#{street} #{nr}", "#{zip} #{city}"].reject(&:blank?).join(", ")
   end

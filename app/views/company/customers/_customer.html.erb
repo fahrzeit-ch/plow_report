@@ -1,11 +1,14 @@
 <li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= customer.id %>">
-  <div class="p-2"><%= customer.name %> <%= customer.first_name %><br><small><%= customer.details %></small></div>
+  <div class="p-2 col-4"><%= customer.name %> <%= customer.first_name %><br><small><%= customer.details %></small></div>
+  <div class="my-3 p-2">
+    <%= customer.site_names %>
+  </div>
   <div class="align-self-center ml-auto mr-2 d-print-none">
-    <%= link_to edit_company_customer_path(company_id: current_company.id, id: customer), class: 'pull-right btn btn-light', title: t('views.companies.customers.edit') do %>
+    <%= link_to edit_company_customer_path(current_company, customer), class: 'pull-right btn btn-light', title: t('views.companies.customers.edit') do %>
       <i class="fa fa-edit"></i>
     <% end %>
     <% unless customer.drives.any? %>
-      <%= link_to company_customer_path(company_id: current_company.id, id: customer),
+      <%= link_to company_customer_path(current_company, customer),
                   method: :delete,
                   data: { disable_with: is_processing(true) },
                   remote: true,
