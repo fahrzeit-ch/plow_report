@@ -70,11 +70,11 @@ module ApplicationHelper
     end
   end
 
-  def empty_message(locale_key)
+  def empty_message(locale_key, postfix = "")
     content_tag("div", class: "row mt-5") do
       content_tag("div", class: "col-6 m-auto text-center") do
-        concat content_tag("h3", t("views.#{locale_key}.empty_info_title"))
-        concat content_tag("p", t("views.#{locale_key}.empty_info"), class: "lead")
+        concat content_tag("h3", t("views.#{locale_key}.empty_info_title" + postfix))
+        concat content_tag("p", t("views.#{locale_key}.empty_info" + postfix), class: "lead")
       end
     end
   end

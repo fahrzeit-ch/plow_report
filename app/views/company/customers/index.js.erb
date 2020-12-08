@@ -1,0 +1,6 @@
+$('#customers').append('<%= j render partial: 'customer', collection: @customers, locals: { tools: true} %>');
+<% if @customers.next_page %>
+$('.pagination').replaceWith('<%= j paginate(@customers) %>');
+<% else %>
+$('.pagination').html('');
+<% end %>
