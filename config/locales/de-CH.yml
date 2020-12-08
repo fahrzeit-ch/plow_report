@@ -508,6 +508,7 @@ de-CH:
       drive_hourly_rate: "Stundensatz"
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
+      label_empty_drive_time: "(Anfahrt)"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."

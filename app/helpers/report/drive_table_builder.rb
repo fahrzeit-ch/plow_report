@@ -27,7 +27,10 @@ module Report
       return if @drives.empty?
 
       @drives.each do |drive|
-        @last_row = ws.add_row @rb.columns_for(drive), style: @rb.styles, widths: @hb.column_widths
+        ws.add_row @rb.columns_for(drive), style: @rb.styles, widths: @hb.column_widths
+
+        # Add separate row for the empty drive values of the drive
+        @last_row = ws.add_row @rb.empty_drive_columns_for(drive), style: @rb.styles, widths: @hb.column_widths
       end
 
       @table = ws.add_table table_ref, name: table_name
