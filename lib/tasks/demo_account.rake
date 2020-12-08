@@ -55,10 +55,21 @@ namespace :demo_account do
       Drive.unscoped.joins(:driver).where({ drivers: { company_id: company.id } }).destroy_all
       company.tours.with_discarded.delete_all
       StandbyDate.unscoped.joins(:driver).where({ drivers: { company_id: company.id } }).destroy_all
+      Vehicle.where(company_id: company.id).with_discarded.destroy_all
+      create_vehicles company
       create_sample_tours company
       create_sample_standby_dates company
     end
     Audited.auditing_enabled = true
+  end
+
+  def create_vehicles(company)
+    v1 = Vehicle.create(name: "Multicar Tremo 601", company: company)
+    v1.activities << company.activities.find_by(name: "Räumen")
+    v1.activities << company.activities.find_by(name: "Salzen")
+    v2 = Vehicle.create(name: "Unimog", company: company)
+    v2.activities << company.activities.find_by(name: "Räumen Unimog")
+    v2.activities << company.activities.find_by(name: "Salzen")
   end
 
   def create_sample_standby_dates(company)
@@ -81,6 +92,7 @@ namespace :demo_account do
     drivers = company.drivers.to_a
     customer_sites = Site.joins(:customer).where({ customers: { company_id: company.id } }).all.to_a
     activities = company.activities.all.to_a
+    vehicles = Vehicle.where(company_id: company.id).all.to_a
 
     from_date = 3.months.ago.to_date
     to_date = 1.day.ago.to_date
@@ -88,7 +100,8 @@ namespace :demo_account do
     (from_date..to_date).each do |date|
       num_drives = rand(3..6)
       driver = drivers.sample
-      tour = Tour.create(start_time: date.beginning_of_day + rand(6..15).hours + rand(0..360).minutes, driver: driver)
+      vehicle = vehicles.sample
+      tour = Tour.create(start_time: date.beginning_of_day + rand(6..15).hours + rand(0..360).minutes, driver: driver, vehicle: vehicle)
       last_end_time = tour.start_time
       activity = activities.sample
       num_drives.times do

@@ -3,19 +3,19 @@
 class VehiclePolicy < ApplicationPolicy
 
   def create?
-    company_admin_or_owner?(record.company)
+    company_admin_or_owner?(record.company) || is_demo(record.company)
   end
 
   def new?
-    company_admin_or_owner?
+    company_admin_or_owner? || is_demo(record.company)
   end
 
   def update?
-    company_admin_or_owner?(record.company)
+    company_admin_or_owner?(record.company) || is_demo(record.company)
   end
 
   def destroy?
-    company_admin_or_owner?(record.company)
+    company_admin_or_owner?(record.company) || is_demo(record.company)
   end
 
   def permitted_attributes
