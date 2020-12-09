@@ -38,7 +38,7 @@ module DrivesHelper
   end
 
   def vehicle_select_options
-    Vehicle.where(company_id: current_company.id).kept.all.map { |v| [v.name, v.id] }
+    Vehicle.where(company: current_company).kept.all.map { |v| [v.name, v.id] }
   end
 
   def customer_enabled?
