@@ -86,7 +86,11 @@ class Company::DrivesController < ApplicationController
     def fetch_defaults(params)
       if tour
         start_time = tour.last_drive.try(:end) || tour.start_time
-        { start: start_time, end: start_time + 30.minutes, driver: tour.driver, tour_id: params[:tour_id] }
+        { start: start_time,
+          end: start_time + 30.minutes,
+          driver: tour.driver,
+          vehicle: tour.vehicle,
+          tour_id: params[:tour_id] }
       end
     end
 

@@ -5,6 +5,10 @@ FactoryBot.define do
     "person#{n}@example.com"
   end
 
+  sequence :vehicle_name do |n|
+    "Fahrzeug #{n}"
+  end
+
   sequence :site_name do |n|
     "Objekt Hannenbach #{n}"
   end

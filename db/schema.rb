@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_130517) do
+ActiveRecord::Schema.define(version: 2020_12_09_074212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -154,11 +154,13 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.bigint "site_id"
     t.datetime "discarded_at"
     t.uuid "tour_id"
+    t.bigint "vehicle_id"
     t.index ["customer_id"], name: "index_drives_on_customer_id"
     t.index ["discarded_at"], name: "index_drives_on_discarded_at"
     t.index ["site_id"], name: "index_drives_on_site_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
     t.index ["tour_id"], name: "index_drives_on_tour_id"
+    t.index ["vehicle_id"], name: "index_drives_on_vehicle_id"
   end
 
   create_table "hourly_rates", force: :cascade do |t|
@@ -361,6 +363,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "drives", "sites"
   add_foreign_key "drives", "tours"
+  add_foreign_key "drives", "vehicles"
   add_foreign_key "hourly_rates", "activities"
   add_foreign_key "hourly_rates", "companies"
   add_foreign_key "hourly_rates", "customers"

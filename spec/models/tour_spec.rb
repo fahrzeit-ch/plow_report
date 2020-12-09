@@ -103,6 +103,20 @@ RSpec.describe Tour, type: :model do
     end
   end
 
+  describe "update drives on changes" do
+    let(:company) { create(:company) }
+    subject { create(:tour, driver: create(:driver, company: company)) }
+    let(:drive) { create(:drive, tour: subject) }
+
+    it "changes the vehicle of the drive when updating tour vehicle" do
+      new_vehicle = create(:vehicle, company: company)
+      expect {
+        subject.update_attribute(:vehicle, new_vehicle)
+        drive.reload
+      }.to change(drive, :vehicle).to new_vehicle
+    end
+  end
+
   describe "vehicle assignment" do
     let(:driver) { create(:driver, company: create(:company)) }
     let(:vehicle) { create(:vehicle, company: create(:company)) }

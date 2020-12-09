@@ -6,7 +6,8 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
   render_views
 
   let(:user) { create(:user) }
-  let(:driver) { create(:driver, user: user) }
+  let(:company) { create(:company) }
+  let(:driver) { create(:driver, user: user, company: company) }
   let(:drive1) { create(:drive, driver: driver, activity_execution: create(:activity_execution)) }
 
   before do
@@ -92,7 +93,8 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
   end
 
   describe "post" do
-    let!(:tour) { create(:tour, driver: driver) }
+    let(:vehicle) { create(:vehicle, company: driver.company) }
+    let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
     let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id } }
 
     before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
@@ -105,7 +107,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
 
     describe "response body" do
       subject { api_response }
-      it { is_expected.to have_attribute_values(tour_id: tour.id) }
+      it { is_expected.to have_attribute_values(tour_id: tour.id, vehicle_id: vehicle.id) }
     end
   end
 

@@ -254,6 +254,62 @@ RSpec.describe Drive, type: :model do
     end
   end
 
+  describe "vehicles" do
+    it { is_expected.to belong_to(:vehicle).optional }
+
+    describe "validate same vehicle as tour" do
+      let(:company) { create(:company) }
+      let(:driver) { create(:driver, company: company) }
+
+      let(:vehicle1) { create(:vehicle, company: company) }
+      let(:vehicle2) { create(:vehicle, company: company) }
+      let(:tour) { create(:tour, vehicle: vehicle1, driver: driver) }
+
+      context "vehicle different than vehicle on tour" do
+        let(:drive) { build(:drive, tour: tour, vehicle: vehicle2, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.not_to be_valid }
+        its(:errors) { is_expected.to have_key(:vehicle) }
+      end
+
+      context "vehicle not explicitly set on drive" do
+        let(:drive) { build(:drive, tour: tour, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.not_to be_valid }
+        its(:errors) { is_expected.to have_key(:vehicle) }
+      end
+
+      context "vehicle not set on drive and tour" do
+        let(:tour) { create(:tour, vehicle: nil, driver: driver) }
+        let(:drive) { build(:drive, tour: tour, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "no tour and no vehicle set" do
+        let(:drive) { build(:drive, tour: nil, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "no tour and any vehicle set" do
+        let(:drive) { build(:drive, tour: nil, vehicle: vehicle2, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
+    end
+  end
+
   describe "hourly_rates" do
     # We need to disable transactional specs because implicit hourly rates is based on a db view
     # which will not be populated until the transaction is committed.
