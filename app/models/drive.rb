@@ -4,11 +4,11 @@
 # represent drives but also any other tasks
 class Drive < ApplicationRecord
   after_initialize :defaults
-  validates :end, date: { after: :start }
 
   # A drive is always done by a driver
   belongs_to :driver
   belongs_to :tour, optional: true
+  belongs_to :vehicle, optional: true
 
   after_save :update_tour
 
@@ -20,6 +20,9 @@ class Drive < ApplicationRecord
   # A Drive may be recorded on a customer but its not necessary
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
+
+  validates :end, date: { after: :start }
+  validate :vehicle_same_as_tour
 
   # Allow to discard instead of destroy drives
   include Discard::Model
@@ -209,6 +212,12 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+    def vehicle_same_as_tour
+      if tour&.vehicle && vehicle != tour.vehicle
+        errors.add(:vehicle, :vehicle_not_sames_as_tour)
+      end
+    end
+
     def update_tour
       tour.try(:refresh_times_from_dirves)
     end

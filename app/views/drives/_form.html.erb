@@ -12,10 +12,22 @@
     <%= render 'drives/attribute_fields', form: form %>
     <% if local_assigns[:can_change_driver] %>
       <div class="form-group col-12">
-        <%= form.label :driver  %>
-        <%= form.select2 :driver_id, drive_driver_select_options %>
+        <% if form.object.tour_id.nil? %>
+          <%= form.label :driver  %>
+          <%= form.select2 :driver_id, drive_driver_select_options %>
+        <% else %>
+          <%= form.hidden_field :driver_id %>
+        <% end %>
       </div>
     <% end %>
+    <div class="form-group col-12">
+      <% if form.object.tour_id.nil? %>
+        <%= form.label :vehicle  %>
+        <%= form.select2 :vehicle_id, vehicle_select_options, { prompt: true } %>
+      <% else %>
+        <%= form.hidden_field :vehicle_id %>
+      <% end %>
+    </div>
     <div class="col-12">
       <%= form.button type: :submit, class: 'btn btn-primary', data: {disable_with: is_processing} do %>
         <%= t('common.ok') %>

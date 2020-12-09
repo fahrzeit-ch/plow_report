@@ -36,6 +36,7 @@ class Api::V1::DrivesController < Api::V1::ApiController
   def update
     activity = create_attributes[:activity]
     @record = Drive.where(driver_id: driver_id).find(params[:id])
+    @record.vehicle_id = @record.tour.try(:vehicle_id)
     authorize @record
     if @record.update_attributes update_attributes.to_h.except(:activity).merge(activity_execution_attributes: activity)
       head :no_content
@@ -47,6 +48,7 @@ class Api::V1::DrivesController < Api::V1::ApiController
   def create
     activity = create_attributes[:activity]
     @record = Drive.new(create_attributes.except(:activity))
+    @record.vehicle_id = @record.tour.try(:vehicle_id)
     @record.activity_execution_attributes = activity || {}
     authorize @record
     if @record.save
