@@ -13,6 +13,7 @@ class CompanyMember < ApplicationRecord
 
   belongs_to :company
   scope :owners, -> { where(role: OWNER) }
+  scope :admins_and_owners, -> { where(role: [ADMINISTRATOR, OWNER]) }
 
   attribute :user_email
   attribute :user_name

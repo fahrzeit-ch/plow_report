@@ -27,6 +27,7 @@
 //= require print
 //= require cocoon
 //= require turbolinks_csp
+//= require cable
 
 window.typeIsArray = function(value) {
     obj = {};

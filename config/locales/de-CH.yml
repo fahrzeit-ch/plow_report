@@ -307,6 +307,9 @@ de-CH:
     tours:
       updated: "Tour wurde aktuallisiert"
       destroyed: "Die Tour wurde erfolgreich gelöscht"
+    new_tour_created:
+      title: "Neue Tour"
+      body: "Eine neue Tour wurde erstellt."
   common:
     ok: "OK"
     create: "Erstellen"

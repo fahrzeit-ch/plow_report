@@ -43,6 +43,7 @@ class Api::V1::ToursController < Api::V1::ApiController
     @record = Tour.new(create_attributes)
     authorize @record
     if @record.save
+      notify_admins
       render :create, status: :created
     else
       render json: { error: @record.errors }, status: :bad_request
@@ -50,6 +51,17 @@ class Api::V1::ToursController < Api::V1::ApiController
   end
 
   private
+
+    def notify_admins
+      current_company.company_members.admins_and_owners.each do |member|
+        NotificationChannel.broadcast_to(
+          member.user,
+          title: I18n.t("flash.new_tour_created.title"),
+          body: I18n.t("flash.new_tour_created.body")
+        )
+      end
+    end
+
     def handle_param_missing(e)
       render json: { error: e.message }, status: :bad_request
     end
