@@ -13,9 +13,7 @@
     <ul class="navbar-nav">
       <% if current_user.has_driver? %>
       <li class="nav-item">
-        <%= link_to root_path, class: 'nav-link' do %>
-          <i class="fa fa-dashboard"></i> <%= t('navbar.main.my_dashboard') %>
-        <% end %>
+        <%= render 'companies/selector' %>
       </li>
       <% end %>
       <li class="nav-item dropdown">

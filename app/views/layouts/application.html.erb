@@ -2,20 +2,12 @@
 <html lang="de">
   <%= render 'layouts/head' %>
   <body>
-    <% if company_view? %>
-      <%= render 'navigation/navbar_company_view' %>
-    <% else %>
-      <%= render 'navigation/navbar_main' %>
-    <% end %>
+    <%= render 'navigation/navbar_company_view' %>
     <div class="wrapper">
 
       <!-- Sidebar -->
       <nav id="sidebar" class="bg-light pt-3">
-        <% if company_view? %>
-          <%= render 'navigation/side_nav_company' %>
-        <% else %>
-          <%= render 'navigation/side_nav_driver' %>
-        <% end %>
+        <%= render 'navigation/side_nav_company' %>
       </nav>
 
       <!-- Page Content -->

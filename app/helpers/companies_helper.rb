@@ -2,7 +2,7 @@
 
 module CompaniesHelper
   def company_view?
-    company_controller?
+    true
   end
 
   def company_controller?

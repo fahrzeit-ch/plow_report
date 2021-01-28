@@ -99,7 +99,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    root "dashboard#index", as: :authenticated_root
+    root "companies#index", as: :authenticated_root
   end
 
   get "/setup", to: "static_pages#setup", as: :setup
