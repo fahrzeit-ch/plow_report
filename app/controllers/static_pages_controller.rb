@@ -4,9 +4,6 @@ class StaticPagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home, :demo_login]
   skip_before_action :check_account!
 
-  def home
-  end
-
   def account_error
     Rollbar.critical("Account error for: User<#{current_user.id}> Drivers<#{current_user.drivers.pluck(:id).join(",")}>")
   end

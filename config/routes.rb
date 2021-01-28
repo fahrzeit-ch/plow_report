@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   use_doorkeeper do
     controllers authorizations: "authorizations"
   end
-  get "static_pages/home"
 
   namespace :api do
     defaults format: :json do
