@@ -44,17 +44,6 @@ Rails.application.routes.draw do
       registrations: "user/registrations",
       invitations: "user/invitations"
   }
-  resources :drives do
-    collection do
-      get :suggested_values
-    end
-  end
-  resources :standby_dates, only: %i[create destroy index]
-  resources :standby_date_ranges, only: :create
-  resource :driver, only: :create
-  resource :recordings, only: %i[create destroy] do
-    put :finish
-  end
 
   resources :driver_applications, only: %i[create show] do
     member do
