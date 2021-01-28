@@ -1,0 +1,8 @@
+<%= title_row t("views.reports.new") %>
+<%= content_card(body: true) do %>
+  <%= bootstrap_form_with model: [current_company, @report] do |f| %>
+    <%= f.datetime_field :start_date %>
+    <%= f.datetime_field :end_date %>
+    <%= f.submit %>
+  <% end %>
+<% end %>

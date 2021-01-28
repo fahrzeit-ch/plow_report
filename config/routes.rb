@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       resources :hourly_rates
       get :dashboard, to: "dashboard#index", as: "dashboard"
       resources :activities
+      resources :tours_reports
       resources :customer_to_site_transitions, only: %i[new create]
       resources :customers do
         resources :sites do

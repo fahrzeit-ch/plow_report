@@ -42,6 +42,8 @@ gem "doorkeeper", "~> 5.1.1"
 gem "pundit", "~> 2.1.0"
 gem "rollbar"
 
+gem "azure-storage"
+
 gem "money-rails", "~>1.12"
 
 # Geo libraries

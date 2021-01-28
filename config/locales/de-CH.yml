@@ -96,6 +96,9 @@ de-CH:
       vehicle:
         one: "Fahrzeug"
         other: "Fahrzeuge"
+      tours_report:
+        one: "Rapport"
+        other: "Rapporte"
     help:
       user:
         name: "Ihr vollständiger Name"
@@ -123,6 +126,9 @@ de-CH:
           driver: "Fahrer"
         user_email: "Email"
         user_name: "Name"
+      tours_report:
+        start_date: "Von"
+        end_date: "Bis"
       company:
         name: "Namen der Firma"
         contact_email: "Kontakt E-Mail"
@@ -228,7 +234,7 @@ de-CH:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export"
+    download_xlsx: "Rapport Herunterladen"
     disable: "Deaktivieren"
     add_marker: "Markierung setzen"
     add_line: "Linie Zeichnen"
@@ -310,6 +316,10 @@ de-CH:
     new_tour_created:
       title: "Neue Tour"
       body: "Eine neue Tour wurde erstellt."
+    reports:
+      created: "Rapport wird generiert..."
+      destroyed: "Rapport erfolgreich gelöscht."
+      not_destroyed: "Fehler beim Löschen des Rapports."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -460,6 +470,13 @@ de-CH:
       empty_info_title: "Noch keine Fahrzeuge"
       remove_activity: "X"
       add_activity: "Tätigkeit zuweisen"
+    reports:
+      generating: "Rapport wird generiert..."
+      title: "Rapporte"
+      create_new: "Neuer Rapport"
+      empty_info_title: "Keine Rapporte erfasst"
+      empty_info: "Noch keine Rapporte erzeugt. Erstellen Sie excel Rapporte für bestimmte Zeiträume."
+      new: "Neuen Rapport erstellen"
   forms:
     placeholders:
       driver:
@@ -521,6 +538,7 @@ de-CH:
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
       label_empty_drive_time: "(Anfahrt)"
+      file_name: "fahrten-rapport"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."
