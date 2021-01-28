@@ -6,16 +6,30 @@ require "rails_helper"
 feature "after sign in paths" do
   let(:user) { create(:user) }
 
-  context "user with driver" do
-    before { user.create_personal_driver }
-    it "should open driver dashboard" do
+  context "user with driver on company without membership" do
+    let(:company) { create(:company) }
+    let(:driver) { create(:driver, company: company) }
+
+    before { user.drivers << driver }
+
+    it "should actually never really happen" do
       sign_in_with(user.email, user.password)
-      expect(page).to have_content(I18n.t("dashboard.cards.standby_dates.title"))
+      expect(page).to have_content(I18n.t("views.static_pages.account_error.title"))
+    end
+  end
+
+  context "user with driver on company" do
+    let(:company) { create(:company) }
+
+    before { company.add_member(user, CompanyMember::DRIVER) }
+
+    it "should actually never really happen" do
+      sign_in_with(user.email, user.password)
+      expect(page).to have_content(I18n.t("views.companies.dashboard.title"))
     end
   end
 
   context "user without driver" do
-    before { user.drivers.destroy_all }
     it "should redirect to setup page" do
       sign_in_with(user.email, user.password)
       expect(page).to have_current_path(setup_path)
