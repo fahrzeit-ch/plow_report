@@ -93,6 +93,7 @@ Rails.application.routes.draw do
 
   get "/setup", to: "static_pages#setup", as: :setup
   get "/demo_login", to: "static_pages#demo_login", as: :demo_login
+  get "/account_error", to: "static_pages#account_error", as: :account_error
 
   devise_scope :user do
     get "/", to: "devise/sessions#new"

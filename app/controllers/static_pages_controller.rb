@@ -7,6 +7,10 @@ class StaticPagesController < ApplicationController
   def home
   end
 
+  def account_error
+    Rollbar.critical("Account error for: User<#{current_user.id}> Drivers<#{current_user.drivers.pluck(:id).join(",")}>")
+  end
+
   def setup
   end
 
