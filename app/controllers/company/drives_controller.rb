@@ -21,7 +21,7 @@ class Company::DrivesController < ApplicationController
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
       format.js do
-        @drives.without_tour
+        @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
       format.xlsx do
         @drives = @drives.includes(:tour)
