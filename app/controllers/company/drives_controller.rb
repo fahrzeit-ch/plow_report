@@ -23,9 +23,6 @@ class Company::DrivesController < ApplicationController
       format.js do
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
-      format.xlsx do
-        @drives = @drives.includes(:tour)
-      end
     end
   end
 

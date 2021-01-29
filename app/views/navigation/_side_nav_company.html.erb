@@ -7,6 +7,10 @@
     <%= navbar_item("company/tours", "truck", active: (controller_name == 'drives' || controller_name == 'tours')) %>
   <% end %>
 
+  <% if policy(current_company).index_reports? %>
+    <%= navbar_item("company/tours_reports", "bar-chart") %>
+  <% end %>
+
   <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>
 
   <% if policy(current_company).index_customers? %>

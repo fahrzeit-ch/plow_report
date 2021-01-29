@@ -34,11 +34,6 @@ RSpec.describe Company::DrivesController, type: :controller do
         expect(response).to redirect_to root_path
       end
     end
-
-    context "format xlsx" do
-      before { get :index, params: { company_id: company.to_param, format: :xlsx } }
-      it { is_expected.to have_http_status(:success) }
-    end
   end
 
   describe "GET #destroy" do
