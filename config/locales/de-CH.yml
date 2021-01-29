@@ -14,6 +14,7 @@ de-CH:
     hourly_rates: "Stundensätze"
     drivers: "Fahrer"
     activities: "Tätigkeiten"
+    tours_reports: "Rapporte"
     main:
       drives: "Fahrten"
       sign_in: "Anmelden"

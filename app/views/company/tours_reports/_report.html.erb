@@ -1,10 +1,19 @@
 <li class="list-group-item d-flex flex-row align-items-center">
   <div class="p-2">
+    <i class="fa fa-file-excel-o"></i>
+  </div>
+  <div class="p-2">
+    <b>vor <%= distance_of_time_in_words_to_now(report.created_at) %></b>
+  </div>
+  <div class="p-2 ml-4">
     <stong><%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %></stong>
   </div>
   <div class="p-2 ml-2">
     <% if report.excel_report.attached? %>
-      <%= link_to t("actions.download_xlsx"), rails_blob_url(report.excel_report, disposition: "attachment") %>
+      <%= link_to rails_blob_url(report.excel_report, disposition: "attachment") do %>
+        <%= t("actions.download_xlsx") %>
+        <i class="fa fa-download"></i>
+      <% end %>
     <% else %>
       <%= t("views.reports.generating") %>
     <% end %>

@@ -5,7 +5,7 @@ class Company::ToursReportsController < ApplicationController
 
   def index
     authorize current_company, :index_reports?
-    @records = current_company.tours_reports.page(params[:page]).per(30)
+    @records = current_company.tours_reports.page(params[:page]).per(30).order(created_at: :desc)
   end
 
   def destroy
