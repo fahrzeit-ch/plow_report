@@ -437,6 +437,9 @@ de-CH:
       home:
         welcome_title: "FAHRZEIT.ch"
         welcome_subtitle: "Die einfache Art Ihren Winterdienst im Griff zu haben."
+      account_error:
+        title: "Konto Fehler"
+        description: "Es scheint ein Problem mit Ihrem Benutzerkonto zu geben. Bitte kontaktieren Sie den Support."
     common:
       info:
         no_data_available: "Keine Daten verfügbar"

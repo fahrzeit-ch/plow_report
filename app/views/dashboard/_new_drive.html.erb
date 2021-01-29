@@ -1,8 +1,0 @@
-<div class="card text-dark bg-light col-12">
-  <div class="card-body">
-    <h5 class="card-title"><%= t 'dashboard.cards.new_drive.title' %></h5>
-    <%= link_to recordings_path, method: :post, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
-      <i class="fa fa-play"></i> <%= t('dashboard.cards.new_drive.start_recording') %>
-    <% end %>
-  </div>
-</div>

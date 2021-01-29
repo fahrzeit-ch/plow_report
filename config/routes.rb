@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   use_doorkeeper do
     controllers authorizations: "authorizations"
   end
-  get "static_pages/home"
 
   namespace :api do
     defaults format: :json do
@@ -44,17 +43,6 @@ Rails.application.routes.draw do
       registrations: "user/registrations",
       invitations: "user/invitations"
   }
-  resources :drives do
-    collection do
-      get :suggested_values
-    end
-  end
-  resources :standby_dates, only: %i[create destroy index]
-  resources :standby_date_ranges, only: :create
-  resource :driver, only: :create
-  resource :recordings, only: %i[create destroy] do
-    put :finish
-  end
 
   resources :driver_applications, only: %i[create show] do
     member do
@@ -100,11 +88,12 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    root "dashboard#index", as: :authenticated_root
+    root "companies#index", as: :authenticated_root
   end
 
   get "/setup", to: "static_pages#setup", as: :setup
   get "/demo_login", to: "static_pages#demo_login", as: :demo_login
+  get "/account_error", to: "static_pages#account_error", as: :account_error
 
   devise_scope :user do
     get "/", to: "devise/sessions#new"

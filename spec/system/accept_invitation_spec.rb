@@ -19,6 +19,6 @@ feature "accept invitation" do
     check("user[terms][agb]")
 
     click_button(I18n.t "devise.invitations.edit.submit_button")
-    expect(page).to have_current_path("/")
+    expect(page).to have_current_path(company_dashboard_path(company_member.company))
   end
 end

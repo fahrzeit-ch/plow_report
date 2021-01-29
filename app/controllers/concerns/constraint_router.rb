@@ -8,8 +8,14 @@ module ConstraintRouter
   # Check account for sufficient setup, or redirect accordingly
   def check_account!
     return unless current_user
-    return if current_user.has_driver? || current_user.companies.any?
-    redirect_to setup_path unless controller_name == "sessions"
+    return if current_user.company_members.any?
+    if current_user.has_driver?
+      # This case should not happen, it mens that a driver is assigned, but the user
+      # is not member of a company
+      redirect_to account_error_path
+    else
+      redirect_to setup_path unless controller_name == "sessions"
+    end
   end
 
   # Redirect to company path if user has no driver.
