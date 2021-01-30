@@ -12,6 +12,20 @@ RSpec.describe Activity, type: :model do
     it { is_expected.to belong_to(:company).optional }
   end
 
+  describe "squish names" do
+    subject { build(:activity, name: "  name    \n test   ") }
+
+    it "should squish whitespace" do
+      subject.save
+      expect(subject.name).to eq("name test")
+    end
+
+    it "should not throw error if name is nil" do
+      subject.name = nil
+      expect { subject.save }.not_to raise_error
+    end
+  end
+
   describe "#destroy" do
     let(:activity) { create(:activity) }
     context "with activity executions assigned" do
