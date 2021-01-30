@@ -18,4 +18,18 @@ RSpec.describe Vehicle, type: :model do
       it { is_expected.not_to validate_uniqueness_of(:name) }
     end
   end
+
+  describe "squish names" do
+    subject { build(:vehicle, name: "  name    \n test   ") }
+
+    it "should squish whitespace" do
+      subject.save
+      expect(subject.name).to eq("name test")
+    end
+
+    it "should not throw error if name is nil" do
+      subject.name = nil
+      expect { subject.save }.not_to raise_error
+    end
+  end
 end

@@ -31,6 +31,7 @@ class Activity < ApplicationRecord
   scope :default, -> { where(company: nil) }
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
+  before_save :squish_name
 
   audited
 
@@ -48,4 +49,9 @@ class Activity < ApplicationRecord
   def same?(other)
     has_value? == other.has_value? && name == other.name && value_label == other.value_label
   end
+
+  private
+    def squish_name
+      self.name&.squish!
+    end
 end
