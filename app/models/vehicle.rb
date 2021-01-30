@@ -17,6 +17,7 @@ class Vehicle < ApplicationRecord
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
+  before_save :squish_name
 
   def activity_ids
     vehicle_activity_assignments.pluck(:activity_id)
@@ -26,5 +27,9 @@ class Vehicle < ApplicationRecord
     # Make sure, all activities have the company id set.
     def set_company_on_activities
       activities.each { |a| a.company_id = company_id unless a.persisted? }
+    end
+
+    def squish_name
+      self.name&.squish!
     end
 end
