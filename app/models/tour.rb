@@ -5,7 +5,6 @@
 class Tour < ApplicationRecord
   include Discard::Model
   include ChangedSince
-  default_scope -> { kept }
 
   attribute :full_validation, :boolean, default: false
 

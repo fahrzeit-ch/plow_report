@@ -66,6 +66,14 @@ RSpec.describe Tour, type: :model do
       subject { tour }
       its(:drives_duration) { is_expected.to eq 0.minutes }
     end
+
+    context "discarded drives" do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time, discarded_at: 1.minute.ago) }
+
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 0.minutes }
+    end
   end
 
   describe "changed_since scope" do
@@ -92,7 +100,7 @@ RSpec.describe Tour, type: :model do
 
     context "removing drive" do
       it "should not update start and end times" do
-        expect { drive.delete }.not_to change(subject, :start_time)
+        expect { drive.discard }.not_to change(subject, :start_time)
       end
     end
 

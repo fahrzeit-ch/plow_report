@@ -17,7 +17,7 @@ class Company::DrivesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @stats = apply_scopes(current_company.drives).stats
+        @stats = apply_scopes(current_company.drives).kept.stats
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
       format.js do

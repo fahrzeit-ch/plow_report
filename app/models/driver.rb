@@ -14,6 +14,8 @@
 # and track drives.
 #
 class Driver < ApplicationRecord
+  include Discard::Model
+
   # Association to the user through the driver_login
   # Theoretically, multiple users could be assigned to one driver
   has_one :driver_login, dependent: :destroy
