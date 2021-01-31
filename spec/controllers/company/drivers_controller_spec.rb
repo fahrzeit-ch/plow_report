@@ -50,4 +50,49 @@ RSpec.describe Company::DriversController, type: :controller do
     it { expect(response).to redirect_to company_drivers_path(company) }
     it { expect(Driver.where(name: "Hans", company_id: company.id).count).to eq(1) }
   end
+
+  describe "DELETE #destroy" do
+    let(:other_member) { create(:company_member, company: company, role: :owner) }
+    let(:driver) { create(:driver, company: company) }
+
+    context "without drives" do
+      before { delete :destroy, params: { id: driver.id, company_id: company.to_param } }
+
+      it { expect(response).to redirect_to company_drivers_path(company) }
+      it { expect(Driver.find_by(id: driver.id)).to be_nil }
+    end
+
+    context "with existing drives" do
+      before { create(:drive, driver: driver) }
+      before { delete :destroy, params: { id: driver.id, company_id: company.to_param } }
+
+      it { expect(response).to redirect_to company_drivers_path(company) }
+      it { expect(Driver.find_by(id: driver.id)).to be_nil }
+    end
+
+    context "with existing tour" do
+      let(:tour) { create(:tour) }
+      before do
+        create(:drive, driver: driver, tour: tour)
+      end
+
+      before { delete :destroy, params: { id: driver.id, company_id: company.to_param } }
+
+      it { expect(response).to redirect_to company_drivers_path(company) }
+      it { expect(Driver.find_by(id: driver.id)).to be_nil }
+    end
+
+    context "with discarded tours" do
+      let(:tour) { create(:tour) }
+      before do
+        create(:drive, driver: driver, tour: tour)
+        tour.discard
+      end
+
+      before { delete :destroy, params: { id: driver.id, company_id: company.to_param } }
+
+      it { expect(response).to redirect_to company_drivers_path(company) }
+      it { expect(Driver.find_by(id: driver.id)).to be_nil }
+    end
+  end
 end

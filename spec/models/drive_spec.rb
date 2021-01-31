@@ -96,8 +96,8 @@ RSpec.describe Drive, type: :model do
 
       it { is_expected.not_to be_kept }
 
-      it "is not in the default scope" do
-        expect(Drive.all).not_to include(subject)
+      it "is not in the kept scope" do
+        expect(Drive.kept).not_to include(subject)
       end
     end
 
@@ -105,8 +105,8 @@ RSpec.describe Drive, type: :model do
       subject { create(:drive, tour: tour, driver: driver) }
       before { subject.discard }
 
-      it "is not in default scope" do
-        expect(Drive.all).not_to include(subject)
+      it "is not in kept scope" do
+        expect(Drive.kept).not_to include(subject)
       end
     end
 
