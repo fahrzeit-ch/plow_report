@@ -51,7 +51,7 @@ class Company::ToursController < ApplicationController
   private
     def apply_scopes(tours)
       tours = tours.by_season(selected_season)
-      tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
+      tours = tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
       tours
     end
 
