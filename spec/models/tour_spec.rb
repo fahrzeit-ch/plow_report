@@ -8,6 +8,24 @@ RSpec.describe Tour, type: :model do
 
     it { is_expected.to allow_value(subject.start_time + 1.minute).for(:end_time) }
     it { is_expected.to_not allow_value(subject.start_time - 1.minute).for(:end_time) }
+
+    describe "drive_time_not_more_than_tour_time" do
+      let(:start_time) { 3.hours.ago }
+      let(:end_time) { 1.hour.ago }
+      let(:tour) { create(:tour, start_time: start_time, end_time: end_time) }
+
+      let(:drive1) { create(:drive, start: start_time, end: 2.hour.ago) }
+      let(:drive2) { create(:drive, start: 2.hours.ago, end: end_time) }
+
+      before do
+        tour.drives = [drive1, drive2]
+        tour.full_validation = true
+        tour.valid?
+      end
+
+      subject { tour }
+      it { is_expected.to be_valid }
+    end
   end
 
   it { is_expected.to belong_to(:vehicle).optional }

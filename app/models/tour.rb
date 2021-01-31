@@ -146,7 +146,7 @@ class Tour < ApplicationRecord
     end
 
     def drive_time_not_more_than_tour_time
-      if duration_seconds - drives_duration < 1
+      if duration_seconds - drives_duration < 0
         errors.add(:base, :total_time_gt_tour_time)
       end
     end
