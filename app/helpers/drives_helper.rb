@@ -32,7 +32,7 @@ module DrivesHelper
   end
 
   def drive_driver_select_options
-    current_company.drivers.map do |driver|
+    current_company.active_drivers.map do |driver|
       [driver.name, driver.id]
     end
   end

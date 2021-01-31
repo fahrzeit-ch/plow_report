@@ -171,6 +171,8 @@ de-CH:
           salt: "Salzen"
           plow: "Räumen"
           refill_salt: "Füllen"
+      driver:
+        discarded_at: "Deaktiviert am: "
       inactive: "Inaktiv"
       hourly_rate:
         inheritance_types:
@@ -264,8 +266,8 @@ de-CH:
       invitation_resent: "Die einladung wurde versendet."
       invitation_failed: "Fehler beim versenden der Einladung."
     drivers:
-      destroyed: "Fahrer wurde erfolgreich gelöscht."
-      not_destroyed: "Fahrer konnte nicht gelöscht werden."
+      discarded: "Fahrer wurde erfolgreich deaktiviert."
+      not_discarded: "Fahrer konnte nicht deaktiviert werden."
       created: "Fahrer wurde erfolgreich hinzugefügt."
       driver_not_created: "Fahrer konnte nicht hinzugefügt werden."
       user_already_has_driver: "Sie sind bereits als Fahrer registriert."
@@ -380,6 +382,7 @@ de-CH:
         status_linked: "Dieser Fahrer ist mit einem Benutzer Login verknüpft."
         status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
         edit: "Benutzer zuweisen"
+        show_inactive: "Inaktive anzeigen"
       dashboard:
         title: "Übersicht"
       customers:
@@ -478,7 +481,6 @@ de-CH:
         customers_without_sites: "Kunden ohne Objekte"
   confirm:
     company:
-      delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
       delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"

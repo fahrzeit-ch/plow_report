@@ -37,6 +37,12 @@ RSpec.describe Driver, type: :model do
     end
   end
 
+  describe "discard" do
+    let(:driver) { described_class.create(valid_attributes) }
+
+    it { is_expected.to respond_to(:discard) }
+  end
+
   describe "#destroy" do
     let(:driver) { described_class.create(valid_attributes) }
 
