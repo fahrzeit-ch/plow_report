@@ -133,6 +133,7 @@ de-CH:
         user_email: "Email"
         user_name: "Name"
       tours_report:
+        date_range: "Datumsbereich"
         start_date: "Von"
         end_date: "Bis"
       company:

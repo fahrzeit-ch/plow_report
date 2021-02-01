@@ -59,6 +59,7 @@
 @import "drives";
 @import "sites";
 @import "static_pages";
+@import "daterangepicker/daterangepicker";
 
 $colors: map-merge((
         'green-light': $green-light,

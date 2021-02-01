@@ -8,26 +8,28 @@
   <div class="p-2 ml-4">
     <stong><%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %></stong>
   </div>
-  <div class="p-2 ml-2">
+
+  <div class="align-self-center ml-auto mr-2 d-print-none">
     <% if report.excel_report.attached? %>
-      <%= link_to rails_blob_url(report.excel_report, disposition: "attachment") do %>
-        <%= t("actions.download_xlsx") %>
+      <%= link_to rails_blob_url(report.excel_report, disposition: "attachment"),
+                  class: 'btn btn-light' do %>
         <i class="fa fa-download"></i>
+        <%= t("actions.download_xlsx") %>
       <% end %>
     <% else %>
-      <%= t("views.reports.generating") %>
+      <a class="pull-right btn btn-default disabled">
+        <i class='fa fa-refresh fa-spin'></i>
+        <%= t("views.reports.generating") %>
+      </a>
     <% end %>
-  </div>
-
-  <% if local_assigns[:tools] && policy(report).destroy? %>
-    <div class="align-self-center ml-auto mr-2 d-print-none">
+    <% if local_assigns[:tools] && policy(report).destroy? %>
       <%= link_to [current_company, report],
                   method: :delete,
-                  class: 'pull-right btn btn-danger',
+                  class: 'btn btn-danger',
                   data: { confirm: t('confirmation.delete'),
                           disable_with: is_processing(true) } do %>
         <i class="fa fa-trash"></i>
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </li>

@@ -30,7 +30,7 @@ class ToursReportPolicy < ApplicationPolicy
   # :api_create
   # :api_update
   def permitted_attributes
-    [:start_date, :end_date]
+    [:date_range]
   end
 
 

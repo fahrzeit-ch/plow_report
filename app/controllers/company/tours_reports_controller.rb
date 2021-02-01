@@ -35,7 +35,7 @@ class Company::ToursReportsController < ApplicationController
       flash[:success] = I18n.t "flash.reports.created"
       redirect
     else
-      render :edit
+      render :new
     end
   end
 
