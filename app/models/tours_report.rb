@@ -11,7 +11,7 @@ class ToursReport < ApplicationRecord
   has_one_attached :excel_report
 
   def drives
-    company.drives.where(start: start_date..end_date)
+    company.drives.kept.where(start: start_date..end_date)
   end
 
   def to_filename
