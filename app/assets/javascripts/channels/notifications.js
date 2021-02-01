@@ -1,8 +1,5 @@
 App.cable.subscriptions.create("NotificationChannel", {
     received(data) {
-        if(data["update_element"]) {
-            $(data["update_element"]["selector"]).replaceWith(data["update_element"]["replace_with"])
-        }
         toastr.info(
             data["body"],
             data["title"],

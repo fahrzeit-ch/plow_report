@@ -14,7 +14,7 @@ RSpec.describe Report::Renderer do
     let(:report) { build(:tours_report) }
 
     it "is attachable as a file to active_storage" do
-      report.excel_report.attach io: subject.render_stream(subject.build_package), filename: "report.xlsx"
+      report.excel_report.attach io: subject.render, filename: "report.xlsx"
       expect(report.excel_report).to be_attached
     end
 
