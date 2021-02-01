@@ -15,6 +15,7 @@ class Company < ApplicationRecord
   has_many :company_members, dependent: :destroy
   has_many :users, through: :company_members
   has_many :drivers, dependent: :destroy
+  has_many :active_drivers, -> { kept }, class_name: "Driver"
   has_many :drives, through: :drivers
   has_many :tours, through: :drivers
   has_many :customers, dependent: :destroy

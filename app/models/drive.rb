@@ -28,7 +28,6 @@ class Drive < ApplicationRecord
   include Discard::Model
   include ChangedSince
 
-  default_scope -> { kept }
   scope :without_tour, -> { where(tour_id: nil) }
 
   def kept?

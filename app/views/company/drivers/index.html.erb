@@ -10,6 +10,14 @@
 </div>
 <div class="card mt-3">
   <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex flex-row align-items-right">
+      <%= form_with(url: url_for(@params), method: :get, class: 'ml-auto') do |f| %>
+        <div class="custom-control custom-switch m-2">
+          <input type="checkbox" class="custom-control-input" id="showOthers" name="show_inactive" <%= params[:show_inactive] ? 'checked' : '' %> data-submit-on-change="true">
+          <label class="custom-control-label" for="showOthers"><%= t('views.companies.drivers.show_inactive') %></label>
+        </div>
+      <% end %>
+    </li>
     <%= render @drivers %>
   </ul>
 </div>

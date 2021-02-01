@@ -37,15 +37,42 @@ RSpec.describe Driver, type: :model do
     end
   end
 
-  describe "#destroy" do
-    subject { described_class.create(valid_attributes) }
+  describe "discard" do
+    let(:driver) { described_class.create(valid_attributes) }
 
-    before { create_list(:drive, 2, driver: subject) }
+    it { is_expected.to respond_to(:discard) }
+  end
+
+  describe "#destroy" do
+    let(:driver) { described_class.create(valid_attributes) }
+
+    before { create_list(:drive, 2, driver: driver) }
 
     it "should delete all drives" do
       expect {
-        subject.destroy!
+        driver.destroy!
       }.to change(Drive, :count).by(-2)
+    end
+
+    it "deletes the driver" do
+      driver.destroy
+      expect(Driver.find_by(id: driver.id)).to be_nil
+    end
+
+    context "with discarded drives" do
+      let!(:drive) { create(:drive, driver: driver, discarded_at: 1.day.ago) }
+      it "deletes the driver" do
+        driver.destroy
+        expect(Driver.find_by(id: driver.id)).to be_nil
+      end
+    end
+
+    context "with discarded tours" do
+      let!(:tour) { create(:tour, driver: driver, discarded_at: 1.day.ago) }
+      it "deletes the driver" do
+        driver.destroy
+        expect(Driver.find_by(id: driver.id)).to be_nil
+      end
     end
   end
 

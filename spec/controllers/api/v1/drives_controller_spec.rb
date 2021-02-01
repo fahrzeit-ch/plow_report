@@ -59,7 +59,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
         it { is_expected.to have_attribute_keys :items }
         describe "item count" do
           subject { api_response.attributes[:items].count }
-          it { is_expected.to eq 2 }
+          it { is_expected.to eq 3 }
         end
       end
     end
