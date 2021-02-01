@@ -8,6 +8,11 @@ class Company::ToursReportsController < ApplicationController
     @records = current_company.tours_reports.page(params[:page]).per(30).order(created_at: :desc)
   end
 
+  def show
+    @report = ToursReport.find(params[:id])
+    authorize @report
+  end
+
   def destroy
     @report = current_company.tours_reports.find(params[:id])
     store_referral
@@ -32,7 +37,6 @@ class Company::ToursReportsController < ApplicationController
     authorize @report
     if @report.save
       TourReportJob.perform_later(@report.id)
-      flash[:success] = I18n.t "flash.reports.created"
       redirect
     else
       render :new

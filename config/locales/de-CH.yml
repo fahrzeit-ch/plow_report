@@ -329,6 +329,8 @@ de-CH:
       created: "Rapport wird generiert..."
       destroyed: "Rapport erfolgreich gelöscht."
       not_destroyed: "Fehler beim Löschen des Rapports."
+      read_title: "Rapport Erstellt"
+      ready_body_html: "Der Rapport wurde erfolgreich erstellt: <a href='%{url}' class='text-bold'>Rapporte anzeigen</a>"
   common:
     ok: "OK"
     create: "Erstellen"

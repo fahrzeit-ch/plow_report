@@ -1,4 +1,4 @@
-<li class="list-group-item d-flex flex-row align-items-center">
+<li class="list-group-item d-flex flex-row align-items-center" id="report-<%= report.id %>">
   <div class="p-2">
     <i class="fa fa-file-excel-o"></i>
   </div>
@@ -17,7 +17,7 @@
         <%= t("actions.download_xlsx") %>
       <% end %>
     <% else %>
-      <a class="pull-right btn btn-default disabled">
+      <a class="btn btn-default disabled" data-report-generating="<%= report.id %>">
         <i class='fa fa-refresh fa-spin'></i>
         <%= t("views.reports.generating") %>
       </a>
