@@ -10,11 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_31_202817) do
+ActiveRecord::Schema.define(version: 2021_02_02_153616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "activities", force: :cascade do |t|
     t.bigint "company_id"
@@ -291,6 +312,19 @@ ActiveRecord::Schema.define(version: 2021_01_31_202817) do
     t.index ["vehicle_id"], name: "index_tours_on_vehicle_id"
   end
 
+  create_table "tours_reports", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "created_by_id"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "customer_id"
+    t.index ["company_id"], name: "index_tours_reports_on_company_id"
+    t.index ["created_by_id"], name: "index_tours_reports_on_created_by_id"
+    t.index ["customer_id"], name: "index_tours_reports_on_customer_id"
+  end
+
   create_table "user_actions", force: :cascade do |t|
     t.string "activity"
     t.bigint "user_id"
@@ -352,6 +386,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_202817) do
     t.index ["name"], name: "index_vehicles_on_name"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "companies"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
@@ -379,6 +414,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_202817) do
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "tours", "drivers"
   add_foreign_key "tours", "vehicles"
+  add_foreign_key "tours_reports", "customers"
   add_foreign_key "user_actions", "users"
   add_foreign_key "vehicle_activity_assignments", "activities"
   add_foreign_key "vehicle_activity_assignments", "vehicles"

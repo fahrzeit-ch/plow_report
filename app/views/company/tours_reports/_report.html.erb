@@ -1,0 +1,36 @@
+<li class="list-group-item d-flex flex-row align-items-center" id="report-<%= report.id %>">
+  <div class="p-2">
+    <i class="fa fa-file-excel-o"></i>
+  </div>
+  <div class="p-2">
+    <b>vor <%= distance_of_time_in_words_to_now(report.created_at) %></b>
+  </div>
+  <div class="p-2 ml-4">
+    <div><%= report.customer&.name || t("views.reports.all_customers") %></div>
+    <%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %>
+  </div>
+
+  <div class="align-self-center ml-auto mr-2 d-print-none">
+    <% if report.excel_report.attached? %>
+      <%= link_to rails_blob_url(report.excel_report, disposition: "attachment"),
+                  class: 'btn btn-light' do %>
+        <i class="fa fa-download"></i>
+        <%= t("actions.download_xlsx") %>
+      <% end %>
+    <% else %>
+      <a class="btn btn-default disabled" data-report-generating="<%= report.id %>">
+        <i class='fa fa-refresh fa-spin'></i>
+        <%= t("views.reports.generating") %>
+      </a>
+    <% end %>
+    <% if local_assigns[:tools] && policy(report).destroy? %>
+      <%= link_to [current_company, report],
+                  method: :delete,
+                  class: 'btn btn-danger',
+                  data: { confirm: t('confirmation.delete'),
+                          disable_with: is_processing(true) } do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    <% end %>
+  </div>
+</li>

@@ -1,83 +1,44 @@
 <% if current_company %>
 <ul class="nav flex-column">
-  <li class="nav-item <%= (controller_name == 'dashboard') ? 'active' : '' %>">
-    <%= link_to company_dashboard_path(current_company), class: 'nav-link' do %>
-      <i class="fa fa-tachometer"></i>
-      <%= t 'navbar.companies.dashboard' %>
-    <% end %>
-  </li>
-  <li class="nav-item <%= (controller_name == 'standby_dates') ? 'active' : '' %>">
-    <%= link_to company_standby_dates_path(current_company), class: 'nav-link' do %>
-      <i class="fa fa-calendar"></i>
-      <%= t 'navbar.companies.stand_by_dates' %>
-    <% end %>
-  </li>
+  <%= navbar_item("company/dashboard", "tachometer") %>
+  <%= navbar_item("company/standby_dates", "calendar") %>
+
   <% if policy(current_company).index_drives? %>
-  <li class="nav-item <%= (controller_name == 'drives' || controller_name == 'tours') ? 'active' : '' %>">
-    <%= link_to company_tours_path(current_company), class: 'nav-link' do %>
-      <i class="fa fa-truck"></i>
-      <%= t 'navbar.companies.drives' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/tours", "truck", active: (controller_name == 'drives' || controller_name == 'tours')) %>
+  <% end %>
+
+  <% if policy(current_company).index_reports? %>
+    <%= navbar_item("company/tours_reports", "bar-chart") %>
   <% end %>
 
   <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>
+
   <% if policy(current_company).index_customers? %>
-  <li class="nav-item <%= (controller_name == 'customers') ? 'active' : '' %>">
-    <%= link_to company_customers_path(current_company), class: "nav-link" do %>
-      <i class="fa fa-address-card"></i> <%= t 'views.companies.nav.customers.title' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/customers", "address-card") %>
   <% end %>
+
   <% if policy(current_company).index_hourly_rates? %>
-  <li class="nav-item <%= (controller_name == 'hourly_rates') ? 'active' : '' %>">
-    <%= link_to company_hourly_rates_path(current_company), class: "nav-link" do %>
-      <i class="fa fa-money"></i> <%= t 'views.companies.nav.hourly_rates.title' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/hourly_rates", "money") %>
   <% end %>
+
   <% if policy(current_company).index_drivers? %>
-  <li class="nav-item <%= (controller_name == 'drivers') ? 'active' : '' %>">
-    <%= link_to company_drivers_path(current_company), class: "nav-link" do %>
-      <i class="fa fa-user"></i> <%= t'views.companies.nav.drivers.title' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/drivers", "user") %>
   <% end %>
+
   <% if policy(current_company).index_vehicles? %>
-  <li class="nav-item <%= (controller_name == 'vehicles') ? 'active' : '' %>">
-    <%= link_to company_vehicles_path(current_company), class: "nav-link" do %>
-      <i class="fa fa-truck"></i> <%= t'views.companies.nav.vehicles.title' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/vehicles", "truck") %>
   <% end %>
+
   <% if policy(current_company).index_activities? %>
-  <li class="nav-item <%= (controller_name == 'activities') ? 'active' : '' %>">
-    <%= link_to company_activities_path(current_company), class: "nav-link #{(controller_name == 'activities') ? 'active' : ''}" do %>
-      <i class="fa fa-hourglass-o"></i> <%= t 'views.companies.nav.activities.title' %>
-    <% end %>
-  </li>
+    <%= navbar_item("company/activities", "hourglass-o") %>
   <% end %>
+
   <% if current_user.company_admin_or_owner?(current_company) %>
     <li class="nav-section"><%= t 'sidenav.section.settings' %></li>
     <% if policy(current_company).edit? %>
-      <li class="nav-item">
-        <%= link_to edit_company_path(current_company), class: 'nav-link' do %>
-          <i class="fa fa-cog"></i>
-          <%= t 'navbar.companies.settings' %>
-        <% end %>
-      </li>
+      <%= navbar_item("company_settings", "cog", path: edit_company_path(current_company), active: (controller_name == 'companies')) %>
     <% end %>
   <% end %>
-
-  <li class="nav-section"><%= t 'sidenav.section.user' %></li>
-  <li class="nav-item">
-    <%= link_to edit_user_registration_path, class: 'nav-link' do %>
-      <i class="fa fa-cog"></i> <%= t('navbar.main.edit_registration') %>
-    <% end %>
-    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
-      <i class="fa fa-sign-out"></i> <%= t('navbar.main.signout') %>
-    <% end %>
-  </li>
 </ul>
 <% else %>
   <ul class="nav flex-column">

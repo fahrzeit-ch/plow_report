@@ -1,18 +1,5 @@
 <%= bootstrap_form_with(model: [current_company, tour], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |form| %>
-  <% if tour.errors[:base].any? %>
-    <div class="alert alert-warning d-flex">
-      <div class="alert-icon align-self-center">
-        <i style="font-size: 1.8em" class="fa fa-warning"></i>
-      </div>
-      <div class="align-self-center">
-        <ul>
-          <% tour.errors[:base].each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+  <%= render "shared/base_errors", record: tour %>
   <%= form.select :driver_id, drive_driver_select_options %>
   <%= form.select :vehicle_id, vehicle_select_options, include_blank: true %>
   <%= form.text_field :start_time, value: form.object.start_time.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>

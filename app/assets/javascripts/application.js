@@ -18,6 +18,8 @@
 //= require bootstrap-sprockets
 //= require toastr
 //= require toastr_config
+//= require moment
+//= require daterangepicker
 //= require forms
 //= require drives
 //= require suggestion_value_loader
@@ -27,6 +29,7 @@
 //= require print
 //= require cocoon
 //= require turbolinks_csp
+//= require cable
 
 window.typeIsArray = function(value) {
     obj = {};

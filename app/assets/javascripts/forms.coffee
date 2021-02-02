@@ -16,6 +16,57 @@ $(document).on 'turbolinks:load', ->
       $('[data-s2]').select2();
 
 
+  $('[data-daterange]').each ->
+    defaults = {
+      "locale": {
+        "format": "DD.MM.YYYY",
+        "separator": " - ",
+        "applyLabel": "Anwenden",
+        "cancelLabel": "Abbrechen",
+        "fromLabel": "Von",
+        "toLabel": "Bis",
+        "customRangeLabel": "Benutzerdefiniert",
+        "weekLabel": "W",
+        "daysOfWeek": [
+          "So",
+          "Mo",
+          "Di",
+          "Mi",
+          "Do",
+          "Fr",
+          "Sa"
+        ],
+        "monthNames": [
+          "Januar",
+          "Februar",
+          "März",
+          "April",
+          "Mai",
+          "Juni",
+          "Juli",
+          "August",
+          "September",
+          "Oktober",
+          "November",
+          "Dezember"
+        ],
+        "firstDay": 1
+      },
+      "timePicker24Hour": true,
+      "timePickerIncrement": 1
+      "timePicker": true,
+      "ranges": {
+        'Heute': [moment().startOf('day'), moment().endOf('day')],
+        'Gestern': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
+        'Letze 7 Tage': [moment().subtract(6, 'days').startOf('day'), moment().endOf('day')],
+        'Diesen Monat': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
+        'Letzten Monat': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+        'Dieses Jahr': [moment().startOf('year').startOf('day'), moment().endOf('day')]
+      }
+    }
+    options = $.extend(true, {}, defaults, $(this).data('daterange'))
+    $(this).daterangepicker(options);
+
   forms = document.getElementsByClassName('needs-validation');
 
   # Auto update timefield until focus

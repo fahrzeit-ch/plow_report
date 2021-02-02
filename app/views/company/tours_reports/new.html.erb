@@ -1,0 +1,9 @@
+<%= title_row t("views.reports.new") %>
+<%= toolbar_row do %>
+  <div class="col">
+    <h4 class="card-title"><%= link_to t('views.reports.title'), company_tours_reports_path(current_company) %> / <%= t 'common.new' %></h4>
+  </div>
+<% end %>
+<%= content_card(body: true) do %>
+  <%= render 'form' %>
+<% end %>

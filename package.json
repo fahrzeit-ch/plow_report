@@ -1,5 +1,7 @@
 {
   "name": "plow_report",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "daterangepicker": "^3.1.0"
+  }
 }

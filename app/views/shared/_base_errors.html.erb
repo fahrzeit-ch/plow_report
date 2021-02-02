@@ -1,0 +1,14 @@
+<% if record.errors[:base].any? %>
+<div class="alert alert-warning d-flex">
+    <div class="alert-icon align-self-center">
+        <i style="font-size: 1.8em" class="fa fa-warning"></i>
+    </div>
+    <div class="align-self-center">
+        <ul>
+          <% record.errors[:base].each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+    </div>
+</div>
+<% end %>

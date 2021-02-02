@@ -38,6 +38,11 @@ module ApplicationHelper
     end.join("\n").html_safe
   end
 
+  def current_season_as_js_array
+    [current_season.start_date.beginning_of_day.strftime(ToursReport::DATETIME_FORMAT),
+     current_season.end_date.beginning_of_day.strftime(ToursReport::DATETIME_FORMAT)]
+  end
+
   def distance_of_date_in_words_to_now(date)
     key = ""
     distance = nil

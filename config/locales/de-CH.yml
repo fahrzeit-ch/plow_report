@@ -5,22 +5,28 @@ de-CH:
         create: "Senden"
         update: "Fahrer Hinzufügen"
   navbar:
+    dashboard: "Übersicht"
+    standby_dates: "Pikett"
+    company_settings: "Firmen Einstellungen"
+    vehicles: "Fahrzeuge"
+    tours: "Touren & Fahrten"
+    customers: "Kunden & Objekte"
+    hourly_rates: "Stundensätze"
+    drivers: "Fahrer"
+    activities: "Tätigkeiten"
+    tours_reports: "Rapporte"
     main:
-      dashboard: "Übersicht"
-      standby_dates: "Pikett"
       drives: "Fahrten"
       sign_in: "Anmelden"
       sign_up: "Benutzerkonto Erstellen"
       signout: "Abmelden"
       new_company: "Firma registrieren"
-      company_settings: "Einstellungen"
       company_show: "Zur Firmen Ansicht"
       my_dashboard: "Zur Fahrer Ansicht"
       edit_registration: "Benutzer Einstellungen"
       demo_login: "Demo Zugang"
     companies:
       drives: "Fahrten"
-      settings: "Firmen Einstellungen"
       stand_by_dates: "Pikett"
       dashboard: "Übersicht"
   activemodel:
@@ -68,6 +74,8 @@ de-CH:
               user_not_found: "Benutzer konnte nicht gefunden werden."
             user:
               taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
+        tours_report:
+          no_results: "Für den gewählten Zeitraum sind keine Daten vorhanden."
     models:
       activity:
         one: "Tätigkeit"
@@ -96,6 +104,9 @@ de-CH:
       vehicle:
         one: "Fahrzeug"
         other: "Fahrzeuge"
+      tours_report:
+        one: "Rapport"
+        other: "Rapporte"
     help:
       user:
         name: "Ihr vollständiger Name"
@@ -123,6 +134,11 @@ de-CH:
           driver: "Fahrer"
         user_email: "Email"
         user_name: "Name"
+      tours_report:
+        date_range: "Datumsbereich"
+        start_date: "Von"
+        end_date: "Bis"
+        customer_id: "Kunde"
       company:
         name: "Namen der Firma"
         contact_email: "Kontakt E-Mail"
@@ -230,7 +246,7 @@ de-CH:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export"
+    download_xlsx: "Rapport Herunterladen"
     disable: "Deaktivieren"
     add_marker: "Markierung setzen"
     add_line: "Linie Zeichnen"
@@ -309,6 +325,15 @@ de-CH:
     tours:
       updated: "Tour wurde aktuallisiert"
       destroyed: "Die Tour wurde erfolgreich gelöscht"
+    new_tour_created:
+      title: "Neue Tour"
+      body: "Eine neue Tour wurde erstellt."
+    reports:
+      created: "Rapport wird generiert..."
+      destroyed: "Rapport erfolgreich gelöscht."
+      not_destroyed: "Fehler beim Löschen des Rapports."
+      read_title: "Rapport Erstellt"
+      ready_body_html: "Der Rapport wurde erfolgreich erstellt: <a href='%{url}' class='text-bold'>Rapporte anzeigen</a>"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -463,6 +488,14 @@ de-CH:
       empty_info_title: "Noch keine Fahrzeuge"
       remove_activity: "X"
       add_activity: "Tätigkeit zuweisen"
+    reports:
+      generating: "Rapport wird generiert..."
+      title: "Rapporte"
+      create_new: "Neuer Rapport"
+      empty_info_title: "Keine Rapporte erfasst"
+      empty_info: "Noch keine Rapporte erzeugt. Erstellen Sie excel Rapporte für bestimmte Zeiträume."
+      new: "Neuen Rapport erstellen"
+      all_customers: "Alle Kunden"
   forms:
     placeholders:
       driver:
@@ -523,6 +556,7 @@ de-CH:
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
       label_empty_drive_time: "(Anfahrt)"
+      file_name: "fahrten-rapport"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."
