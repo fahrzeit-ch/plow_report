@@ -74,6 +74,8 @@ de-CH:
               user_not_found: "Benutzer konnte nicht gefunden werden."
             user:
               taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
+        tours_report:
+          no_results: "Für den gewählten Zeitraum sind keine Daten vorhanden."
     models:
       activity:
         one: "Tätigkeit"

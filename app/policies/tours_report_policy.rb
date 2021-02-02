@@ -10,7 +10,7 @@ class ToursReportPolicy < ApplicationPolicy
   end
 
   def create?
-    new? && company.customers.where(id: record.customer_id).exists?
+    new? && (record.customer_id.nil? || company.customers.where(id: record.customer_id).exists?)
   end
 
   def show?

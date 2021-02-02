@@ -53,7 +53,7 @@ $(document).on 'turbolinks:load', ->
         "firstDay": 1
       },
       "timePicker24Hour": true,
-      "timePickerIncrement": 15
+      "timePickerIncrement": 1
       "timePicker": true,
       "ranges": {
         'Heute': [moment().startOf('day'), moment().endOf('day')],

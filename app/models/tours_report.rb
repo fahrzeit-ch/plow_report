@@ -11,10 +11,13 @@ class ToursReport < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validates :start_date, date: true
   validates :end_date, date: { after: :start_date }
+  validate :results_not_empty
 
   has_one_attached :excel_report
 
   def drives
+    return Drive.none unless company
+
     if customer_id
       scope = customer.drives.kept
     else
@@ -27,7 +30,7 @@ class ToursReport < ApplicationRecord
   # Expected Format: "%d.%m.%Y %H:%M" (see ToursReport::DATETIME_FORMAT)
   def date_range=(date_range)
     self.start_date, self.end_date = date_range.split(/\s+-\s+/)
-                                    .map { |date| DateTime.strptime(date, DATETIME_FORMAT) }
+                                    .map { |date| Time.strptime(date, DATETIME_FORMAT).to_datetime }
   rescue ArgumentError
     errors.add(:date_range, :invalid_range)
   end
@@ -47,5 +50,12 @@ class ToursReport < ApplicationRecord
   def to_filename
     I18n.t("reports.drives.file_name") + "#{customer&.name}" + start_date.to_s(:short) + "_" + end_date.to_s(:short) + ".xlsx"
   end
+
+  private
+    def results_not_empty
+      unless drives.any?
+        errors.add(:base, :no_results)
+      end
+    end
 
 end
