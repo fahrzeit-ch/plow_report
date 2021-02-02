@@ -14,7 +14,7 @@ class TourReportJob < ApplicationJob
       update_report_items(report)
     rescue StandardError => e
       Rails.logger.error("Could not generate report: #{e.message}")
-      Rollbar.report_exception(e)
+      Rollbar.notifier.error(e)
     end
   end
 
