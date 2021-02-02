@@ -30,7 +30,7 @@ class ToursReport < ApplicationRecord
   # Expected Format: "%d.%m.%Y %H:%M" (see ToursReport::DATETIME_FORMAT)
   def date_range=(date_range)
     self.start_date, self.end_date = date_range.split(/\s+-\s+/)
-                                    .map { |date| Time.strptime(date, DATETIME_FORMAT).to_datetime }
+                                    .map { |date| Time.zone.strptime(date, DATETIME_FORMAT).to_datetime }
   rescue ArgumentError
     errors.add(:date_range, :invalid_range)
   end

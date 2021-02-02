@@ -15,9 +15,9 @@ RSpec.describe ToursReport, type: :model do
   end
 
   describe "date_range" do
-    before { Time.zone = Time.zone = "Bern" } # We need to explicitly set this so it matches the DateTime.parse below
     describe "date range write" do
       subject { described_class.new(date_range: "01.01.2021 00:00 - 31.01.2021 23:59") }
+      # We need to set the offset for the timezone set by default_zone
       its(:start_date) { is_expected.to eq(DateTime.parse("2021-01-01T00:00 +01:00")) }
       its(:end_date) { is_expected.to eq(DateTime.parse("2021-01-31T23:59 +01:00")) }
     end
