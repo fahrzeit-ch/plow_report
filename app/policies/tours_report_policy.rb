@@ -10,7 +10,7 @@ class ToursReportPolicy < ApplicationPolicy
   end
 
   def create?
-    new?
+    new? && company.customers.where(id: record.customer_id).exists?
   end
 
   def show?
@@ -30,7 +30,7 @@ class ToursReportPolicy < ApplicationPolicy
   # :api_create
   # :api_update
   def permitted_attributes
-    [:date_range]
+    [:date_range, :customer_id]
   end
 
 

@@ -6,7 +6,8 @@
     <b>vor <%= distance_of_time_in_words_to_now(report.created_at) %></b>
   </div>
   <div class="p-2 ml-4">
-    <stong><%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %></stong>
+    <div><%= report.customer&.name || t("views.reports.all_customers") %></div>
+    <%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %>
   </div>
 
   <div class="align-self-center ml-auto mr-2 d-print-none">

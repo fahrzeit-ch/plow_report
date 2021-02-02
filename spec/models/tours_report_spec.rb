@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ToursReport, type: :model do
+  it { is_expected.to belong_to(:customer).optional }
   it { is_expected.to respond_to(:date_range) }
 
   describe "date_range" do
@@ -18,6 +19,38 @@ RSpec.describe ToursReport, type: :model do
     context "invalid date range" do
       subject { described_class.new(date_range: "01.33.2021 00:00 - 31.01.2021 23:59") }
       it { is_expected.not_to be_valid }
+    end
+  end
+
+  describe "drives" do
+    let(:company) { create(:company) }
+
+
+    context "without setting customer filter" do
+      let(:customer) { create(:customer, client_of: company) }
+      let(:driver) { create(:driver, company: company) }
+      let!(:drives_included) { create_list(:drive, 3, start: 1.day.ago, end: 1.day.ago + 1.hour, driver: driver, customer: customer) }
+      let!(:drives_not_included) { create_list(:drive, 3, start: 2.day.ago, end: 2.day.ago + 1.hour, driver: driver, customer: customer) }
+      let!(:report) { create(:tours_report, company: company, start_date: 1.day.ago.beginning_of_day, end_date: DateTime.current.end_of_day, customer: nil) }
+
+      subject { report.drives }
+
+      it { is_expected.to include(*drives_included) }
+      it { is_expected.not_to include(*drives_not_included) }
+    end
+
+    context "without setting customer filter" do
+      let(:customer) { create(:customer, client_of: company) }
+      let(:other_customer) { create(:customer, client_of: company) }
+      let(:driver) { create(:driver, company: company) }
+      let!(:drives_included) { create_list(:drive, 3, start: 1.day.ago, end: 1.day.ago + 1.hour, driver: driver, customer: customer) }
+      let!(:drives_not_included) { create_list(:drive, 3, start: 1.day.ago, end: 1.day.ago + 1.hour, driver: driver, customer: other_customer) }
+      let!(:report) { create(:tours_report, company: company, start_date: 1.day.ago.beginning_of_day, end_date: DateTime.current.end_of_day, customer: customer) }
+
+      subject { report.drives }
+
+      it { is_expected.to include(*drives_included) }
+      it { is_expected.not_to include(*drives_not_included) }
     end
   end
 

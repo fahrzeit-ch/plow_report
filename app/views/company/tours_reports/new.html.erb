@@ -9,6 +9,10 @@
     <%= f.text_field :date_range, data: { daterange: { locale: {
       format: ToursReport::DATETIME_FORMAT_JS}, ranges: {
       "Diese Saison": current_season_as_js_array } } } %>
+    <%= f.select :customer_id, options_from_collection_for_select(current_company.customers.order(:name), 'id', 'name', params[:driver_id]),
+                 {include_blank: t('common.all')},
+                 class: 'dropdown-select',
+                 data: {s2: true} %>
     <%= f.submit %>
   <% end %>
 <% end %>

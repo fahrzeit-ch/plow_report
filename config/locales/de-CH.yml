@@ -136,6 +136,7 @@ de-CH:
         date_range: "Datumsbereich"
         start_date: "Von"
         end_date: "Bis"
+        customer_id: "Kunde"
       company:
         name: "Namen der Firma"
         contact_email: "Kontakt E-Mail"
@@ -492,6 +493,7 @@ de-CH:
       empty_info_title: "Keine Rapporte erfasst"
       empty_info: "Noch keine Rapporte erzeugt. Erstellen Sie excel Rapporte für bestimmte Zeiträume."
       new: "Neuen Rapport erstellen"
+      all_customers: "Alle Kunden"
   forms:
     placeholders:
       driver:
