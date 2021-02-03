@@ -16,6 +16,7 @@ module Pricing::HourlyRatable
   end
 
   def hourly_rate_attributes=(attrs)
+    attrs.delete(:id) # id must not be used, update or create is decided based on valid_from date
     valid_from = attrs[:valid_from]
     @rate = hourly_rates.where(valid_from: valid_from).first
     if @rate
