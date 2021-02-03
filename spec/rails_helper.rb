@@ -11,6 +11,7 @@ require "capybara/rspec"
 require "capybara-screenshot/rspec"
 require "pundit/matchers"
 require "active_support/testing/time_helpers"
+require "money-rails/test_helpers"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

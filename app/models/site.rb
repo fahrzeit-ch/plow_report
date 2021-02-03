@@ -17,6 +17,7 @@ class Site < ApplicationRecord
 
   audited
 
+  include Pricing::FlatRatable
   include AddressSearch
 
   def details

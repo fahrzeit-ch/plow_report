@@ -42,4 +42,47 @@ RSpec.describe Site, type: :model do
       expect(subject.area_json.keys).not_to be_empty
     end
   end
+
+  describe "pricing" do
+    let(:site) { create(:site) }
+    let!(:flat_rate) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago) }
+    before { site.reload }
+
+    it "includes the flat_rate" do
+      expect(site.flat_rates).to include(flat_rate)
+    end
+
+    describe "destroy" do
+      it "also destroys attached flatrates" do
+        expect { site.destroy! }.to change(Pricing::FlatRate, :count).by(-1)
+      end
+    end
+
+    describe "activity_fees" do
+      let!(:activity_fee) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::ACTIVITY_FEE) }
+      let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
+      it "only includes activity fee" do
+        expect(site.activity_fees).to include(activity_fee)
+        expect(site.activity_fees).not_to include(other)
+      end
+    end
+
+    describe "travel expense" do
+      let!(:travel_expense) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+      let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
+      it "only includes travel expenses" do
+        expect(site.travel_expenses).to include(travel_expense)
+        expect(site.travel_expenses).not_to include(other)
+      end
+    end
+
+    describe "travel expense" do
+      let!(:commitment_fee) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::COMMITMENT_FEE) }
+      let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
+      it "only includes commitment fees" do
+        expect(site.commitment_fees).to include(commitment_fee)
+        expect(site.commitment_fees).not_to include(other)
+      end
+    end
+  end
 end

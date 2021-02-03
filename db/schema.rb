@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_153616) do
+ActiveRecord::Schema.define(version: 2021_02_03_104838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -254,6 +254,30 @@ ActiveRecord::Schema.define(version: 2021_02_02_153616) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pricing_flat_rates", force: :cascade do |t|
+    t.string "flat_ratable_type"
+    t.bigint "flat_ratable_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", null: false
+    t.datetime "valid_from", null: false
+    t.string "rate_type", default: "custom", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flat_ratable_id", "flat_ratable_type", "rate_type"], name: "index_flat_rates_on_rable_id_ratable_type_rate_type"
+    t.index ["flat_ratable_type", "flat_ratable_id"], name: "index_flat_rates_on_rable_id_ratable_type"
+  end
+
+  create_table "pricing_hourly_rates", force: :cascade do |t|
+    t.string "hourly_ratable_type"
+    t.bigint "hourly_ratable_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", null: false
+    t.datetime "valid_from", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hourly_ratable_type", "hourly_ratable_id"], name: "index_hourly_rates_on_hourly_priceable_id"
   end
 
   create_table "recordings", force: :cascade do |t|
