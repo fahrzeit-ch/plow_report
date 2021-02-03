@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class VehicleActivityAssignment < ApplicationRecord
+  include Pricing::HourlyRatable
+
   belongs_to :vehicle
   belongs_to :activity
 
