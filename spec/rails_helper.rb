@@ -94,6 +94,8 @@ RSpec.configure do |config|
 
   config.include SystemScenarios, type: :system
   config.include SystemScenarios, type: :feature
+
+  config.full_backtrace = true
 end
 
 Shoulda::Matchers.configure do |config|
