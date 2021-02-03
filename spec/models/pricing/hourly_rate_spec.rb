@@ -7,7 +7,7 @@ RSpec.describe Pricing::HourlyRate, type: :model do
   describe "defaults" do
     subject { described_class.new }
     its(:price) { is_expected.to eq Money.new("0.0") }
-    its(:valid_from) { is_expected.to be_between(DateTime.current - 1.second, DateTime.current + 1.second) }
+    its(:valid_from) { is_expected.to eq Date.current }
   end
 
   describe "validity scopes" do

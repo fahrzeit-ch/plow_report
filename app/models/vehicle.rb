@@ -24,6 +24,10 @@ class Vehicle < ApplicationRecord
     vehicle_activity_assignments.pluck(:activity_id)
   end
 
+  def pricing_default_valid_from
+    Season.current.start_date
+  end
+
   private
     # Make sure, all activities have the company id set.
     def set_company_on_activities

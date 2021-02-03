@@ -562,3 +562,6 @@ de-CH:
       infotext: "Auf die Karte klicken um Markierung zu setzen."
     addline:
       infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"
+  attributes:
+    vehicle:
+      price_help: "Änderungen gelten für die aktuelle Saison"

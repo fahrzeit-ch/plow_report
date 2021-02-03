@@ -5,7 +5,7 @@ module Pricing::Price
   included do
     monetize :price_cents
     validates :valid_from, presence: true, date: true
-    after_initialize :set_defaults
+    after_initialize :set_default_valid_from
 
     def self.for_date(i)
       valid_from_col = self.arel_table[:valid_from]
@@ -18,7 +18,7 @@ module Pricing::Price
 
   end
 
-  def set_defaults
-    self.valid_from ||= DateTime.current
+  def set_default_valid_from
+    self.valid_from ||= self.try(:pricing_default_valid_from) || DateTime.current
   end
 end

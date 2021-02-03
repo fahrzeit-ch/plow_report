@@ -21,6 +21,30 @@ RSpec.describe Company::VehiclesController, type: :controller do
       post :create, params: { company_id: company.to_param, vehicle: attributes_for(:vehicle) }
       expect(response).to redirect_to(company_vehicles_path company)
     end
+
+    it "creates a new vehicle" do
+      expect {
+        post :create, params: { company_id: company.to_param, vehicle: attributes_for(:vehicle) }
+      }.to change(Vehicle, :count).by(1)
+    end
+
+    describe "activities and price rates" do
+      let(:activity) { create(:activity, company: company) }
+      let(:activity_assignment_attributes) { { activity_id: activity.id, hourly_rate_attributes: { price: "80.0", valid_from: 1.year.ago.to_s } } }
+      let(:vehicle_attributes) { attributes_for(:vehicle).merge(vehicle_activity_assignments_attributes: { 1 => activity_assignment_attributes }) }
+
+      it "it creates an activity asignment" do
+        expect {
+          post :create, params: { company_id: company.to_param, vehicle: vehicle_attributes }
+        }.to change(VehicleActivityAssignment, :count).by(1)
+      end
+
+      it "it creates an activity asignment" do
+        expect {
+          post :create, params: { company_id: company.to_param, vehicle: vehicle_attributes }
+        }.to change(Pricing::HourlyRate, :count).by(1)
+      end
+    end
   end
 
   describe "GET #edit" do
