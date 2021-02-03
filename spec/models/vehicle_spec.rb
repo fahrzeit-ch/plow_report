@@ -75,7 +75,7 @@ RSpec.describe Vehicle, type: :model do
 
     describe "#travel_expense_rate=value" do
       let(:new_price) { Money.new(20) }
-      let(:valid_from) { 1.month.ago }
+      let(:valid_from) { 1.month.ago.to_date }
 
       context "without existing rates" do
         before { vehicle.hourly_rate_attributes = { price: new_price, valid_from: valid_from } }
