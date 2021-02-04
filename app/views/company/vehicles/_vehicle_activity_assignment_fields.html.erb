@@ -1,9 +1,9 @@
-<div class="nested-fields mb-1">
+<div class="nested-fields mb-1 p-2">
   <div class=" d-flex">
-    <div class="flex-grow-1 py-0">
+    <div class="flex-grow-1">
       <%= f.select :activity_id, current_company.activities.pluck(:name, :id), hide_label: true, include_blank: true %>
     </div>
-    <div class="flex-grow-1 px-2">
+    <div class="flex-grow-1 mx-2">
       <%= f.fields_for :hourly_rate do |hrf| %>
         <%= hrf.text_field :price, hide_label: true, append: hrf.object.price.currency, help: t('activerecord.attributes.vehicle.price_help')  %>
         <%= hrf.hidden_field :valid_from, value: Season.current.start_date %>
