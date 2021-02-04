@@ -1,23 +1,16 @@
-<div class="row bg-white pt-3">
-  <div class="col-sm-6">
-    <h1><%= t 'views.companies.sites.edit' %></h1>
-  </div>
-</div>
-<div class="row toolbar border-top bg-light p-2 d-print-none">
+<%= title_row t('views.companies.sites.edit') %>
+<%= toolbar_row do %>
   <div class="col">
-    <h4 class="card-title"><%= link_to t('views.companies.customers.title'), company_customers_path(current_company) %> /
+    <h4 class="card-title">
+      <%= link_to t('views.companies.customers.title'), company_customers_path(current_company) %> /
       <%= link_to @customer.name,
                   edit_company_customer_path(company_id:
-                                                 current_company.to_param,
+                                               current_company.to_param,
                                              id: @customer.to_param) %> /
       <%= @site.display_name %>
-
     </h4>
-    <form class="form form-inline">
-      <!-- May insert search and filter -->
-    </form>
   </div>
-</div>
+<% end %>
 
 <div class="row mt-3">
   <%= render 'form' %>

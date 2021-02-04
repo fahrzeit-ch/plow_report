@@ -165,6 +165,11 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
         active: 'Objekt Aktiv'
+        travel_expense: "Anfahrtspauschale (pro Einsatz)"
+        commitment_fee: "Bereitschaftspauschale (pro Saison)"
+        activity_fee: "Tätigkeitspauschale (pro Einsatz)"
+      pricing/flat_rate:
+        active: "Pauschale verwenden"
       drive:
         activity: "Tätigkeit"
         driver: "Fahrer"
