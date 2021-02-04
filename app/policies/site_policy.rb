@@ -37,6 +37,13 @@ class SitePolicy < ApplicationPolicy
     @company ||= record.customer.try(:client_of)
   end
 
+  def permitted_attributes
+    [:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features,
+     commitment_fee_attributes: [:active, :price, :valid_from],
+     travel_expense_attributes: [:active, :price, :valid_from],
+     activity_fee_attributes: [:active, :price, :valid_from]]
+  end
+
   class Scope < Scope
     def resolve
       scope

@@ -85,7 +85,7 @@ RSpec.describe Site, type: :model do
 
           context "without existing rates" do
             subject { site.travel_expense }
-            it { is_expected.to be_nil }
+            it { is_expected.not_to be_nil }
           end
 
           context "with existing rate" do

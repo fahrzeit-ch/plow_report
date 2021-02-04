@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_104838) do
+ActiveRecord::Schema.define(version: 2021_02_04_121252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_104838) do
     t.string "rate_type", default: "custom", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: false
     t.index ["flat_ratable_id", "flat_ratable_type", "rate_type"], name: "index_flat_rates_on_rable_id_ratable_type_rate_type"
     t.index ["flat_ratable_type", "flat_ratable_id"], name: "index_flat_rates_on_rable_id_ratable_type"
   end
