@@ -18,6 +18,10 @@ class Site < ApplicationRecord
   audited
 
   include Pricing::FlatRatable
+  flat_rate :commitment_fee
+  flat_rate :activity_fee
+  flat_rate :travel_expense
+
   include AddressSearch
 
   def details

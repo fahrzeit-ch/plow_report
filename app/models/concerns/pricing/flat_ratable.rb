@@ -10,15 +10,22 @@ module Pricing::FlatRatable
 
   included do
     has_many :flat_rates, class_name: "Pricing::FlatRate", as: :flat_ratable, dependent: :destroy, autosave: true
-    has_many :activity_fees, -> { where(rate_type: Pricing::FlatRate::ACTIVITY_FEE) }, class_name: "Pricing::FlatRate", as: :flat_ratable
-    has_many :travel_expenses, -> { where(rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }, class_name: "Pricing::FlatRate", as: :flat_ratable
-    has_many :commitment_fees, -> { where(rate_type: Pricing::FlatRate::COMMITMENT_FEE) }, class_name: "Pricing::FlatRate", as: :flat_ratable
-
     after_save :write_changed_rates
+  end
 
-    attribute :activity_fee
-    attribute :travel_expense
-    attribute :commitment_fee
+  class_methods do
+    def flat_rate(type)
+      self.attribute type
+      self.has_many type.to_s.pluralize.to_sym, -> { where(rate_type: TYPE_MAP[type]) }, class_name: "Pricing::FlatRate", as: :flat_ratable
+
+      self.define_method type do
+        current_or_new(type)
+      end
+
+      self.define_method "#{type}_attributes=" do |attrs|
+        update_or_create_by_valid_from(attrs, type)
+      end
+    end
   end
 
   def changed_rates
@@ -44,30 +51,6 @@ module Pricing::FlatRatable
   def current_or_new(attribute_name)
     relation = attribute_name.to_s.pluralize
     public_send(relation).current || public_send(relation).build(rate_type: Pricing::FlatRatable::TYPE_MAP[attribute_name])
-  end
-
-  def commitment_fee
-    current_or_new(:commitment_fee)
-  end
-
-  def commitment_fee_attributes=(attrs)
-    update_or_create_by_valid_from(attrs, :commitment_fee)
-  end
-
-  def travel_expense
-    current_or_new(:travel_expense)
-  end
-
-  def travel_expense_attributes=(attrs)
-    update_or_create_by_valid_from(attrs, :travel_expense)
-  end
-
-  def activity_fee
-    current_or_new(:activity_fee)
-  end
-
-  def activity_fee_attributes=(attrs)
-    update_or_create_by_valid_from(attrs, :activity_fee)
   end
 
   protected
