@@ -59,12 +59,8 @@ RSpec.describe Site, type: :model do
     end
 
     describe "activity_fees" do
-      let!(:activity_fee) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::ACTIVITY_FEE) }
-      let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
-      it "only includes activity fee" do
-        expect(site.activity_fees).to include(activity_fee)
-        expect(site.activity_fees).not_to include(other)
-      end
+      it { is_expected.to have_many(:activity_flat_rates) }
+      it { is_expected.to accept_nested_attributes_for(:activity_flat_rates) }
     end
 
     describe "travel expense" do

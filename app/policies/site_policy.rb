@@ -39,9 +39,9 @@ class SitePolicy < ApplicationPolicy
 
   def permitted_attributes
     [:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features,
+     site_activity_flat_rates_attributes: [:id, :_delete, :activity_id, activity_fee_attributes: [:active, :price, :valid_from]],
      commitment_fee_attributes: [:active, :price, :valid_from],
-     travel_expense_attributes: [:active, :price, :valid_from],
-     activity_fee_attributes: [:active, :price, :valid_from]]
+     travel_expense_attributes: [:active, :price, :valid_from]]
   end
 
   class Scope < Scope

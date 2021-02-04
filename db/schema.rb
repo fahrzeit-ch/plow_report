@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_121252) do
+ActiveRecord::Schema.define(version: 2021_02_04_165631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -287,6 +287,15 @@ ActiveRecord::Schema.define(version: 2021_02_04_121252) do
     t.index ["driver_id"], name: "index_recordings_on_driver_id", unique: true
   end
 
+  create_table "site_activity_flat_rates", force: :cascade do |t|
+    t.bigint "site_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_site_activity_flat_rates_on_activity_id"
+    t.index ["site_id"], name: "index_site_activity_flat_rates_on_site_id"
+  end
+
   create_table "sites", force: :cascade do |t|
     t.string "name"
     t.string "street", default: "", null: false
@@ -433,6 +442,8 @@ ActiveRecord::Schema.define(version: 2021_02_04_121252) do
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "site_activity_flat_rates", "activities"
+  add_foreign_key "site_activity_flat_rates", "sites"
   add_foreign_key "sites", "customers"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"

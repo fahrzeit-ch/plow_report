@@ -53,7 +53,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
     def append_classes(options, attribute, classes = ["form-control"])
       classes << options.delete(:class) || ""
-      classes << "is-invalid" if object.errors.include?(attribute)
+      classes << "is-invalid" if object&.errors&.include?(attribute)
       options.merge class: classes.join(" ")
     end
 end

@@ -22,6 +22,9 @@ class Site < ApplicationRecord
   flat_rate :activity_fee
   flat_rate :travel_expense
 
+  has_many :site_activity_flat_rates, dependent: :destroy
+  accepts_nested_attributes_for :site_activity_flat_rates, allow_destroy: true, reject_if: :all_blank
+
   include AddressSearch
 
   def details

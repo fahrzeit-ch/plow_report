@@ -7,7 +7,12 @@
   <%= render 'flat_rate_fields', form: fa %>
 <% end %>
 <hr />
-<%= f.label :activity_fee %>
-<%= f.fields_for :activity_fee do |fa| %>
-  <%= render 'flat_rate_fields', form: fa %>
-<% end %>
+<div id="site_activity_flat_rates">
+  <%= f.label :activity_fee %>
+  <%= f.fields_for :site_activity_flat_rates do |fa| %>
+    <%= render 'site_activity_flat_rate_fields', f: fa %>
+  <% end %>
+  <div class="links form-group">
+    <%= link_to_add_association t("views.vehicles.add_activity"), f, :site_activity_flat_rates, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>
