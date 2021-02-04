@@ -1,0 +1,12 @@
+<%= f.label :activity_fee %>
+<%= f.fields_for :activity_fee do |fa| %>
+  <%= render 'flat_rate_fields', form: fa %>
+<% end %>
+<%= f.label :travel_expense %>
+<%= f.fields_for :travel_expense do |fa| %>
+  <%= render 'flat_rate_fields', form: fa %>
+<% end %>
+<%= f.label :commitment_fee %>
+<%= f.fields_for :commitment_fee do |fa| %>
+  <%= render 'flat_rate_fields', form: fa %>
+<% end %>

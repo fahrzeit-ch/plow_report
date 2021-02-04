@@ -4,10 +4,18 @@
     <span class="badge badge-secondary"><%= t 'activerecord.attributes.inactive' %></span>
   <% end %>
   <div class="ml-auto p-2">
+    <% unless site.drives.any? %>
+      <%= link_to company_customer_site_path(company_id: current_company.to_param, customer_id: site.customer.to_param, id: site, title: t('actions.delete')),
+                  method: :delete,
+                  data: { disable_with: is_processing(true) },
+                  remote: true,
+                  class: 'text-muted mr-1' do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    <% end %>
     <%= link_to edit_company_customer_site_path(company_id: current_company.to_param, customer_id: site.customer_id, id: site.id), class: 'text-muted', title: t('views.companies.sites.edit') do %>
       <i class="fa fa-edit"></i>
     <% end %>
-  </div>
-  <div>
+
   </div>
 </li>

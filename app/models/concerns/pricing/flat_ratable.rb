@@ -28,6 +28,7 @@ module Pricing::FlatRatable
   def update_or_create_by_valid_from(attrs, attribute_name)
     attrs.delete(:id) # id must not be used, update or create is decided based on valid_from date
     valid_from = attrs[:valid_from]
+    attrs[:price] ||= Money.new("0.0")
     attrs[:rate_type] = Pricing::FlatRatable::TYPE_MAP[attribute_name]
     existing_rate = public_send(attribute_name.to_s.pluralize).where(valid_from: valid_from).first
 
@@ -46,7 +47,7 @@ module Pricing::FlatRatable
   end
 
   def commitment_fee
-    commitment_fee.current
+    current_or_new(:commitment_fee)
   end
 
   def commitment_fee_attributes=(attrs)
@@ -54,7 +55,7 @@ module Pricing::FlatRatable
   end
 
   def travel_expense
-    travel_expenses.current
+    current_or_new(:travel_expense)
   end
 
   def travel_expense_attributes=(attrs)
@@ -62,14 +63,15 @@ module Pricing::FlatRatable
   end
 
   def activity_fee
-    activity_fees.current
+    current_or_new(:activity_fee)
   end
 
   def activity_fee_attributes=(attrs)
     update_or_create_by_valid_from(attrs, :activity_fee)
   end
 
-  def write_changed_rates
-    changed_rates.each(&:save)
-  end
+  protected
+    def write_changed_rates
+      changed_rates.each(&:save)
+    end
 end

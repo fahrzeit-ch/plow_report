@@ -102,6 +102,10 @@ $(document).on 'turbolinks:load', ->
     target = $(this).data('collapse-on-change')
     $("#" + target).collapse('toggle')
 
+  $("[data-disable-on-change]").on 'change', ->
+    target = $(this).data('disable-on-change')
+    $("#" + target).prop("disabled", !this.checked );
+
   $("[data-submit-on-change]").on 'change', ->
     target = $(this).closest('form')
     $(target).submit();
