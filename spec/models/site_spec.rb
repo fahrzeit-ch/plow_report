@@ -68,15 +68,94 @@ RSpec.describe Site, type: :model do
     end
 
     describe "travel expense" do
-      let!(:travel_expense) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
-      let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
-      it "only includes travel expenses" do
-        expect(site.travel_expenses).to include(travel_expense)
-        expect(site.travel_expenses).not_to include(other)
+      describe "travel_expense_rates" do
+        describe "all travel_expense_rates" do
+
+          let!(:expense_rate) { create(:pricing_flat_rate, flat_ratable: site, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+          let!(:expense_rate_old) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.year.ago, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+
+          subject { site.travel_expenses }
+          it { is_expected.to include(expense_rate) }
+          it { is_expected.to include(expense_rate_old) }
+        end
+
+        describe "#travel_expanse_rate" do
+          let(:old_price) { Money.new(10) }
+          let(:current_price) { Money.new(20) }
+
+          context "without existing rates" do
+            subject { site.travel_expense }
+            it { is_expected.to be_nil }
+          end
+
+          context "with existing rate" do
+            let!(:expense_rate) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.week.ago, price: current_price, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+
+            subject { site.travel_expense }
+            it { is_expected.to eq expense_rate }
+
+          end
+
+          context "with historic expense rates" do
+            let!(:expense_rate) { create(:pricing_flat_rate, flat_ratable: site, price: current_price, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+            let!(:expense_rate_old) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.year.ago, price: old_price, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+
+            subject { site.travel_expense }
+            it { is_expected.to eq expense_rate }
+          end
+
+        end
+
+        describe "#travel_expense_rate=value" do
+          let(:new_price) { Money.new(20) }
+          let(:valid_from) { 1.month.ago.to_date }
+
+          context "without existing rates" do
+            before { site.travel_expense_attributes = { price: new_price, valid_from: valid_from } }
+            subject { site }
+
+            it "creates a new expense_rate" do
+              expect { subject.save }.to change(Pricing::FlatRate, :count).by(1)
+            end
+          end
+
+          context "with existing expense_rate having different valid_from" do
+            let!(:expense_rate_old) { create(:pricing_flat_rate, flat_ratable: site, valid_from: valid_from - 1.year, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+
+            before { site.travel_expense_attributes = { price: new_price, valid_from: valid_from } }
+            subject { site }
+
+            it "creates a new expense_rate" do
+              expect { subject.save }.to change(Pricing::FlatRate, :count).by(1)
+            end
+
+            it "sets #travel_expense_rate to the new one" do
+              subject.save
+              expect(subject.travel_expense.valid_from).to eq valid_from
+            end
+          end
+
+          context "with existing expense_rate having same valid_from" do
+            let(:old_price) { new_price + Money.new(20) }
+            let!(:expense_rate_old) { create(:pricing_flat_rate, flat_ratable: site, valid_from: valid_from, price: old_price, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
+
+            before { site.travel_expense_attributes = { price: new_price, valid_from: valid_from } }
+            subject { site }
+
+            it "creates a new expense_rate" do
+              expect { subject.save }.not_to change(Pricing::FlatRate, :count)
+            end
+
+            it "updates the existing rate" do
+              subject.save
+              expect(subject.travel_expense.price).to eq new_price
+            end
+          end
+        end
       end
     end
 
-    describe "travel expense" do
+    describe "commitment fees" do
       let!(:commitment_fee) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::COMMITMENT_FEE) }
       let!(:other) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago, rate_type: Pricing::FlatRate::CUSTOM_FEE) }
       it "only includes commitment fees" do
