@@ -10,6 +10,5 @@ class Pricing::FlatRate < ApplicationRecord
 
   include Pricing::Price
   belongs_to :flat_ratable, polymorphic: true
-  validates :rate_type, inclusion: TYPES
 
 end

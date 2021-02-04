@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 module Pricing::FlatRatable
-  TYPE_MAP = {
-    activity_fee: Pricing::FlatRate::ACTIVITY_FEE,
-    travel_expense: Pricing::FlatRate::TRAVEL_EXPENSE,
-    commitment_fee: Pricing::FlatRate::COMMITMENT_FEE }
-
   extend ActiveSupport::Concern
 
   included do
@@ -16,7 +11,7 @@ module Pricing::FlatRatable
   class_methods do
     def flat_rate(type)
       self.attribute type
-      self.has_many type.to_s.pluralize.to_sym, -> { where(rate_type: TYPE_MAP[type]) }, class_name: "Pricing::FlatRate", as: :flat_ratable
+      self.has_many type.to_s.pluralize.to_sym, -> { where(rate_type: type) }, class_name: "Pricing::FlatRate", as: :flat_ratable
 
       self.define_method type do
         current_or_new(type)
@@ -36,7 +31,7 @@ module Pricing::FlatRatable
     attrs.delete(:id) # id must not be used, update or create is decided based on valid_from date
     valid_from = attrs[:valid_from]
     attrs[:price] ||= Money.new("0.0")
-    attrs[:rate_type] = Pricing::FlatRatable::TYPE_MAP[attribute_name]
+    attrs[:rate_type] = attribute_name
     existing_rate = public_send(attribute_name.to_s.pluralize).where(valid_from: valid_from).first
 
     if existing_rate
@@ -50,7 +45,7 @@ module Pricing::FlatRatable
 
   def current_or_new(attribute_name)
     relation = attribute_name.to_s.pluralize
-    public_send(relation).current || public_send(relation).build(rate_type: Pricing::FlatRatable::TYPE_MAP[attribute_name])
+    public_send(relation).current || public_send(relation).build(rate_type: attribute_name)
   end
 
   protected

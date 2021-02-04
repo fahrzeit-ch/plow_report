@@ -5,10 +5,6 @@ RSpec.describe Pricing::FlatRate, type: :model do
     it { is_expected.to belong_to(:flat_ratable) }
   end
 
-  describe "validation" do
-    it { is_expected.to validate_inclusion_of(:rate_type).in_array(Pricing::FlatRate::TYPES) }
-  end
-
   it { is_expected.to monetize(:price_cents) }
 
   describe "defaults" do
