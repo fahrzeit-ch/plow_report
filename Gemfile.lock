@@ -142,7 +142,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.13.1)
+    ffi (1.14.2)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
     globalid (0.4.2)
@@ -478,7 +478,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 2.6.1p33
+   ruby 2.7.2p137
 
 BUNDLED WITH
-   2.1.4
+   2.2.8
