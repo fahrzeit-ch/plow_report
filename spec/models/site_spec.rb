@@ -59,8 +59,8 @@ RSpec.describe Site, type: :model do
     end
 
     describe "activity_fees" do
-      it { is_expected.to have_many(:activity_flat_rates) }
-      it { is_expected.to accept_nested_attributes_for(:activity_flat_rates) }
+      it { is_expected.to have_many(:site_activity_flat_rates) }
+      it { is_expected.to accept_nested_attributes_for(:site_activity_flat_rates) }
     end
 
     describe "travel expense" do
