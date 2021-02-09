@@ -29,7 +29,9 @@
       <% end %>
     </div>
     <div class="form-group">
-      <%= link_to_remove_association( t("views.companies.sites.remove_flat_rate"), f, class: "btn btn-outline-danger") %>
+      <% if f.object.can_destroy? %>
+        <%= link_to_remove_association( t("views.companies.sites.remove_flat_rate"), f, class: "btn btn-outline-danger") %>
+      <% end %>
     </div>
   </div>
 </div>
