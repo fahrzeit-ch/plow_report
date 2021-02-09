@@ -158,7 +158,6 @@ RSpec.describe Company, type: :model do
       cust = create(:customer, client_of: company)
       site = create(:site, customer: cust)
       activity = create(:activity, company: company)
-      create(:hourly_rate, company: company, activity: activity, customer: cust)
       create(:drive, driver: drivers[1], customer: cust, site: site, activity: activity)
     end
 

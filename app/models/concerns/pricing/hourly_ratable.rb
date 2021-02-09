@@ -11,6 +11,10 @@ module Pricing::HourlyRatable
     after_save :update_hourly_rate
   end
 
+  def hourly_rate_for_date(date)
+    hourly_rates.for_date(date)
+  end
+
   def hourly_rate
     hourly_rates.current || hourly_rates.build
   end

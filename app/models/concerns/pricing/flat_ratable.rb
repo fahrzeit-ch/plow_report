@@ -17,6 +17,10 @@ module Pricing::FlatRatable
         current_or_new(type, opts[:defaults])
       end
 
+      self.define_method "#{type}_for_date" do |date|
+        for_date(type, date)
+      end
+
       self.define_method "#{type}_attributes=" do |attrs|
         update_or_create_by_valid_from(attrs, type)
       end
@@ -43,10 +47,19 @@ module Pricing::FlatRatable
     end
   end
 
+  def for_date(attribute_name, date)
+    relation = relation_for(attribute_name)
+    public_send(relation).for_date(date)
+  end
+
   def current_or_new(attribute_name, defaults)
-    relation = attribute_name.to_s.pluralize
+    relation = relation_for(attribute_name)
     defaults ||= {}
     public_send(relation).current || public_send(relation).build(defaults.merge(rate_type: attribute_name))
+  end
+
+  def relation_for(attribute_name)
+    attribute_name.to_s.pluralize
   end
 
   protected

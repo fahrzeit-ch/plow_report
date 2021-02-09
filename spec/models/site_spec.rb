@@ -118,7 +118,7 @@ RSpec.describe Site, type: :model do
           context "with existing expense_rate having different valid_from" do
             let!(:expense_rate_old) { create(:pricing_flat_rate, flat_ratable: site, valid_from: valid_from - 1.year, rate_type: Pricing::FlatRate::TRAVEL_EXPENSE) }
 
-            before { site.travel_expense_attributes = { price: new_price, valid_from: valid_from } }
+            before { site.travel_expense_attributes = { price: new_price, valid_from: valid_from, active: true } }
             subject { site }
 
             it "creates a new expense_rate" do

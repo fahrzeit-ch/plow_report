@@ -80,8 +80,8 @@ class Drive < ApplicationRecord
   end
 
   # @return The hourly rate applicable for this drive.
-  def hourly_rate
-    nil
+  def prices
+    @prices ||= DrivePrice.new self
   end
 
   def customer_name

@@ -11,7 +11,6 @@ class Company < ApplicationRecord
   validates :zip_code, presence: true
   validates :city, presence: true
 
-  has_many :hourly_rates, dependent: :destroy
   has_many :company_members, dependent: :destroy
   has_many :users, through: :company_members
   has_many :drivers, dependent: :destroy

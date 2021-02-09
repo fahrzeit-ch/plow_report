@@ -18,8 +18,10 @@ class Site < ApplicationRecord
   audited
 
   include Pricing::FlatRatable
+  # creates #commitment_fee #commitment_fee_attributes=() #commitment_fee_for_date(date)
   flat_rate :commitment_fee
-  flat_rate :activity_fee
+
+  # creates #travel_expense #travel_expense_attributes=() #travel_expense_for_date(date)
   flat_rate :travel_expense
 
   has_many :site_activity_flat_rates, dependent: :destroy
