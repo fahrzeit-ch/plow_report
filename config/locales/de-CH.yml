@@ -169,7 +169,7 @@ de-CH:
         commitment_fee: "Bereitschaftspauschale (pro Saison)"
         activity_fee: "Tätigkeitspauschale (pro Einsatz)"
       pricing/flat_rate:
-        active: "Pauschale verwenden"
+        active: "Pauschale aktiv"
       drive:
         activity: "Tätigkeit"
         driver: "Fahrer"
@@ -441,6 +441,8 @@ de-CH:
         location_panel_header: "Standort"
         edit: "Objekt bearbeiten"
         show_inactive: "Inaktive anzeigen"
+        add_flat_rate: "Pauschale hinzufügen"
+        remove_flat_rate: "X"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"

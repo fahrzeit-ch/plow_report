@@ -1,4 +1,18 @@
 <div class="nested-fields mb-1 p-2">
+  <div class="d-flex">
+    <%= f.fields_for :activity_fee do |hrf| %>
+      <% if f.object.persisted? %>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <%= hrf.check_box :active, class: 'custom-control-input', data: { disable_on_change: hrf.object_name.gsub(/[\[\]]+/, '_')+"price"} %>
+            <%= hrf.label :active, class: 'custom-control-label' %>
+          </div>
+        </div>
+      <% else %>
+        <%= hrf.hidden_field :active, value: hrf.object.active %>
+      <% end %>
+    <% end %>
+  </div>
   <div class=" d-flex">
     <div class="flex-grow-1">
       <%= f.select :activity_id, current_company.activities.pluck(:name, :id), hide_label: true, include_blank: true %>
@@ -6,7 +20,7 @@
     <div class="flex-grow-1 mx-2">
       <%= f.fields_for :activity_fee do |hrf| %>
         <div class="input-group">
-          <%= hrf.text_field :price %>
+          <%= hrf.text_field :price, disabled: !hrf.object.active %>
           <div class="input-group-append">
             <span class="input-group-text" id="basic-addon2"><%= hrf.object.price.currency %></span>
           </div>
@@ -15,7 +29,7 @@
       <% end %>
     </div>
     <div class="form-group">
-      <%= link_to_remove_association( t("views.vehicles.remove_activity"), f, class: "btn btn-outline-danger") %>
+      <%= link_to_remove_association( t("views.companies.sites.remove_flat_rate"), f, class: "btn btn-outline-danger") %>
     </div>
   </div>
 </div>

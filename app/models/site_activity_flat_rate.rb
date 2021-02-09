@@ -7,5 +7,5 @@ class SiteActivityFlatRate < ApplicationRecord
   validates_uniqueness_of :activity_id, scope: :site_id
 
   include Pricing::FlatRatable
-  flat_rate :activity_fee
+  flat_rate :activity_fee, defaults: { active: true }
 end

@@ -9,12 +9,12 @@ module Pricing::FlatRatable
   end
 
   class_methods do
-    def flat_rate(type)
+    def flat_rate(type, opts = {})
       self.attribute type
       self.has_many type.to_s.pluralize.to_sym, -> { where(rate_type: type) }, class_name: "Pricing::FlatRate", as: :flat_ratable
 
       self.define_method type do
-        current_or_new(type)
+        current_or_new(type, opts[:defaults])
       end
 
       self.define_method "#{type}_attributes=" do |attrs|
@@ -43,9 +43,10 @@ module Pricing::FlatRatable
     end
   end
 
-  def current_or_new(attribute_name)
+  def current_or_new(attribute_name, defaults)
     relation = attribute_name.to_s.pluralize
-    public_send(relation).current || public_send(relation).build(rate_type: attribute_name)
+    defaults ||= {}
+    public_send(relation).current || public_send(relation).build(defaults.merge(rate_type: attribute_name))
   end
 
   protected
