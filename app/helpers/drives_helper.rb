@@ -52,8 +52,8 @@ module DrivesHelper
     end
   end
 
-  def available_activities(company)
-    company ? company.activities : Activity.default
+  def available_activities(vehicle)
+    vehicle ? vehicle.activities : Activity.default
   end
 
   private
