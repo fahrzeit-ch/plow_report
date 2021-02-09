@@ -24,7 +24,7 @@ module Report
       if drive.prices.travel_expense_flat_rate?
         I18n.t('reports.drives.flat_rate')
       else
-        drive.prices.price_per_hour
+        drive.prices.travel_expense_per_hour
       end
     end
 
