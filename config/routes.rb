@@ -53,7 +53,6 @@ Rails.application.routes.draw do
 
   resources :companies do
     scope module: "company" do
-      resources :hourly_rates
       get :dashboard, to: "dashboard#index", as: "dashboard"
       resources :activities
       resources :tours_reports

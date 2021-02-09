@@ -11,7 +11,6 @@ de-CH:
     vehicles: "Fahrzeuge"
     tours: "Touren & Fahrten"
     customers: "Kunden & Objekte"
-    hourly_rates: "Stundensätze"
     drivers: "Fahrer"
     activities: "Tätigkeiten"
     tours_reports: "Rapporte"
@@ -195,10 +194,6 @@ de-CH:
       driver:
         discarded_at: "Deaktiviert am: "
       inactive: "Inaktiv"
-      hourly_rate:
-        inheritance_types:
-          base_rate: "Basis Stundensatz"
-          activity_rate: "Stundensatz - Tätigkeit"
       vehicle:
         name: "Bezeichnung"
         activities: "Tätigkeiten"
@@ -404,8 +399,6 @@ de-CH:
           title: "Kunden"
         activities:
           title: "Tätigkeiten"
-        hourly_rates:
-          title: "Preise"
         vehicles:
           title: "Fahrzeuge"
       drivers:
