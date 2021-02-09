@@ -28,7 +28,7 @@ class ToursReport < ApplicationRecord
       :driver,
       :activity,
       site: [:site_activity_flat_rates],
-      vehicle: { vehicle_activity_assignments: :hourly_rate })
+      vehicle: [:vehicle_activity_assignments])
   end
 
   # Sets start and end date by parsing the given date range string.
