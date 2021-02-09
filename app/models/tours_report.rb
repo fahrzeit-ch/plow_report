@@ -23,7 +23,12 @@ class ToursReport < ApplicationRecord
     else
       scope = company.drives.kept
     end
-    scope.where(start: start_date..end_date)
+    scope.where(start: start_date..end_date).includes(
+      :customer,
+      :driver,
+      :activity,
+      site: [:site_activity_flat_rates],
+      vehicle: { vehicle_activity_assignments: :hourly_rate })
   end
 
   # Sets start and end date by parsing the given date range string.

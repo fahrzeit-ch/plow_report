@@ -17,10 +17,6 @@
     <%= navbar_item("company/customers", "address-card") %>
   <% end %>
 
-  <% if policy(current_company).index_hourly_rates? %>
-    <%= navbar_item("company/hourly_rates", "money") %>
-  <% end %>
-
   <% if policy(current_company).index_drivers? %>
     <%= navbar_item("company/drivers", "user") %>
   <% end %>

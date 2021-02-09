@@ -6,6 +6,7 @@
 class Vehicle < ApplicationRecord
   include Discard::Model
   include ChangedSince
+  include Pricing::HourlyRatable
 
   validates :name, presence: true, length: { maximum: 50 }
   validates_uniqueness_of :name, scope: [:company_id, :discarded_at], unless: :discarded?
@@ -13,7 +14,7 @@ class Vehicle < ApplicationRecord
 
   has_many :vehicle_activity_assignments, dependent: :destroy
   has_many :activities, through: :vehicle_activity_assignments
-  has_many :tours, dependent: :nullify
+  has_many :tours
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
@@ -21,6 +22,10 @@ class Vehicle < ApplicationRecord
 
   def activity_ids
     vehicle_activity_assignments.pluck(:activity_id)
+  end
+
+  def pricing_default_valid_from
+    Season.current.start_date
   end
 
   private

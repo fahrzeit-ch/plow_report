@@ -11,7 +11,6 @@ de-CH:
     vehicles: "Fahrzeuge"
     tours: "Touren & Fahrten"
     customers: "Kunden & Objekte"
-    hourly_rates: "Stundensätze"
     drivers: "Fahrer"
     activities: "Tätigkeiten"
     tours_reports: "Rapporte"
@@ -165,6 +164,11 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
         active: 'Objekt Aktiv'
+        travel_expense: "Anfahrtspauschale (pro Einsatz)"
+        commitment_fee: "Bereitschaftspauschale (pro Saison)"
+        activity_fee: "Tätigkeitspauschale (pro Einsatz)"
+      pricing/flat_rate:
+        active: "Pauschale aktiv"
       drive:
         activity: "Tätigkeit"
         driver: "Fahrer"
@@ -190,13 +194,11 @@ de-CH:
       driver:
         discarded_at: "Deaktiviert am: "
       inactive: "Inaktiv"
-      hourly_rate:
-        inheritance_types:
-          base_rate: "Basis Stundensatz"
-          activity_rate: "Stundensatz - Tätigkeit"
       vehicle:
         name: "Bezeichnung"
         activities: "Tätigkeiten"
+        price_help: "Änderungen gelten für die aktuelle Saison"
+        price: "Stundensatz für Anfahrten"
       tour:
         driver: "Fahrer"
         vehicle: "Fahrzeug"
@@ -397,8 +399,6 @@ de-CH:
           title: "Kunden"
         activities:
           title: "Tätigkeiten"
-        hourly_rates:
-          title: "Preise"
         vehicles:
           title: "Fahrzeuge"
       drivers:
@@ -434,6 +434,8 @@ de-CH:
         location_panel_header: "Standort"
         edit: "Objekt bearbeiten"
         show_inactive: "Inaktive anzeigen"
+        add_flat_rate: "Pauschale hinzufügen"
+        remove_flat_rate: "X"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
@@ -557,6 +559,7 @@ de-CH:
       label_total_price: "Total Preis"
       label_empty_drive_time: "(Anfahrt)"
       file_name: "fahrten-rapport"
+      flat_rate: "Pauschal"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."

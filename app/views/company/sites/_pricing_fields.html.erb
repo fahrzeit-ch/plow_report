@@ -1,0 +1,18 @@
+<%= f.label :commitment_fee %>
+<%= f.fields_for :commitment_fee do |fa| %>
+  <%= render 'flat_rate_fields', form: fa %>
+<% end %>
+<%= f.label :travel_expense %>
+<%= f.fields_for :travel_expense do |fa| %>
+  <%= render 'flat_rate_fields', form: fa %>
+<% end %>
+<hr />
+<div id="site_activity_flat_rates">
+  <%= f.label :activity_fee %>
+  <%= f.fields_for :site_activity_flat_rates do |fa| %>
+    <%= render 'site_activity_flat_rate_fields', f: fa %>
+  <% end %>
+  <div class="links form-group">
+    <%= link_to_add_association t("views.companies.sites.add_flat_rate"), f, :site_activity_flat_rates, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

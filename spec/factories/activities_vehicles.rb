@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :vehicle_activity_assignment do
-    vehicle { nil }
-    activity { nil }
+    vehicle { association :vehicle }
+    activity { association :activity }
   end
 end

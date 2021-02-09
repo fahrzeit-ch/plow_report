@@ -1,62 +1,29 @@
-<div id="company-member-form">
-  <%= form_with(model: @site, url: [current_company, @customer, @site], builder: BootstrapFormBuilder, local: true, disabled: true) do |f| %>
-    <%= f.hidden_field :area_features, id: 'mapData' %>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <%= f.label :display_name %>
-        <%= f.text_field :display_name, autofocus: true  %>
-        <small class="form-text text-muted">
-          <i class="fa fa-info"></i> <%= t 'views.companies.sites.name_info' %>
-        </small>
-      </div>
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs" id="sites-form-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general">Allgemein</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pricing-tab" data-toggle="tab" href="#pricing">Pauschalen</a>
+        </li>
+      </ul>
     </div>
-    <% if f.object.persisted? %>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <div class="custom-control custom-checkbox">
-          <%= f.check_box :active, class: 'custom-control-input', id: 'site_active' %>
-          <%= f.label :active, class: 'custom-control-label' %>
+    <%= form_with(model: @site, url: [current_company, @customer, @site], builder: BootstrapFormBuilder, local: true, disabled: true) do |f| %>
+      <div class="card-body tab-content" id="sites-form-content">
+        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+          <%= render 'company/sites/general_fields', f: f %>
         </div>
-        <small class="form-text text-muted">
-          <i class="fa fa-info"></i> <%= t 'views.companies.sites.activation_status_info' %>
-        </small>
+        <div class="tab-pane fade show" id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
+          <%= render 'company/sites/pricing_fields', f: f %>
+        </div>
+        <div class="form-group">
+          <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %>
+            <i class="fa fa-check"></i> <%= t 'actions.save' %>
+          <% end %>
+        </div>
       </div>
-    </div>
     <% end %>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-      </div>
-      <div class="form-group col-md-6">
-        <%= f.label :first_name %>
-        <%= f.text_field :first_name %>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-10">
-        <%= f.label :street %>
-        <%= f.text_field :street, id: 'route' %>
-      </div>
-      <div class="form-group col-md-2">
-        <%= f.label :nr %>
-        <%= f.text_field :nr, id: 'street_number' %>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <%= f.label :zip %>
-        <%= f.text_field :zip, id: 'postal_code' %>
-      </div>
-      <div class="form-group col-md-8">
-        <%= f.label :city %>
-        <%= f.text_field :city, id: 'locality' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %>
-        <i class="fa fa-check"></i> <%= t 'actions.save' %>
-      <% end %>
-    </div>
-  <% end %>
+  </div>
 </div>

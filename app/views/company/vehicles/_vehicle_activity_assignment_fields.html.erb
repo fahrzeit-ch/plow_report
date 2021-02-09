@@ -1,4 +1,18 @@
-<div class="nested-fields mb-3">
-  <%= f.select :activity_id, current_company.activities.pluck(:name, :id), hide_label: true, include_blank: true,
-               append: link_to_remove_association( t("views.vehicles.remove_activity"), f, class: "btn btn-outline-danger") %>
+<div class="nested-fields mb-1 p-2">
+  <div class=" d-flex">
+    <div class="flex-grow-1">
+      <%= f.select :activity_id, current_company.activities.pluck(:name, :id), hide_label: true, include_blank: true %>
+    </div>
+    <div class="flex-grow-1 mx-2">
+      <%= f.fields_for :hourly_rate do |hrf| %>
+        <%= hrf.text_field :price, hide_label: true, append: hrf.object.price.currency, help: t('activerecord.attributes.vehicle.price_help')  %>
+        <%= hrf.hidden_field :valid_from, value: Season.current.start_date %>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <% if f.object.can_destroy? %>
+        <%= link_to_remove_association( t("views.vehicles.remove_activity"), f, class: "btn btn-outline-danger") %>
+      <% end %>
+    </div>
+  </div>
 </div>

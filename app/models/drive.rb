@@ -80,22 +80,8 @@ class Drive < ApplicationRecord
   end
 
   # @return The hourly rate applicable for this drive.
-  def hourly_rate
-    if @hourly_rate
-      @hourly_rate
-    elsif activity_execution.nil?
-      # Lookup for hourly rates without activity in the implicit rates does not work so we need
-      # to fetch explicitly the base rate (as long as w do not support customer prices)
-      @hourly_rate = HourlyRate.where(company_id: company.id).base_rate.try(:price) || Money.new(0.0, Money.default_currency)
-    else
-      possible_rates = ImplicitHourlyRate.where(company_id: company.id, customer_id: customer_id, activity_id: activity_execution.activity_id)
-      if possible_rates.any?
-        best_match = ImplicitHourlyRate.best_matches(possible_rates).first
-        @hourly_rate = best_match.price
-      else
-        @hourly_rate = Money.new(0.0, Money.default_currency)
-      end
-    end
+  def prices
+    @prices ||= DrivePrice.new self
   end
 
   def customer_name
