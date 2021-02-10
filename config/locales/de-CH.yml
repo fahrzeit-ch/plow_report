@@ -416,6 +416,7 @@ de-CH:
         status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
         edit: "Benutzer zuweisen"
         show_inactive: "Inaktive anzeigen"
+        no_users_available: "Es sind keine Benutzer vorhanden, die diesem Fahrer zugewiesen werden können. Alternativ kann die App mit einem Admin Benutzer angemeldet werden, um diesen Fahrer zu verwenden."
       dashboard:
         title: "Übersicht"
       customers:
