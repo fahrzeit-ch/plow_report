@@ -72,6 +72,10 @@ de-CH:
   activerecord:
     errors:
       models:
+        driver:
+          attributes:
+            user:
+              not_blank: "Bitte einen Benutzer wählen"
         company_member:
           attributes:
             user_email:
