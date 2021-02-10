@@ -9,7 +9,7 @@
 <div class="form-group col-12 col-md-2">
   <%= form.label :activity %>
   <div class="form-group">
-    <% available_activities(current_company).each do |activity| %>
+    <% available_activities(form.object.vehicle).each do |activity| %>
       <div class="custom-control custom-radio">
         <%= form.activity_choice(activity) %>
       </div>

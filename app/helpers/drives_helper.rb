@@ -53,7 +53,7 @@ module DrivesHelper
   end
 
   def available_activities(vehicle)
-    vehicle ? vehicle.activities : Activity.default
+    vehicle ? vehicle.activities : current_company.activities
   end
 
   private
