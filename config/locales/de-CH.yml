@@ -50,6 +50,11 @@ de-CH:
       standby_date/date_range:
         start_date: "Start Datum"
         end_date: "End Datum"
+      activity_replacement:
+        old_activity: "Vorherige Tätigkeit"
+        new_activity_id: "Neue Tätigkeit"
+      vehicle_reassignment:
+        new_vehicle_id: "Neues Fahrzeug"
   errors:
     attributes:
       base:
@@ -336,6 +341,9 @@ de-CH:
       not_destroyed: "Fehler beim Löschen des Rapports."
       read_title: "Rapport Erstellt"
       ready_body_html: "Der Rapport wurde erfolgreich erstellt: <a href='%{url}' class='text-bold'>Rapporte anzeigen</a>"
+    vehicle_reassignments:
+      reassigned: "Neues Fahrzeug zugewiesen"
+      reassignment_failed: "Fehler beim zuweisen des Fahrzeugs. Bitte prüfen sie die Angaben."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -469,6 +477,7 @@ de-CH:
       title: "Touren"
       add_drive_description: "Zusätzlichen Einsatz zu dieser Tour hinzufügen"
       add_drive: "Einsatz Hinzufügen"
+      assign_new_vehicle: "Neues Fahrzeug zuweisen"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"
@@ -498,6 +507,8 @@ de-CH:
       empty_info: "Noch keine Rapporte erzeugt. Erstellen Sie excel Rapporte für bestimmte Zeiträume."
       new: "Neuen Rapport erstellen"
       all_customers: "Alle Kunden"
+    vehicle_reassignments:
+      reassignment_required: "Nachfolgende Tätigkeiten müssen für diese Tour neu zugeordnet werden, weil das neue Fahrzeug die zugewiesenen Tätigkeiten nicht erlaubt."
   forms:
     placeholders:
       driver:

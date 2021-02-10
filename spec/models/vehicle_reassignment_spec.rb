@@ -25,16 +25,21 @@ RSpec.describe VehicleReassignment, type: :model do
   its(:activity_executions) { is_expected.to include(affected_drive.activity_execution) }
   its(:activity_executions) { is_expected.not_to include(unaffected_drive.activity_execution) }
 
+  it "creates activity replacements for all affected activities" do
+    expect(subject.activity_replacements.count).to eq 1
+    expect(subject.activity_replacements.first.old_activity).to eq affected_drive.activity_execution.activity
+  end
+
   describe "validation" do
     it "is invalid if activity id for affected execution is missing" do
-      subject.activity_execution_attributes = {}
+      subject.activity_replacements_attributes = {}
       expect(subject.save).to be_falsey
     end
   end
 
   describe "assign new activities" do
     before do
-      subject.activity_execution_attributes = {0 => { id: affected_drive.activity_execution.id, activity_id: unaffected_activity.id } }
+      subject.activity_replacements_attributes = {0 => { old_activity_id: affected_drive.activity_execution.activity_id, new_activity_id: unaffected_activity.id } }
     end
     it "assigns new activity to the affected drive" do
       expect { subject.save; affected_drive.reload }.to change(affected_drive, :activity)

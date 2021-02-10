@@ -3,15 +3,21 @@
 class VehicleReassignment
   include ActiveModel::Model
 
-  attr_reader :activity_executions
+  attr_accessor :activity_executions
   attr_accessor :tour_id, :new_vehicle_id
   validates :tour_id, :new_vehicle_id, presence: true
   validate :all_affected_reassigned
 
-  def activity_execution_attributes=(attrs)
+  def activity_replacements
+    @activity_replacements ||= activity_executions.group(:activity_id).pluck(:activity_id).map do |id|
+      ActivityReplacement.new(old_activity_id: id)
+    end
+  end
+
+  def activity_replacements_attributes=(attrs)
     attrs.each do |k,v|
-      execution = activity_executions.find { |ae| ae.id == v[:id] }
-      execution.assign_attributes v
+      replacement = activity_replacements.find { |r| r.old_activity_id == v[:old_activity_id].to_i }
+      replacement.assign_attributes v if replacement
     end
   end
 
@@ -29,6 +35,8 @@ class VehicleReassignment
   end
 
   def save
+    return unless activity_replacements.all? { |r| r.valid? }
+    apply_activity_replacements
     if valid?
       Tour.transaction do
         activity_executions.each(&:save)
@@ -51,6 +59,13 @@ class VehicleReassignment
       prev = tour&.vehicle&.activities.pluck(:id)
       new = new_vehicle&.activities.pluck(:id)
       prev - new
+    end
+
+    def apply_activity_replacements
+      activity_executions.each do |ae|
+        replacement = activity_replacements.find { |r| r.old_activity_id = ae.activity_id }
+        ae.activity_id = replacement.new_activity_id
+      end
     end
 
     def all_affected_reassigned

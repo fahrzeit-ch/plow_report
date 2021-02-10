@@ -55,6 +55,11 @@ Rails.application.routes.draw do
     scope module: "company" do
       get :dashboard, to: "dashboard#index", as: "dashboard"
       resources :activities
+      resources :vehicle_reassignments, only: %i[create] do
+        collection do
+          get :prepare
+        end
+      end
       resources :tours_reports
       resources :customer_to_site_transitions, only: %i[new create]
       resources :customers do
