@@ -5,7 +5,7 @@
     <label for="vehicle" class="col-sm-2 col-form-label"><%= Tour.human_attribute_name(:vehicle_id) %></label>
     <div class="col-sm-10">
       <div class="input-group">
-        <div class="form-control" id="vehicle"><%= form.object.vehicle.name %></div>
+        <div class="form-control" id="vehicle"><%= form.object.vehicle&.name %></div>
         <% if policy(VehicleReassignment.new(tour_id: tour)).prepare? %>
           <div class="input-group-append">
             <%= link_to("Ändern", prepare_company_vehicle_reassignments_path(current_company, tour_id: tour.id), remote: true, class: 'input-group-text') %>
