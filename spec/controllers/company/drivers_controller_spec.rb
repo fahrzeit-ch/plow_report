@@ -31,13 +31,13 @@ RSpec.describe Company::DriversController, type: :controller do
       let(:other_company) { create(:company) }
       let(:other_member) { create(:company_member, company: other_company, role: :owner) }
 
-      it { expect(response.status).to eq 422 }
+      it { expect(response.status).to eq 200 } # render form again with validation errors
     end
 
     context "with user that already is assigned to a driver in company" do
       let(:other_member) { create(:company_member, company: company, role: :driver) }
 
-      it { expect(response.status).to eq 422 }
+      it { expect(response.status).to eq 200 }
     end
   end
 

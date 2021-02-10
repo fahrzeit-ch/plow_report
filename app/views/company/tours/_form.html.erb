@@ -1,7 +1,19 @@
 <%= bootstrap_form_with(model: [current_company, tour], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |form| %>
   <%= render "shared/base_errors", record: tour %>
   <%= form.select :driver_id, drive_driver_select_options %>
-  <%= form.select :vehicle_id, vehicle_select_options, include_blank: true %>
+  <div class="form-group row">
+    <label for="vehicle" class="col-sm-2 col-form-label"><%= Tour.human_attribute_name(:vehicle_id) %></label>
+    <div class="col-sm-10">
+      <div class="input-group">
+        <div class="form-control" id="vehicle"><%= form.object.vehicle&.name %></div>
+        <% if policy(VehicleReassignment.new(tour_id: tour)).prepare? %>
+          <div class="input-group-append">
+            <%= link_to("Ändern", prepare_company_vehicle_reassignments_path(current_company, tour_id: tour.id), remote: true, class: 'input-group-text') %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
   <%= form.text_field :start_time, value: form.object.start_time.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>
   <% if form.object.end_time %>
     <%= form.text_field :end_time, value: form.object.end_time.strftime('%Y-%m-%dT%H:%M'), type: 'datetime-local', step: '60', required: true, id: :drive_start %>

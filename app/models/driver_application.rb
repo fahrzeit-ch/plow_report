@@ -8,7 +8,7 @@ class DriverApplication < ApplicationRecord
 
   scope :idle, -> { where(accepted_at: nil) }
 
-  validates :recipient, presence: true
+  validates :recipient, presence: true, format: { with: Devise.email_regexp }
   after_create :send_application
 
   def send_application

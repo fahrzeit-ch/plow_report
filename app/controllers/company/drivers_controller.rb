@@ -46,7 +46,8 @@ class Company::DriversController < ApplicationController
       render :edit
     end
   rescue ActiveRecord::RecordNotFound => _e
-    head :unprocessable_entity
+    @driver.errors.add(:user, :not_blank)
+    render :edit
   end
 
   def destroy
