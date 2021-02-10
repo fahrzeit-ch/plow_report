@@ -37,7 +37,7 @@ RSpec.describe Company::DriversController, type: :controller do
     context "with user that already is assigned to a driver in company" do
       let(:other_member) { create(:company_member, company: company, role: :driver) }
 
-      it { expect(response.status).to eq 422 }
+      it { expect(response.status).to eq 200 }
     end
   end
 
