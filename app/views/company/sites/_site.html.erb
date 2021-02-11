@@ -4,7 +4,7 @@
     <span class="badge badge-secondary"><%= t 'activerecord.attributes.inactive' %></span>
   <% end %>
   <%= item_tools do %>
-    <% edit_button([current_company, site.customer, site]) %>
+    <%= edit_button([current_company, site.customer, site]) %>
     <% unless site.drives.any? %>
       <%= delete_button([current_company, site.customer, site]) %>
     <% end %>
