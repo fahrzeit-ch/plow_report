@@ -17,10 +17,6 @@ module ToolsHelper
     end
   end
 
-  def button(url, opts = {})
-
-  end
-
   def edit_button(scope_and_record, opts = {})
     url_opts = { action: :edit }
     label = opts.delete(:label) || false
