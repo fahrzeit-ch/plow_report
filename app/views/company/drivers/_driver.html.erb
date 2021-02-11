@@ -9,22 +9,10 @@
       <i class="fa fa-chain-broken" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_unlinked' %>"></i>
     </div>
     <div class="p-2"><%= driver.name %></div>
-    <div class="ml-auto p-2">
-      <%= link_to edit_company_driver_path(company_id: current_company.id, id: driver), class: 'text-muted' do %>
-        <i class="fa fa-user-plus"></i> <%= t 'views.companies.drivers.edit' %>
-      <% end %>
-    </div>
-    <div>
-      <%= link_to company_driver_path(company_id: current_company.id, id: driver),
-                  method: :delete,
-                  data: {
-                      disable_with: is_processing(:true)
-                  },
-                  remote: true,
-                  class: 'btn btn-danger' do %>
-        <i class="fa fa-trash"></i>
-      <% end %>
-    </div>
+    <%= item_tools do %>
+      <%= edit_button([current_company, driver], icon_class: "fa fa-user-plus", label: t('views.companies.drivers.edit'))  %>
+      <%= delete_button([current_company, driver])%>
+    <% end %>
   <% else %>
     <div class="text-muted p-2">
       <i class="fa fa-user-o" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_linked' %>"></i>
