@@ -8,6 +8,24 @@ RSpec.describe Tour, type: :model do
 
     it { is_expected.to allow_value(subject.start_time + 1.minute).for(:end_time) }
     it { is_expected.to_not allow_value(subject.start_time - 1.minute).for(:end_time) }
+
+    describe "drive_time_not_more_than_tour_time" do
+      let(:start_time) { 3.hours.ago }
+      let(:end_time) { 1.hour.ago }
+      let(:tour) { create(:tour, start_time: start_time, end_time: end_time) }
+
+      let(:drive1) { create(:drive, start: start_time, end: 2.hour.ago) }
+      let(:drive2) { create(:drive, start: 2.hours.ago, end: end_time) }
+
+      before do
+        tour.drives = [drive1, drive2]
+        tour.full_validation = true
+        tour.valid?
+      end
+
+      subject { tour }
+      it { is_expected.to be_valid }
+    end
   end
 
   it { is_expected.to belong_to(:vehicle).optional }
@@ -66,6 +84,14 @@ RSpec.describe Tour, type: :model do
       subject { tour }
       its(:drives_duration) { is_expected.to eq 0.minutes }
     end
+
+    context "discarded drives" do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time, discarded_at: 1.minute.ago) }
+
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 0.minutes }
+    end
   end
 
   describe "changed_since scope" do
@@ -92,7 +118,7 @@ RSpec.describe Tour, type: :model do
 
     context "removing drive" do
       it "should not update start and end times" do
-        expect { drive.delete }.not_to change(subject, :start_time)
+        expect { drive.discard }.not_to change(subject, :start_time)
       end
     end
 
@@ -100,6 +126,20 @@ RSpec.describe Tour, type: :model do
       it "should update end_time" do
         expect { drive.update_attribute(:end, 1.second.ago) }.to change(tour, :end_time)
       end
+    end
+  end
+
+  describe "update drives on changes" do
+    let(:company) { create(:company) }
+    subject { create(:tour, driver: create(:driver, company: company)) }
+    let(:drive) { create(:drive, tour: subject) }
+
+    it "changes the vehicle of the drive when updating tour vehicle" do
+      new_vehicle = create(:vehicle, company: company)
+      expect {
+        subject.update_attribute(:vehicle, new_vehicle)
+        drive.reload
+      }.to change(drive, :vehicle).to new_vehicle
     end
   end
 

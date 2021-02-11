@@ -34,7 +34,7 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index_tours?
-    company_admin_or_owner?(record) || is_demo(record)
+    company_member?(record) || is_demo(record)
   end
 
   def index_activities?
@@ -54,6 +54,10 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def index_vehicles?
+    company_admin_or_owner?(record) || is_demo(record)
+  end
+
+  def index_reports?
     company_admin_or_owner?(record) || is_demo(record)
   end
 

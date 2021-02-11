@@ -13,7 +13,7 @@ class Company::ToursController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @stats = apply_scopes(current_company.drives).stats
+        @stats = apply_scopes(current_company.drives).kept.stats
         @records = @records.page(params[:page]).per(30)
       end
       format.js do
@@ -51,7 +51,7 @@ class Company::ToursController < ApplicationController
   private
     def apply_scopes(tours)
       tours = tours.by_season(selected_season)
-      tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
+      tours = tours.where(driver_id: params[:driver_id]) unless params[:driver_id].blank?
       tours
     end
 

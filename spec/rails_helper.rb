@@ -11,6 +11,7 @@ require "capybara/rspec"
 require "capybara-screenshot/rspec"
 require "pundit/matchers"
 require "active_support/testing/time_helpers"
+require "money-rails/test_helpers"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -93,6 +94,8 @@ RSpec.configure do |config|
 
   config.include SystemScenarios, type: :system
   config.include SystemScenarios, type: :feature
+
+  config.full_backtrace = true
 end
 
 Shoulda::Matchers.configure do |config|

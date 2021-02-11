@@ -10,11 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_130517) do
+ActiveRecord::Schema.define(version: 2021_02_09_102042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "activities", force: :cascade do |t|
     t.bigint "company_id"
@@ -137,6 +158,8 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_drivers_on_discarded_at"
   end
 
   create_table "drives", force: :cascade do |t|
@@ -154,28 +177,13 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.bigint "site_id"
     t.datetime "discarded_at"
     t.uuid "tour_id"
+    t.bigint "vehicle_id"
     t.index ["customer_id"], name: "index_drives_on_customer_id"
     t.index ["discarded_at"], name: "index_drives_on_discarded_at"
     t.index ["site_id"], name: "index_drives_on_site_id"
     t.index ["start", "end"], name: "index_drives_on_start_and_end"
     t.index ["tour_id"], name: "index_drives_on_tour_id"
-  end
-
-  create_table "hourly_rates", force: :cascade do |t|
-    t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", null: false
-    t.bigint "activity_id"
-    t.bigint "customer_id"
-    t.bigint "company_id", null: false
-    t.date "valid_from", default: "2000-01-01", null: false
-    t.date "valid_until", default: "2100-01-01", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["activity_id"], name: "index_hourly_rates_on_activity_id"
-    t.index ["company_id"], name: "index_hourly_rates_on_company_id"
-    t.index ["customer_id"], name: "index_hourly_rates_on_customer_id"
-    t.index ["valid_from"], name: "index_hourly_rates_on_valid_from"
-    t.index ["valid_until"], name: "index_hourly_rates_on_valid_until"
+    t.index ["vehicle_id"], name: "index_drives_on_vehicle_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -231,10 +239,44 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pricing_flat_rates", force: :cascade do |t|
+    t.string "flat_ratable_type"
+    t.bigint "flat_ratable_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", null: false
+    t.date "valid_from", null: false
+    t.string "rate_type", default: "custom", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active", default: false
+    t.index ["flat_ratable_id", "flat_ratable_type", "rate_type"], name: "index_flat_rates_on_rable_id_ratable_type_rate_type"
+    t.index ["flat_ratable_type", "flat_ratable_id"], name: "index_flat_rates_on_rable_id_ratable_type"
+  end
+
+  create_table "pricing_hourly_rates", force: :cascade do |t|
+    t.string "hourly_ratable_type"
+    t.bigint "hourly_ratable_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", null: false
+    t.date "valid_from", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hourly_ratable_type", "hourly_ratable_id"], name: "index_hourly_rates_on_hourly_priceable_id"
+  end
+
   create_table "recordings", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.bigint "driver_id"
     t.index ["driver_id"], name: "index_recordings_on_driver_id", unique: true
+  end
+
+  create_table "site_activity_flat_rates", force: :cascade do |t|
+    t.bigint "site_id"
+    t.bigint "activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_site_activity_flat_rates_on_activity_id"
+    t.index ["site_id"], name: "index_site_activity_flat_rates_on_site_id"
   end
 
   create_table "sites", force: :cascade do |t|
@@ -285,6 +327,19 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.index ["driver_id"], name: "index_tours_on_driver_id"
     t.index ["start_time"], name: "index_tours_on_start_time"
     t.index ["vehicle_id"], name: "index_tours_on_vehicle_id"
+  end
+
+  create_table "tours_reports", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "created_by_id"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "customer_id"
+    t.index ["company_id"], name: "index_tours_reports_on_company_id"
+    t.index ["created_by_id"], name: "index_tours_reports_on_created_by_id"
+    t.index ["customer_id"], name: "index_tours_reports_on_customer_id"
   end
 
   create_table "user_actions", force: :cascade do |t|
@@ -348,6 +403,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
     t.index ["name"], name: "index_vehicles_on_name"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "companies"
   add_foreign_key "activity_executions", "activities"
   add_foreign_key "activity_executions", "drives", column: "drive_id"
@@ -361,98 +417,21 @@ ActiveRecord::Schema.define(version: 2020_12_03_130517) do
   add_foreign_key "drives", "drivers", name: "fk_drives_driver"
   add_foreign_key "drives", "sites"
   add_foreign_key "drives", "tours"
-  add_foreign_key "hourly_rates", "activities"
-  add_foreign_key "hourly_rates", "companies"
-  add_foreign_key "hourly_rates", "customers"
+  add_foreign_key "drives", "vehicles"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "site_activity_flat_rates", "activities"
+  add_foreign_key "site_activity_flat_rates", "sites"
   add_foreign_key "sites", "customers"
   add_foreign_key "standby_dates", "drivers", name: "fk_standby_dates_driver"
   add_foreign_key "term_acceptances", "policy_terms"
   add_foreign_key "term_acceptances", "users"
   add_foreign_key "tours", "drivers"
   add_foreign_key "tours", "vehicles"
+  add_foreign_key "tours_reports", "customers"
   add_foreign_key "user_actions", "users"
   add_foreign_key "vehicle_activity_assignments", "activities"
   add_foreign_key "vehicle_activity_assignments", "vehicles"
-
-  create_view "implicit_hourly_rates", sql_definition: <<-SQL
-      SELECT q1.hourly_rate_id,
-      q1.price_cents,
-      q1.price_currency,
-      q1.activity_id,
-      q1.customer_id,
-      q1.company_id,
-      q1.rate_type,
-      q1.inheritance_type,
-      q1.inheritance_level
-     FROM ( SELECT hr.id AS hourly_rate_id,
-              hr.price_cents,
-              hr.price_currency,
-              hr.company_id,
-              ca.activity_id,
-              ca.customer_id,
-                  CASE
-                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NOT NULL)) THEN 'customer_activity_rate'::text
-                      WHEN ((hr.customer_id IS NOT NULL) AND (hr.activity_id IS NULL)) THEN 'customer_base_rate'::text
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 'activity_rate'::text
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
-                      ELSE NULL::text
-                  END AS rate_type,
-                  CASE
-                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 0
-                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id IS NULL) AND (ca.activity_id IS NOT NULL)) THEN 1
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 2
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 3
-                      ELSE NULL::integer
-                  END AS inheritance_level,
-                  CASE
-                      WHEN ((hr.customer_id = ca.customer_id) AND (hr.activity_id = ca.activity_id)) THEN 'explicit'::text
-                      ELSE 'inherited'::text
-                  END AS inheritance_type
-             FROM ( SELECT customers.id AS customer_id,
-                      activities.id AS activity_id,
-                      customers.company_id
-                     FROM customers,
-                      activities
-                    WHERE (customers.company_id = activities.company_id)
-                    ORDER BY customers.id, activities.id) ca,
-              hourly_rates hr
-            WHERE (((hr.activity_id = ca.activity_id) OR (hr.activity_id IS NULL)) AND ((hr.customer_id = ca.customer_id) OR (hr.customer_id IS NULL)) AND (hr.company_id = ca.company_id))) q1
-  UNION
-   SELECT q2.id AS hourly_rate_id,
-      q2.price_cents,
-      q2.price_currency,
-      q2.activity_id,
-      q2.customer_id,
-      q2.company_id,
-      q2.rate_type,
-      q2.inheritance_type,
-      q2.inheritance_level
-     FROM ( SELECT hr.id,
-              hr.price_cents,
-              hr.price_currency,
-              hr.company_id,
-              ca.id AS activity_id,
-              hr.customer_id,
-                  CASE
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 'activity_rate'::text
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 'base_rate'::text
-                      ELSE NULL::text
-                  END AS rate_type,
-                  CASE
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NOT NULL)) THEN 0
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id IS NULL)) THEN 1
-                      ELSE NULL::integer
-                  END AS inheritance_level,
-                  CASE
-                      WHEN ((hr.customer_id IS NULL) AND (hr.activity_id = ca.id)) THEN 'explicit'::text
-                      ELSE 'inherited'::text
-                  END AS inheritance_type
-             FROM activities ca,
-              hourly_rates hr
-            WHERE (((hr.activity_id = ca.id) OR (hr.activity_id IS NULL)) AND (hr.company_id = ca.company_id) AND (hr.customer_id IS NULL))) q2;
-  SQL
 end

@@ -1,0 +1,35 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= t('views.company_tours.assign_new_vehicle') %></h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%= bootstrap_form_with model: @reassignment, url: company_vehicle_reassignments_path(current_company) do |f| %>
+  <div class="modal-body">
+    <%= f.select :new_vehicle_id, vehicle_select_options.reject { |v| @reassignment.tour.vehicle_id == v[1] }, {}, data: { submit_on_change: true } %>
+    <%= f.hidden_field :tour_id %>
+    <% if @reassignment.activity_executions.any? %>
+      <div class="alert alert-info"><%= t('views.vehicle_reassignments.reassignment_required') %></div>
+    <% end %>
+    <%= f.fields_for :activity_replacements do |af| %>
+      <% if af.object %>
+        <div class="card nested-fields mb-3">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="vehicle" class="form-label"><%= t('activemodel.attributes.activity_replacement.old_activity') %></label>
+              <div class="form-control" id="vehicle"><%= af.object.old_activity.name %></div>
+            </div>
+            <%= af.hidden_field :old_activity_id %>
+            <%= af.select :new_activity_id, available_activities(@reassignment.new_vehicle).map { |a| [a.name, a.id]}, include_blank: true %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t'common.cancel' %></button>
+    <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing(true) } do %><i class="fa fa-check"></i><% end %>
+  </div>
+  <% end %>
+</div>

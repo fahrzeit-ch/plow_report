@@ -7,6 +7,9 @@ class Company::DriversController < ApplicationController
   def index
     authorize current_company, :index_drivers?
     @drivers = current_company.drivers.order(:name)
+    unless params[:show_inactive]
+      @drivers = @drivers.kept
+    end
   end
 
   # Creates a new driver for this company
@@ -43,14 +46,15 @@ class Company::DriversController < ApplicationController
       render :edit
     end
   rescue ActiveRecord::RecordNotFound => _e
-    head :unprocessable_entity
+    @driver.errors.add(:user, :not_blank)
+    render :edit
   end
 
   def destroy
-    if @driver.destroy
-      flash[:success] = I18n.t "flash.drivers.destroyed"
+    if @driver.discard
+      flash[:success] = I18n.t "flash.drivers.discarded"
     else
-      flash[:error] = I18n.t "flash.drivers.not_destroyed"
+      flash[:error] = I18n.t "flash.drivers.not_discarded"
     end
     redirect_to company_drivers_path(current_company)
   end

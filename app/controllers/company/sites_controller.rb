@@ -16,7 +16,7 @@ class Company::SitesController < ApplicationController
 
   # Creates a new site for the current company and the given customer
   def create
-    @site = Site.new site_params
+    @site = Site.new permitted_attributes(Site)
     @site.customer = @customer
     authorize @site
     if @site.save
@@ -38,7 +38,7 @@ class Company::SitesController < ApplicationController
 
   # Update a site
   def update
-    if @site.update(site_update_params)
+    if @site.update(permitted_attributes(@site))
       flash[:success] = I18n.t "flash.site.updated"
       redirect_to edit_company_customer_path(company_id: current_company.to_param, id: @customer.to_param)
     else
@@ -77,13 +77,5 @@ class Company::SitesController < ApplicationController
     def set_site
       @site = @customer.sites.find(params[:id])
       authorize @site
-    end
-
-    def site_params
-      params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :area_features)
-    end
-
-    def site_update_params
-      params.require(:site).permit(:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features)
     end
 end

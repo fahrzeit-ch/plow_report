@@ -96,8 +96,8 @@ RSpec.describe Drive, type: :model do
 
       it { is_expected.not_to be_kept }
 
-      it "is not in the default scope" do
-        expect(Drive.all).not_to include(subject)
+      it "is not in the kept scope" do
+        expect(Drive.kept).not_to include(subject)
       end
     end
 
@@ -105,8 +105,8 @@ RSpec.describe Drive, type: :model do
       subject { create(:drive, tour: tour, driver: driver) }
       before { subject.discard }
 
-      it "is not in default scope" do
-        expect(Drive.all).not_to include(subject)
+      it "is not in kept scope" do
+        expect(Drive.kept).not_to include(subject)
       end
     end
 
@@ -254,32 +254,59 @@ RSpec.describe Drive, type: :model do
     end
   end
 
-  describe "hourly_rates" do
-    # We need to disable transactional specs because implicit hourly rates is based on a db view
-    # which will not be populated until the transaction is committed.
-    self.use_transactional_tests = false
+  describe "vehicles" do
+    it { is_expected.to belong_to(:vehicle).optional }
 
-    def clear_all
-      ActiveRecord::Base.connection.execute("delete from hourly_rates")
-      ActiveRecord::Base.connection.execute("delete from customers")
-      ActiveRecord::Base.connection.execute("delete from activities")
-      ActiveRecord::Base.connection.execute("delete from companies")
-    end
-    before(:all) { clear_all }
-    after(:all) { clear_all }
+    describe "validate same vehicle as tour" do
+      let(:company) { create(:company) }
+      let(:driver) { create(:driver, company: company) }
 
-    let(:company) { create(:company) }
-    let(:driver) { build(:driver, company_id: company.id) }
-    let(:drive) { build(:drive, driver: driver) }
+      let(:vehicle1) { create(:vehicle, company: company) }
+      let(:vehicle2) { create(:vehicle, company: company) }
+      let(:tour) { create(:tour, vehicle: vehicle1, driver: driver) }
 
-    before { hourly_rate }
+      context "vehicle different than vehicle on tour" do
+        let(:drive) { build(:drive, tour: tour, vehicle: vehicle2, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
 
-    subject { drive.hourly_rate }
+        it { is_expected.not_to be_valid }
+        its(:errors) { is_expected.to have_key(:vehicle) }
+      end
 
-    context "without activity or customer" do
-      let(:hourly_rate) { create(:hourly_rate, company_id: company.id, activity: nil, customer: nil) }
-      it { is_expected.to be_a Money }
-      it { is_expected.to eq hourly_rate.price }
+      context "vehicle not explicitly set on drive" do
+        let(:drive) { build(:drive, tour: tour, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.not_to be_valid }
+        its(:errors) { is_expected.to have_key(:vehicle) }
+      end
+
+      context "vehicle not set on drive and tour" do
+        let(:tour) { create(:tour, vehicle: nil, driver: driver) }
+        let(:drive) { build(:drive, tour: tour, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "no tour and no vehicle set" do
+        let(:drive) { build(:drive, tour: nil, vehicle: nil, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "no tour and any vehicle set" do
+        let(:drive) { build(:drive, tour: nil, vehicle: vehicle2, driver: driver) }
+        before { drive.valid? }
+        subject { drive }
+
+        it { is_expected.to be_valid }
+      end
     end
   end
 end

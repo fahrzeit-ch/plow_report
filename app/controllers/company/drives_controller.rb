@@ -17,14 +17,11 @@ class Company::DrivesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @stats = apply_scopes(current_company.drives).stats
+        @stats = apply_scopes(current_company.drives).kept.stats
         @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
       format.js do
-        @drives.without_tour
-      end
-      format.xlsx do
-        @drives = @drives.includes(:tour)
+        @drives = @drives.includes(:activity, :customer).page(params[:page]).per(30).without_tour
       end
     end
   end
@@ -86,7 +83,11 @@ class Company::DrivesController < ApplicationController
     def fetch_defaults(params)
       if tour
         start_time = tour.last_drive.try(:end) || tour.start_time
-        { start: start_time, end: start_time + 30.minutes, driver: tour.driver, tour_id: params[:tour_id] }
+        { start: start_time,
+          end: start_time + 30.minutes,
+          driver: tour.driver,
+          vehicle: tour.vehicle,
+          tour_id: params[:tour_id] }
       end
     end
 

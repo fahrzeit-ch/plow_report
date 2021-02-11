@@ -1,6 +1,10 @@
 <div class="card-body">
   <%= bootstrap_form_for([current_company, @record], local: true) do |f| %>
     <%= f.text_field :name %>
+    <%= f.fields_for :hourly_rate do |hrf| %>
+      <%= hrf.text_field :price, append: hrf.object.price.currency, help: t('activerecord.attributes.vehicle.price_help'), label: t('activerecord.attributes.vehicle.price')  %>
+      <%= hrf.hidden_field :valid_from, value: Season.current.start_date %>
+    <% end %>
     <%= f.label :activities %>
     <div id="activities" class="">
       <%= f.fields_for :vehicle_activity_assignments do |af| %>

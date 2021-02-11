@@ -12,6 +12,22 @@ module Report
     end
 
     # @param [Drive] drive
+    def get_hourly_rate(drive)
+      if drive.prices.flat_rate?
+        I18n.t('reports.drives.flat_rate')
+      else
+        drive.prices.price_per_hour
+      end
+    end
+
+    def get_travel_expense_rate(drive)
+      if drive.prices.travel_expense_flat_rate?
+        I18n.t('reports.drives.flat_rate')
+      else
+        drive.prices.travel_expense_per_hour
+      end
+    end
+
     def columns_for(drive)
       columns = [
         drive.start,
@@ -20,8 +36,8 @@ module Report
         drive.site_name,
         drive.driver.name,
         drive.distance_km,
-        drive.hourly_rate,
-        get_price(drive)
+        get_hourly_rate(drive),
+        drive.prices.price.amount,
       ]
       return columns unless drive.activity_execution
 
@@ -33,7 +49,14 @@ module Report
     end
 
     def empty_drive_columns_for(drive)
-      [ nil, nil, seconds_to_excel_time(drive.empty_drive_duration), I18n.t("reports.drives.label_empty_drive_time") ]
+      [ nil,
+        nil,
+        seconds_to_excel_time(drive.empty_drive_duration),
+        I18n.t("reports.drives.label_empty_drive_time"),
+        nil,
+        nil,
+        get_travel_expense_rate(drive),
+        drive.prices.travel_expense.amount]
     end
 
     def styles

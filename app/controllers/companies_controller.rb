@@ -4,6 +4,11 @@ class CompaniesController < ApplicationController
   skip_before_action :check_account!, only: [:new, :create]
   before_action :check_company_assigned, only: [:new, :create]
 
+  def index
+    # Currently no indexing of companies, as there should only be one company assigned
+    redirect_to company_dashboard_path(current_user.companies.first)
+  end
+
   def new
     @resource = Company::Registration.new name: params[:name], contact_email: params[:contact_email]
     authorize @resource

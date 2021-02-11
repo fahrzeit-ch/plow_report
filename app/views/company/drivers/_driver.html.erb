@@ -4,7 +4,7 @@
       <i class="fa fa-user" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_linked' %>"></i>
     </div>
     <div class="p-2 flex-grow-1 "><%= driver.name %></div>
-  <% else %>
+  <% elsif driver.kept? %>
     <div class="text-muted p-2">
       <i class="fa fa-chain-broken" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_unlinked' %>"></i>
     </div>
@@ -13,5 +13,11 @@
       <%= edit_button([current_company, driver], icon_class: "fa fa-user-plus", label: t('views.companies.drivers.edit'))  %>
       <%= delete_button([current_company, driver])%>
     <% end %>
+  <% else %>
+    <div class="text-muted p-2">
+      <i class="fa fa-user-o" data-toggle="tooltip" title="<%= t 'views.companies.drivers.status_linked' %>"></i>
+    </div>
+    <div class="p-2 flex-grow-1 "><span class="text-muted"><%= driver.name %></span></div>
+    <div class="p-2"><span class="text-muted"><%= Driver.human_attribute_name(:discarded_at) %> <%= driver.discarded_at.to_s(:short) %></span></div>
   <% end %>
 </li>

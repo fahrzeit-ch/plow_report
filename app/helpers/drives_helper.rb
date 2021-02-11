@@ -32,13 +32,13 @@ module DrivesHelper
   end
 
   def drive_driver_select_options
-    current_company.drivers.map do |driver|
+    current_company.active_drivers.map do |driver|
       [driver.name, driver.id]
     end
   end
 
   def vehicle_select_options
-    Vehicle.where(company_id: current_company.id).kept.all.map { |v| [v.name, v.id] }
+    Vehicle.where(company: current_company).kept.all.map { |v| [v.name, v.id] }
   end
 
   def customer_enabled?
@@ -52,8 +52,8 @@ module DrivesHelper
     end
   end
 
-  def available_activities(company)
-    company ? company.activities : Activity.default
+  def available_activities(vehicle)
+    vehicle ? vehicle.activities : current_company.activities
   end
 
   private

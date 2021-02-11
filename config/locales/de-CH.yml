@@ -5,22 +5,27 @@ de-CH:
         create: "Senden"
         update: "Fahrer Hinzufügen"
   navbar:
+    dashboard: "Übersicht"
+    standby_dates: "Pikett"
+    company_settings: "Firmen Einstellungen"
+    vehicles: "Fahrzeuge"
+    tours: "Touren & Fahrten"
+    customers: "Kunden & Objekte"
+    drivers: "Fahrer"
+    activities: "Tätigkeiten"
+    tours_reports: "Rapporte"
     main:
-      dashboard: "Übersicht"
-      standby_dates: "Pikett"
       drives: "Fahrten"
       sign_in: "Anmelden"
       sign_up: "Benutzerkonto Erstellen"
       signout: "Abmelden"
       new_company: "Firma registrieren"
-      company_settings: "Einstellungen"
       company_show: "Zur Firmen Ansicht"
       my_dashboard: "Zur Fahrer Ansicht"
       edit_registration: "Benutzer Einstellungen"
       demo_login: "Demo Zugang"
     companies:
       drives: "Fahrten"
-      settings: "Firmen Einstellungen"
       stand_by_dates: "Pikett"
       dashboard: "Übersicht"
   activemodel:
@@ -45,6 +50,11 @@ de-CH:
       standby_date/date_range:
         start_date: "Start Datum"
         end_date: "End Datum"
+      activity_replacement:
+        old_activity: "Vorherige Tätigkeit"
+        new_activity_id: "Neue Tätigkeit"
+      vehicle_reassignment:
+        new_vehicle_id: "Neues Fahrzeug"
   errors:
     attributes:
       base:
@@ -62,12 +72,18 @@ de-CH:
   activerecord:
     errors:
       models:
+        driver:
+          attributes:
+            user:
+              not_blank: "Bitte einen Benutzer wählen"
         company_member:
           attributes:
             user_email:
               user_not_found: "Benutzer konnte nicht gefunden werden."
             user:
               taken: "Dieser Benutzer ist bereits Ihrer Firma zugewiesen."
+        tours_report:
+          no_results: "Für den gewählten Zeitraum sind keine Daten vorhanden."
     models:
       activity:
         one: "Tätigkeit"
@@ -96,6 +112,9 @@ de-CH:
       vehicle:
         one: "Fahrzeug"
         other: "Fahrzeuge"
+      tours_report:
+        one: "Rapport"
+        other: "Rapporte"
     help:
       user:
         name: "Ihr vollständiger Name"
@@ -123,6 +142,11 @@ de-CH:
           driver: "Fahrer"
         user_email: "Email"
         user_name: "Name"
+      tours_report:
+        date_range: "Datumsbereich"
+        start_date: "Von"
+        end_date: "Bis"
+        customer_id: "Kunde"
       company:
         name: "Namen der Firma"
         contact_email: "Kontakt E-Mail"
@@ -149,6 +173,11 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
         active: 'Objekt Aktiv'
+        travel_expense: "Anfahrtspauschale (pro Einsatz)"
+        commitment_fee: "Bereitschaftspauschale (pro Saison)"
+        activity_fee: "Tätigkeitspauschale (pro Einsatz)"
+      pricing/flat_rate:
+        active: "Pauschale aktiv"
       drive:
         activity: "Tätigkeit"
         driver: "Fahrer"
@@ -165,19 +194,20 @@ de-CH:
         salted: "Salzen"
         customer: "Kunde"
         site: "Objekt"
+        vehicle: "Fahrzeug"
         salt_refilled: "Salz füllen"
         task:
           salt: "Salzen"
           plow: "Räumen"
           refill_salt: "Füllen"
+      driver:
+        discarded_at: "Deaktiviert am: "
       inactive: "Inaktiv"
-      hourly_rate:
-        inheritance_types:
-          base_rate: "Basis Stundensatz"
-          activity_rate: "Stundensatz - Tätigkeit"
       vehicle:
         name: "Bezeichnung"
         activities: "Tätigkeiten"
+        price_help: "Änderungen gelten für die aktuelle Saison"
+        price: "Stundensatz für Anfahrten"
       tour:
         driver: "Fahrer"
         vehicle: "Fahrzeug"
@@ -227,7 +257,7 @@ de-CH:
     print: "Drucken"
     delete: "Löschen"
     save: "Speichern"
-    download_xlsx: "Excel Export"
+    download_xlsx: "Rapport Herunterladen"
     disable: "Deaktivieren"
     add_marker: "Markierung setzen"
     add_line: "Linie Zeichnen"
@@ -263,8 +293,8 @@ de-CH:
       invitation_resent: "Die einladung wurde versendet."
       invitation_failed: "Fehler beim versenden der Einladung."
     drivers:
-      destroyed: "Fahrer wurde erfolgreich gelöscht."
-      not_destroyed: "Fahrer konnte nicht gelöscht werden."
+      discarded: "Fahrer wurde erfolgreich deaktiviert."
+      not_discarded: "Fahrer konnte nicht deaktiviert werden."
       created: "Fahrer wurde erfolgreich hinzugefügt."
       driver_not_created: "Fahrer konnte nicht hinzugefügt werden."
       user_already_has_driver: "Sie sind bereits als Fahrer registriert."
@@ -306,6 +336,18 @@ de-CH:
     tours:
       updated: "Tour wurde aktuallisiert"
       destroyed: "Die Tour wurde erfolgreich gelöscht"
+    new_tour_created:
+      title: "Neue Tour"
+      body: "Eine neue Tour wurde erstellt."
+    reports:
+      created: "Rapport wird generiert..."
+      destroyed: "Rapport erfolgreich gelöscht."
+      not_destroyed: "Fehler beim Löschen des Rapports."
+      read_title: "Rapport Erstellt"
+      ready_body_html: "Der Rapport wurde erfolgreich erstellt: <a href='%{url}' class='text-bold'>Rapporte anzeigen</a>"
+    vehicle_reassignments:
+      reassigned: "Neues Fahrzeug zugewiesen"
+      reassignment_failed: "Fehler beim zuweisen des Fahrzeugs. Bitte prüfen sie die Angaben."
   common:
     ok: "OK"
     create: "Erstellen"
@@ -369,8 +411,6 @@ de-CH:
           title: "Kunden"
         activities:
           title: "Tätigkeiten"
-        hourly_rates:
-          title: "Preise"
         vehicles:
           title: "Fahrzeuge"
       drivers:
@@ -379,6 +419,8 @@ de-CH:
         status_linked: "Dieser Fahrer ist mit einem Benutzer Login verknüpft."
         status_unlinked: "Dieser Fahrer hat keinen Benutzer Login"
         edit: "Benutzer zuweisen"
+        show_inactive: "Inaktive anzeigen"
+        no_users_available: "Es sind keine Benutzer vorhanden, die diesem Fahrer zugewiesen werden können. Alternativ kann die App mit einem Admin Benutzer angemeldet werden, um diesen Fahrer zu verwenden."
       dashboard:
         title: "Übersicht"
       customers:
@@ -405,6 +447,8 @@ de-CH:
         location_panel_header: "Standort"
         edit: "Objekt bearbeiten"
         show_inactive: "Inaktive anzeigen"
+        add_flat_rate: "Pauschale hinzufügen"
+        remove_flat_rate: "X"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
@@ -423,6 +467,9 @@ de-CH:
       home:
         welcome_title: "FAHRZEIT.ch"
         welcome_subtitle: "Die einfache Art Ihren Winterdienst im Griff zu haben."
+      account_error:
+        title: "Konto Fehler"
+        description: "Es scheint ein Problem mit Ihrem Benutzerkonto zu geben. Bitte kontaktieren Sie den Support."
     common:
       info:
         no_data_available: "Keine Daten verfügbar"
@@ -435,6 +482,7 @@ de-CH:
       title: "Touren"
       add_drive_description: "Zusätzlichen Einsatz zu dieser Tour hinzufügen"
       add_drive: "Einsatz Hinzufügen"
+      assign_new_vehicle: "Neues Fahrzeug zuweisen"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"
@@ -456,6 +504,16 @@ de-CH:
       empty_info_title: "Noch keine Fahrzeuge"
       remove_activity: "X"
       add_activity: "Tätigkeit zuweisen"
+    reports:
+      generating: "Rapport wird generiert..."
+      title: "Rapporte"
+      create_new: "Neuer Rapport"
+      empty_info_title: "Keine Rapporte erfasst"
+      empty_info: "Noch keine Rapporte erzeugt. Erstellen Sie excel Rapporte für bestimmte Zeiträume."
+      new: "Neuen Rapport erstellen"
+      all_customers: "Alle Kunden"
+    vehicle_reassignments:
+      reassignment_required: "Nachfolgende Tätigkeiten müssen für diese Tour neu zugeordnet werden, weil das neue Fahrzeug die zugewiesenen Tätigkeiten nicht erlaubt."
   forms:
     placeholders:
       driver:
@@ -474,7 +532,6 @@ de-CH:
         customers_without_sites: "Kunden ohne Objekte"
   confirm:
     company:
-      delete_driver: "Achtung, wenn der Fahrer gelöscht wird, werden alle Fahrten ebenfalls gelöscht. Sind Sie sicher dass sie fortfahren möchten?"
       delete_drive: "Möchten Sie diese fahrt wirklich löschen?"
       delete_company: "Achtung! Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie sicher dass Sie forfahren möchten?"
       delete_member: "Sind Sie sicher dass Sie diesen Benutzer entfernen möchten?"
@@ -517,6 +574,8 @@ de-CH:
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
       label_empty_drive_time: "(Anfahrt)"
+      file_name: "fahrten-rapport"
+      flat_rate: "Pauschal"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."

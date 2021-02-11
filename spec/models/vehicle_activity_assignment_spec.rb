@@ -16,6 +16,11 @@ RSpec.describe VehicleActivityAssignment, type: :model do
     }.to change(VehicleActivityAssignment, :count).by(1)
   end
 
+  describe "validate activity uniqueness" do
+    subject { create(:vehicle_activity_assignment) }
+    it { is_expected.to validate_uniqueness_of(:activity_id).scoped_to(:vehicle_id) }
+  end
+
   describe "nested attribute assignment" do
     context "adding existing activity" do
 
@@ -50,14 +55,24 @@ RSpec.describe VehicleActivityAssignment, type: :model do
   describe "deletion" do
     let(:activity) { create(:activity, company: company) }
     let(:vehicle) { create(:vehicle, company: company) }
+    subject { create(:vehicle_activity_assignment, activity: activity, vehicle: vehicle) }
 
-    before { VehicleActivityAssignment.create(activity: activity, vehicle: vehicle) }
+    before { subject }
+
     it "delete activity deletes ActivitiesVehicle relationsships" do
       expect { activity.destroy }.to change(VehicleActivityAssignment, :count).by(-1)
     end
 
     it "delete activity deletes ActivitiesVehicle relationsships" do
       expect { vehicle.destroy }.to change(VehicleActivityAssignment, :count).by(-1)
+    end
+
+    context "with drives using vehicle and activity" do
+      before { create(:drive, activity: activity, vehicle: vehicle) }
+
+      it "does not delete the assignment" do
+        expect { subject.destroy }.not_to change(VehicleActivityAssignment, :count)
+      end
     end
   end
 

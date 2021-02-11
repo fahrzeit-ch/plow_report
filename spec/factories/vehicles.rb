@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :vehicle do
-    name { "Unimoc" }
+    name { generate(:vehicle_name) }
     discarded_at { nil }
     company
   end

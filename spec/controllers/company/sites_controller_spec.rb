@@ -58,6 +58,18 @@ RSpec.describe Company::SitesController, type: :controller do
       it "creates new site" do
         expect { subject; customer.reload }.to change(customer.sites, :count)
       end
+
+      describe "set commitment rate" do
+        let(:commitment_fee_attributes) { { active: true, valid_from: Season.current.start_date, price: 80 } }
+        let(:site_attributes) { attributes_for(:site).merge(commitment_fee_attributes: commitment_fee_attributes) }
+        subject { post :create, params: { company_id: company.to_param, customer_id: customer.to_param }.merge(site: site_attributes) }
+
+        it "creates a new flat rate" do
+          expect { subject }.to change(Pricing::FlatRate, :count).by(1)
+        end
+
+
+      end
     end
   end
 

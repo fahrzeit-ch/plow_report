@@ -31,13 +31,13 @@ RSpec.describe Company::DriversController, type: :controller do
       let(:other_company) { create(:company) }
       let(:other_member) { create(:company_member, company: other_company, role: :owner) }
 
-      it { expect(response.status).to eq 422 }
+      it { expect(response.status).to eq 200 } # render form again with validation errors
     end
 
     context "with user that already is assigned to a driver in company" do
       let(:other_member) { create(:company_member, company: company, role: :driver) }
 
-      it { expect(response.status).to eq 422 }
+      it { expect(response.status).to eq 200 }
     end
   end
 
@@ -49,5 +49,14 @@ RSpec.describe Company::DriversController, type: :controller do
 
     it { expect(response).to redirect_to company_drivers_path(company) }
     it { expect(Driver.where(name: "Hans", company_id: company.id).count).to eq(1) }
+  end
+
+  describe "DELETE #destroy" do
+    let(:other_member) { create(:company_member, company: company, role: :owner) }
+    let(:driver) { create(:driver, company: company) }
+    before { delete :destroy, params: { id: driver.id, company_id: company.to_param } }
+
+    it { expect(response).to redirect_to company_drivers_path(company) }
+    it { expect(Driver.find_by(id: driver.id)).to be_discarded }
   end
 end

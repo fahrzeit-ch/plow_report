@@ -59,6 +59,7 @@
 @import "drives";
 @import "sites";
 @import "static_pages";
+@import "daterangepicker/daterangepicker";
 
 $colors: map-merge((
         'green-light': $green-light,
@@ -272,4 +273,9 @@ label.required:after {
   .card {
     border: none;
   }
+}
+
+form .nested-fields {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
 }

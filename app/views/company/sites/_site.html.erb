@@ -5,5 +5,8 @@
   <% end %>
   <%= item_tools do %>
     <% edit_button([current_company, site.customer, site]) %>
+    <% unless site.drives.any? %>
+      <%= delete_button([current_company, site.customer, site]) %>
+    <% end %>
   <% end %>
 </li>

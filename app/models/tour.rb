@@ -5,7 +5,6 @@
 class Tour < ApplicationRecord
   include Discard::Model
   include ChangedSince
-  default_scope -> { kept }
 
   attribute :full_validation, :boolean, default: false
 
@@ -22,6 +21,7 @@ class Tour < ApplicationRecord
   validate :vehicle_same_company_as_driver
 
   before_validation :set_default_start_time
+  after_update :update_children
 
   # Returns the first drive associated to this
   # tour sorted by starttime
@@ -136,8 +136,17 @@ class Tour < ApplicationRecord
   end
 
   private
+    def update_children
+      changes = {}
+      changes[:vehicle_id] = self.vehicle_id if saved_change_to_attribute?(:vehicle_id)
+      changes[:driver_id] = self.driver_id if saved_change_to_attribute?(:driver_id)
+      unless changes.blank?
+        drives.update_all(changes)
+      end
+    end
+
     def drive_time_not_more_than_tour_time
-      if duration_seconds - drives_duration < 1
+      if duration_seconds - drives_duration < 0
         errors.add(:base, :total_time_gt_tour_time)
       end
     end

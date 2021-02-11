@@ -9,6 +9,7 @@ json = {
     customer_id: drive.customer_id,
     site_id: drive.site_id,
     tour_id: drive.tour_id,
+    vehicle_id: drive.vehicle_id,
     created_at: drive.created_at,
     updated_at: drive.updated_at,
     discarded_at: drive.discarded_at

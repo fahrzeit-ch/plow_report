@@ -18,4 +18,106 @@ RSpec.describe Vehicle, type: :model do
       it { is_expected.not_to validate_uniqueness_of(:name) }
     end
   end
+
+  describe "squish names" do
+    subject { build(:vehicle, name: "  name    \n test   ") }
+
+    it "should squish whitespace" do
+      subject.save
+      expect(subject.name).to eq("name test")
+    end
+
+    it "should not throw error if name is nil" do
+      subject.name = nil
+      expect { subject.save }.not_to raise_error
+    end
+  end
+
+  describe "travel_expense_rates" do
+    let(:vehicle) { create(:vehicle) }
+
+    describe "all travel_expense_rates" do
+
+      let!(:expense_rate) { create(:pricing_hourly_rate, hourly_ratable: vehicle) }
+      let!(:expense_rate_old) { create(:pricing_hourly_rate, hourly_ratable: vehicle, valid_from: 1.year.ago) }
+
+      subject { vehicle.hourly_rates }
+      it { is_expected.to include(expense_rate) }
+      it { is_expected.to include(expense_rate_old) }
+    end
+
+    describe "#travel_expanse_rate" do
+      let(:old_price) { Money.new(10) }
+      let(:current_price) { Money.new(20) }
+
+      context "without existing rates" do
+        subject { vehicle.hourly_rate }
+        it { is_expected.not_to be_nil }
+      end
+
+      context "with existing rate" do
+        let!(:expense_rate) { create(:pricing_hourly_rate, hourly_ratable: vehicle, valid_from: 1.week.ago, price: current_price) }
+
+        subject { vehicle.hourly_rate }
+        it { is_expected.to eq expense_rate }
+
+      end
+
+      context "with historic expense rates" do
+        let!(:expense_rate) { create(:pricing_hourly_rate, hourly_ratable: vehicle, price: current_price) }
+        let!(:expense_rate_old) { create(:pricing_hourly_rate, hourly_ratable: vehicle, valid_from: 1.year.ago, price: old_price) }
+
+        subject { vehicle.hourly_rate }
+        it { is_expected.to eq expense_rate }
+      end
+
+    end
+
+    describe "#travel_expense_rate=value" do
+      let(:new_price) { Money.new(20) }
+      let(:valid_from) { 1.month.ago.to_date }
+
+      context "without existing rates" do
+        before { vehicle.hourly_rate_attributes = { price: new_price, valid_from: valid_from } }
+        subject { vehicle }
+
+        it "creates a new expense_rate" do
+          expect { subject.save }.to change(Pricing::HourlyRate, :count).by(1)
+        end
+      end
+
+      context "with existing expense_rate having different valid_from" do
+        let!(:expense_rate_old) { create(:pricing_hourly_rate, hourly_ratable: vehicle, valid_from: valid_from - 1.year) }
+
+        before { vehicle.hourly_rate_attributes = { price: new_price, valid_from: valid_from } }
+        subject { vehicle }
+
+        it "creates a new expense_rate" do
+          expect { subject.save }.to change(Pricing::HourlyRate, :count).by(1)
+        end
+
+        it "sets #travel_expense_rate to the new one" do
+          subject.save
+          expect(subject.hourly_rate.valid_from).to eq valid_from
+        end
+      end
+
+      context "with existing expense_rate having same valid_from" do
+        let(:old_price) { new_price + Money.new(20) }
+        let!(:expense_rate_old) { create(:pricing_hourly_rate, hourly_ratable: vehicle, valid_from: valid_from, price: old_price) }
+
+        before { vehicle.hourly_rate_attributes = { price: new_price, valid_from: valid_from } }
+        subject { vehicle }
+
+        it "creates a new expense_rate" do
+          expect { subject.save }.not_to change(Pricing::HourlyRate, :count)
+        end
+
+        it "updates the existing rate" do
+          subject.save
+          expect(subject.hourly_rate.price).to eq new_price
+        end
+      end
+    end
+  end
 end

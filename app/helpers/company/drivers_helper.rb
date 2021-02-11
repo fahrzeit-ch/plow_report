@@ -12,12 +12,12 @@ module Company::DriversHelper
   end
 
   def available_drivers_for(standby_list)
-    @available_drivers ||= current_company.drivers.to_a
+    @available_drivers ||= current_company.active_drivers.to_a
     @available_drivers - standby_list.map(&:driver)
   end
 
   def all_drivers_selection_options(blank_value = I18n.t("common.all"))
-    drivers = current_company.drivers.map do |d|
+    drivers = current_company.active_drivers.map do |d|
       [d.name, d.id]
     end
     [[blank_value, nil]] + drivers

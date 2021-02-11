@@ -101,7 +101,7 @@ namespace :demo_account do
       num_drives = rand(3..6)
       driver = drivers.sample
       vehicle = vehicles.sample
-      tour = Tour.create(start_time: date.beginning_of_day + rand(6..15).hours + rand(0..360).minutes, driver: driver, vehicle: vehicle)
+      tour = Tour.create(start_time: random_time(date), driver: driver, vehicle: vehicle)
       last_end_time = tour.start_time
       activity = activities.sample
       num_drives.times do
@@ -112,11 +112,23 @@ namespace :demo_account do
         activity_value = activity.has_value? ? rand(0.5..4).round(1) : 0
         km = activity.name == "Räumen Hand" ? 0.0 : rand(1.5..12).round(1)
 
-        Drive.create!(start: start_time, distance_km: km, end: end_time, driver: driver, tour: tour, customer: customer_site.customer, site: customer_site, activity_execution_attributes: { activity_id: activity.id, value: activity_value })
+        Drive.create!(start: start_time,
+                      distance_km: km,
+                      end: end_time,
+                      driver: driver,
+                      tour: tour,
+                      vehicle: vehicle,
+                      customer: customer_site.customer,
+                      site: customer_site,
+                      activity_execution_attributes: { activity_id: activity.id, value: activity_value })
         last_end_time = end_time
       end
       tour.update_attribute(:end_time, last_end_time + rand(2..10).minutes)
     end
+  end
+
+  def random_time(date)
+    date.beginning_of_day + rand(6..15).hours + rand(0..360).minutes
   end
 
   def build_customer_query(company_id)

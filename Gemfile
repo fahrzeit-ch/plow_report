@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "2.6.1"
+ruby "2.7.2"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -41,6 +41,9 @@ gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper", "~> 5.1.1"
 gem "pundit", "~> 2.1.0"
 gem "rollbar"
+gem 'newrelic_rpm'
+
+gem "azure-storage"
 
 gem "money-rails", "~>1.12"
 
