@@ -41,6 +41,7 @@ gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper", "~> 5.1.1"
 gem "pundit", "~> 2.1.0"
 gem "rollbar"
+gem 'newrelic_rpm'
 
 gem "azure-storage"
 
