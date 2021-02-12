@@ -3,6 +3,7 @@
 # A tour combines multiple drives and tracks the overall
 # time spent by a driver.
 class Tour < ApplicationRecord
+  extend Memoist
   include Discard::Model
   include ChangedSince
 
@@ -39,12 +40,20 @@ class Tour < ApplicationRecord
     drives.first
   end
 
+  # Returns the average travel time per charged site
+  #
   def avg_empty_drive_time_per_site
-    if drives_count == 0
+    if charged_sites_count == 0
       empty_drive_time
     else
-      empty_drive_time / drives_count
+      empty_drive_time / charged_sites_count
     end
+  end
+
+  # Returns the first drive within this tour
+  # with the given site
+  def first_of_site(site_id)
+    drives.last { |d| d.site_id == site_id }
   end
 
   def end_time
@@ -61,6 +70,16 @@ class Tour < ApplicationRecord
 
   def drives_count
     @drives_count ||= drives.size
+  end
+
+  # @return [Hash] Number of occurrences for each site, where the keys are the ids of the site
+  def sites_occurrences
+    @sites_count ||= drives.pluck(:site_id).tally
+  end
+
+  # @return [Numeric] The number of unique sites in this tour
+  def charged_sites_count
+    drives.to_a.select { |d| d.charged_separately? }.length
   end
 
   def drives_duration

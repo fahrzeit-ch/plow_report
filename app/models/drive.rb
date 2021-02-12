@@ -27,8 +27,16 @@ class Drive < ApplicationRecord
   # Allow to discard instead of destroy drives
   include Discard::Model
   include ChangedSince
+  include TrackedViews
+
+  extend Memoist
 
   scope :without_tour, -> { where(tour_id: nil) }
+
+  attribute :separately_charged, :boolean, default: false
+  validate :customer_associated_with_site
+
+  audited associated_with: :driver
 
   def kept?
     discarded? && tour.kept?
@@ -37,12 +45,6 @@ class Drive < ApplicationRecord
   def self.kept
     undiscarded.without_tour.or(Drive.where(id: undiscarded.joins(:tour).merge(Tour.undiscarded)))
   end
-
-  validate :customer_associated_with_site
-
-  audited associated_with: :driver
-
-  include TrackedViews
 
   # Returns the +Company+ for this drive or nil if the
   # +driver+ is not associated with a company.
@@ -81,8 +83,9 @@ class Drive < ApplicationRecord
 
   # @return The hourly rate applicable for this drive.
   def prices
-    @prices ||= DrivePrice.new self
+    DrivePrice.new self
   end
+  memoize :prices
 
   def customer_name
     customer ? "#{customer.name} #{customer.first_name}" : ""
@@ -97,23 +100,32 @@ class Drive < ApplicationRecord
     activity.try(:name)
   end
 
-  # The duration is loaded from attribute (in case it was calculated in the sql query). If
-  # the attribute is not defined, it is calculated on the fly.
-  #
-  # @return [Time] the duration of the drive
-  def duration
-    Time.at(duration_seconds).utc
-  end
-
   def duration_with_empty_drives
     duration_seconds + empty_drive_duration
   end
 
   # Returns the additional time of the empty drives of the tour that will
   # be applied to this drive for billing to customers
+  #
+  # It only returns the empty drive duration for charged
+  # drives, otherwise will return 0, as the empty drive
+  # time is averaged on the separately charged drives only.
   def empty_drive_duration
-    tour.try(:avg_empty_drive_time_per_site) || 0
+    if charged_separately?
+      tour.try(:avg_empty_drive_time_per_site) || 0
+    else
+      0
+    end
   end
+
+  # Returns true if it is the first drive in a tour for
+  # the associated site, or if it is explicitly flagged to
+  # be charged again.
+  def charged_separately?
+    return true unless tour # always charge if not in a tour
+    (tour.first_of_site(site_id) == self) || separately_charged
+  end
+  memoize :charged_separately?
 
   def duration_seconds
     if has_attribute? :duration
@@ -185,7 +197,7 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
     # activity.
     #
     # @param [Hash] drive_opts
-    # @return [ActiveRecord::Relation<Driver>] Driver relation that have similar characteristics on the options
+    # @return [ActiveRecord::Relation<Drive>] Drive relation that have similar characteristics on the options
     def similar(drive_opts)
       activity_id = drive_opts[:activity_id]
       if activity_id
