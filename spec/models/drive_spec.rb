@@ -309,4 +309,23 @@ RSpec.describe Drive, type: :model do
       end
     end
   end
+
+  describe "prices" do
+
+
+    context "hourly rate" do
+
+    end
+
+    context "active activity flatrate" do
+
+    end
+
+    context "inactive activity flatrate" do
+
+    end
+
+    context ""
+
+  end
 end

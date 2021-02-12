@@ -9,7 +9,7 @@ module Pricing::Price
 
     def self.for_date(i)
       valid_from_col = self.arel_table[:valid_from]
-      where(valid_from_col.lt(i)).order(valid_from: :desc).first
+      where(valid_from_col.lteq(i)).order(valid_from: :desc).first
     end
 
     def self.current
