@@ -12,10 +12,16 @@ class Pricing::FlatRate < ApplicationRecord
   belongs_to :flat_ratable, polymorphic: true
   scope :active, -> { where(active: true) }
 
+
+  def self.current
+    valid_from_col = self.arel_table[:valid_from]
+    where(valid_from_col.lteq(Date.current)).order(valid_from: :desc).first
+  end
+
   # Fetches active flat rate valid for given date
   def self.for_date(i)
     valid_from_col = self.arel_table[:valid_from]
-    active.where(valid_from_col.lt(i)).order(valid_from: :desc).first
+    active.where(valid_from_col.lteq(i)).order(valid_from: :desc).first
   end
 
 end

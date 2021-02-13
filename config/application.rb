@@ -30,8 +30,6 @@ module PlowReport
     # Use resqueue as Job Queue Processor
     config.active_job.queue_adapter = :resque
 
-    config.log_formatter = ::NewRelic::Agent::Logging::DecoratingFormatter.new
-
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         address:              "smtp.sendgrid.net",

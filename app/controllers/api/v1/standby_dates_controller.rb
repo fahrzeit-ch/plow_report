@@ -2,7 +2,7 @@
 
 class Api::V1::StandbyDatesController < Api::V1::ApiController
   def index
-    _from = params[:from] ? params[:from] : Date.current
+    _from = params[:from] ? params[:from] : Season.current.start_date
     _until = params[:until] ? params[:until] : Date.current.end_of_month
     @records = StandbyDate.joins(:driver)
                          .where(driver_id: driver_id)

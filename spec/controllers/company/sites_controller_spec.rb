@@ -134,5 +134,32 @@ RSpec.describe Company::SitesController, type: :controller do
         expect(site.name).to eq new_attrs[:name]
       end
     end
+
+    describe "flat rates" do
+      before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
+      let(:activity) { create(:activity) }
+      context "with existing flatrates" do
+        before do
+          site.site_activity_flat_rates.create(
+            activity_id: activity.id,
+            activity_fee_attributes: { valid_from: Season.current.start_date, price: "30", active: true }
+          )
+        end
+
+        let(:new_attrs) do
+          { site_activity_flat_rates_attributes: { 1 => {
+                                                     id: site.site_activity_flat_rates.first.id,
+                                                     activity_id: activity.id,
+                                                     activity_fee_attributes: { valid_from: Season.current.start_date, active: false }
+                                                   } } }
+        end
+
+        it "deactivates the flat rate" do
+          put :update, params: { id: site.id, customer_id: customer.to_param, company_id: company.to_param, site: new_attrs }
+          site.reload
+          expect(site.site_activity_flat_rates.first.activity_fee).not_to be_active
+        end
+      end
+    end
   end
 end

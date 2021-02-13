@@ -20,14 +20,16 @@ module Report
       end
     end
 
+    # @param [Drive] drive
     def get_travel_expense_rate(drive)
       if drive.prices.travel_expense_flat_rate?
         I18n.t('reports.drives.flat_rate')
-      else
+      elsif drive.charged_separately?
         drive.prices.travel_expense_per_hour
       end
     end
 
+    # @param [Drive] drive
     def columns_for(drive)
       columns = [
         drive.start,
@@ -37,7 +39,7 @@ module Report
         drive.driver.name,
         drive.distance_km,
         get_hourly_rate(drive),
-        drive.prices.price.amount,
+        get_price(drive)
       ]
       return columns unless drive.activity_execution
 
@@ -56,17 +58,23 @@ module Report
         nil,
         nil,
         get_travel_expense_rate(drive),
-        drive.prices.travel_expense.amount]
+        get_travel_expense(drive)]
     end
 
     def styles
       [@styles.date, @styles.time, @styles.duration]
     end
 
+    # @param [Drive] drive
     def get_price(drive)
-      if drive.hourly_rate
-        (drive.hourly_rate.amount * (drive.duration_seconds / 3600.0)).round(2)
-      end
+      skip_price = (drive.prices.flat_rate? && drive.charged_separately?)
+      skip_price ? nil : drive.prices.price.amount
+    end
+
+    # @param [Drive] drive
+    def get_travel_expense(drive)
+      skip_price = (drive.prices.travel_expense_flat_rate? && drive.charged_separately?)
+      skip_price ? nil : drive.prices.travel_expense.amount
     end
 
     private

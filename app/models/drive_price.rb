@@ -3,27 +3,49 @@
 # Fetches and calculates the applicable prices for the given drive
 #
 class DrivePrice
+  # [Drive]
   attr_reader :drive
 
+  # @param [Drive] drive
   def initialize(drive)
     @drive = drive
     fetch!
   end
 
   def travel_expense
-    @travel_expense_flat || calculate_travel_expense(@travel_expense_rate)
+    if drive.charged_separately?
+      @travel_expense_flat || calculate_travel_expense(@travel_expense_rate)
+    else
+      Money.new("0")
+    end
   end
 
   def travel_expense_per_hour
-    @travel_expense_flat || @travel_expense_rate || Money.new("0")
+    if drive.charged_separately?
+      @travel_expense_flat || @travel_expense_rate || Money.new("0")
+    else
+      Money.new("0")
+    end
   end
 
   def price
-    @flat_rate || calculate_total_price(@hourly_rate)
+    if drive.charged_separately?
+      @flat_rate || calculate_total_price(@hourly_rate)
+    elsif !flat_rate?
+      calculate_total_price(@hourly_rate)
+    else
+      Money.new("0")
+    end
   end
 
   def price_per_hour
-    @flat_rate || @hourly_rate || Money.new("0")
+    if drive.charged_separately?
+      @flat_rate || @hourly_rate || Money.new("0")
+    elsif !flat_rate?
+      @hourly_rate
+    else
+      Money.new("0")
+    end
   end
 
   def flat_rate?

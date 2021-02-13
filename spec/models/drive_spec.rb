@@ -309,4 +309,20 @@ RSpec.describe Drive, type: :model do
       end
     end
   end
+
+  describe "#charged_separately?" do
+    let(:start_time) { 3.hours.ago }
+    let(:tour) { create(:tour, start_time: start_time, end_time: start_time + 3.hours) }
+    let!(:drive_1) { create(:drive, tour: tour, start: start_time, end: start_time + 20.minutes, vehicle: tour.vehicle) }
+    let!(:drive_2) { create(:drive, tour: tour, start: start_time + 30.minutes, end: start_time + 1.hour, vehicle: tour.vehicle, site: drive_1.site) }
+
+    it "charges first drive for site in tour" do
+      expect(drive_1).to be_charged_separately
+    end
+
+    it "does not charge second drive of same site" do
+      expect(drive_2).not_to be_charged_separately
+    end
+
+  end
 end

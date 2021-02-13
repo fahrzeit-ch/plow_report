@@ -15,6 +15,14 @@ $(document).on 'turbolinks:load', ->
   $('#finish-drive-form').on 'slid.bs.carousel', ->
       $('[data-s2]').select2();
 
+  if navigator.userAgent.search("Safari") != -1 && navigator.userAgent.search("Chrome") == -1
+    # For Safari, we add a mask, as native datetime picker is not available
+    $('input[type="datetime-local"]').flatpickr({
+      enableTime: true,
+      dateFormat: "Y-m-d H:i",
+      time_24hr: true
+    })
+
 
   $('[data-daterange]').each ->
     defaults = {
