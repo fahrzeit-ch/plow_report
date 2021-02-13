@@ -20,6 +20,7 @@
 //= require toastr_config
 //= require moment
 //= require daterangepicker
+//= require flatpickr
 //= require forms
 //= require drives
 //= require suggestion_value_loader
