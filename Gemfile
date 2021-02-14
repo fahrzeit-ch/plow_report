@@ -10,7 +10,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 5.2.4"
+gem "rails", "~> 6.0.3"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
 gem "scenic", "~> 1.5"
@@ -88,7 +88,7 @@ group :development, :test do
   gem "pundit-matchers", "~> 1.6.0"
   gem "rails-controller-testing"
   gem "rspec-benchmark", ">= 0.4"
-  gem "rspec-rails", ">= 3.7.2", "< 4.0"
+  gem "rspec-rails", "~> 4.0.2"
   gem "rspec-its", "~> 1.2.0"
   gem "rubocop"
   gem "rubocop-performance"
