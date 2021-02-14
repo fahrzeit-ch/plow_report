@@ -32,7 +32,7 @@ class Api::V1::ToursController < Api::V1::ApiController
   def update
     @record = Tour.where(driver_id: driver_id).find(params[:id])
     authorize @record
-    if @record.update_attributes update_attributes
+    if @record.update update_attributes
       head :no_content
     else
       render json: { error: @record.errors }, status: :bad_request
