@@ -38,7 +38,7 @@ class Api::V1::DrivesController < Api::V1::ApiController
     @record = Drive.where(driver_id: driver_id).find(params[:id])
     @record.vehicle_id = @record.tour.try(:vehicle_id)
     authorize @record
-    if @record.update_attributes update_attributes.to_h.except(:activity).merge(activity_execution_attributes: activity)
+    if @record.update update_attributes.to_h.except(:activity).merge(activity_execution_attributes: activity)
       head :no_content
     else
       render json: { error: @record.errors }, status: :bad_request

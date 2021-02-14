@@ -13,7 +13,7 @@ RSpec.describe DriverLogin, type: :model do
 
     expect {
       DriverLogin.create(user: user2, driver: driver)
-    }.to raise_error
+    }.to raise_error ActiveRecord::RecordNotUnique
   end
 
   it "should be possible to destroy driver login without destroying driver" do

@@ -87,7 +87,7 @@ RSpec.describe Driver, type: :model do
       subject.start_recording
       expect {
         subject.start_recording
-      }.to raise_error
+      }.to raise_error "Already recording"
     end
 
     it "should save current time as start for recording" do

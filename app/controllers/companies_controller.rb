@@ -44,7 +44,7 @@ class CompaniesController < ApplicationController
     authorize @resource
 
     respond_to do |format|
-      if @resource.update_attributes(company_attributes)
+      if @resource.update(company_attributes)
         flash[:notice] = t("flash.company.updated")
         format.html { redirect_back(fallback_location: company_dashboard_path(@resource)) }
       else

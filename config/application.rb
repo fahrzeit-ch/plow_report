@@ -12,7 +12,7 @@ Bundler.require(*Rails.groups)
 module PlowReport
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.1
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -29,6 +29,8 @@ module PlowReport
 
     # Use resqueue as Job Queue Processor
     config.active_job.queue_adapter = :resque
+
+    config.action_view.form_with_generates_remote_forms = true
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {

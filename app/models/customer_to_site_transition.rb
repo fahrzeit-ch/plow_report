@@ -35,7 +35,7 @@ class CustomerToSiteTransition
     return false unless target.valid?
     Site.transaction do
       target.save
-      affected_drives.each { |drive| drive.update_attributes(customer_id: target.customer_id, site_id: target.id) }
+      affected_drives.each { |drive| drive.update(customer_id: target.customer_id, site_id: target.id) }
       source.destroy unless source == assign_to
     end
     target

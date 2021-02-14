@@ -25,7 +25,7 @@ class DriverApplication < ApplicationRecord
 
   def validate_already_accepted
     if accepted?
-      errors[:base] << :already_accepted
+      errors.add(:base, :already_accepted)
       false
     else
       true
