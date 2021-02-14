@@ -10,9 +10,9 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.0.3"
+gem "rails", "~> 6.1.2"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 0.18"
+gem "pg", "~> 1.1"
 gem "scenic", "~> 1.5"
 # Use Puma as the app server
 gem "puma", "~> 3.12"
@@ -43,7 +43,7 @@ gem "pundit", "~> 2.1.0"
 gem "rollbar"
 gem 'newrelic_rpm'
 
-gem "azure-storage"
+gem "azure-storage-blob", require: false
 
 gem "money-rails", "~>1.12"
 
