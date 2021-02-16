@@ -44,7 +44,7 @@ RSpec.describe PolicyTerm, type: :model do
       term.version_date = term_acceptance.created_at
       expect(term).not_to be_valid, lambda { "Term Version date: #{term.version_date},
 Latest acceptance date: #{term.last_known_acceptance_date},
-Diff: #{term.version_date.to_i - term.last_known_acceptance_date.to_i},
+Diff: #{term.version_date.to_f - term.last_known_acceptance_date.to_f},
 New Record: #{term.new_record?},
 Date Changed: #{term.version_date_changed?},
 Expression Result: #{term.last_known_acceptance_date >= term.version_date}" }
