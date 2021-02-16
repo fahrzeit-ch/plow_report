@@ -42,7 +42,7 @@ RSpec.describe PolicyTerm, type: :model do
 
     it "must not be possible to set a version date older than the newest acceptance date" do
       term.version_date = term_acceptance.created_at
-      expect(term).not_to be_valid
+      expect(term).not_to be_valid, lambda { "Term Version date: #{term.version_date}, Latest acceptance date: #{term.last_known_acceptance_date}" }
     end
 
     it "is possible to set a version date that is bigger than the latest term acceptance" do
