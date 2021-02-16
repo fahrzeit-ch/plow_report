@@ -1,0 +1,19 @@
+<%= form_for(@user, as: 'user', url: term_acceptances_path, builder: BootstrapFormBuilder, html: { role: 'form' }) do |f| %>
+  <% if @user.errors.any? %>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.hidden_field :id %>
+
+  <% @user.terms_with_updates.each do |t| %>
+    <%= render 'policy_terms/policy_term', policy_term: t %>
+  <% end %>
+  <% @user.unchecked_terms.each do |t| %>
+    <%= render 'policy_terms/policy_term', policy_term: t %>
+  <% end %>
+  <%= f.submit t('common.continue', default: 'Weiter'), class: 'btn btn-primary' %>
+<% end %>

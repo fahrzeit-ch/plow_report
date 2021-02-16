@@ -479,6 +479,7 @@ de-CH:
         no_data_available: "Keine Daten verfügbar"
     policies_and_terms:
       require_new_concent: "Unsere Bestimmungen haben sich geändert"
+      no_new_terms: "Es gibt zurzeit keine Änderungen die akzeptiert werden müssen."
     tours:
       empty: "Keine Kunden Objekte auf dieser Tour erfasst"
     company_tours:

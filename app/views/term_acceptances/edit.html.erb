@@ -3,24 +3,13 @@
     <h2><%= t 'views.policies_and_terms.require_new_concent' %></h2>
   </div>
   <div class="card-body">
-    <%= form_for(@user, as: 'user', url: term_acceptances_path, builder: BootstrapFormBuilder, html: { role: 'form' }) do |f| %>
-      <% if @user.errors.any? %>
-        <ul>
-          <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <%= f.hidden_field :id %>
-
-      <% @user.terms_with_updates.each do |t| %>
-        <%= render 'policy_terms/policy_term', policy_term: t %>
-      <% end %>
-      <% @user.unchecked_terms.each do |t| %>
-        <%= render 'policy_terms/policy_term', policy_term: t %>
-      <% end %>
-      <%= f.submit t('common.continue', default: 'Sign up'), class: 'btn btn-primary' %>
+    <% if @user.terms_with_updates.empty? && @user.unchecked_terms.empty? %>
+      <div class="alert alert-info">
+        <%= t('views.policies_and_terms.no_new_terms') %>
+      </div>
+      <%= link_to t('common.back'), root_path, class: "btn btn-primary" %>
+    <% else %>
+      <%= render 'form' %>
     <% end %>
   </div>
 <% end %>
