@@ -28,7 +28,10 @@ class PolicyTerm < ApplicationRecord
     def version_date_newer
       return if new_record?
       return unless version_date_changed?
-      if last_known_acceptance_date && last_known_acceptance_date >= version_date
+      # we do use seconds comparison here because tests on ci fail because of a
+      # fraction difference (9.5367431640625e-07), although it uses the same values for created_at in term acceptance
+      # as for the version_date.
+      if last_known_acceptance_date && last_known_acceptance_date.to_i >= version_date.to_i
         errors.add(:version_date, :date_after, date: I18n.localize(last_known_acceptance_date))
       end
     end
