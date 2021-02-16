@@ -21,6 +21,7 @@ Trestle.resource(:policy_terms) do
     text_field :short_description
     text_area :description
     text_field :key
+    datetime_field :version_date
 
     row do
       # col(xs: 6) { datetime_field :updated_at }
