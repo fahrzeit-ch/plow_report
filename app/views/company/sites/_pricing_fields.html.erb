@@ -2,13 +2,17 @@
 <%= f.fields_for :commitment_fee do |fa| %>
   <%= render 'flat_rate_fields', form: fa %>
 <% end %>
-<%= f.label :travel_expense %>
+<label>
+  <%= label_with_help_for(f.object.class, :travel_expense) %>
+</label>
 <%= f.fields_for :travel_expense do |fa| %>
   <%= render 'flat_rate_fields', form: fa %>
 <% end %>
 <hr />
 <div id="site_activity_flat_rates">
-  <%= f.label :activity_fee %>
+  <label>
+    <%= label_with_help_for(f.object.class, :activity_fee) %>
+  </label>
   <%= f.fields_for :site_activity_flat_rates do |fa| %>
     <%= render 'site_activity_flat_rate_fields', f: fa %>
   <% end %>
