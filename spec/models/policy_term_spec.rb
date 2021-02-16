@@ -46,7 +46,8 @@ RSpec.describe PolicyTerm, type: :model do
 Latest acceptance date: #{term.last_known_acceptance_date},
 Diff: #{term.version_date.to_i - term.last_known_acceptance_date.to_i},
 New Record: #{term.new_record?},
-Date Changed: #{term.version_date_changed?}" }
+Date Changed: #{term.version_date_changed?},
+Expression Result: #{term.last_known_acceptance_date >= term.version_date}" }
     end
 
     it "is possible to set a version date that is bigger than the latest term acceptance" do
