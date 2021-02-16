@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 before_install:
   - nvm install --lts
   - npm install yarn
