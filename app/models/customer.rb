@@ -29,7 +29,7 @@ class Customer < ApplicationRecord
 
   def self.with_site_names
     sites = Site.arel_table
-    string_agg = Arel::Nodes::NamedFunction.new("string_agg", [sites[:name], Arel::Nodes.build_quoted(", ")])
+    string_agg = Arel::Nodes::NamedFunction.new("string_agg", [sites[:display_name], Arel::Nodes.build_quoted(", ")])
 
     left_outer_joins(:sites).select(arel_table[Arel.star], string_agg.as("site_names")).group(arel_table[:id])
   end

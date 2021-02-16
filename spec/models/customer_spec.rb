@@ -20,4 +20,12 @@ RSpec.describe Customer, type: :model do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe "#with_site_names" do
+    let(:customer) { create(:customer) }
+    let!(:sites) { create_list(:site, 2, customer: customer) }
+
+    subject { described_class.with_site_names.first }
+    its(:site_names) { is_expected.to eq(sites.pluck(:display_name).join(', ')) }
+  end
 end
