@@ -10,7 +10,7 @@ feature "existing terms updated" do
     before do
       user.accepted_terms << required_policy
       required_policy.update!(description: "the new policy text", version_date: 1.day.from_now)
-      travel_to 1.day.from_now
+      travel_to 1.day.from_now + 1.second
     end
 
     after do
