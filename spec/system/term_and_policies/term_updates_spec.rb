@@ -6,12 +6,17 @@ feature "existing terms updated" do
   let(:user) { create(:user) }
   let(:required_policy) { create(:policy_term, required: true, key: :agb) }
 
-  before do
-    user.accepted_terms << required_policy
-    required_policy.update_attribute(:description, "the new policy text")
-  end
+  context "with major update" do
+    before do
+      user.accepted_terms << required_policy
+      required_policy.update!(description: "the new policy text", version_date: 1.day.from_now)
+      travel_to 1.day.from_now + 1.second
+    end
 
-  context "when user signs in" do
+    after do
+      travel_back
+    end
+
     before { sign_in_with(user.email, user.password) }
 
     it "shows that the user has to accept updated terms" do
@@ -28,6 +33,19 @@ feature "existing terms updated" do
       check("user[terms][agb]")
       click_button(I18n.t("common.continue"))
       expect(page).to have_current_path("/")
+    end
+  end
+
+  context "with minor updates" do
+    before do
+      user.accepted_terms << required_policy
+      required_policy.update(description: "the new policy text") # no new version date
+    end
+
+    before { sign_in_with(user.email, user.password) }
+
+    it "shows that the user has to accept updated terms" do
+      expect(page).not_to have_content(I18n.t("views.policies_and_terms.require_new_concent"))
     end
   end
 end

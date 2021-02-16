@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_215352) do
+ActiveRecord::Schema.define(version: 2021_02_16_111236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_215352) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "version_date", default: "2021-02-16 12:20:24", null: false
   end
 
   create_table "pricing_flat_rates", force: :cascade do |t|

@@ -6,5 +6,6 @@ FactoryBot.define do
     short_description { "MyText" }
     description { "MyText" }
     name { "MyString" }
+    version_date { 1.day.ago }
   end
 end
