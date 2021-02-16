@@ -9,7 +9,12 @@ feature "existing terms updated" do
   context "with major update" do
     before do
       user.accepted_terms << required_policy
-      required_policy.update(description: "the new policy text", version_date: DateTime.current)
+      required_policy.update!(description: "the new policy text", version_date: 1.day.from_now)
+      travel_to 1.day.from_now
+    end
+
+    after do
+      travel_back
     end
 
     before { sign_in_with(user.email, user.password) }
