@@ -16,7 +16,7 @@ module Report
       if drive.prices.flat_rate?
         I18n.t('reports.drives.flat_rate')
       else
-        drive.prices.price_per_hour
+        drive.prices.price_per_hour.amount
       end
     end
 
@@ -25,7 +25,7 @@ module Report
       if drive.prices.travel_expense_flat_rate?
         I18n.t('reports.drives.flat_rate')
       elsif drive.charged_separately?
-        drive.prices.travel_expense_per_hour
+        drive.prices.travel_expense_per_hour.amount
       end
     end
 
@@ -67,13 +67,13 @@ module Report
 
     # @param [Drive] drive
     def get_price(drive)
-      skip_price = (drive.prices.flat_rate? && drive.charged_separately?)
+      skip_price = (drive.prices.flat_rate? && !drive.charged_separately?)
       skip_price ? nil : drive.prices.price.amount
     end
 
     # @param [Drive] drive
     def get_travel_expense(drive)
-      skip_price = (drive.prices.travel_expense_flat_rate? && drive.charged_separately?)
+      skip_price = (drive.prices.travel_expense_flat_rate? && !drive.charged_separately?)
       skip_price ? nil : drive.prices.travel_expense.amount
     end
 
