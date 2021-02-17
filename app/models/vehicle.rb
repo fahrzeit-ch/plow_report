@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # A vehicle can be assigned to a drive. For each vehicle, multiple activities can be assigned.
 # This helps to scope the available activities in the app to only those for the selected vehicle.
 # Additionally, vehicles can later have different prices assigned for the same activities
@@ -26,6 +24,11 @@ class Vehicle < ApplicationRecord
 
   def pricing_default_valid_from
     Season.current.start_date
+  end
+
+  def display_name
+    return name unless discarded?
+    "#{name} #{I18n.t('activerecord.attributes.vehicle.discarded_postfix')}"
   end
 
   private

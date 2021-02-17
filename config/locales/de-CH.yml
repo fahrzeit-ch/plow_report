@@ -214,6 +214,7 @@ de-CH:
         activities: "Tätigkeiten"
         price_help: ""
         price: "Stundensatz für Anfahrten"
+        discarded_postfix: "(Deaktiviert)"
         price_help_html: "<p>Die für die Verrechnung verwendete Anfahrtsdauer wird auf die Anzahl Objekte einer Tour aufgeteilt.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
         activities_help_html: "<p>Tätigkeiten die mit diesem Fahrzeug ausgeführt werden können.</p><p>Fahrten mit diesem Fahrzeug können nur die hier definierten Tätigkeiten zugeordnet werden.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
       tour:
@@ -270,6 +271,7 @@ de-CH:
     add_marker: "Markierung setzen"
     add_line: "Linie Zeichnen"
     finish: "Fertig"
+    change: "Ändern"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert."
@@ -492,6 +494,7 @@ de-CH:
       add_drive_description: "Zusätzlichen Einsatz zu dieser Tour hinzufügen"
       add_drive: "Einsatz Hinzufügen"
       assign_new_vehicle: "Neues Fahrzeug zuweisen"
+      no_vehicle_assigned: "(Kein Fahrzeug zugeordnet)"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"

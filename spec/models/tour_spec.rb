@@ -167,7 +167,26 @@ RSpec.describe Tour, type: :model do
 
       its(:duration_seconds) { is_expected.to be 0 }
     end
+  end
 
+  describe "#first_of_site" do
+    let(:start_time) { 3.hours.ago }
+    let(:tour) { create(:tour, start_time: start_time, end_time: start_time + 3.hours) }
+    let(:site1) { create(:site) }
+    let(:site2) { create(:site) }
+    let!(:drive_1) { create(:drive, tour: tour, start: start_time, end: start_time + 20.minutes, vehicle: tour.vehicle, site: site1) }
+    let!(:drive_2) { create(:drive, tour: tour, start: start_time + 30.minutes, end: start_time + 1.hour, vehicle: tour.vehicle, site: site1) }
+    let!(:drive_3) { create(:drive, tour: tour, start: start_time + 1.hour, end: start_time + 1.5.hours, vehicle: tour.vehicle, site: site2) }
+
+    it "returns drive 1 for site 1" do
+      expect(tour.first_of_site(site1.id)).to eq drive_1
+    end
+
+    it "returns drive 3 for site 2" do
+      expect(tour.first_of_site(site2.id)).to eq drive_3
+    end
 
   end
+
+
 end
