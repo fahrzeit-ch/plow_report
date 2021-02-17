@@ -178,8 +178,10 @@ de-CH:
         city: "Ort"
         active: 'Objekt Aktiv'
         travel_expense: "Anfahrtspauschale (pro Einsatz)"
+        travel_expense_help_html: "<p>Für dieses Objekt eine Anfahrtspauschale verrechnen. Die Anfahrtspauschale wird nur einmal pro Tour verrechnet.</p><p>Ist die Anfahrtspauschale nicht aktiv, wird der auf dem Fahrzeug hinterlegte Stundensatz verwendet.</p><p>Änderungen gelten rückwirkend auf Saisonstart ab aktuellen Saison (1. Juli).</p>"
         commitment_fee: "Bereitschaftspauschale (pro Saison)"
         activity_fee: "Tätigkeitspauschale (pro Einsatz)"
+        activity_fee_help_html: "<p>Für dieses Objekt Tätigkeitspauschalen anstatt des stundenbasierten Tätigkeitspreises verwenden. Es wird nur eine Tätigkeitspauschle pro Tour verrechnet.</p><p>Für Tätigkeiten denen keine aktive Pauschale zugeordnet ist, wird der auf dem Fahrzeug festgelegte Stundensatz verwendet.</p><p>Die Pauschale wird nur für hier definierte Tätigkeiten angewendet.</p><p>Änderungen gelten rückwirkend ab Saisonstart der aktuellen Saison (1. Juli).</p>"
       pricing/flat_rate:
         active: "Pauschale aktiv"
       drive:
@@ -210,9 +212,11 @@ de-CH:
       vehicle:
         name: "Bezeichnung"
         activities: "Tätigkeiten"
-        price_help: "Änderungen gelten für die aktuelle Saison"
+        price_help: ""
         price: "Stundensatz für Anfahrten"
         discarded_postfix: "(Deaktiviert)"
+        price_help_html: "<p>Die für die Verrechnung verwendete Anfahrtsdauer wird auf die Anzahl Objekte einer Tour aufgeteilt.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
+        activities_help_html: "<p>Tätigkeiten die mit diesem Fahrzeug ausgeführt werden können.</p><p>Fahrten mit diesem Fahrzeug können nur die hier definierten Tätigkeiten zugeordnet werden.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
       tour:
         driver: "Fahrer"
         vehicle: "Fahrzeug"

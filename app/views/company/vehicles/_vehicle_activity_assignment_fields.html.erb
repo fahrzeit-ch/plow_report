@@ -5,7 +5,7 @@
     </div>
     <div class="flex-grow-1 mx-2">
       <%= f.fields_for :hourly_rate do |hrf| %>
-        <%= hrf.text_field :price, hide_label: true, append: hrf.object.price.currency, help: t('activerecord.attributes.vehicle.price_help')  %>
+        <%= hrf.text_field :price, hide_label: true, append: "#{hrf.object.price.currency}/h"  %>
         <%= hrf.hidden_field :valid_from, value: Season.current.start_date %>
       <% end %>
     </div>
