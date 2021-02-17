@@ -6,5 +6,6 @@ FactoryBot.define do
     add_attribute(:end) { Time.current }
     driver
     activity_execution { nil }
+    site { association(:site) }
   end
 end

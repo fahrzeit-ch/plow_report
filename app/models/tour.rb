@@ -53,7 +53,7 @@ class Tour < ApplicationRecord
   # Returns the first drive within this tour
   # with the given site
   def first_of_site(site_id)
-    drives.last { |d| d.site_id == site_id }
+    drives.to_a.reverse.find { |d| d.site_id == site_id }
   end
 
   def end_time
