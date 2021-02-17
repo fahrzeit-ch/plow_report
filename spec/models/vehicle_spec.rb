@@ -19,6 +19,18 @@ RSpec.describe Vehicle, type: :model do
     end
   end
 
+  describe "name" do
+    subject { build(:vehicle) }
+    context "regular vehicle" do
+      its(:display_name) { is_expected.not_to include(I18n.t('activerecord.attributes.vehicle.discarded_postfix')) }
+    end
+
+    context "regular vehicle" do
+      before { subject.discarded_at = 1.second.ago }
+      its(:display_name) { is_expected.to include(I18n.t('activerecord.attributes.vehicle.discarded_postfix')) }
+    end
+  end
+
   describe "squish names" do
     subject { build(:vehicle, name: "  name    \n test   ") }
 

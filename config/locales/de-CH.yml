@@ -212,6 +212,7 @@ de-CH:
         activities: "Tätigkeiten"
         price_help: "Änderungen gelten für die aktuelle Saison"
         price: "Stundensatz für Anfahrten"
+        discarded_postfix: "(Deaktiviert)"
       tour:
         driver: "Fahrer"
         vehicle: "Fahrzeug"
@@ -266,6 +267,7 @@ de-CH:
     add_marker: "Markierung setzen"
     add_line: "Linie Zeichnen"
     finish: "Fertig"
+    change: "Ändern"
   flash:
     standby_dates:
       created: "Pikett Tag erfolgreich gespeichert."
@@ -488,6 +490,7 @@ de-CH:
       add_drive_description: "Zusätzlichen Einsatz zu dieser Tour hinzufügen"
       add_drive: "Einsatz Hinzufügen"
       assign_new_vehicle: "Neues Fahrzeug zuweisen"
+      no_vehicle_assigned: "(Kein Fahrzeug zugeordnet)"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"
