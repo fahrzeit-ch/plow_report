@@ -9,7 +9,7 @@
   <div class="modal-body">
     <%= f.select :new_vehicle_id, vehicle_select_options.reject { |v| @reassignment.tour.vehicle_id == v[1] }, {}, data: { submit_on_change: true } %>
     <%= f.hidden_field :tour_id %>
-    <% if @reassignment.activity_executions.any? %>
+    <% if @reassignment.activity_replacements.any? %>
       <div class="alert alert-info"><%= t('views.vehicle_reassignments.reassignment_required') %></div>
     <% end %>
     <%= f.fields_for :activity_replacements do |af| %>

@@ -48,22 +48,17 @@ class VehicleReassignment
 
   private
 
-    def load_activity_executions
-      if tour_id && new_vehicle_id
-        @activity_executions = affected
-      end
-    end
-
     def missing_activities
       return [] unless tour && new_vehicle
-      prev = tour&.vehicle&.activities.pluck(:id)
-      new = new_vehicle&.activities.pluck(:id)
-      prev - new
+      ActivityExecution
+        .where(drive_id: tour.drives)
+        .where.not(activity_id: new_vehicle.activities.pluck(:id))
+        .select(:activity_id)
     end
 
     def apply_activity_replacements
       activity_executions.each do |ae|
-        replacement = activity_replacements.find { |r| r.old_activity_id = ae.activity_id }
+        replacement = activity_replacements.find { |r| r.old_activity_id&.to_i == ae.activity_id.to_i }
         ae.activity_id = replacement.new_activity_id
       end
     end
