@@ -7,7 +7,7 @@
 # the option `has_value`
 class ActivityExecution < ApplicationRecord
   belongs_to :activity
-  belongs_to :drive
+  belongs_to :drive, touch: true
 
   validates_presence_of :value, if: :value_required?
 
