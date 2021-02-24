@@ -130,6 +130,19 @@ RSpec.describe Vehicle, type: :model do
           expect(subject.hourly_rate.price).to eq new_price
         end
       end
+
+      context "with invalid vehicle" do
+        before do
+          vehicle.name = ""
+          vehicle.hourly_rate_attributes = { price: new_price, valid_from: valid_from }
+          vehicle.save
+        end
+
+        it "is expected to keep assigned hourly rate values" do
+          expect(vehicle.hourly_rate.price).to eq new_price
+        end
+
+      end
     end
   end
 end

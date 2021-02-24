@@ -5,6 +5,7 @@ json = {
     name: driver.name,
     company_id: driver.company_id,
     company_name: driver.company.try(:name) || "",
+    discarded_at: driver.discarded_at,
     created_at: driver.created_at,
     updated_at: driver.updated_at
 }

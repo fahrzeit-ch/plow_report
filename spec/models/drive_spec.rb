@@ -172,6 +172,17 @@ RSpec.describe Drive, type: :model do
       it "is expected to return the activity name in tasks" do
         expect(subject.tasks).to eq(activity_name)
       end
+
+      describe "update value" do
+        it "changes updated_at value on drive" do
+          new_attrs = { activity_execution_attributes: { id: activity_execution.id, value: 10 } }
+          expect do
+            subject.update(new_attrs)
+            subject.reload
+          end.to change(subject, :updated_at)
+        end
+
+      end
     end
   end
 

@@ -27,5 +27,10 @@ RSpec.describe Customer, type: :model do
 
     subject { described_class.with_site_names.first }
     its(:site_names) { is_expected.to eq(sites.pluck(:display_name).join(', ')) }
+
+    context "inactive sites" do
+      before { sites.first.update(active: false) }
+      its(:site_names) { is_expected.to eq(sites.last.display_name )}
+    end
   end
 end

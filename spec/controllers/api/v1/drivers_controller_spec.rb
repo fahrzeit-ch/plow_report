@@ -33,7 +33,7 @@ RSpec.describe Api::V1::DriversController, type: :controller do
         before { get :index, params: { format: :json, company_id: company.id } }
         subject { api_response.attributes[:items] }
 
-        its(:count) { is_expected.to eq 1 } # it is not including any discarded drivers
+        its(:count) { is_expected.to eq 2 } # including discarded driver
         describe "item values" do
           subject { api_response.attributes[:items][0] }
           it do
@@ -41,6 +41,7 @@ RSpec.describe Api::V1::DriversController, type: :controller do
               id:           company_driver.id,
               name:         company_driver.name,
               company_name: company_driver.company.name,
+              discarded_at: company_driver.discarded_at,
               company_id:   company_driver.company_id
                            )
           end

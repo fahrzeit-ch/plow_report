@@ -16,7 +16,7 @@ module Pricing::HourlyRatable
   end
 
   def hourly_rate
-    hourly_rates.current || hourly_rates.build
+    @rate || (hourly_rates.current || hourly_rates.build)
   end
 
   def hourly_rate_attributes=(attrs)
@@ -29,7 +29,7 @@ module Pricing::HourlyRatable
       hourly_rate_will_change! if @rate.changed?
     else
       # in this case association autosave will kick in
-      hourly_rates.build attrs
+      @rate = hourly_rates.build attrs
     end
   end
 

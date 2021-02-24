@@ -14,7 +14,7 @@ module Pricing::FlatRatable
       self.has_many type.to_s.pluralize.to_sym, -> { where(rate_type: type) }, class_name: "Pricing::FlatRate", as: :flat_ratable
 
       self.define_method type do
-        current_or_new(type, opts[:defaults])
+        read_attribute(type) || current_or_new(type, opts[:defaults])
       end
 
       self.define_method "#{type}_for_date" do |date|
@@ -22,7 +22,7 @@ module Pricing::FlatRatable
       end
 
       self.define_method "#{type}_attributes=" do |attrs|
-        update_or_create_by_valid_from(attrs, type)
+        public_send("#{type}=", update_or_create_by_valid_from(attrs, type))
       end
     end
   end
@@ -32,18 +32,16 @@ module Pricing::FlatRatable
   end
 
   def update_or_create_by_valid_from(attrs, attribute_name)
-    attrs.delete(:id) # id must not be used, update or create is decided based on valid_from date
-    valid_from = attrs[:valid_from]
-    attrs[:price] ||= Money.new("0.0")
-    attrs[:rate_type] = attribute_name
-    existing_rate = public_send(attribute_name.to_s.pluralize).where(valid_from: valid_from).first
+    rate = public_send(attribute_name.to_s.pluralize)
+             .where(valid_from: attrs[:valid_from])
+             .first
 
-    if existing_rate
-      existing_rate.assign_attributes attrs
-      public_send("#{attribute_name}_will_change!") if existing_rate.changed?
-      changed_rates.push(existing_rate)
+    attributes = extract_attrs_for_assignment(attribute_name, attrs)
+
+    if rate
+      update_existing(attribute_name, attributes, rate)
     else
-      flat_rates.build attrs
+      flat_rates.build attributes
     end
   end
 
@@ -65,5 +63,21 @@ module Pricing::FlatRatable
   protected
     def write_changed_rates
       changed_rates.each(&:save)
+    end
+
+  private
+    def update_existing(attribute_name, attributes, rate)
+      rate.assign_attributes attributes
+      public_send("#{attribute_name}_will_change!") if rate.changed?
+      changed_rates.push(rate)
+      rate
+    end
+
+    def extract_attrs_for_assignment(attribute_name, attrs)
+      a = attrs.clone
+      a.delete(:id) # id must not be used, update or create is decided based on valid_from date
+      a[:price] ||= Money.new("0.0")
+      a[:rate_type] = attribute_name
+      a
     end
 end

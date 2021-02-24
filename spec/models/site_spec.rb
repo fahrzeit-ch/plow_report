@@ -148,6 +148,26 @@ RSpec.describe Site, type: :model do
             end
           end
         end
+
+        context "with site validation errors" do
+          let(:new_price) { Money.new(20) }
+          let(:valid_from) { 1.month.ago.to_date }
+
+          before do
+            site.display_name = ""
+            site.travel_expense_attributes = { price: new_price, valid_from: valid_from }
+          end
+
+          it "will not persist travel expense" do
+            expect{ site.save }.not_to change(Pricing::FlatRate, :count)
+          end
+
+          it "keeps the values set by attribute writer" do
+            site.save
+            expect(site.travel_expense.price).to eq new_price
+          end
+
+        end
       end
     end
 
