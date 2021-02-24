@@ -41,6 +41,7 @@ RSpec.describe Api::V1::DriversController, type: :controller do
               id:           company_driver.id,
               name:         company_driver.name,
               company_name: company_driver.company.name,
+              discarded_at: company_driver.discarded_at,
               company_id:   company_driver.company_id
                            )
           end
