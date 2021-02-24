@@ -31,7 +31,10 @@ class Customer < ApplicationRecord
     sites = Site.arel_table
     string_agg = Arel::Nodes::NamedFunction.new("string_agg", [sites[:display_name], Arel::Nodes.build_quoted(", ")])
 
-    left_outer_joins(:sites).select(arel_table[Arel.star], string_agg.as("site_names")).group(arel_table[:id])
+    left_outer_joins(:sites)
+      .select(arel_table[Arel.star], string_agg.as("site_names"))
+      .where(sites[:active].eq(true))
+      .group(arel_table[:id])
   end
 
   private
