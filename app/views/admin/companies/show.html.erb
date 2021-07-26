@@ -1,0 +1,34 @@
+<% title = "Abrechnung - #{@company.name}" %>
+<% content_for(:title, title) %>
+
+<% breadcrumb(title) %>
+
+<% toolbar(:primary) do %>
+  <%= render('shared/season_selector') %>
+<% end %>
+
+<% toolbar(:secondary) do |t| %>
+  <%= link_to(t("buttons.edit"), action: :edit, class: 'btn btn-default')  %>
+<% end %>
+
+<%= render layout: 'layout' do %>
+  <h3><%= @company.name %></h3>
+  <address>
+    <%= @company.address %><br>
+    <%= @company.zip_code %> <%= @company.city %>
+    <p><%= @company.contact_email %></p>
+  </address>
+  <dl class="row">
+    <dt class="col-sm-3">Abrechnungsperiode</dt>
+    <dd class="col-sm-9"><%= @season.start_date.to_s(:long) %> - <%= @season.end_date.to_s(:long) %></dd>
+
+    <dt class="col-sm-3">Nutzungs Gebühr</dt>
+    <dd class="col-sm-9"><%= @usage_cost.total_cost %> CHF</dd>
+  </dl>
+
+  <%= table collection: -> { @usage_cost.day_reports }, admin: :accounts do %>
+    <% column(:date_trunc, header: "Tag") %>
+    <% column(:nr_of_drives, header: "Anz. Objekte") %>
+    <% column(:nr_of_tours, header: "Anz. Touren") %>
+  <% end %>
+<% end %>

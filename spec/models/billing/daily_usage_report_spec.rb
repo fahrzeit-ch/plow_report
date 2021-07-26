@@ -82,4 +82,13 @@ RSpec.describe Billing::DailyUsageReport, type: :model do
     it { is_expected.to be_empty }
   end
 
+  context "with drives without sites" do
+    let(:driver) { create(:driver, company: company) }
+    let(:tour) { create(:tour, driver: driver, discarded_at: 1.day.ago) }
+    let!(:drive) { create(:drive, driver: driver, tour: tour) }
+    subject { described_class.where(company_id: company.id) }
+
+    it { is_expected.to be_empty }
+  end
+
 end

@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
 Trestle.resource(:companies) do
+  helper ApplicationHelper
+  helper SeasonSelection
   menu do
     item :companies, icon: "fa fa-star"
   end
 
-  # Customize the table columns shown on the index view.
+  # Customize the tabFAH-le columns shown on the index view.
   #
-  table do
+  table autolink: true do
     column :name
     column :contact_email
     column :city
     column :created_at, align: :center
-    actions
+    actions do |toolbar, instance, admin|
+      toolbar.show if admin && admin.actions.include?(:edit)
+      toolbar.edit if admin && admin.actions.include?(:edit)
+      toolbar.delete if admin && admin.actions.include?(:destroy)
+    end
   end
 
   # Customize the form fields shown on the new/edit views.
@@ -23,6 +29,20 @@ Trestle.resource(:companies) do
     text_field :address
     text_field :zip_code
     text_field :city
+  end
+
+  controller do
+    def show
+      @company = Company.find(params[:id])
+      base_price = 0.9
+      discount_per_day = 0.05
+      @season = params[:season].blank? ? Season.new : Season.from_sym(params[:season])
+      @usage_cost = Billing::UsageCosts.new base_price, discount_per_day, @company.id, @season
+    end
+  end
+
+  routes do
+    get :show, on: :member
   end
 
   # By default, all parameters passed to the update and create actions will be

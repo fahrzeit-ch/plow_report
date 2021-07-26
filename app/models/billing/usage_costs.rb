@@ -1,8 +1,8 @@
 class Billing::UsageCosts
 
-  # @param [Numeric] base_price
-  # @param [Numeric] discount_per_day The discount for each day used in percent as a value between 0 and 1
-  # @param [Numeric] company_id The company id to get the Usage cost for
+  # @param [Float] base_price
+  # @param [Float] discount_per_day The discount for each day used in percent as a value between 0 and 1
+  # @param [Integer] company_id The company id to get the Usage cost for
   # @param [Season] season
   def initialize(base_price, discount_per_day, company_id, season)
     @base_price = base_price
@@ -16,6 +16,7 @@ class Billing::UsageCosts
   end
 
   def avg_number_of_sites_per_day
+    return 0 if day_reports.sum(&:nr_of_drives) == 0
     total_days / day_reports.sum(&:nr_of_drives)
   end
 

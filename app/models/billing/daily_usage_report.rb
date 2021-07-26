@@ -16,9 +16,9 @@ class Billing::DailyUsageReport < ApplicationRecord
   self.table_name_prefix = 'billing_'
   belongs_to :company
 
-  scope :between, -> (start_day, end_day) { where(arel_table[:day_group]
-                                          .gte(start_day)
-                                          .and(arel_table[:day_group].lt(end_day))) }
+  scope :between, -> (start_day, end_day) { where(arel_table[:date_trunc]
+                                          .gteq(start_day)
+                                          .and(arel_table[:date_trunc].lt(end_day))) }
 
   # The Usage Report is only a DB View, so it is readonly
   def readonly?
