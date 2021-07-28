@@ -44,5 +44,7 @@ module PlowReport
     }
 
     config.autoload_paths << Rails.root.join("lib")
+
+    config.billing = config_for(:billing)
   end
 end

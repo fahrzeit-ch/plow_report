@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ConstraintRouter
   include Pundit
   include ConsentVerifier
+  include SeasonSelection
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -17,11 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :check_consents
 
   layout :determine_layout
-
-  # Returns the Season that represents the actual season at point in time.
-  def current_season
-    @current_season ||= Season.new
-  end
 
   def current_driver
     return nil unless user_signed_in?
@@ -43,13 +39,7 @@ class ApplicationController < ActionController::Base
     @current_company = company
   end
 
-  def selected_season
-    return @season if @season
 
-    # update session
-    session[:season] = params[:season] unless params[:season].blank?
-    @season = session[:season] ? Season.from_sym(session[:season]) : current_season
-  end
 
   def redirect_to_referral(fallback_location: nil)
     redirect_to session.delete(:return_to) || fallback_location
