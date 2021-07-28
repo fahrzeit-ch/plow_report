@@ -46,6 +46,10 @@ class Season
       (range.first).downto(range.last).map { |i| from_date(Season.new.start_date - i.years + 1.day) }
     end
 
+    def previous
+      last(2).first
+    end
+
     # Returns the season that includes the given dcate
     def from_date(date)
       Season.new date
