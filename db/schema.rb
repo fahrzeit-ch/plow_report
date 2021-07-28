@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_111236) do
+ActiveRecord::Schema.define(version: 2021_06_09_081250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -443,4 +443,24 @@ ActiveRecord::Schema.define(version: 2021_02_16_111236) do
   add_foreign_key "user_actions", "users"
   add_foreign_key "vehicle_activity_assignments", "activities"
   add_foreign_key "vehicle_activity_assignments", "vehicles"
+
+  create_view "billing_daily_usage_reports", sql_definition: <<-SQL
+      SELECT date_trunc('day'::text, tours_report.start_time) AS date_trunc,
+      tours_report.name,
+      sum(tours_report.number_of_drives) AS nr_of_drives,
+      count(*) AS nr_of_tours,
+      tours_report.company_id
+     FROM ( SELECT c.name,
+              t2.start_time,
+              count(DISTINCT d.site_id) AS number_of_drives,
+              c.id AS company_id
+             FROM (((drives d
+               JOIN drivers dr ON ((dr.id = d.driver_id)))
+               JOIN companies c ON ((dr.company_id = c.id)))
+               JOIN tours t2 ON (((d.tour_id = t2.id) AND (t2.discarded_at IS NULL))))
+            WHERE (d.discarded_at IS NULL)
+            GROUP BY c.name, c.id, t2.start_time, t2.id
+            ORDER BY c.name, t2.start_time) tours_report
+    GROUP BY tours_report.name, tours_report.company_id, (date_trunc('day'::text, tours_report.start_time));
+  SQL
 end

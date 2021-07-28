@@ -20,6 +20,8 @@ class Company < ApplicationRecord
   has_many :customers, dependent: :destroy
   has_many :activities, dependent: :destroy
 
+  has_many :billing_daily_usage_reports, :class_name => 'Billing::DailyUsageReport'
+
   has_many :tours_reports, dependent: :destroy
 
   before_validation :default_values
