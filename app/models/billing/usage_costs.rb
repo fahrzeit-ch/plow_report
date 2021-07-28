@@ -5,6 +5,13 @@ class Billing::UsageCosts
   # @param [Integer] company_id The company id to get the Usage cost for
   # @param [Season] season
   def initialize(base_price, discount_per_day, company_id, season)
+    raise ArgumentError.new "base_price must be > 0" if base_price <= 0
+    raise ArgumentError.new "discount_per_day must not be negative" if discount_per_day < 0
+    raise ArgumentError.new "discount_per_day must be less than 1" if discount_per_day >= 1
+
+    raise ArgumentError.new "company_id must nut be nil" unless company_id
+    raise ArgumentError.new "season must respond to start_date and end_date" unless season.respond_to?(:start_date) & season.respond_to?(:end_date)
+
     @base_price = base_price
     @discount_per_day = discount_per_day
     @company_id = company_id
