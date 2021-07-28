@@ -34,8 +34,8 @@ Trestle.resource(:companies) do
   controller do
     def show
       @company = Company.find(params[:id])
-      base_price = 0.9
-      discount_per_day = 0.05
+      base_price = Rails.configuration.billing['usage_base_price']
+      discount_per_day = Rails.configuration.billing['usage_discount_per_day']
       @season = params[:season].blank? ? Season.new : Season.from_sym(params[:season])
       @usage_cost = Billing::UsageCosts.new base_price, discount_per_day, @company.id, @season
     end

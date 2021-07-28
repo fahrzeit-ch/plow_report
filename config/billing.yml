@@ -1,0 +1,15 @@
+default: &default
+  usage_base_price: 0.9
+  usage_discount_per_day: 0.05
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+stage:
+  <<: *default
