@@ -26,6 +26,7 @@ module PlowReport
 
     config.time_zone = "Bern"
     config.active_record.default_timezone = :utc
+    config.active_record.schema_format = :sql
 
     # Use resqueue as Job Queue Processor
     config.active_job.queue_adapter = :resque
