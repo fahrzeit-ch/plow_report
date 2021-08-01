@@ -1,0 +1,14 @@
+<div class="card-body">
+  <%= bootstrap_form_for([current_company, @route], local: true) do |f| %>
+    <%= f.text_field :name %>
+    <%= f.select :site_ordering, [
+      [t('activerecord.attributes.route.site_orderings.' + Route::ORDER_BY_DISTANCE), Route::ORDER_BY_DISTANCE],
+      [t('activerecord.attributes.route.site_orderings.' + Route::CUSTOM_ORDER), Route::CUSTOM_ORDER]]
+    %>
+    <%= f.form_group do %>
+      <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
+        <i class="fa fa-check"></i> <%= t('actions.save') %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

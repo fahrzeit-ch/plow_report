@@ -1,0 +1,21 @@
+<%= title_row t('views.companies.routes.title') %>
+<%= toolbar_row do %>
+  <div class="col">
+  </div>
+  <div class="col-3 button-group">
+    <% if policy(Route.new(company: current_company)).new? %>
+      <%= link_to t('views.companies.routes.new'), new_company_route_path(current_company), class: 'btn btn-primary float-right' %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @routes.empty? && params[:q].blank? %>
+  <%= empty_message('companies.routes') %>
+<% else %>
+  <%= content_card do %>
+    <ul id="routes"  class="list-group list-group-flush">
+      <%= render(@routes) || content_tag("li", t('views.companies.routes.empty_info_title'), class: 'list-group-item text-warning') %>
+    </ul>
+    <%= paginate @routes %>
+  <% end %>
+<% end %>

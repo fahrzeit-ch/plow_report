@@ -12,6 +12,7 @@ de-CH:
     tours: "Touren & Fahrten"
     customers: "Kunden & Objekte"
     drivers: "Fahrer"
+    routes: "Routen"
     activities: "Tätigkeiten"
     tours_reports: "Rapporte"
     main:
@@ -119,12 +120,21 @@ de-CH:
       tours_report:
         one: "Rapport"
         other: "Rapporte"
+      route:
+        one: "Route"
+        other: "Routen"
     help:
       user:
         name: "Ihr vollständiger Name"
         email: "Die E-Mail Adresse benötigen Sie um sich anzumelden, sowie um Ihr Passwort zurückzusetzen."
         password: "Das Passwort muss mindestens 6 Zeichen lang sein."
     attributes:
+      route:
+        name: "Name"
+        site_ordering: "Sortierung der Objekte"
+        site_orderings:
+          order_by_distance: "Nach Entfernung"
+          custom_order: "Sortierung gemäss Objektliste"
       activity:
         name: "Name"
         has_value: "Erfordert Eingabe eines Werts (z.B. Menge oder Distanz)"
@@ -323,6 +333,13 @@ de-CH:
       error: "Objekt konnte nicht aktuallisiert werden."
       destroyed: "Objekt erfolgreich gelöscht."
       not_destroyed: "Objekt konnte nicht gelöscht werden."
+    route:
+      created: "Route erfolgreich erstellt."
+      not_created: "Route konnte nicht erstellt werden."
+      updated: "Route erfolgreich aktuallisiert."
+      error: "Route konnte nicht aktuallisiert werden."
+      destroyed: "Route erfolgreich gelöscht."
+      not_destroyed: "Route konnte nicht gelöscht werden."
     customer_to_site_transition:
       success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
     common:
@@ -462,6 +479,13 @@ de-CH:
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
+      routes:
+        empty_info_title: "Noch keine Routen erstellt"
+        empty_info: "Mit Routen ist es möglich, nur die für den Fahrer nötigen Objekte in der App sichtbar zu machen."
+        new_title: "Neue Route"
+        edit_title: "Route bearbeiten"
+        title: "Routen"
+        new: "Neue Route erstellen"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"

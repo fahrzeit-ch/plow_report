@@ -1,0 +1,9 @@
+<%= title_row t("views.companies.routes.edit_title") %>
+<%= toolbar_row do %>
+  <div class="col">
+    <h4><%= link_to Route.model_name.human(count: 3), company_routes_path(current_company) %> / <%= t("common.edit") %></h4>
+  </div>
+<% end %>
+<%= content_card do %>
+  <%= render "form" %>
+<% end %>

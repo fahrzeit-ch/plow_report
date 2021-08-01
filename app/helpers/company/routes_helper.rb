@@ -1,0 +1,2 @@
+module Company::RoutesHelper
+end

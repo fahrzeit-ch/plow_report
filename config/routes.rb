@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :company do
+    get 'routes/index'
+    get 'routes/edit'
+    get 'routes/create'
+    get 'routes/update'
+    get 'routes/delete'
+  end
   use_doorkeeper do
     controllers authorizations: "authorizations"
   end
@@ -88,6 +95,7 @@ Rails.application.routes.draw do
         resources :drives
       end
       resources :vehicles
+      resources :routes
     end
   end
 
