@@ -489,6 +489,7 @@ de-CH:
         new: "Neue Route erstellen"
         site_entries_entry: "Ziehe Objekte per Drag and Drop hierhin um sie der Route hinzuzufügen."
         drag_target_info: "Kunden Objekte hier hin ziehen"
+        add_site: "Kundenobjekt hinzufügen"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"

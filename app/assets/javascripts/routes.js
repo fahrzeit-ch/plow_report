@@ -1,34 +1,30 @@
+const positionSelector = 'input.position-attr';
+const containerSelector = '#site-list-container';
+
 $(document).on('turbolinks:load', function() {
-    const selected_sites = document.getElementById('selected_sites');
-    const available_sites = document.getElementById('available_sites');
+    const container = $(containerSelector);
 
-    const selected_sortable = Sortable.create(selected_sites, {
-        group: "shared",
-        ghostClass: 'drop-ghost',
-        filter: '.no-drag',
-        dataIdAttr: 'data-id',
-        onAdd: (event) => {
-            hideInfoTargetList();
-            createFormElement(event);
-        },
-        onRemove: (event) => {
-            updateInfoStateTargetList();
-        }
-    });
-
-
-    const available_sortable = Sortable.create(available_sites, {
-        group: { name: "shared"},
-        sort: false
+    container.on('cocoon:after-insert', (e, insertedItem) => {
+        const positions = $('#site-list-container').find(positionSelector).toArray().map( (el) => el.value);
+        const validPositions = positions.filter(pos => !isNaN(pos));
+        const highest = Math.max(...validPositions);
+        $(insertedItem).find(positionSelector).val(highest + 1);
     })
 
-    function updateInfoStateTargetList() {
-        if(selected_sortable.toArray().length === 0) {
-            $('.drag-target-info').show();
-        }
-    }
+    const selected_sites = document.getElementById('selected_sites');
+    Sortable.create(selected_sites, {
+        ghostClass: 'drop-ghost',
+        filter: '.no-drag',
+        onEnd: (/**Event*/evt) => {
+            updatePositions();
+        },
+    });
 
-    function hideInfoTargetList() {
-        $('.drag-target-info').hide();
+    function updatePositions() {
+        let position = 1;
+        container.find(positionSelector).each((index, el) => {
+            $(el).val(position);
+            position++;
+        });
     }
 });

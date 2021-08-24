@@ -1633,6 +1633,14 @@ ALTER TABLE ONLY public.route_site_entries
 
 
 --
+-- Name: route_site_entries route_site_entries_position_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.route_site_entries
+    ADD CONSTRAINT route_site_entries_position_unique UNIQUE (route_id, "position") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: routes routes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2047,7 +2055,7 @@ CREATE UNIQUE INDEX index_recordings_on_driver_id ON public.recordings USING btr
 -- Name: index_route_site_entries_on_position_and_route_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_route_site_entries_on_position_and_route_id ON public.route_site_entries USING btree ("position", route_id);
+CREATE INDEX index_route_site_entries_on_position_and_route_id ON public.route_site_entries USING btree ("position", route_id);
 
 
 --

@@ -26,7 +26,7 @@ class RoutePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :site_ordering, site_entries_attributes: [:site_id, :position]]
+    [:name, :site_ordering, site_entries_attributes: [:id, :_destroy, :site_id, :position]]
   end
 
   class Scope < Scope

@@ -12,6 +12,6 @@ class Route < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :company_id }
   validates :site_ordering, inclusion: [ORDER_BY_DISTANCE, CUSTOM_ORDER]
 
-  has_many :site_entries, :class_name => 'Route::SiteEntry'
-  accepts_nested_attributes_for :site_entries
+  has_many :site_entries, -> { order(:position) }, :class_name => 'Route::SiteEntry', inverse_of: :route
+  accepts_nested_attributes_for :site_entries, allow_destroy: true, reject_if: :all_blank
 end

@@ -8,26 +8,14 @@
   <%= f.form_group do %>
       <%= f.label :site_entries %>
       <div class="row">
-        <div class="col-6">
-          <ul class="list-group item-dashed" id="selected_sites" style="min-height: 62px">
+        <div class="col-12" id="site-list-container">
+          <ul class="list-group" id="selected_sites" style="min-height: 62px">
             <%= f.fields_for :site_entries do |af| %>
-              <%= render "company/routes/site_entry_fields", f: af %>
+              <%= render "site_entry_fields", f: af %>
             <% end %>
-          </ul>
-          <div class="drag-target-info">
-            <%= t('views.companies.routes.drag_target_info') %>
-          </div>
-
-        </div>
-        <div class="col-6">
-          <ul class="list-group item-dashed" id="available_sites" style="min-height: 62px">
-            <% available_sites(@route).each do |site| %>
-              <li class="list-group-item d-flex flex-row align-items-center" data-id="<%= site.id %>">
-                <div class="p-2">
-                  <%= site.display_name %>
-                </div>
-              </li>
-            <% end %>
+            <div class="links form-group">
+              <%= link_to_add_association t('views.companies.routes.add_site'), f, :site_entries, class: 'btn btn-outline-secondary' %>
+            </div>
           </ul>
         </div>
       </div>

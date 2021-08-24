@@ -21,8 +21,14 @@ class CreateRoutes < ActiveRecord::Migration[6.1]
       ALTER TABLE route_site_entries ADD CONSTRAINT position_gte_zero CHECK ( position >= 0 );
     SQL
 
+    execute <<-SQL
+      alter table route_site_entries
+        add constraint route_site_entries_position_unique unique (route_id, position)
+        DEFERRABLE INITIALLY DEFERRED;
+    SQL
+
     add_index(:routes, [:company_id, :name], unique: true)
-    add_index(:route_site_entries, [:position, :route_id], unique: true)
+    add_index(:route_site_entries, [:position, :route_id])
   end
 
   def down
