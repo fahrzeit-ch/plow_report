@@ -1,0 +1,10 @@
+<li class="list-group-item d-flex flex-row align-items-center nested-fields">
+  <div class="p-2">
+    <%= f.object.site.try(:display_name) %>
+    <%= f.hidden_field :site_id %>
+    <%= f.hidden_field :position %>
+  </div>
+  <%= item_tools do %>
+    <%= link_to_remove_association( t("x"), f, class: "btn btn-outline-danger") %>
+  <% end %>
+</li>

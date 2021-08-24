@@ -135,6 +135,7 @@ de-CH:
         site_orderings:
           order_by_distance: "Nach Entfernung"
           custom_order: "Sortierung gemäss Objektliste"
+        site_entries: "Objektliste"
       activity:
         name: "Name"
         has_value: "Erfordert Eingabe eines Werts (z.B. Menge oder Distanz)"
@@ -486,6 +487,8 @@ de-CH:
         edit_title: "Route bearbeiten"
         title: "Routen"
         new: "Neue Route erstellen"
+        site_entries_entry: "Ziehe Objekte per Drag and Drop hierhin um sie der Route hinzuzufügen."
+        drag_target_info: "Kunden Objekte hier hin ziehen"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"

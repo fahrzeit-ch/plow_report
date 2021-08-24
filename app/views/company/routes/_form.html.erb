@@ -5,6 +5,33 @@
       [t('activerecord.attributes.route.site_orderings.' + Route::ORDER_BY_DISTANCE), Route::ORDER_BY_DISTANCE],
       [t('activerecord.attributes.route.site_orderings.' + Route::CUSTOM_ORDER), Route::CUSTOM_ORDER]]
     %>
+  <%= f.form_group do %>
+      <%= f.label :site_entries %>
+      <div class="row">
+        <div class="col-6">
+          <ul class="list-group item-dashed" id="selected_sites" style="min-height: 62px">
+            <%= f.fields_for :site_entries do |af| %>
+              <%= render "company/routes/site_entry_fields", f: af %>
+            <% end %>
+          </ul>
+          <div class="drag-target-info">
+            <%= t('views.companies.routes.drag_target_info') %>
+          </div>
+        </div>
+        <div class="col-6">
+          <ul class="list-group item-dashed" id="available_sites" style="min-height: 62px">
+            <% available_sites(@route).each do |site| %>
+              <li class="list-group-item d-flex flex-row align-items-center" data-id="<%= site.id %>">
+                <div class="p-2">
+                  <%= site.display_name %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+    <% end %>
     <%= f.form_group do %>
       <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
         <i class="fa fa-check"></i> <%= t('actions.save') %>

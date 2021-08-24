@@ -31,6 +31,8 @@
 //= require cocoon
 //= require turbolinks_csp
 //= require cable
+//= require sortablejs
+//= require routes
 
 window.typeIsArray = function(value) {
     obj = {};
