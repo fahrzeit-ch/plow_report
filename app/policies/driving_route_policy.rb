@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RoutePolicy < ApplicationPolicy
+class DrivingRoutePolicy < ApplicationPolicy
   def new?
     company_admin_or_owner?(company)
   end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Company::RoutesController, type: :controller do
+RSpec.describe Company::DrivingRoutesController, type: :controller do
   let(:company) { create(:company) }
   let(:company_admin) { create(:user) }
 
@@ -18,33 +18,33 @@ RSpec.describe Company::RoutesController, type: :controller do
 
   describe "POST #create" do
     it "redirects to index page" do
-      post :create, params: { company_id: company.to_param, route: attributes_for(:route) }
-      expect(response).to redirect_to(company_routes_path company)
+      post :create, params: { company_id: company.to_param, driving_route: attributes_for(:driving_route) }
+      expect(response).to redirect_to(company_driving_routes_path company)
     end
 
     it "creates a new route" do
       expect {
-        post :create, params: { company_id: company.to_param, route: attributes_for(:route) }
-      }.to change(Route, :count).by(1)
+        post :create, params: { company_id: company.to_param, driving_route: attributes_for(:driving_route) }
+      }.to change(DrivingRoute, :count).by(1)
     end
 
   end
 
   describe "GET #edit" do
-    let!(:route) { create(:route, company: company) }
+    let!(:driving_route) { create(:driving_route, company: company) }
 
     it "returns http success" do
-      get :edit, params: { company_id: company.to_param, id: route.id }
+      get :edit, params: { company_id: company.to_param, id: driving_route.id }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "PATCH #update" do
-    let!(:route) { create(:route, company: company) }
+    let!(:driving_route) { create(:driving_route, company: company) }
 
     it "redirects back to index" do
-      patch :update, params: { company_id: company.to_param, id: route.id, route: attributes_for(:route) }
-      expect(response).to redirect_to(company_routes_path company)
+      patch :update, params: { company_id: company.to_param, id: driving_route.id, driving_route: attributes_for(:driving_route) }
+      expect(response).to redirect_to(company_driving_routes_path company)
     end
   end
 
@@ -56,10 +56,10 @@ RSpec.describe Company::RoutesController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    let!(:route) { create(:route, company: company) }
+    let!(:driving_route) { create(:driving_route, company: company) }
     it "returns http success" do
-      delete :destroy, params: { company_id: company.to_param, id: route.id }
-      expect(response).to redirect_to(company_routes_path company)
+      delete :destroy, params: { company_id: company.to_param, id: driving_route.id }
+      expect(response).to redirect_to(company_driving_routes_path company)
     end
   end
 end

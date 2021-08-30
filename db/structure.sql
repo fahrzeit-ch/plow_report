@@ -24,10 +24,10 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
--- Name: route_sites_ordering; Type: TYPE; Schema: public; Owner: -
+-- Name: driving_route_sites_ordering; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE public.route_sites_ordering AS ENUM (
+CREATE TYPE public.driving_route_sites_ordering AS ENUM (
     'order_by_distance',
     'custom_order'
 );
@@ -582,6 +582,72 @@ ALTER SEQUENCE public.drives_id_seq OWNED BY public.drives.id;
 
 
 --
+-- Name: driving_route_site_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.driving_route_site_entries (
+    id bigint NOT NULL,
+    site_id bigint NOT NULL,
+    driving_route_id bigint NOT NULL,
+    "position" integer NOT NULL,
+    CONSTRAINT position_gte_zero CHECK (("position" >= 0))
+);
+
+
+--
+-- Name: driving_route_site_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.driving_route_site_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: driving_route_site_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.driving_route_site_entries_id_seq OWNED BY public.driving_route_site_entries.id;
+
+
+--
+-- Name: driving_routes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.driving_routes (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    company_id bigint NOT NULL,
+    site_ordering public.driving_route_sites_ordering NOT NULL,
+    discarded_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: driving_routes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.driving_routes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: driving_routes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.driving_routes_id_seq OWNED BY public.driving_routes.id;
+
+
+--
 -- Name: oauth_access_grants; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -827,71 +893,6 @@ CREATE SEQUENCE public.recordings_id_seq
 --
 
 ALTER SEQUENCE public.recordings_id_seq OWNED BY public.recordings.id;
-
-
---
--- Name: route_site_entries; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.route_site_entries (
-    id bigint NOT NULL,
-    site_id bigint NOT NULL,
-    route_id bigint NOT NULL,
-    "position" integer NOT NULL,
-    CONSTRAINT position_gte_zero CHECK (("position" >= 0))
-);
-
-
---
--- Name: route_site_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.route_site_entries_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: route_site_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.route_site_entries_id_seq OWNED BY public.route_site_entries.id;
-
-
---
--- Name: routes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.routes (
-    id bigint NOT NULL,
-    name character varying NOT NULL,
-    company_id bigint NOT NULL,
-    site_ordering public.route_sites_ordering NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: routes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.routes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: routes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.routes_id_seq OWNED BY public.routes.id;
 
 
 --
@@ -1323,6 +1324,20 @@ ALTER TABLE ONLY public.drives ALTER COLUMN id SET DEFAULT nextval('public.drive
 
 
 --
+-- Name: driving_route_site_entries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_route_site_entries ALTER COLUMN id SET DEFAULT nextval('public.driving_route_site_entries_id_seq'::regclass);
+
+
+--
+-- Name: driving_routes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_routes ALTER COLUMN id SET DEFAULT nextval('public.driving_routes_id_seq'::regclass);
+
+
+--
 -- Name: oauth_access_grants id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1369,20 +1384,6 @@ ALTER TABLE ONLY public.pricing_hourly_rates ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.recordings ALTER COLUMN id SET DEFAULT nextval('public.recordings_id_seq'::regclass);
-
-
---
--- Name: route_site_entries id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.route_site_entries ALTER COLUMN id SET DEFAULT nextval('public.route_site_entries_id_seq'::regclass);
-
-
---
--- Name: routes id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.routes ALTER COLUMN id SET DEFAULT nextval('public.routes_id_seq'::regclass);
 
 
 --
@@ -1569,6 +1570,30 @@ ALTER TABLE ONLY public.drives
 
 
 --
+-- Name: driving_route_site_entries driving_route_site_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_route_site_entries
+    ADD CONSTRAINT driving_route_site_entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: driving_route_site_entries driving_route_site_entries_position_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_route_site_entries
+    ADD CONSTRAINT driving_route_site_entries_position_unique UNIQUE (driving_route_id, "position") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: driving_routes driving_routes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_routes
+    ADD CONSTRAINT driving_routes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: oauth_access_grants oauth_access_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1622,30 +1647,6 @@ ALTER TABLE ONLY public.pricing_hourly_rates
 
 ALTER TABLE ONLY public.recordings
     ADD CONSTRAINT recordings_pkey PRIMARY KEY (id);
-
-
---
--- Name: route_site_entries route_site_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.route_site_entries
-    ADD CONSTRAINT route_site_entries_pkey PRIMARY KEY (id);
-
-
---
--- Name: route_site_entries route_site_entries_position_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.route_site_entries
-    ADD CONSTRAINT route_site_entries_position_unique UNIQUE (route_id, "position") DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: routes routes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.routes
-    ADD CONSTRAINT routes_pkey PRIMARY KEY (id);
 
 
 --
@@ -1968,6 +1969,41 @@ CREATE INDEX index_drives_on_vehicle_id ON public.drives USING btree (vehicle_id
 
 
 --
+-- Name: index_driving_route_site_entries_on_driving_route_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_driving_route_site_entries_on_driving_route_id ON public.driving_route_site_entries USING btree (driving_route_id);
+
+
+--
+-- Name: index_driving_route_site_entries_on_site_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_driving_route_site_entries_on_site_id ON public.driving_route_site_entries USING btree (site_id);
+
+
+--
+-- Name: index_driving_routes_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_driving_routes_on_company_id ON public.driving_routes USING btree (company_id);
+
+
+--
+-- Name: index_driving_routes_on_company_id_and_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_driving_routes_on_company_id_and_name ON public.driving_routes USING btree (company_id, name);
+
+
+--
+-- Name: index_driving_routes_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_driving_routes_on_discarded_at ON public.driving_routes USING btree (discarded_at);
+
+
+--
 -- Name: index_flat_rates_on_rable_id_ratable_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2049,41 +2085,6 @@ CREATE UNIQUE INDEX index_oauth_applications_on_uid ON public.oauth_applications
 --
 
 CREATE UNIQUE INDEX index_recordings_on_driver_id ON public.recordings USING btree (driver_id);
-
-
---
--- Name: index_route_site_entries_on_position_and_route_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_route_site_entries_on_position_and_route_id ON public.route_site_entries USING btree ("position", route_id);
-
-
---
--- Name: index_route_site_entries_on_route_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_route_site_entries_on_route_id ON public.route_site_entries USING btree (route_id);
-
-
---
--- Name: index_route_site_entries_on_site_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_route_site_entries_on_site_id ON public.route_site_entries USING btree (site_id);
-
-
---
--- Name: index_routes_on_company_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_routes_on_company_id ON public.routes USING btree (company_id);
-
-
---
--- Name: index_routes_on_company_id_and_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_routes_on_company_id_and_name ON public.routes USING btree (company_id, name);
 
 
 --
@@ -2276,6 +2277,13 @@ CREATE INDEX index_vehicles_on_name ON public.vehicles USING btree (name);
 
 
 --
+-- Name: route_site_entries_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX route_site_entries_index ON public.driving_route_site_entries USING btree ("position", driving_route_id);
+
+
+--
 -- Name: uniq_index_driver_logins_on_driver_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2322,27 +2330,19 @@ ALTER TABLE ONLY public.term_acceptances
 
 
 --
--- Name: routes fk_rails_11391cebde; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.routes
-    ADD CONSTRAINT fk_rails_11391cebde FOREIGN KEY (company_id) REFERENCES public.companies(id);
-
-
---
--- Name: route_site_entries fk_rails_186f4ef22a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.route_site_entries
-    ADD CONSTRAINT fk_rails_186f4ef22a FOREIGN KEY (route_id) REFERENCES public.routes(id);
-
-
---
 -- Name: drivers fk_rails_1ae84e42c0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.drivers
     ADD CONSTRAINT fk_rails_1ae84e42c0 FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: driving_routes fk_rails_1b21510d03; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_routes
+    ADD CONSTRAINT fk_rails_1b21510d03 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
@@ -2359,6 +2359,14 @@ ALTER TABLE ONLY public.activity_executions
 
 ALTER TABLE ONLY public.term_acceptances
     ADD CONSTRAINT fk_rails_28dd86c8c1 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: driving_route_site_entries fk_rails_31ef759a4b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_route_site_entries
+    ADD CONSTRAINT fk_rails_31ef759a4b FOREIGN KEY (driving_route_id) REFERENCES public.driving_routes(id);
 
 
 --
@@ -2431,14 +2439,6 @@ ALTER TABLE ONLY public.sites
 
 ALTER TABLE ONLY public.tours_reports
     ADD CONSTRAINT fk_rails_8558bdf31a FOREIGN KEY (customer_id) REFERENCES public.customers(id);
-
-
---
--- Name: route_site_entries fk_rails_85f3d328c8; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.route_site_entries
-    ADD CONSTRAINT fk_rails_85f3d328c8 FOREIGN KEY (site_id) REFERENCES public.sites(id);
 
 
 --
@@ -2559,6 +2559,14 @@ ALTER TABLE ONLY public.drives
 
 ALTER TABLE ONLY public.driver_logins
     ADD CONSTRAINT fk_rails_fe5b83ef83 FOREIGN KEY (driver_id) REFERENCES public.drivers(id);
+
+
+--
+-- Name: driving_route_site_entries fk_rails_fec71ee359; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.driving_route_site_entries
+    ADD CONSTRAINT fk_rails_fec71ee359 FOREIGN KEY (site_id) REFERENCES public.sites(id);
 
 
 --

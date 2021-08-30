@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         resources :companies, only: [] do
           resources :activities, only: [:index]
           resources :drivers, only: [:index]
+          resources :driving_routes, only: [:index]
           resources :sites, only: [:index]
           resources :vehicles, only: [:index]
         end
@@ -95,7 +96,7 @@ Rails.application.routes.draw do
         resources :drives
       end
       resources :vehicles
-      resources :routes
+      resources :driving_routes
     end
   end
 

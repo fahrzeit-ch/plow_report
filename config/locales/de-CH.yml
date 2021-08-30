@@ -12,7 +12,7 @@ de-CH:
     tours: "Touren & Fahrten"
     customers: "Kunden & Objekte"
     drivers: "Fahrer"
-    routes: "Routen"
+    driving_routes: "Routen"
     activities: "Tätigkeiten"
     tours_reports: "Rapporte"
     main:
@@ -120,7 +120,7 @@ de-CH:
       tours_report:
         one: "Rapport"
         other: "Rapporte"
-      route:
+      driving_route:
         one: "Route"
         other: "Routen"
     help:
@@ -129,7 +129,7 @@ de-CH:
         email: "Die E-Mail Adresse benötigen Sie um sich anzumelden, sowie um Ihr Passwort zurückzusetzen."
         password: "Das Passwort muss mindestens 6 Zeichen lang sein."
     attributes:
-      route:
+      driving_route:
         name: "Name"
         site_ordering: "Sortierung der Objekte"
         site_orderings:
@@ -334,7 +334,7 @@ de-CH:
       error: "Objekt konnte nicht aktuallisiert werden."
       destroyed: "Objekt erfolgreich gelöscht."
       not_destroyed: "Objekt konnte nicht gelöscht werden."
-    route:
+    driving_route:
       created: "Route erfolgreich erstellt."
       not_created: "Route konnte nicht erstellt werden."
       updated: "Route erfolgreich aktuallisiert."
@@ -480,7 +480,7 @@ de-CH:
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
-      routes:
+      driving_routes:
         empty_info_title: "Noch keine Routen erstellt"
         empty_info: "Mit Routen ist es möglich, nur die für den Fahrer nötigen Objekte in der App sichtbar zu machen."
         new_title: "Neue Route"

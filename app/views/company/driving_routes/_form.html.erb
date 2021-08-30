@@ -2,8 +2,8 @@
   <%= bootstrap_form_for([current_company, @route], local: true) do |f| %>
     <%= f.text_field :name %>
     <%= f.select :site_ordering, [
-      [t('activerecord.attributes.route.site_orderings.' + Route::ORDER_BY_DISTANCE), Route::ORDER_BY_DISTANCE],
-      [t('activerecord.attributes.route.site_orderings.' + Route::CUSTOM_ORDER), Route::CUSTOM_ORDER]]
+      [t('activerecord.attributes.driving_route.site_orderings.' + Route::ORDER_BY_DISTANCE), Route::ORDER_BY_DISTANCE],
+      [t('activerecord.attributes.driving_route.site_orderings.' + Route::CUSTOM_ORDER), Route::CUSTOM_ORDER]]
     %>
   <%= f.form_group do %>
       <%= f.label :site_entries %>
@@ -14,7 +14,7 @@
               <%= render "site_entry_fields", f: af %>
             <% end %>
             <div class="links form-group">
-              <%= link_to_add_association t('views.companies.routes.add_site'), f, :site_entries, class: 'btn btn-outline-secondary' %>
+              <%= link_to_add_association t('views.companies.driving_route.add_site'), f, :site_entries, class: 'btn btn-outline-secondary' %>
             </div>
           </ul>
         </div>
