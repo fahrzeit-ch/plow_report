@@ -2,8 +2,8 @@
   <%= bootstrap_form_for([current_company, @route], local: true) do |f| %>
     <%= f.text_field :name %>
     <%= f.select :site_ordering, [
-      [t('activerecord.attributes.driving_route.site_orderings.' + Route::ORDER_BY_DISTANCE), Route::ORDER_BY_DISTANCE],
-      [t('activerecord.attributes.driving_route.site_orderings.' + Route::CUSTOM_ORDER), Route::CUSTOM_ORDER]]
+      [t('activerecord.attributes.driving_route.site_orderings.' + DrivingRoute::ORDER_BY_DISTANCE), DrivingRoute::ORDER_BY_DISTANCE],
+      [t('activerecord.attributes.driving_route.site_orderings.' + DrivingRoute::CUSTOM_ORDER), DrivingRoute::CUSTOM_ORDER]]
     %>
   <%= f.form_group do %>
       <%= f.label :site_entries %>

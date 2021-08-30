@@ -2,7 +2,11 @@ class Company::DrivingRoutesController < ApplicationController
   before_action :set_route, only: %i[edit update destroy]
 
   def index
-    @routes = policy_scope(DrivingRoute).order(:name).page(params[:page]).per(50)
+    @routes = policy_scope(DrivingRoute)
+                .kept
+                .order(:name)
+                .page(params[:page])
+                .per(50)
   end
 
   def new
