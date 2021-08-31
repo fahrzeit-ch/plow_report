@@ -42,6 +42,7 @@ RSpec.describe Api::V1::VehiclesController, type: :controller do
               name:         vehicle.name,
               company_id:   vehicle.company_id,
               activity_ids: vehicle.activity_ids,
+              default_driving_route_id: vehicle.default_driving_route_id,
               discarded_at: vehicle.discarded_at,
               created_at:   vehicle.created_at.as_json)
           end

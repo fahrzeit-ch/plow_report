@@ -4,6 +4,7 @@
     name: vehicle.name,
     company_id: vehicle.company_id,
     activity_ids: vehicle.activity_ids,
+    default_driving_route_id: vehicle.default_driving_route_id,
     created_at: vehicle.created_at,
     updated_at: vehicle.updated_at,
     discarded_at: vehicle.discarded_at
