@@ -44,6 +44,7 @@ RSpec.describe Api::V1::DrivingRoutesController, type: :controller do
                              id:           driving_route.id,
                              name:         driving_route.name,
                              company_id:   driving_route.company_id,
+                             discarded_at: nil,
                              created_at:   driving_route.created_at.as_json)
           end
         end
@@ -67,7 +68,12 @@ RSpec.describe Api::V1::DrivingRoutesController, type: :controller do
                              id:           driving_route.id,
                              name:         driving_route.name,
                              company_id:   driving_route.company_id,
+                             discarded_at: nil,
                              created_at:   driving_route.created_at.as_json)
+          end
+          describe 'site entries' do
+            subject { api_response.attributes[:items][0][:site_entries][0] }
+            it { is_expected.to contain_keys([:position, :site_id]) }
           end
         end
       end

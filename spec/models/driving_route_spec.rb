@@ -28,5 +28,14 @@ RSpec.describe DrivingRoute, type: :model do
       attrs = { site_entries_attributes: [{site_id: site1.to_param, position: 0}, { site_id: site2.to_param, position: 1}] }
       expect { subject.update(attrs) }.to change(DrivingRoute::SiteEntry, :count).by 2
     end
+
+    describe "add site_entries" do
+      subject { create(:driving_route) }
+
+      it "changes updated_at" do
+        attrs = { site_entries_attributes: [{site_id: site1.to_param, position: 0}, { site_id: site2.to_param, position: 1}] }
+        expect { subject.update(attrs) }.to change(subject, :updated_at)
+      end
+    end
   end
 end
