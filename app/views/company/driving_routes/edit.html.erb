@@ -1,7 +1,7 @@
-<%= title_row t("views.companies.routes.edit_title") %>
+<%= title_row t("views.companies.driving_routes.edit_title") %>
 <%= toolbar_row do %>
   <div class="col">
-    <h4><%= link_to DrivingRoute.model_name.human(count: 3), company_driving_routes_path(current_company) %> / <%= t("common.edit") %></h4>
+    <h4><%= link_to DrivingRoute.model_name.human(count: 3), company_driving_routes_path(current_company) %> / <%= @route.name %></h4>
   </div>
 <% end %>
 <%= content_card do %>

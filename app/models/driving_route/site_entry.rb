@@ -3,4 +3,5 @@ class DrivingRoute::SiteEntry < ApplicationRecord
 
   belongs_to :site
   belongs_to :driving_route, inverse_of: :site_entries, touch: true
+  validates :site_id, presence: true
 end

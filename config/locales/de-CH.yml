@@ -337,6 +337,7 @@ de-CH:
     driving_route:
       created: "Route erfolgreich erstellt."
       not_created: "Route konnte nicht erstellt werden."
+      not_updated: "Route konnte nicht aktuallisiert werden. Prüfen sie alle Eingaben"
       updated: "Route erfolgreich aktuallisiert."
       error: "Route konnte nicht aktuallisiert werden."
       destroyed: "Route erfolgreich gelöscht."
@@ -457,9 +458,9 @@ de-CH:
         title: "Kunden"
         new: "Neuer Kunde erstellen"
         empty_info_title: "Noch keine Kunden"
+        empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         empty_info_title_search: "Keine Ergebnisse gefunden"
         empty_info_search: ""
-        empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         convert_to_site: "In Objekt umwandeln"
         convert_to_site_info:
           one: "Ein Einsatz wird auf das neue Objekt umgehängt."
