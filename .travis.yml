@@ -1,5 +1,7 @@
 language: ruby
 cache: bundler
+addons:
+  postgresql: "13"
 before_install:
   - nvm install --lts
   - npm install yarn
