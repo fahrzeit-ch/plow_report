@@ -16,6 +16,7 @@
         <%= link_to_add_association t("views.vehicles.add_activity"), f, :vehicle_activity_assignments, class: 'btn btn-outline-secondary' %>
       </div>
     </div>
+    <%= f.select :default_driving_route_id, available_driving_routes.map { |route| [route.name, route.id] }, include_blank: true %>
     <hr>
     <%= f.form_group do %>
       <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
