@@ -30,11 +30,21 @@ RSpec.describe DrivingRoute, type: :model do
     end
 
     describe "add site_entries" do
-      subject { create(:driving_route) }
-
       it "changes updated_at" do
         attrs = { site_entries_attributes: [{site_id: site1.to_param, position: 0}, { site_id: site2.to_param, position: 1}] }
         expect { subject.update(attrs) }.to change(subject, :updated_at)
+      end
+    end
+
+    describe "vehicle assignments" do
+      let(:vehicle) { create(:vehicle, company: subject.company, default_driving_route: subject) }
+
+      it "nullifies default_driving_route when deleting driving_route" do
+        expect { subject.destroy; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
+      end
+
+      it "nullifies default_driving_route when discarding driving_route" do
+        expect { subject.discard; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
       end
     end
   end

@@ -14,7 +14,16 @@ class DrivingRoute < ApplicationRecord
   belongs_to :company
   validates :name, presence: true, uniqueness: { scope: :company_id }
   validates :site_ordering, inclusion: [ORDER_BY_DISTANCE, CUSTOM_ORDER]
+  has_many :vehicles, inverse_of: :default_driving_route, dependent: :nullify, foreign_key: :default_driving_route_id
 
   has_many :site_entries, -> { order(:position) }, :class_name => 'DrivingRoute::SiteEntry', inverse_of: :driving_route
   accepts_nested_attributes_for :site_entries, allow_destroy: true, reject_if: :all_blank
+
+  after_discard :nullify_default_driving_routes
+
+  private
+    def nullify_default_driving_routes
+      vehicles.update_all(default_driving_route_id: nil)
+    end
+
 end

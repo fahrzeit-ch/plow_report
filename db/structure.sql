@@ -1202,7 +1202,8 @@ CREATE TABLE public.vehicles (
     discarded_at timestamp without time zone,
     company_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    default_driving_route_id integer
 );
 
 
@@ -2578,6 +2579,14 @@ ALTER TABLE ONLY public.standby_dates
 
 
 --
+-- Name: vehicles fk_vehicles_driving_routes; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vehicles
+    ADD CONSTRAINT fk_vehicles_driving_routes FOREIGN KEY (default_driving_route_id) REFERENCES public.driving_routes(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2645,6 +2654,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210214215352'),
 ('20210216111236'),
 ('20210609081250'),
-('20210729193815');
+('20210729193815'),
+('20210831203507');
 
 
