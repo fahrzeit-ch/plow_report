@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+{
+    items: render(partial: "route", collection: @records, as: :route),
+}.merge! render("api/v1/shared/pagination", pagination_source: @records)

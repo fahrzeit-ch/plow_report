@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+{
+    id: route.id,
+    name: route.name,
+    company_id: route.company_id,
+    site_ordering: route.site_ordering,
+    created_at: route.created_at,
+    updated_at: route.updated_at,
+    site_entries: render(partial: "site_entry", collection: route.site_entries, as: :site_entry),
+    discarded_at: route.discarded_at
+}

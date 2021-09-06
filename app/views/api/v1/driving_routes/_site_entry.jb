@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+{
+  site_id: site_entry.site_id,
+  driving_route_id: site_entry.driving_route_id,
+  position: site_entry.position
+}

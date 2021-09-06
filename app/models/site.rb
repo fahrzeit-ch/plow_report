@@ -5,6 +5,7 @@ class Site < ApplicationRecord
   before_destroy :check_drives
 
   has_many :drives, class_name: "Drive"
+  has_many :site_entries, dependent: :destroy, class_name: "DrivingRoute::SiteEntry"
 
   validates :display_name, presence: true, uniqueness: { scope: :customer_id }
 

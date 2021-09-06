@@ -2,16 +2,19 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::VehiclesController, type: :controller do
+RSpec.describe Api::V1::DrivingRoutesController, type: :controller do
   render_views
 
   let(:user) { create(:user) }
   let(:company) { create(:company) }
-  let(:vehicle) { create(:vehicle, company: company) }
-  let(:activity) { create(:activity, company: company) }
+
+  let!(:driving_route) do
+    create(:driving_route, company: company) do |route|
+      create_list(:site_entry, 3, driving_route: route)
+    end
+  end
 
   before do
-    vehicle.activities << activity
     sign_in_user(user)
   end
 
@@ -38,32 +41,13 @@ RSpec.describe Api::V1::VehiclesController, type: :controller do
           subject { api_response.attributes[:items][0] }
           it do
             is_expected.to contain_hash_values(
-              id:           vehicle.id,
-              name:         vehicle.name,
-              company_id:   vehicle.company_id,
-              activity_ids: vehicle.activity_ids,
-              default_driving_route_id: vehicle.default_driving_route_id,
-              discarded_at: vehicle.discarded_at,
-              created_at:   vehicle.created_at.as_json)
+                             id:           driving_route.id,
+                             name:         driving_route.name,
+                             company_id:   driving_route.company_id,
+                             discarded_at: nil,
+                             created_at:   driving_route.created_at.as_json)
           end
         end
-      end
-
-      context "with multiple activities assigned" do
-        let(:activity2) { create(:activity, company: company) }
-        before { vehicle.activities << activity2 }
-        before { get :index, params: { format: :json, company_id: company.id } }
-
-        subject { api_response.attributes[:items] }
-        its(:count) { is_expected.to eq 1 }
-      end
-
-      describe "discarded vehicles" do
-        before { vehicle.discard }
-        before { get :index, params: { format: :json, company_id: company.id } }
-        subject { api_response.attributes[:items] }
-
-        its(:count) { is_expected.to eq 1 }
       end
 
     end
@@ -81,12 +65,15 @@ RSpec.describe Api::V1::VehiclesController, type: :controller do
           subject { api_response.attributes[:items][0] }
           it do
             is_expected.to contain_hash_values(
-              id:           vehicle.id,
-              name:         vehicle.name,
-              company_id:   vehicle.company_id,
-              activity_ids: vehicle.activity_ids,
-              discarded_at: vehicle.discarded_at,
-              created_at:   vehicle.created_at.as_json)
+                             id:           driving_route.id,
+                             name:         driving_route.name,
+                             company_id:   driving_route.company_id,
+                             discarded_at: nil,
+                             created_at:   driving_route.created_at.as_json)
+          end
+          describe 'site entries' do
+            subject { api_response.attributes[:items][0][:site_entries][0] }
+            it { is_expected.to contain_keys([:position, :site_id]) }
           end
         end
       end

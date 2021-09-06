@@ -57,6 +57,10 @@ class CompanyPolicy < ApplicationPolicy
     company_admin_or_owner?(record) || is_demo(record)
   end
 
+  def index_routes?
+    company_admin_or_owner?(record) || is_demo(record)
+  end
+
   def index_reports?
     company_admin_or_owner?(record) || is_demo(record)
   end

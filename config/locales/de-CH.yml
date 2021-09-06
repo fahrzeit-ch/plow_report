@@ -12,6 +12,7 @@ de-CH:
     tours: "Touren & Fahrten"
     customers: "Kunden & Objekte"
     drivers: "Fahrer"
+    driving_routes: "Routen"
     activities: "Tätigkeiten"
     tours_reports: "Rapporte"
     main:
@@ -119,12 +120,22 @@ de-CH:
       tours_report:
         one: "Rapport"
         other: "Rapporte"
+      driving_route:
+        one: "Route"
+        other: "Routen"
     help:
       user:
         name: "Ihr vollständiger Name"
         email: "Die E-Mail Adresse benötigen Sie um sich anzumelden, sowie um Ihr Passwort zurückzusetzen."
         password: "Das Passwort muss mindestens 6 Zeichen lang sein."
     attributes:
+      driving_route:
+        name: "Name"
+        site_ordering: "Sortierung der Objekte"
+        site_orderings:
+          order_by_distance: "Nach Entfernung"
+          custom_order: "Sortierung gemäss Objektliste"
+        site_entries: "Objektliste"
       activity:
         name: "Name"
         has_value: "Erfordert Eingabe eines Werts (z.B. Menge oder Distanz)"
@@ -215,6 +226,7 @@ de-CH:
         price_help: ""
         price: "Stundensatz für Anfahrten"
         discarded_postfix: "(Deaktiviert)"
+        default_driving_route_id: "Standard Route"
         price_help_html: "<p>Die für die Verrechnung verwendete Anfahrtsdauer wird auf die Anzahl Objekte einer Tour aufgeteilt.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
         activities_help_html: "<p>Tätigkeiten die mit diesem Fahrzeug ausgeführt werden können.</p><p>Fahrten mit diesem Fahrzeug können nur die hier definierten Tätigkeiten zugeordnet werden.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
       tour:
@@ -323,6 +335,14 @@ de-CH:
       error: "Objekt konnte nicht aktuallisiert werden."
       destroyed: "Objekt erfolgreich gelöscht."
       not_destroyed: "Objekt konnte nicht gelöscht werden."
+    driving_route:
+      created: "Route erfolgreich erstellt."
+      not_created: "Route konnte nicht erstellt werden."
+      not_updated: "Route konnte nicht aktuallisiert werden. Prüfen sie alle Eingaben"
+      updated: "Route erfolgreich aktuallisiert."
+      error: "Route konnte nicht aktuallisiert werden."
+      destroyed: "Route erfolgreich gelöscht."
+      not_destroyed: "Route konnte nicht gelöscht werden."
     customer_to_site_transition:
       success: "Das Objekt wurde erfolgreich erstellt und alle Einsätze umgehängt."
     common:
@@ -439,9 +459,9 @@ de-CH:
         title: "Kunden"
         new: "Neuer Kunde erstellen"
         empty_info_title: "Noch keine Kunden"
+        empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         empty_info_title_search: "Keine Ergebnisse gefunden"
         empty_info_search: ""
-        empty_info: "Erfassen Sie Kunden und deren Objekte, damit Mitarbeiter via App die Einsätze erfassen können."
         convert_to_site: "In Objekt umwandeln"
         convert_to_site_info:
           one: "Ein Einsatz wird auf das neue Objekt umgehängt."
@@ -462,6 +482,16 @@ de-CH:
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"
+      driving_routes:
+        empty_info_title: "Noch keine Routen erstellt"
+        empty_info: "Mit Routen ist es möglich, nur die für den Fahrer nötigen Objekte in der App sichtbar zu machen."
+        new_title: "Neue Route"
+        edit_title: "Route bearbeiten"
+        title: "Routen"
+        new: "Neue Route erstellen"
+        site_entries_entry: "Ziehe Objekte per Drag and Drop hierhin um sie der Route hinzuzufügen."
+        drag_target_info: "Kunden Objekte hier hin ziehen"
+        add_site: "Kundenobjekt hinzufügen"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"

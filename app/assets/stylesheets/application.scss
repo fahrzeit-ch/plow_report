@@ -280,3 +280,18 @@ form .nested-fields {
   background-color: #f8f9fa;
   border: 1px solid #ced4da;
 }
+
+.item-dashed {
+  border: 1px dashed rgba(0, 0, 0, 0.125);
+}
+
+.drop-ghost {
+  background: #3498db;
+  opacity: 0.5;
+}
+
+.drag-target-info {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+}

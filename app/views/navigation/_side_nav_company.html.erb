@@ -25,6 +25,10 @@
     <%= navbar_item("company/vehicles", "truck") %>
   <% end %>
 
+  <% if policy(current_company).index_routes? %>
+    <%= navbar_item("company/driving_routes", "map-signs") %>
+  <% end %>
+
   <% if policy(current_company).index_activities? %>
     <%= navbar_item("company/activities", "hourglass-o") %>
   <% end %>
