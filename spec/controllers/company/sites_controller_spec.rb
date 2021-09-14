@@ -73,7 +73,7 @@ RSpec.describe Company::SitesController, type: :controller do
     end
   end
 
-  describe "GET #destroy" do
+  describe "DELETE #destroy" do
     let(:site) { create(:site, customer: customer) }
     subject { delete :destroy, params: { company_id: company.to_param, customer_id: customer.to_param, id: site.to_param } }
 
@@ -132,6 +132,21 @@ RSpec.describe Company::SitesController, type: :controller do
         put :update, params: { id: site.id, customer_id: customer.to_param, company_id: company.to_param, site: new_attrs }
         site.reload
         expect(site.name).to eq new_attrs[:name]
+      end
+
+      describe "site_info" do
+        context "create site info" do
+          let(:site) { create(:site, customer: customer) }
+          let(:content) { "Some Info text" }
+          let(:new_attrs) { attributes_for(:site, site_info_attributes: { content: content } ) }
+
+          it "creates a new site info" do
+            put :update, params: { id: site.id, customer_id: customer.to_param, company_id: company.to_param, site: new_attrs }
+            site.reload
+            site_info = site.site_info
+            expect(site_info.content).to eq content
+          end
+        end
       end
     end
 

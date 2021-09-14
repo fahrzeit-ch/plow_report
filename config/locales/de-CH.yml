@@ -193,6 +193,8 @@ de-CH:
         commitment_fee: "Bereitschaftspauschale (pro Saison)"
         activity_fee: "Tätigkeitspauschale (pro Einsatz)"
         activity_fee_help_html: "<p>Für dieses Objekt Tätigkeitspauschalen anstatt des stundenbasierten Tätigkeitspreises verwenden. Es wird nur eine Tätigkeitspauschle pro Tour verrechnet.</p><p>Für Tätigkeiten denen keine aktive Pauschale zugeordnet ist, wird der auf dem Fahrzeug festgelegte Stundensatz verwendet.</p><p>Die Pauschale wird nur für hier definierte Tätigkeiten angewendet.</p><p>Änderungen gelten rückwirkend ab Saisonstart der aktuellen Saison (1. Juli).</p>"
+      site_info:
+        content: "Informationen für Fahrer"
       pricing/flat_rate:
         active: "Pauschale aktiv"
       drive:
@@ -479,6 +481,8 @@ de-CH:
         show_inactive: "Inaktive anzeigen"
         add_flat_rate: "Pauschale hinzufügen"
         remove_flat_rate: "X"
+        add_site_info: "Informationen für Fahrer hinterlegen"
+        site_info_help: "Diese Information ist für die Fahrer in der App sichtbar."
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"

@@ -937,6 +937,39 @@ ALTER SEQUENCE public.site_activity_flat_rates_id_seq OWNED BY public.site_activ
 
 
 --
+-- Name: site_infos; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.site_infos (
+    id bigint NOT NULL,
+    site_id bigint NOT NULL,
+    discarded_at timestamp without time zone,
+    content text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: site_infos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.site_infos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: site_infos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.site_infos_id_seq OWNED BY public.site_infos.id;
+
+
+--
 -- Name: sites; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1395,6 +1428,13 @@ ALTER TABLE ONLY public.site_activity_flat_rates ALTER COLUMN id SET DEFAULT nex
 
 
 --
+-- Name: site_infos id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.site_infos ALTER COLUMN id SET DEFAULT nextval('public.site_infos_id_seq'::regclass);
+
+
+--
 -- Name: sites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1664,6 +1704,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.site_activity_flat_rates
     ADD CONSTRAINT site_activity_flat_rates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: site_infos site_infos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.site_infos
+    ADD CONSTRAINT site_infos_pkey PRIMARY KEY (id);
 
 
 --
@@ -2103,6 +2151,13 @@ CREATE INDEX index_site_activity_flat_rates_on_site_id ON public.site_activity_f
 
 
 --
+-- Name: index_site_infos_on_site_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_site_infos_on_site_id ON public.site_infos USING btree (site_id);
+
+
+--
 -- Name: index_sites_on_customer_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2515,6 +2570,14 @@ ALTER TABLE ONLY public.driver_applications
 
 
 --
+-- Name: site_infos fk_rails_d027f2e8c9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.site_infos
+    ADD CONSTRAINT fk_rails_d027f2e8c9 FOREIGN KEY (site_id) REFERENCES public.sites(id);
+
+
+--
 -- Name: tours fk_rails_d4c281e8ca; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2655,6 +2718,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210216111236'),
 ('20210609081250'),
 ('20210729193815'),
-('20210831203507');
+('20210831203507'),
+('20210912090730');
 
 
