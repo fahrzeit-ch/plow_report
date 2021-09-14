@@ -1,0 +1,5 @@
+if site_info
+  { content: site_info.content }
+else
+  nil
+end

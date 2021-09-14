@@ -9,7 +9,7 @@ RSpec.describe Api::V1::SitesController, type: :controller do
   let(:company) { create(:company) }
   let(:customer1) { create(:customer, client_of: company) }
 
-  let(:site1) { create(:site, customer: customer1) }
+  let(:site1) { create(:site, customer: customer1, site_info_attributes: { content: "Text" }) }
 
   before do
     site1
@@ -39,9 +39,16 @@ RSpec.describe Api::V1::SitesController, type: :controller do
                                                               :first_name,
                                                               :street,
                                                               :city,
+                                                              :site_info,
                                                               :zip,
                                                               :active,
                                                               :customer_id])}
+
+        context "without site_info" do
+          let(:site1) { create(:site, customer: customer1) }
+          subject { api_response.attributes[:items][0][:site_info] }
+          it { is_expected.to be_nil }
+        end
       end
 
       describe "location point" do
