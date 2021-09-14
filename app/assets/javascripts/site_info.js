@@ -19,7 +19,7 @@ $(document).on('turbolinks:load', function() {
             height: '500px',
             initialValue: contentInputField.val(),
             initialEditType: 'wysiwyg',
-            language: 'de',
+            language: 'de-DE',
             usageStatistics: false,
             toolbarItems: [
                 ['heading', 'bold', 'italic'],
