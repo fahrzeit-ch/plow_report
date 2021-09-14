@@ -21,6 +21,12 @@ $(document).on('turbolinks:load', function() {
             initialEditType: 'wysiwyg',
             language: 'de',
             usageStatistics: false,
+            toolbarItems: [
+                ['heading', 'bold', 'italic'],
+                ['hr'],
+                ['ul', 'ol', 'indent', 'outdent'],
+                ['table', 'image', 'link'],
+            ],
             hideModeSwitch: true
         });
 
