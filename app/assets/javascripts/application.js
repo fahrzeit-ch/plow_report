@@ -33,6 +33,7 @@
 //= require cable
 //= require sortablejs
 //= require routes
+//= require site_info
 
 window.typeIsArray = function(value) {
     obj = {};

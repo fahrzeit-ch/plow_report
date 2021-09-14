@@ -11,6 +11,7 @@ json = {
     location: site.area_json,
     customer_id: site.customer_id,
     active: site.active,
+    site_info: render("site_info", site_info: site.site_info),
     created_at: site.created_at,
     updated_at: site.updated_at
 }

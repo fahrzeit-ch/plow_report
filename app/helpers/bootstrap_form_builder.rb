@@ -27,6 +27,11 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     super(attribute, options)
   end
 
+  def text_area(attribute, options = {})
+    options = append_classes options, attribute
+    super(attribute, options)
+  end
+
   def select(method, choices, options = {}, html_options = {}, &block)
     html_options = append_classes(html_options, method, ["custom-control", "custom-select"])
     super(method, choices, options, html_options, &block)

@@ -43,6 +43,25 @@ RSpec.describe Site, type: :model do
     end
   end
 
+  describe "site_info" do
+    let(:content) { "Some markdown info about this site" }
+    let(:site) { create(:site, site_info_attributes: { content: content }) }
+    subject { site.site_info }
+    it { is_expected.to be_a SiteInfo  }
+    its(:content) { is_expected.to eq content }
+
+    describe "update site info" do
+      let(:site) { create(:site) }
+      subject { site }
+      it "touches site" do
+        expect {
+          subject.update( site_info_attributes: { content: "new content" })
+          subject.reload
+        }.to change(subject, :updated_at)
+      end
+    end
+  end
+
   describe "pricing" do
     let(:site) { create(:site) }
     let!(:flat_rate) { create(:pricing_flat_rate, flat_ratable: site, valid_from: 1.day.ago) }

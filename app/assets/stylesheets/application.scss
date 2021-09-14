@@ -295,3 +295,7 @@ form .nested-fields {
   top: 20px;
   left: 30px;
 }
+//This hides the add_association button if there is a .nested-fields which isn't hidden as a sibling
+.nested-fields:not([style*="display: none;"]) ~ .links.max-one-association {
+  display: none;
+}

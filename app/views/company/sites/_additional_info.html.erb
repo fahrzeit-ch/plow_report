@@ -1,0 +1,8 @@
+<div class="form-group" id="siteInfo">
+  <%= f.fields_for :site_info, f.object.site_info do |fields| %>
+    <%= render 'company/sites/site_info_fields', f: fields %>
+  <% end %>
+  <div class="links max-one-association">
+    <%= link_to_add_association t("views.companies.sites.add_site_info"), f, :site_info, force_non_association_create: true, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

@@ -6,6 +6,7 @@ class Site < ApplicationRecord
 
   has_many :drives, class_name: "Drive"
   has_many :site_entries, dependent: :destroy, class_name: "DrivingRoute::SiteEntry"
+  has_one :site_info, dependent: :destroy
 
   validates :display_name, presence: true, uniqueness: { scope: :customer_id }
 
@@ -27,6 +28,7 @@ class Site < ApplicationRecord
 
   has_many :site_activity_flat_rates, dependent: :destroy
   accepts_nested_attributes_for :site_activity_flat_rates, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :site_info, allow_destroy: true, reject_if: :all_blank
 
   include AddressSearch
 
