@@ -1,5 +1,6 @@
 <div class="nested-fields">
   <%= f.label :content %>
-  <%= f.text_area :content %>
+  <%= f.hidden_field :content, id: 'infoContent' %>
+  <div id="editor"></div>
   <%= link_to_remove_association "Zusatz-Info entfernen", f, class: "btn btn-danger" %>
 </div>

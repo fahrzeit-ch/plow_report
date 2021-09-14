@@ -1,7 +1,7 @@
-const positionSelector = 'input.position-attr';
-const containerSelector = '#site-list-container';
-
 $(document).on('turbolinks:load', function() {
+    const positionSelector = 'input.position-attr';
+    const containerSelector = '#site-list-container';
+
     const container = $(containerSelector);
 
     container.on('cocoon:after-insert', (e, insertedItem) => {
@@ -12,13 +12,15 @@ $(document).on('turbolinks:load', function() {
     })
 
     const selected_sites = document.getElementById('selected_sites');
-    Sortable.create(selected_sites, {
-        ghostClass: 'drop-ghost',
-        filter: '.no-drag',
-        onEnd: (/**Event*/evt) => {
-            updatePositions();
-        },
-    });
+    if(selected_sites) {
+        Sortable.create(selected_sites, {
+            ghostClass: 'drop-ghost',
+            filter: '.no-drag',
+            onEnd: (/**Event*/evt) => {
+                updatePositions();
+            },
+        });
+    }
 
     function updatePositions() {
         let position = 1;
