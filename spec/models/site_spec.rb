@@ -48,7 +48,18 @@ RSpec.describe Site, type: :model do
     let(:site) { create(:site, site_info_attributes: { content: content }) }
     subject { site.site_info }
     it { is_expected.to be_a SiteInfo  }
-    its(:content) { is_expected.to eq content  }
+    its(:content) { is_expected.to eq content }
+
+    describe "update site info" do
+      let(:site) { create(:site) }
+      subject { site }
+      it "touches site" do
+        expect {
+          subject.update( site_info_attributes: { content: "new content" })
+          subject.reload
+        }.to change(subject, :updated_at)
+      end
+    end
   end
 
   describe "pricing" do
