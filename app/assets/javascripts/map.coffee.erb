@@ -215,6 +215,7 @@ $(document).on 'turbolinks:load', ->
   map = new google.maps.Map(document.getElementById('map'), mapOptions)
   loadMapData()
   map.data.addGeoJson(geoJson)
+  jsonData = geoJson;
 
   bounds = new google.maps.LatLngBounds()
   if geoJson.geometry
