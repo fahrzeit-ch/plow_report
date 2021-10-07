@@ -1,4 +1,15 @@
+<div class="form-group" id="requiredValues">
+  <%= f.label(:activity_ids) %>
+  <%= f.collection_check_boxes :activity_ids, Activity.where(company: current_company, has_value: true), :id, :name_and_value_label do |k| %>
+    <div class="custom-control custom-switch">
+      <%= k.check_box({class: 'custom-control-input'}) %>
+      <%= k.label({class: 'custom-control-label'}) %>
+    </div>
+  <% end %>
+</div>
+<hr>
 <div class="form-group" id="siteInfo">
+  <%= f.label :site_info %>
   <%= f.fields_for :site_info, f.object.site_info do |fields| %>
     <%= render 'company/sites/site_info_fields', f: fields %>
   <% end %>

@@ -7,6 +7,7 @@ class Site < ApplicationRecord
   has_many :drives, class_name: "Drive"
   has_many :site_entries, dependent: :destroy, class_name: "DrivingRoute::SiteEntry"
   has_one :site_info, dependent: :destroy
+  has_and_belongs_to_many :activities
 
   validates :display_name, presence: true, uniqueness: { scope: :customer_id }
 

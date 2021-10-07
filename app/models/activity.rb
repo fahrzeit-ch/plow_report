@@ -50,6 +50,12 @@ class Activity < ApplicationRecord
     has_value? == other.has_value? && name == other.name && value_label == other.value_label
   end
 
+  def name_and_value_label
+    if has_value?
+      "#{name}: #{value_label}"
+    end
+  end
+
   private
     def squish_name
       self.name&.squish!

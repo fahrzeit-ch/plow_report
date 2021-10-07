@@ -146,3 +146,6 @@ en:
       empty: ""
     company_tours:
       edit: ""
+    companies:
+      sites:
+        tab_label_general: "General"

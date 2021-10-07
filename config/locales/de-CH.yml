@@ -188,6 +188,8 @@ de-CH:
         zip: "PLZ"
         city: "Ort"
         active: 'Objekt Aktiv'
+        site_info: "Fahrer Information"
+        activity_ids: "Werte müssen erfasst werden für:"
         travel_expense: "Anfahrtspauschale (pro Einsatz)"
         travel_expense_help_html: "<p>Für dieses Objekt eine Anfahrtspauschale verrechnen. Die Anfahrtspauschale wird nur einmal pro Tour verrechnet.</p><p>Ist die Anfahrtspauschale nicht aktiv, wird der auf dem Fahrzeug hinterlegte Stundensatz verwendet.</p><p>Änderungen gelten rückwirkend auf Saisonstart ab aktuellen Saison (1. Juli).</p>"
         commitment_fee: "Bereitschaftspauschale (pro Saison)"
@@ -483,6 +485,9 @@ de-CH:
         remove_flat_rate: "X"
         add_site_info: "Informationen für Fahrer hinterlegen"
         site_info_help: "Diese Information ist für die Fahrer in der App sichtbar."
+        tab_label_general: "Allgemein"
+        tab_label_flatrates: "Pauschalen"
+        tab_label_additional_info: "Erweitert"
       price_rates:
         title: "Preise"
         set_price: "Neuen Preis setzen"

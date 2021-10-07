@@ -169,6 +169,16 @@ ALTER SEQUENCE public.activities_id_seq OWNED BY public.activities.id;
 
 
 --
+-- Name: activities_sites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activities_sites (
+    site_id bigint NOT NULL,
+    activity_id bigint NOT NULL
+);
+
+
+--
 -- Name: activity_executions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1850,6 +1860,20 @@ CREATE INDEX index_activities_on_name ON public.activities USING btree (name);
 
 
 --
+-- Name: index_activities_sites_on_activity_id_and_site_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_sites_on_activity_id_and_site_id ON public.activities_sites USING btree (activity_id, site_id);
+
+
+--
+-- Name: index_activities_sites_on_site_id_and_activity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_sites_on_site_id_and_activity_id ON public.activities_sites USING btree (site_id, activity_id);
+
+
+--
 -- Name: index_activity_executions_on_activity_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2719,6 +2743,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210609081250'),
 ('20210729193815'),
 ('20210831203507'),
-('20210912090730');
+('20210912090730'),
+('20211007205529');
 
 

@@ -39,6 +39,7 @@ class SitePolicy < ApplicationPolicy
 
   def permitted_attributes
     [:display_name, :first_name, :name, :street, :nr, :zip, :city, :active, :area_features,
+     activity_ids: [],
      site_info_attributes: [:id, :_destroy, :content],
      site_activity_flat_rates_attributes: [:id, :_destroy, :activity_id, activity_fee_attributes: [:active, :price, :valid_from]],
      commitment_fee_attributes: [:active, :price, :valid_from],
