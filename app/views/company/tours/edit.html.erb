@@ -21,6 +21,26 @@
   <%= render 'form', tour: @record %>
 <% end %>
 
+<% unless @record.invalid_drives.empty? %>
+  <%= content_card body: true, card_css: 'is-invalid' do %>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex">
+          <div class="">
+            <h4><i class="fa fa-exclamation-triangle mr-3 text-danger"></i></h4>
+          </div>
+          <div>
+            <h4><%= t'views.company_tours.invalid_drives_title' %></h4>
+            <p><%= t'views.company_tours.invalid_drives_description' %></p>
+          </div>
+
+        </div>
+        <%= render partial: '/company/drives/drive', collection: @record.invalid_drives, locals: { tools: true, tour: @record } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 <%= content_card body: true do %>
   <div class="row mb-3">
     <div class="col-12">
@@ -33,6 +53,7 @@
       <% end %>
     </div>
   </div>
+
   <div class="row">
     <div class="col-12">
       <% if @record.drives.empty? %>

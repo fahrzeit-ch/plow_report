@@ -188,5 +188,32 @@ RSpec.describe Tour, type: :model do
 
   end
 
+  describe "drives with missing values" do
+    let(:tour) { create(:tour) }
+    let(:value_activity) { create(:value_activity) }
+    let(:activity) { create(:activity) }
+    let(:site1) { create(:site, requires_value_for_ids: [value_activity.id]) }
+    let(:site2) { create(:site) }
+
+    subject { tour.invalid_drives }
+
+    context "having site with zero value" do
+      let!(:drive_1) { create(:drive, tour: tour, site: site1, activity_execution_attributes: { activity_id: value_activity.id, value: 0 }) }
+
+      it { is_expected.to include(drive_1) }
+
+      it "will not have invalid drives if at least one of the same sites have an activity value set" do
+        create(:drive, tour: tour, site: site1, activity_execution_attributes: { activity_id: value_activity.id, value: 1.0 })
+        expect(subject).not_to include(drive_1)
+      end
+
+      it "will still treat the drive as invalid if the same site was done with other activity" do
+        create(:drive, tour: tour, site: site1, activity_execution_attributes: { activity_id: activity.id, value: 1.0 })
+        expect(subject).to include(drive_1)
+      end
+    end
+
+  end
+
 
 end

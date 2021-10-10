@@ -32,6 +32,15 @@ class Tour < ApplicationRecord
     drives.last
   end
 
+  # Returns a list of drives that need to be checked by the user
+  # because they have missing values
+  def invalid_drives
+    all_drives = drives.includes(activity_execution: :activity, site: :requires_value_for).to_a
+    all_invalid_drives = all_drives.to_a.select { |d| d.missing_activity_value }
+    all_invalid_drives.reject { |d| has_corresponding_valid_drive(all_drives, d) }
+  end
+  memoize :invalid_drives
+
   # Returns the first drive associated to this
   # tour sorted by starttime
   #
@@ -155,6 +164,11 @@ class Tour < ApplicationRecord
   end
 
   private
+
+    def has_corresponding_valid_drive(all_drives, d)
+      all_drives.any? { |d1| d.id != d1.id && d.site_id == d1.site_id && d.activity.id == d1.activity.id && !d1.missing_activity_value }
+    end
+
     def update_children
       changes = {}
       changes[:vehicle_id] = self.vehicle_id if saved_change_to_attribute?(:vehicle_id)

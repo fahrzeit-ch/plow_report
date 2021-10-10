@@ -534,6 +534,8 @@ de-CH:
       add_drive: "Einsatz Hinzufügen"
       assign_new_vehicle: "Neues Fahrzeug zuweisen"
       no_vehicle_assigned: "(Kein Fahrzeug zugeordnet)"
+      invalid_drives_title: "Fehlende Angaben"
+      invalid_drives_description: "Bitte korrigieren Sie die Angaben für diese Fahrten"
     stats:
       duration: "Fahrzeit"
       total_distance: "Total Km"

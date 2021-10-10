@@ -92,9 +92,10 @@ module ApplicationHelper
 
   def content_card(opts = {})
     body = opts.delete(:body)
+    card_css = opts.delete(:card_css)
     content_tag("div", class: "row mt-3") do
       content_tag("div", class: "col-12") do
-        content_tag("div", class: "card") do
+        content_tag("div", class: "card #{card_css}") do
           if body
             content_tag("div", class: "card-body") do
               yield if block_given?

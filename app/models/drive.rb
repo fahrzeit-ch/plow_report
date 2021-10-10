@@ -54,6 +54,13 @@ class Drive < ApplicationRecord
     driver.company
   end
 
+  # Whether or not an activity value for the drives
+  # activity execution is required.
+  def missing_activity_value
+    return false unless activity.has_value
+    site.requires_value_for_ids.include?(activity.id) && activity_execution.value == 0
+  end
+
   def week_nr
     self.start.to_date.cweek
   end

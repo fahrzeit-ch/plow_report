@@ -299,3 +299,9 @@ form .nested-fields {
 .nested-fields:not([style*="display: none;"]) ~ .links.max-one-association {
   display: none;
 }
+
+.is-invalid {
+  &.card {
+    border: 1px solid #ef6a69;
+  }
+}
