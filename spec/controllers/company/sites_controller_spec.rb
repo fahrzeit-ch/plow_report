@@ -176,5 +176,20 @@ RSpec.describe Company::SitesController, type: :controller do
         end
       end
     end
+
+    describe "required activity values" do
+      before { CompanyMember.last.update(role: CompanyMember::ADMINISTRATOR) }
+      let(:activity) { create(:value_activity) }
+      let(:site) { create(:site, customer: customer) }
+      let(:new_attrs) { { requires_value_for_ids: [activity.id] } }
+
+      it "adds selected activities to the list" do
+        put :update, params: { id: site.id, customer_id: customer.to_param, company_id: company.to_param, site: new_attrs }
+
+        site.reload
+        expect(site.requires_value_for).to include(activity)
+      end
+
+    end
   end
 end

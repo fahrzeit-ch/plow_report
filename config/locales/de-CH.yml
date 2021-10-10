@@ -189,7 +189,7 @@ de-CH:
         city: "Ort"
         active: 'Objekt Aktiv'
         site_info: "Fahrer Information"
-        activity_ids: "Werte müssen erfasst werden für:"
+        requires_value_for_ids: "Werte müssen erfasst werden für:"
         travel_expense: "Anfahrtspauschale (pro Einsatz)"
         travel_expense_help_html: "<p>Für dieses Objekt eine Anfahrtspauschale verrechnen. Die Anfahrtspauschale wird nur einmal pro Tour verrechnet.</p><p>Ist die Anfahrtspauschale nicht aktiv, wird der auf dem Fahrzeug hinterlegte Stundensatz verwendet.</p><p>Änderungen gelten rückwirkend auf Saisonstart ab aktuellen Saison (1. Juli).</p>"
         commitment_fee: "Bereitschaftspauschale (pro Saison)"

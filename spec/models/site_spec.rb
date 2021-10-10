@@ -199,4 +199,22 @@ RSpec.describe Site, type: :model do
       end
     end
   end
+
+  describe "enforced values" do
+    let(:activity) { create(:value_activity) }
+    let(:site) { create(:site) }
+
+    it "is possible to assign site with an activity" do
+      site.requires_value_for << activity
+      expect(site.requires_value_for.count).to eq 1
+    end
+
+    it "will touch the site" do
+      expect {
+        site.requires_value_for << activity
+      }.to change(site, :updated_at)
+    end
+
+
+  end
 end

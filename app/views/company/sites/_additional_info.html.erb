@@ -1,6 +1,6 @@
 <div class="form-group" id="requiredValues">
-  <%= f.label(:activity_ids) %>
-  <%= f.collection_check_boxes :activity_ids, Activity.where(company: current_company, has_value: true), :id, :name_and_value_label do |k| %>
+  <%= f.label(:requires_value_for_ids) %>
+  <%= f.collection_check_boxes :requires_value_for_ids, Activity.where(company: current_company, has_value: true), :id, :name_and_value_label do |k| %>
     <div class="custom-control custom-switch">
       <%= k.check_box({class: 'custom-control-input'}) %>
       <%= k.label({class: 'custom-control-label'}) %>
