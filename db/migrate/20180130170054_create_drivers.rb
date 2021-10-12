@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-class Driver < ActiveRecord::Base
-end
-
 class CreateDrivers < ActiveRecord::Migration[5.1]
   def up
     create_table :drivers do |t|
@@ -19,7 +16,7 @@ class CreateDrivers < ActiveRecord::Migration[5.1]
     create_table :driver_logins do |t|
       t.references :driver, foreign_key: true
       t.references :user, foreign_key: true
-      t.timestamp
+      t.timestamps
     end
 
     add_index :driver_logins, [:driver_id, :user_id], unique: true
