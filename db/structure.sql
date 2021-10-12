@@ -883,11 +883,11 @@ ALTER SEQUENCE public.pricing_hourly_rates_id_seq OWNED BY public.pricing_hourly
 
 CREATE TABLE public.reasonability_check_warnings (
     id bigint NOT NULL,
-    record_type character varying NOT NULL,
-    record_id bigint NOT NULL,
     warnings json,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    record_type character varying,
+    record_id uuid
 );
 
 
@@ -2802,6 +2802,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210831203507'),
 ('20210912090730'),
 ('20211007205529'),
-('20211012191503');
+('20211012191503'),
+('20211012221221');
 
 
