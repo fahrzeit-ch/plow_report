@@ -57,7 +57,7 @@ class Drive < ApplicationRecord
   # Whether or not an activity value for the drives
   # activity execution is required.
   def missing_activity_value
-    return false unless activity.has_value
+    return false unless activity.try(:has_value)
     site.requires_value_for_ids.include?(activity.id) && activity_execution.value == 0
   end
 

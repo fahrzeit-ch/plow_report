@@ -41,15 +41,15 @@ feature "Manage customer sites" do
     before do
       company.add_member(company_admin, CompanyMember::ADMINISTRATOR)
       sign_in_with(company_admin.email, company_admin.password)
-      visit(edit_company_customer_site_path(id: site.id, customer_id: site.customer.id, company_id: company.id))
     end
 
-    describe "required attributes" do
+    describe "required attributes", js: true do
 
       let!(:activity_with_value) { create(:value_activity, company: company) }
       let!(:activity_without_value) { create(:activity, company: company) }
 
       before do
+        visit(edit_company_customer_site_path(id: site.id, customer_id: site.customer.id, company_id: company.id))
         click_link I18n.t('views.companies.sites.tab_label_additional_info')
       end
 

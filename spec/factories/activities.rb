@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :value_activity, class: "Activity" do
-    company nil
+    company { nil }
     name { generate(:activity_name_seq) }
     has_value { true }
     value_label { "Kg" }
