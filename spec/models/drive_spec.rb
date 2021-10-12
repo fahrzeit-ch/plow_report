@@ -339,6 +339,47 @@ RSpec.describe Drive, type: :model do
     it "will be charged separately if other site" do
       expect(drive_3).to be_charged_separately
     end
+  end
 
+  describe "activity value validation" do
+    context "without site that requires value entry" do
+      let(:site) { create(:site) }
+      let(:activity) { create(:value_activity) }
+      let!(:drive) { create(:drive, site: site, activity_execution_attributes: { activity_id: activity.id, value: 0.0 } ) }
+
+      it "does not miss activity value" do
+        expect(drive.missing_activity_value).to be_falsey
+      end
+    end
+
+    context "with site that requires value entry" do
+      let(:activity) { create(:value_activity) }
+      let(:site) { create(:site, requires_value_for_ids: [activity.id] ) }
+
+      it "does miss activity value if value is 0.0" do
+        drive = create(:drive, site: site, activity_execution_attributes: { activity_id: activity.id, value: 0.0 })
+        expect(drive.missing_activity_value).to be_truthy
+      end
+
+      it "does miss activity value if value is 0" do
+        drive = create(:drive, site: site, activity_execution_attributes: { activity_id: activity.id, value: 0 })
+        expect(drive.missing_activity_value).to be_truthy
+      end
+
+      it "does NOT miss activity value if value is bigger than 0" do
+        drive = create(:drive, site: site, activity_execution_attributes: { activity_id: activity.id, value: 0.01 })
+        expect(drive.missing_activity_value).to be_falsey
+      end
+    end
+
+    context "with site that requires value entry and activity requiering none" do
+      let(:activity) { create(:activity) }
+      let(:site) { create(:site, requires_value_for_ids: [activity.id] ) }
+      let!(:drive) { create(:drive, site: site, activity_execution_attributes: { activity_id: activity.id } ) }
+
+      it "does not miss activity value" do
+        expect(drive.missing_activity_value).to be_falsey
+      end
+    end
   end
 end

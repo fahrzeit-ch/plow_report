@@ -12,6 +12,8 @@ class Tour < ApplicationRecord
   belongs_to :driver
   belongs_to :vehicle, optional: true
   has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
+  has_one :reasonability_check_warning, as: :record, dependent: :destroy
+
   audited
 
   validates :start_time, presence: true
@@ -23,6 +25,7 @@ class Tour < ApplicationRecord
 
   before_validation :set_default_start_time
   after_update :update_children
+  after_save_commit :perform_reasonability_checks
 
   # Returns the first drive associated to this
   # tour sorted by starttime
@@ -31,6 +34,15 @@ class Tour < ApplicationRecord
   def first_drive
     drives.last
   end
+
+  # Returns a list of drives that need to be checked by the user
+  # because they have missing values
+  def invalid_drives
+    all_drives = drives.includes(activity_execution: :activity, site: :requires_value_for).to_a
+    all_invalid_drives = all_drives.to_a.select { |d| d.missing_activity_value }
+    all_invalid_drives.reject { |d| has_corresponding_valid_drive(all_drives, d) }
+  end
+  memoize :invalid_drives
 
   # Returns the first drive associated to this
   # tour sorted by starttime
@@ -155,6 +167,11 @@ class Tour < ApplicationRecord
   end
 
   private
+
+    def has_corresponding_valid_drive(all_drives, d)
+      all_drives.any? { |d1| d.id != d1.id && d.site_id == d1.site_id && d.activity.id == d1.activity.id && !d1.missing_activity_value }
+    end
+
     def update_children
       changes = {}
       changes[:vehicle_id] = self.vehicle_id if saved_change_to_attribute?(:vehicle_id)
@@ -190,5 +207,9 @@ class Tour < ApplicationRecord
       if start_time && first_drive && first_drive.start < start_time
         errors.add(:start_time, :after_fist_drive)
       end
+    end
+
+    def perform_reasonability_checks
+      ReasonabilityCheckJob.perform_later(self.id)
     end
 end

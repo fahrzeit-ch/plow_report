@@ -84,6 +84,12 @@ module ApplicationHelper
     end
   end
 
+  def reasonability_warnings(reasonability)
+    reasonability.warnings.map{ |key|
+      I18n.t(key)
+    }.join('<br>').html_safe
+  end
+
   def toolbar_row
     content_tag("div", class: "row toolbar border-top bg-light p-2 d-print-none") do
       yield if block_given?
@@ -92,9 +98,10 @@ module ApplicationHelper
 
   def content_card(opts = {})
     body = opts.delete(:body)
+    card_css = opts.delete(:card_css)
     content_tag("div", class: "row mt-3") do
       content_tag("div", class: "col-12") do
-        content_tag("div", class: "card") do
+        content_tag("div", class: "card #{card_css}") do
           if body
             content_tag("div", class: "card-body") do
               yield if block_given?

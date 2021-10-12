@@ -9,7 +9,7 @@ RSpec.describe Api::V1::SitesController, type: :controller do
   let(:company) { create(:company) }
   let(:customer1) { create(:customer, client_of: company) }
 
-  let(:site1) { create(:site, customer: customer1, site_info_attributes: { content: "Text" }) }
+  let(:site1) { create(:site, customer: customer1, site_info_attributes: { content: "Text" } ) }
 
   before do
     site1
@@ -48,6 +48,13 @@ RSpec.describe Api::V1::SitesController, type: :controller do
           let(:site1) { create(:site, customer: customer1) }
           subject { api_response.attributes[:items][0][:site_info] }
           it { is_expected.to be_nil }
+        end
+
+        context "with required activity values" do
+          let(:activity) { create(:value_activity) }
+          let!(:site1) { create(:site, customer: customer1, site_info_attributes: { content: "Text" }, requires_value_for_ids: [activity.id] ) }
+          subject { api_response.attributes[:items][0][:requires_value_for_ids] }
+          it { is_expected.to eq([activity.id]) }
         end
       end
 

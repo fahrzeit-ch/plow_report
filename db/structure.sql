@@ -169,6 +169,16 @@ ALTER SEQUENCE public.activities_id_seq OWNED BY public.activities.id;
 
 
 --
+-- Name: activities_sites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activities_sites (
+    site_id bigint NOT NULL,
+    activity_id bigint NOT NULL
+);
+
+
+--
 -- Name: activity_executions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -244,8 +254,8 @@ ALTER SEQUENCE public.administrators_id_seq OWNED BY public.administrators.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -520,7 +530,9 @@ ALTER SEQUENCE public.driver_applications_id_seq OWNED BY public.driver_applicat
 CREATE TABLE public.driver_logins (
     id bigint NOT NULL,
     driver_id bigint,
-    user_id bigint
+    user_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -770,7 +782,7 @@ CREATE TABLE public.policy_terms (
     name character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    version_date timestamp without time zone DEFAULT '2021-02-16 12:20:24.224752'::timestamp without time zone NOT NULL
+    version_date timestamp without time zone DEFAULT '2021-10-12 21:19:21.925162'::timestamp without time zone NOT NULL
 );
 
 
@@ -863,6 +875,39 @@ CREATE SEQUENCE public.pricing_hourly_rates_id_seq
 --
 
 ALTER SEQUENCE public.pricing_hourly_rates_id_seq OWNED BY public.pricing_hourly_rates.id;
+
+
+--
+-- Name: reasonability_check_warnings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reasonability_check_warnings (
+    id bigint NOT NULL,
+    record_type character varying NOT NULL,
+    record_id bigint NOT NULL,
+    warnings json,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: reasonability_check_warnings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.reasonability_check_warnings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: reasonability_check_warnings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.reasonability_check_warnings_id_seq OWNED BY public.reasonability_check_warnings.id;
 
 
 --
@@ -1414,6 +1459,13 @@ ALTER TABLE ONLY public.pricing_hourly_rates ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: reasonability_check_warnings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reasonability_check_warnings ALTER COLUMN id SET DEFAULT nextval('public.reasonability_check_warnings_id_seq'::regclass);
+
+
+--
 -- Name: recordings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1683,6 +1735,14 @@ ALTER TABLE ONLY public.pricing_hourly_rates
 
 
 --
+-- Name: reasonability_check_warnings reasonability_check_warnings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reasonability_check_warnings
+    ADD CONSTRAINT reasonability_check_warnings_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: recordings recordings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1847,6 +1907,20 @@ CREATE UNIQUE INDEX index_activities_on_company_id_and_name ON public.activities
 --
 
 CREATE INDEX index_activities_on_name ON public.activities USING btree (name);
+
+
+--
+-- Name: index_activities_sites_on_activity_id_and_site_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_sites_on_activity_id_and_site_id ON public.activities_sites USING btree (activity_id, site_id);
+
+
+--
+-- Name: index_activities_sites_on_site_id_and_activity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_sites_on_site_id_and_activity_id ON public.activities_sites USING btree (site_id, activity_id);
 
 
 --
@@ -2130,6 +2204,13 @@ CREATE UNIQUE INDEX index_oauth_applications_on_uid ON public.oauth_applications
 
 
 --
+-- Name: index_reasonability_check_warnings_on_record; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_reasonability_check_warnings_on_record ON public.reasonability_check_warnings USING btree (record_type, record_id);
+
+
+--
 -- Name: index_recordings_on_driver_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2242,10 +2323,10 @@ CREATE INDEX index_tours_reports_on_customer_id ON public.tours_reports USING bt
 
 
 --
--- Name: index_user_actions_on_target_type_and_target_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_actions_on_target; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_user_actions_on_target_type_and_target_id ON public.user_actions USING btree (target_type, target_id);
+CREATE INDEX index_user_actions_on_target ON public.user_actions USING btree (target_type, target_id);
 
 
 --
@@ -2277,17 +2358,17 @@ CREATE INDEX index_users_on_invitations_count ON public.users USING btree (invit
 
 
 --
+-- Name: index_users_on_invited_by; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_invited_by ON public.users USING btree (invited_by_type, invited_by_id);
+
+
+--
 -- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_invited_by_id ON public.users USING btree (invited_by_id);
-
-
---
--- Name: index_users_on_invited_by_type_and_invited_by_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_invited_by_type_and_invited_by_id ON public.users USING btree (invited_by_type, invited_by_id);
 
 
 --
@@ -2719,6 +2800,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210609081250'),
 ('20210729193815'),
 ('20210831203507'),
-('20210912090730');
+('20210912090730'),
+('20211007205529'),
+('20211012191503');
 
 

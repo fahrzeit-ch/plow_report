@@ -8,6 +8,10 @@ class Site < ApplicationRecord
   has_many :site_entries, dependent: :destroy, class_name: "DrivingRoute::SiteEntry"
   has_one :site_info, dependent: :destroy
 
+  # Defines which activities require a value input for this
+  # customer site.
+  has_and_belongs_to_many :requires_value_for, class_name: 'Activity', after_add: :touch_updated_at, after_remove: :touch_updated_at
+
   validates :display_name, presence: true, uniqueness: { scope: :customer_id }
 
   scope :active, -> { where(active: true) }
@@ -73,5 +77,9 @@ class Site < ApplicationRecord
   private
     def check_drives
       throw :abort unless drives.empty?
+    end
+
+    def touch_updated_at(other)
+      self.touch if persisted?
     end
 end
