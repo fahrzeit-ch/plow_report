@@ -1,5 +1,7 @@
 <div class="d-flex mb-2 border">
-  
+  <% if tour.reasonability_check_warning %>
+    <i class="fa fa-exclamation-triangle new-label text-warning" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<%= reasonability_warnings(tour.reasonability_check_warning) %>"></i>
+  <% end %>
   <div class="align-self-center p-2 ml-2 mr-2" style="background-color:<%= driver_color(tour.driver) %>">
     <strong><%= initials(tour.driver.name) %></strong>
   </div>

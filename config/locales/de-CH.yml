@@ -89,6 +89,11 @@ de-CH:
           attributes:
             base:
               new_consent_required: "Bitte akzeptieren Sie die neuen Bedingungen um fortzufahren."
+        tour:
+          vehicle:
+            required: "Kein Fahrzeug definiert"
+          drives:
+            invalid: "Fehlende Daten bei Fahrten"
     models:
       activity:
         one: "Tätigkeit"

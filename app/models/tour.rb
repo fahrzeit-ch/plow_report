@@ -12,6 +12,8 @@ class Tour < ApplicationRecord
   belongs_to :driver
   belongs_to :vehicle, optional: true
   has_many :drives, -> { kept.order(start: :desc) }, class_name: "Drive", dependent: :nullify
+  has_one :reasonability_check_warning, as: :record, dependent: :destroy
+
   audited
 
   validates :start_time, presence: true
@@ -23,6 +25,7 @@ class Tour < ApplicationRecord
 
   before_validation :set_default_start_time
   after_update :update_children
+  after_save_commit :perform_reasonability_checks
 
   # Returns the first drive associated to this
   # tour sorted by starttime
@@ -204,5 +207,9 @@ class Tour < ApplicationRecord
       if start_time && first_drive && first_drive.start < start_time
         errors.add(:start_time, :after_fist_drive)
       end
+    end
+
+    def perform_reasonability_checks
+      ReasonabilityCheckJob.perform_later(self.id)
     end
 end

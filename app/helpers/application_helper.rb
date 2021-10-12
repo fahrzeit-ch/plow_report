@@ -84,6 +84,12 @@ module ApplicationHelper
     end
   end
 
+  def reasonability_warnings(reasonability)
+    reasonability.warnings.map{ |key|
+      I18n.t(key)
+    }.join('<br>').html_safe
+  end
+
   def toolbar_row
     content_tag("div", class: "row toolbar border-top bg-light p-2 d-print-none") do
       yield if block_given?
