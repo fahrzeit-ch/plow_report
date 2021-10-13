@@ -20,7 +20,8 @@ $(document).on 'turbolinks:load', ->
     $('input[type="datetime-local"]').flatpickr({
       enableTime: true,
       dateFormat: "Y-m-d H:i",
-      time_24hr: true
+      time_24hr: true,
+      minuteIncrement: 1,
     })
 
 

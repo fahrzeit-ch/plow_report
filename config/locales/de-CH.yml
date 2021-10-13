@@ -93,6 +93,7 @@ de-CH:
           vehicle:
             required: "Kein Fahrzeug definiert"
           drives:
+            empty: "Keine Einsätze auf dieser Tour erfasst"
             invalid: "Fehlende Daten bei Fahrten"
     models:
       activity:
