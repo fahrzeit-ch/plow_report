@@ -239,6 +239,8 @@ de-CH:
         default_driving_route_id: "Standard Route"
         price_help_html: "<p>Die für die Verrechnung verwendete Anfahrtsdauer wird auf die Anzahl Objekte einer Tour aufgeteilt.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
         activities_help_html: "<p>Tätigkeiten die mit diesem Fahrzeug ausgeführt werden können.</p><p>Fahrten mit diesem Fahrzeug können nur die hier definierten Tätigkeiten zugeordnet werden.</p><p>Änderungen am Stundensatz gelten rückwirkend ab Saisonstart der aktuellen Saison (1.Juli)</p>"
+        driving_route_ids: "Zugeordnete Routen"
+        driving_route_ids_help_html: "<p>Nur die ausgewählten Routen können für dieses Fahrzeug ausgewählt werden.</p>"
       tour:
         driver: "Fahrer"
         vehicle: "Fahrzeug"

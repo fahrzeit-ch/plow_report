@@ -15,7 +15,7 @@ class Vehicle < ApplicationRecord
   has_many :tours
 
   belongs_to :default_driving_route, optional: true, class_name: "DrivingRoute", inverse_of: :vehicles
-  has_and_belongs_to_many :driving_routes
+  has_and_belongs_to_many :driving_routes, after_add: :touch_updated_at, after_remove: :touch_updated_at
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities
@@ -42,5 +42,9 @@ class Vehicle < ApplicationRecord
 
     def squish_name
       self.name&.squish!
+    end
+
+    def touch_updated_at(other)
+      self.touch if persisted?
     end
 end

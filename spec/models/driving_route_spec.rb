@@ -35,17 +35,36 @@ RSpec.describe DrivingRoute, type: :model do
         expect { subject.update(attrs) }.to change(subject, :updated_at)
       end
     end
+  end
 
-    describe "vehicle assignments" do
-      let(:vehicle) { create(:vehicle, company: subject.company, default_driving_route: subject) }
+  describe "vehicle assignments" do
+    let(:vehicle) { create(:vehicle, company: subject.company, default_driving_route: subject, driving_route_ids: [subject.id]) }
 
-      it "nullifies default_driving_route when deleting driving_route" do
-        expect { subject.destroy; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
-      end
+    it "nullifies default_driving_route when deleting driving_route" do
+      expect { subject.destroy; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
+    end
 
-      it "nullifies default_driving_route when discarding driving_route" do
-        expect { subject.discard; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
-      end
+    it "nullifies default_driving_route when discarding driving_route" do
+      expect { subject.discard; vehicle.reload }.to change(vehicle, :default_driving_route).to(nil)
+    end
+
+    it "deletes relations to assigned vehicles when discarding" do
+      expect { subject.discard; vehicle.reload }.to change(vehicle, :driving_route_ids).to([])
+    end
+
+  end
+
+  describe "squish names" do
+    subject { build(:driving_route, name: "  name    \n test   ") }
+
+    it "should squish whitespace" do
+      subject.save
+      expect(subject.name).to eq("name test")
+    end
+
+    it "should not throw error if name is nil" do
+      subject.name = nil
+      expect { subject.save }.not_to raise_error
     end
   end
 end
