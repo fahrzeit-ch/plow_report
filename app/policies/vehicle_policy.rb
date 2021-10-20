@@ -21,6 +21,7 @@ class VehiclePolicy < ApplicationPolicy
   def permitted_attributes
     [:name,
      :default_driving_route_id,
+     driving_route_ids: [],
      hourly_rate_attributes: [:price, :valid_from],
      vehicle_activity_assignments_attributes: [:id,
                                                       :_destroy,

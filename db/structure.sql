@@ -660,6 +660,16 @@ ALTER SEQUENCE public.driving_routes_id_seq OWNED BY public.driving_routes.id;
 
 
 --
+-- Name: driving_routes_vehicles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.driving_routes_vehicles (
+    driving_route_id bigint NOT NULL,
+    vehicle_id bigint NOT NULL
+);
+
+
+--
 -- Name: oauth_access_grants; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1861,6 +1871,20 @@ CREATE INDEX auditable_index ON public.audits USING btree (auditable_type, audit
 
 
 --
+-- Name: idx_driving_route_id_vehicle_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_driving_route_id_vehicle_id ON public.driving_routes_vehicles USING btree (driving_route_id, vehicle_id);
+
+
+--
+-- Name: idx_vehicle_id_driving_route_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_vehicle_id_driving_route_id ON public.driving_routes_vehicles USING btree (vehicle_id, driving_route_id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2803,6 +2827,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210912090730'),
 ('20211007205529'),
 ('20211012191503'),
-('20211012221221');
+('20211012221221'),
+('20211020191604');
 
 
