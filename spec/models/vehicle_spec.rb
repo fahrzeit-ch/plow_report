@@ -145,4 +145,15 @@ RSpec.describe Vehicle, type: :model do
       end
     end
   end
+
+  describe "updated_at when adding driving_routes" do
+    subject { create(:vehicle) }
+    let(:driving_route) { create(:driving_route) }
+    it "touches site" do
+      expect {
+        subject.update( driving_route_ids:  [driving_route.id])
+        subject.reload
+      }.to change(subject, :updated_at)
+    end
+  end
 end

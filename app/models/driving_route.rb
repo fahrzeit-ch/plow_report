@@ -18,12 +18,22 @@ class DrivingRoute < ApplicationRecord
 
   has_many :site_entries, -> { order(:position) }, :class_name => 'DrivingRoute::SiteEntry', inverse_of: :driving_route
   accepts_nested_attributes_for :site_entries, allow_destroy: true, reject_if: :all_blank
+  has_and_belongs_to_many :assigned_vehicles, class_name: "Vehicle"
 
+  before_save :squish_name
   after_discard :nullify_default_driving_routes
+  after_discard :clear_assigned_vehicles
 
   private
     def nullify_default_driving_routes
       vehicles.update_all(default_driving_route_id: nil)
     end
 
+    def clear_assigned_vehicles
+      assigned_vehicles.clear
+    end
+
+    def squish_name
+      self.name&.squish!
+    end
 end
