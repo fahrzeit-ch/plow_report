@@ -15,6 +15,7 @@ class Vehicle < ApplicationRecord
   has_many :tours
 
   belongs_to :default_driving_route, optional: true, class_name: "DrivingRoute", inverse_of: :vehicles
+  has_and_belongs_to_many :driving_routes
 
   accepts_nested_attributes_for :vehicle_activity_assignments, reject_if: :all_blank, allow_destroy: true
   before_save :set_company_on_activities

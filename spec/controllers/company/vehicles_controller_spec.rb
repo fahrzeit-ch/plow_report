@@ -56,6 +56,16 @@ RSpec.describe Company::VehiclesController, type: :controller do
         }.to change(Pricing::HourlyRate, :count).by(1)
       end
     end
+
+    describe "driving routes" do
+      let(:driving_route) { create(:driving_route) }
+      let(:vehicle_attributes) { attributes_for(:vehicle).merge(driving_route_ids: [driving_route.id] ) }
+
+      it "it assigns the driving route" do
+        post :create, params: { company_id: company.to_param, vehicle: vehicle_attributes }
+        expect(Vehicle.first.driving_routes.count).to eq 1
+      end
+    end
   end
 
   describe "GET #edit" do

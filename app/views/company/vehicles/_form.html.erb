@@ -16,7 +16,16 @@
         <%= link_to_add_association t("views.vehicles.add_activity"), f, :vehicle_activity_assignments, class: 'btn btn-outline-secondary' %>
       </div>
     </div>
-    <%= f.select :default_driving_route_id, available_driving_routes.map { |route| [route.name, route.id] }, include_blank: true %>
+
+    <label>
+      <%= label_with_help_for(f.object.class, :driving_route_ids) %>
+    </label>
+    <%= f.collection_check_boxes_without_bootstrap :driving_route_ids, DrivingRoute.where(company: current_company), :id, :name do |k| %>
+      <div class="custom-control custom-checkbox">
+        <%= k.check_box({class: 'custom-control-input'}) %>
+        <%= k.label({class: 'custom-control-label'}) %>
+      </div>
+    <% end %>
     <hr>
     <%= f.form_group do %>
       <%= f.button type: :submit, class: 'btn btn-primary', data: { disable_with: is_processing } do %>
