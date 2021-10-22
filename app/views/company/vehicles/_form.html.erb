@@ -20,7 +20,7 @@
     <label>
       <%= label_with_help_for(f.object.class, :driving_route_ids) %>
     </label>
-    <%= f.collection_check_boxes_without_bootstrap :driving_route_ids, DrivingRoute.where(company: current_company), :id, :name do |k| %>
+    <%= f.collection_check_boxes_without_bootstrap :driving_route_ids, DrivingRoute.kept.where(company: current_company), :id, :name do |k| %>
       <div class="custom-control custom-checkbox">
         <%= k.check_box({class: 'custom-control-input'}) %>
         <%= k.label({class: 'custom-control-label'}) %>

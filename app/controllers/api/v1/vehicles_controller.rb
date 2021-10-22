@@ -5,7 +5,7 @@ class Api::V1::VehiclesController < Api::V1::ApiController
   # Returns all vehicles assigned to the given company
   # Required params: company_id
   def index
-    since = params[:changed_since] || 6.months.ago
+    since = params[:changed_since] || 10.years.ago
     @records = Vehicle.with_discarded
                    .joins(:vehicle_activity_assignments)
                    .changed_since(since)
