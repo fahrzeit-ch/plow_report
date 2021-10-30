@@ -73,7 +73,7 @@ class Tour < ApplicationRecord
   end
 
   def distance_km
-    drives.sum(:distance_km)
+    drives.sum(:distance_km).round 2
   end
 
   def empty_drive_time
