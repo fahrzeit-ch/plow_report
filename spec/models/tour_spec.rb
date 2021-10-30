@@ -94,6 +94,32 @@ RSpec.describe Tour, type: :model do
     end
   end
 
+  describe "distance" do
+    let(:tour) { create(:tour) }
+    let(:start) { 1.hour.ago }
+
+    context "with drives" do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time, distance_km: 1.1) }
+
+      subject { tour }
+      its(:distance_km) { is_expected.to eq 2.2 }
+    end
+
+    context "without drives" do
+      subject { tour }
+      its(:distance_km) { is_expected.to eq 0 }
+    end
+
+    context "discarded drives" do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time, discarded_at: 1.minute.ago, distance_km: 1.1) }
+
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 0 }
+    end
+  end
+
   describe "changed_since scope" do
     let!(:old_tour1) { create(:tour, created_at: 4.days.ago, updated_at: 3.days.ago) }
     let!(:new_tour1) { create(:tour, created_at: 4.days.ago, updated_at: 10.minutes.ago) }

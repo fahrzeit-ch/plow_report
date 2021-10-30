@@ -161,7 +161,7 @@ class Drive < ApplicationRecord
 0 as salt,
 COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
 
-      values.distance = drive_stats.distance
+      values.distance = drive_stats.distance.round 2
       values.duration_seconds = drive_stats.duration_seconds
       values.activity_values = activity_value_summary
       values
