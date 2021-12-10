@@ -57,7 +57,8 @@ module Report
       end
 
       def build_customer_sheet(wb, customer, drives, row_builder, header_builder, styles)
-        wb.add_worksheet(name: customer.try(:name)) do |sheet|
+        ws_name = get_unique_worksheet_name_for_customer wb, customer
+        wb.add_worksheet(name: ws_name) do |sheet|
           table_builder = DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_with_customer")]
@@ -72,6 +73,23 @@ module Report
           sheet.add_row
           table_builder.add_to_worksheet sheet
         end
+      end
+
+      # Retrieve a unique name for the worksheet for this customer
+      #
+      # If the name already exists, a number postfix will be added and incremented until a unique
+      # name is found.
+      def get_unique_worksheet_name_for_customer(wb, customer)
+        name = [customer.try(:first_name), customer.try(:name)].join(',')
+        idx = 1
+        if wb.worksheets.any? { |ws| ws.name == name }
+          new_name = "#{name} #{idx}"
+          while wb.worksheets.any? { |ws| ws.name == new_name }
+            idx += 1
+          end
+          name = new_name
+        end
+        name
       end
   end
 end
