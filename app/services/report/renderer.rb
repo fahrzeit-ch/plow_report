@@ -81,15 +81,27 @@ module Report
       # name is found.
       def get_unique_worksheet_name_for_customer(wb, customer)
         name = [customer.try(:first_name), customer.try(:name)].join(',')
+
+        # convert to ascii and limit character length
+        # Thankfully from: https://stackoverflow.com/a/9420531/1040723
+        encoding_options = {
+          :invalid           => :replace,  # Replace invalid byte sequences
+          :undef             => :replace,  # Replace anything not defined in ASCII
+          :replace           => '',        # Use a blank for those replacements
+        }
+
+        ascii = name.encode(Encoding.find('ASCII'), encoding_options)
+        ascii = ascii.first(20) # Max length is 31 characters, so this leaves enough room to add some numbers behind it
+
         idx = 1
-        if wb.worksheets.any? { |ws| ws.name == name }
-          new_name = "#{name} #{idx}"
+        if wb.worksheets.any? { |ws| ws.name == ascii }
+          new_name = "#{ascii} #{idx}"
           while wb.worksheets.any? { |ws| ws.name == new_name }
             idx += 1
           end
-          name = new_name
+          ascii = new_name
         end
-        name
+        ascii
       end
   end
 end
