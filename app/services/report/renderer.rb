@@ -80,7 +80,7 @@ module Report
       # If the name already exists, a number postfix will be added and incremented until a unique
       # name is found.
       def get_unique_worksheet_name_for_customer(wb, customer)
-        name = [customer.try(:first_name), customer.try(:name)].join(',')
+        name = [customer.try(:first_name), customer.try(:name)].join(' ').strip
 
         # convert to ascii and limit character length
         # Thankfully from: https://stackoverflow.com/a/9420531/1040723
