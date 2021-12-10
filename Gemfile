@@ -43,7 +43,7 @@ gem "pundit", "~> 2.1.0"
 gem "rollbar"
 gem 'newrelic_rpm'
 
-gem "azure-storage-blob", require: false
+gem "azure-storage-blob", "~> 2.0",  require: false
 
 gem "money-rails", "~>1.12"
 
