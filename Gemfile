@@ -58,7 +58,7 @@ gem "resque", "~> 2.0.0"
 gem "resque-rollbar"
 
 # Excel export
-gem "caxlsx"
+gem "caxlsx", "~>3.1.1"
 gem "caxlsx_rails"
 
 gem "trestle"

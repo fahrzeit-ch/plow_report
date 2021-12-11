@@ -49,21 +49,36 @@ module Report
     end
 
     private
+
+      def unique_name_for(original_name, others)
+        idx = 1
+        if others.any?(original_name)
+          new_name = "#{original_name} #{idx}"
+          while others.any?(new_name)
+            idx += 1
+          end
+          new_name
+        else
+          original_name
+        end
+
+      end
+
       def build_activity_headers
         idx = @fixed_headers.length
 
-        @activities.flat_map do |activity|
+        activity_headers = []
+        @activities.each do |activity|
           @activity_index_map[activity.id] = idx
           idx += 1
 
-          res = [activity.name]
+          activity_headers << unique_name_for(activity.name, activity_headers)
           if activity.has_value?
-            res << activity.value_label
+            activity_headers << unique_name_for(activity.value_label, activity_headers)
             idx += 1
           end
-
-          res
         end
+        activity_headers
       end
 
       def build_fixed_headers
