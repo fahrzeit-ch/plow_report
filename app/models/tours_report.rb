@@ -23,7 +23,7 @@ class ToursReport < ApplicationRecord
     else
       scope = company.drives.kept
     end
-    scope.where(start: start_date..end_date).includes(
+    scope.where(start: start_date..end_date).order(:start).includes(
       :customer,
       :driver,
       :activity,
