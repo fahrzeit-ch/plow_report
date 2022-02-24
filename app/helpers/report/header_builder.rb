@@ -51,17 +51,13 @@ module Report
     private
 
       def unique_name_for(original_name, others)
+        new_name = original_name
         idx = 1
-        if others.any?(original_name)
+        while others.any?(new_name)
           new_name = "#{original_name} #{idx}"
-          while others.any?(new_name)
-            idx += 1
-          end
-          new_name
-        else
-          original_name
+          idx += 1
         end
-
+        new_name
       end
 
       def build_activity_headers
