@@ -77,7 +77,7 @@ class Tour < ApplicationRecord
   end
 
   def empty_drive_time
-    @empty_drive_time ||= duration_seconds - drives_duration
+    @empty_drive_time ||= calculate_empty_drive_time
   end
 
   def drives_count
@@ -95,7 +95,7 @@ class Tour < ApplicationRecord
   end
 
   def drives_duration
-    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds) || 0
+    ActiveSupport::Duration.seconds(drives.unscope(:order).stats.duration_seconds).to_i || 0
   end
 
   def empty_drive_percentage
@@ -104,7 +104,8 @@ class Tour < ApplicationRecord
 
   def drives_percentage
     if self.finished?
-      100 / duration_seconds * drives_duration
+      calc = 100.0 / duration_seconds * drives_duration
+      calc > 100 ? 100 : calc
     else
       0
     end
@@ -139,7 +140,7 @@ class Tour < ApplicationRecord
     if active?
       0
     else
-      self.end_time - self.start_time
+      (self.end_time - self.start_time).to_i
     end
   end
 
@@ -167,6 +168,13 @@ class Tour < ApplicationRecord
   end
 
   private
+
+    def calculate_empty_drive_time
+      # drives total duration may be longer than that of tour. Make sure to never have
+      # negative empty drive time
+      dur = duration_seconds - drives_duration
+      dur < 0 ? 0 : dur
+    end
 
     def has_corresponding_valid_drive(all_drives, d)
       all_drives.any? { |d1| d.id != d1.id && d.site_id == d1.site_id && d.activity.id == d1.activity.id && !d1.missing_activity_value }

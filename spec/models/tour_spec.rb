@@ -92,6 +92,18 @@ RSpec.describe Tour, type: :model do
       subject { tour }
       its(:drives_duration) { is_expected.to eq 0.minutes }
     end
+
+    context "with drive_time > tour time" do
+      let(:end_time) { start + 10.minutes }
+      let!(:drives) { create_list(:drive, 2, tour: tour, start: start, end: end_time) }
+
+      before { tour.update(end_time: end_time) }
+
+      subject { tour }
+      its(:drives_duration) { is_expected.to eq 20.minutes }
+      its(:duration_seconds) { is_expected.to eq 10.minutes }
+      its(:avg_empty_drive_time_per_site) { is_expected.to eq 0 }
+    end
   end
 
   describe "distance" do
