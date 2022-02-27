@@ -637,6 +637,7 @@ de-CH:
       label_empty_drive_time: "(Anfahrt)"
       file_name: "fahrten-rapport"
       flat_rate: "Pauschal"
+      drive_vehicle_title: "Fahrzeug"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."

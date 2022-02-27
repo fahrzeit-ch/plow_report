@@ -37,6 +37,7 @@ module Report
         seconds_to_excel_time(drive.duration_seconds),
         drive.site_name,
         drive.driver.name,
+        drive.vehicle&.name,
         drive.distance_km,
         get_hourly_rate(drive),
         get_price(drive)
@@ -55,6 +56,7 @@ module Report
         nil,
         seconds_to_excel_time(drive.empty_drive_duration),
         I18n.t("reports.drives.label_empty_drive_time"),
+        nil,
         nil,
         nil,
         get_travel_expense_rate(drive),
