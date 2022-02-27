@@ -634,10 +634,11 @@ de-CH:
       drive_hourly_rate: "Stundensatz"
       drive_total_price: "Preis"
       label_total_price: "Total Preis"
-      label_empty_drive_time: "(Anfahrt)"
+      label_empty_drive_time: "(Anfahrt - %{site})"
       file_name: "fahrten-rapport"
       flat_rate: "Pauschal"
       drive_vehicle_title: "Fahrzeug"
+      season_flat_rate_hint: "Kunde hat Bereitschaftspauschale von"
   maptools:
     addmarker:
       infotext: "Auf die Karte klicken um Markierung zu setzen."

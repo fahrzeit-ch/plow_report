@@ -52,10 +52,10 @@ module Report
     end
 
     def empty_drive_columns_for(drive)
-      [ nil,
-        nil,
+      [ drive.start,
+        drive.start,
         seconds_to_excel_time(drive.empty_drive_duration),
-        I18n.t("reports.drives.label_empty_drive_time"),
+        I18n.t("reports.drives.label_empty_drive_time", site: drive.site_name),
         nil,
         nil,
         nil,
