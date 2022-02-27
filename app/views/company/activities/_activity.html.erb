@@ -1,7 +1,7 @@
 <li class="list-group-item d-flex flex-row align-items-center" id="company-member-<%= activity.id %>">
   <div class="p-2"><%= activity.name %> <br><small><%= activity.value_label %></small></div>
   <div class="p-2">
-    <% activity.vehicles.pluck(:name).each do |name| %>
+    <% activity.vehicles.kept.pluck(:name).each do |name| %>
       <span class="badge badge-pill badge-secondary"><%= name %></span>
     <% end %>
   </div>
