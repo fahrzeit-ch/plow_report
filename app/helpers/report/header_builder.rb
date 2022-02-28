@@ -84,6 +84,7 @@ module Report
             I18n.t("reports.drives.drive_duration_title"),
             I18n.t("reports.drives.drive_site_title"),
             I18n.t("reports.drives.drive_driver_title"),
+            I18n.t("reports.drives.drive_vehicle_title"),
             I18n.t("reports.drives.drive_distance_title"),
             I18n.t("reports.drives.drive_hourly_rate"),
             I18n.t("reports.drives.drive_total_price")
