@@ -3,6 +3,6 @@ FactoryBot.define do
     hourly_ratable { association :vehicle }
     price_cents { 1 }
     price_currency { "CHF" }
-    valid_from { "2021-02-03 11:48:38" }
+    valid_from { 1.day.ago }
   end
 end

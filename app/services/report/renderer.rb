@@ -28,8 +28,9 @@ module Report
           header_builder = HeaderBuilder.new(company.activities, styles)
           row_builder = DriveRowBuilder.new(styles, header_builder.activity_index_map)
 
-          customers_with_drives = @drives.group_by(&:customer).sort { |a,b| a[0].display_name <=>b[0].display_name }
+          customers_with_drives = @drives.group_by(&:customer)
           drives_without_customers = customers_with_drives.delete(nil)
+          customers_with_drives = customers_with_drives.sort { |a,b| a[0].display_name <=>b[0].display_name }
 
           if drives_without_customers
             build_non_customer_sheet(wb, drives_without_customers, row_builder, header_builder, styles)

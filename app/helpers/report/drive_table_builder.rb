@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Report
-  FIXED_COLUMNS = %i[date start duration site driver distance hourly_rate total_price].freeze
+  FIXED_COLUMNS = %i[date start duration site driver vehicle distance hourly_rate total_price].freeze
 
   class DriveTableBuilder
     HEADER_HEIGHT = 120

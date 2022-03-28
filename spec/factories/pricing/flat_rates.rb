@@ -3,7 +3,7 @@ FactoryBot.define do
     flat_ratable { association :site }
     price_cents { 1 }
     price_currency { "CHF" }
-    valid_from { "2021-02-03 11:51:08" }
+    valid_from { 1.day.ago }
     rate_type { Pricing::FlatRate::ACTIVITY_FEE }
     active { true }
   end
