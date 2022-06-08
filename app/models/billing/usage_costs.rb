@@ -19,12 +19,12 @@ class Billing::UsageCosts
   end
 
   def total_cost
-    calculate(total_days, avg_number_of_sites_per_day, @base_price, @discount_per_day)
+    calculate(total_days, avg_number_of_sites_per_day, @base_price, @discount_per_day).to_f
   end
 
   def avg_number_of_sites_per_day
     return 0 if day_reports.sum(&:nr_of_drives) == 0
-    total_days / day_reports.sum(&:nr_of_drives)
+    day_reports.sum(&:nr_of_drives) / total_days
   end
 
   def total_days
