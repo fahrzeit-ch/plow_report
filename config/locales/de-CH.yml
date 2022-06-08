@@ -1,4 +1,7 @@
 de-CH:
+  number:
+    nth:
+      ordinalized: "%{number}"
   helpers:
     submit:
       driver_application:
