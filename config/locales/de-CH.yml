@@ -179,6 +179,7 @@ de-CH:
         city: "Ort"
         nr: "Nr."
       customer:
+        company_name: "Firma"
         name: "Name"
         first_name: "Vorname"
         street: "Adresse"
@@ -647,3 +648,4 @@ de-CH:
       infotext: "Auf die Karte klicken um Markierung zu setzen."
     addline:
       infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"
+  company_or_name_required: "Firma oder Name muss ausgefüllt werden"

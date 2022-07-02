@@ -5,7 +5,22 @@ require "rails_helper"
 RSpec.describe Customer, type: :model do
   subject { build(:customer) }
 
-  it { is_expected.to validate_presence_of(:name) }
+  context "if company name empty" do
+    before { allow(subject).to receive(:company_name_blank?).and_return(true) }
+    it "validates name" do
+      subject.name = ""
+      expect(subject).not_to be_valid
+    end
+  end
+
+  context "if name empty" do
+    before { allow(subject).to receive(:name_blank?).and_return(true) }
+    it do
+      subject.company_name = ""
+      expect(subject).not_to be_valid
+    end
+  end
+
   it { is_expected.to belong_to(:client_of) }
 
   describe "#destroy" do
