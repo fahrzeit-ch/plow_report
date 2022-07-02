@@ -1,6 +1,12 @@
 <div id="company-member-form">
   <%= form_with(model: @customer, url: [current_company, @customer], builder: BootstrapFormBuilder, local: true) do |f| %>
     <div class="form-row">
+      <div class="form-group col-md-12">
+        <%= f.label :company_name %>
+        <%= f.text_field :company_name %>
+      </div>
+    </div>
+    <div class="form-row">
       <div class="form-group col-md-6">
         <%= f.label :name %>
         <%= f.text_field :name, autofocus: true %>

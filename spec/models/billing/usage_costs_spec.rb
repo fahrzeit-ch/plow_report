@@ -72,7 +72,7 @@ RSpec.describe Billing::UsageCosts, type: :model do
 
       context "with zero discount" do
         let(:discount_per_day) { 0 }
-        its(:total_cost) { is_expected.to eq(base_price * 10)}
+        its(:total_cost) { is_expected.to eq(base_price * 30)}
       end
 
       context "with regular discount" do

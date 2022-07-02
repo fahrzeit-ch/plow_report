@@ -2,9 +2,8 @@
 
 require "resque/failure/multiple"
 require "resque/failure/redis"
-require "resque/rollbar"
 
-Resque::Failure::Multiple.classes = [ Resque::Failure::Redis, Resque::Failure::Rollbar ]
+Resque::Failure::Multiple.classes = [ Resque::Failure::Redis ]
 Resque::Failure.backend = Resque::Failure::Multiple
 
 # Establish a connection between Resque and Redis

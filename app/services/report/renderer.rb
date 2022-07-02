@@ -63,7 +63,13 @@ module Report
           table_builder = DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_with_customer")]
-          sheet.add_row ["#{customer.first_name} #{customer.name}"], style: [styles.h1]
+          if customer.company_name.blank?
+            sheet.add_row [customer.display_name], style: [styles.h1]
+          else
+            sheet.add_row [customer.company_name], style: [styles.h1]
+            sheet.add_row ["#{customer.name} #{customer.first_name}"]
+          end
+
           sheet.add_row [customer.street]
           sheet.add_row ["#{customer.zip} #{customer.city}"]
           sheet.add_row
@@ -81,7 +87,7 @@ module Report
       # If the name already exists, a number postfix will be added and incremented until a unique
       # name is found.
       def get_unique_worksheet_name_for_customer(wb, customer)
-        name = [customer.try(:first_name), customer.try(:name)].join(' ').strip
+        name = customer.display_name
 
         # convert to ascii and limit character length
         # Thankfully from: https://stackoverflow.com/a/9420531/1040723

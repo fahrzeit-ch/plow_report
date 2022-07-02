@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
   skip_before_action :check_account!
 
   def account_error
-    Rollbar.critical("Account error for: User<#{current_user.id}> Drivers<#{current_user.drivers.pluck(:id).join(",")}>")
+    NewRelic::Agent.notice_error(Error.new("Account error for: User<#{current_user.id}> Drivers<#{current_user.drivers.pluck(:id).join(",")}>"))
   end
 
   def setup

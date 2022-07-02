@@ -40,7 +40,6 @@ gem "devise-bootstrap-views"
 gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper", "~> 5.1.1"
 gem "pundit", "~> 2.1.0"
-gem "rollbar"
 gem 'newrelic_rpm'
 
 gem "azure-storage-blob", "~> 2.0",  require: false
@@ -55,7 +54,6 @@ gem "kaminari"
 
 gem "activerecord-import"
 gem "resque", "~> 2.0.0"
-gem "resque-rollbar"
 
 # Excel export
 gem "caxlsx", "~>3.1.1"

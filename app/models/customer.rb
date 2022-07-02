@@ -7,16 +7,18 @@ class Customer < ApplicationRecord
 
   before_destroy :check_existing_drives
 
-  validates :name, presence: true
+  validates :name, presence: { message: I18n.t('company_or_name_required') }, if: :company_name_blank?
+  validates :company_name, presence: { message: I18n.t('company_or_name_required') }, if: :name_blank?
 
-  default_scope { order(:name) }
+  default_scope { order(:company_name, :name) }
 
   audited
 
   include AddressSearch
 
   def display_name
-    "#{name} #{first_name}"
+    _name = [name, first_name].reject(&:blank?).join(" ")
+    [company_name, _name].reject(&:blank?).join(" - ")
   end
 
   def details
@@ -44,7 +46,23 @@ class Customer < ApplicationRecord
       .group(arel_table[:id])
   end
 
+  def self.concat_search_columns
+    arel_table[:company_name]
+      .concat(arel_table[:name])
+      .concat(arel_table[:first_name])
+      .concat(arel_table[:street])
+      .concat(arel_table[:city])
+  end
+
   private
+    def company_name_blank?
+      company_name.blank?
+    end
+
+    def name_blank?
+      name.blank?
+    end
+
     def check_existing_drives
       if drives.any?
         errors.add :drives, "not_empty"

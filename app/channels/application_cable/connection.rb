@@ -19,7 +19,7 @@ module ApplicationCable
 
     private
       def report_error(e)
-        Rollbar.notifier.log_error(e)
+        NewRelic::Agent.notice_error(e)
       end
   end
 end

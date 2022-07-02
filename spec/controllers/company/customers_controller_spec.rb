@@ -61,7 +61,7 @@ RSpec.describe Company::CustomersController, type: :controller do
       end
 
       context "with invalid attributes" do
-        before { post :create, params: { company_id: company.to_param }.merge(customer: attributes_for(:customer, name: "")) }
+        before { post :create, params: { company_id: company.to_param }.merge(customer: attributes_for(:customer, name: "", company_name: "")) }
 
         it { is_expected.to be_successful }
       end

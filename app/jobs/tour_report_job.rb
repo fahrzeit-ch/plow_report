@@ -14,7 +14,7 @@ class TourReportJob < ApplicationJob
       update_report_items(report)
     rescue StandardError => e
       Rails.logger.error("Could not generate report: #{e.message}")
-      Rollbar.notifier.error(e)
+      NewRelic::Agent.notice_error(e)
     end
   end
 

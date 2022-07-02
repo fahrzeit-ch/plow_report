@@ -48,15 +48,6 @@ class Company::CustomersController < ApplicationController
     end
   end
 
-  # Make an inactive customer active again
-  def activate
-  end
-
-  # Dectivate a customer. This customer will not be visible
-  # for selection in future drives
-  def deactivate
-  end
-
   # Destroy a customer. Only customers without recorded drives can be
   # destroyed.
   def destroy
@@ -79,10 +70,10 @@ class Company::CustomersController < ApplicationController
     end
 
     def customer_params
-      params.require(:customer).permit(:name, :first_name, :street, :nr, :zip, :city)
+      params.require(:customer).permit(:company_name, :name, :first_name, :street, :nr, :zip, :city)
     end
 
     def customer_update_params
-      params.require(:customer).permit(:name, :first_name, :street, :nr, :zip, :city)
+      params.require(:customer).permit(:company_name, :name, :first_name, :street, :nr, :zip, :city)
     end
 end

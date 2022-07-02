@@ -464,7 +464,8 @@ CREATE TABLE public.customers (
     nr character varying DEFAULT ''::character varying NOT NULL,
     zip character varying DEFAULT ''::character varying NOT NULL,
     city character varying DEFAULT ''::character varying NOT NULL,
-    first_name character varying DEFAULT ''::character varying NOT NULL
+    first_name character varying DEFAULT ''::character varying NOT NULL,
+    company_name character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -2018,6 +2019,13 @@ CREATE INDEX index_customers_on_company_id ON public.customers USING btree (comp
 
 
 --
+-- Name: index_customers_on_company_name_and_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_customers_on_company_name_and_name ON public.customers USING btree (company_name, name);
+
+
+--
 -- Name: index_driver_applications_on_accepted_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2828,6 +2836,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211007205529'),
 ('20211012191503'),
 ('20211012221221'),
-('20211020191604');
+('20211020191604'),
+('20220629185842');
 
 
