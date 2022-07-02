@@ -12,10 +12,10 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.1.4"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.4"
 gem "scenic", "~> 1.5"
 # Use Puma as the app server
-gem "puma", "~> 4.3"
+gem 'puma', '< 6'
 # Use SCSS for stylesheets
 gem "sassc-rails", "~> 2.1"
 # Use Uglifier as compressor for JavaScript assets
@@ -34,12 +34,12 @@ gem "cocoon"
 
 gem "audited", "~> 4.9"
 gem "discard", "~> 1.0"
-gem "devise", "~> 4.7.3"
+gem "devise", "~> 4.8"
 gem "devise-i18n"
 gem "devise-bootstrap-views"
 gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper", "~> 5.1.1"
-gem "pundit", "~> 2.1.0"
+gem "pundit", "~> 2.2.0"
 gem 'newrelic_rpm'
 
 gem "azure-storage-blob", "~> 2.0",  require: false
@@ -56,7 +56,7 @@ gem "activerecord-import"
 gem "resque", "~> 2.0.0"
 
 # Excel export
-gem "caxlsx", "~>3.1.1"
+gem "caxlsx", "~> 3.1"
 gem "caxlsx_rails"
 
 gem "trestle"
