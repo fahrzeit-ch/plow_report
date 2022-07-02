@@ -63,7 +63,13 @@ module Report
           table_builder = DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_with_customer")]
-          sheet.add_row ["#{customer.first_name} #{customer.name}"], style: [styles.h1]
+          if customer.company_name.blank?
+            sheet.add_row [customer.display_name], style: [styles.h1]
+          else
+            sheet.add_row [customer.company_name], style: [styles.h1]
+            sheet.add_row ["#{customer.name} #{customer.first_name}"]
+          end
+
           sheet.add_row [customer.street]
           sheet.add_row ["#{customer.zip} #{customer.city}"]
           sheet.add_row
