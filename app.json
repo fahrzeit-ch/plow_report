@@ -59,7 +59,7 @@
   },
   "name": "plow_report",
   "scripts": {
-    "postdeploy": "rake demo_account:create_company"
+    "postdeploy": "newrelic deployment && rake demo_account:create_company"
   },
   "stack": "heroku-18"
 }
