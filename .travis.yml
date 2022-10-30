@@ -1,8 +1,12 @@
 dist: focal
 language: ruby
 cache: bundler
-services:
-  - postgresql
+addons:
+  postgresql: '13'
+  apt:
+    packages:
+      - postgresql-13
+      - postgresql-client-13
 env:
   global:
     - PGPORT=5433
