@@ -2,11 +2,11 @@
   <div class="p-2">
     <i class="fa fa-file-excel-o"></i>
   </div>
-  <div class="p-2">
+  <div class="p-2 w-110px">
     <b>vor <%= distance_of_time_in_words_to_now(report.created_at) %></b>
   </div>
   <div class="p-2 ml-4">
-    <div><%= report.customer&.name || t("views.reports.all_customers") %></div>
+    <div><%= report.name %></div>
     <%= report.start_date.to_s(:short) %> - <%= report.end_date.to_s(:short) %>
   </div>
 

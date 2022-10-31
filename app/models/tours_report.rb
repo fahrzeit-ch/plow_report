@@ -31,6 +31,14 @@ class ToursReport < ApplicationRecord
       vehicle: [:vehicle_activity_assignments])
   end
 
+  def name
+    if customer
+      customer.display_name
+    else
+      I18n.t("views.reports.all_customers")
+    end
+  end
+
   # Sets start and end date by parsing the given date range string.
   # Expected Format: "%d.%m.%Y %H:%M" (see ToursReport::DATETIME_FORMAT)
   def date_range=(date_range)
@@ -53,7 +61,7 @@ class ToursReport < ApplicationRecord
   end
 
   def to_filename
-    I18n.t("reports.drives.file_name") + "#{customer&.name}" + start_date.to_s(:short) + "_" + end_date.to_s(:short) + ".xlsx"
+    I18n.t("reports.drives.file_name") + "#{customer&.display_name}" + start_date.to_s(:short) + "_" + end_date.to_s(:short) + ".xlsx"
   end
 
   private
