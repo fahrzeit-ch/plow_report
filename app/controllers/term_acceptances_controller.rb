@@ -3,6 +3,7 @@
 class TermAcceptancesController < ApplicationController
   skip_before_action :check_consents
   skip_before_action :check_account!
+  skip_before_action :check_not_app_login!
   before_action :set_user
   layout "setup"
 

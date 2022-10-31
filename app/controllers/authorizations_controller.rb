@@ -3,7 +3,6 @@
 class AuthorizationsController < Doorkeeper::AuthorizationsController
   include Devise::Controllers::StoreLocation
   prepend_before_action :store_location!, only: :new
-  skip_before_action :check_not_app_login!
 
   # TODO: Handle raise invalid authorization
   def create
