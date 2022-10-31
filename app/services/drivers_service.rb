@@ -23,6 +23,8 @@ class DriversService
         Driver.where(company_id: company.id)
       when CompanyMember::DEMO_ACCOUNT
         Driver.where(company_id: company.id)
+      when CompanyMember::APP_LOGIN
+        Driver.where(company_id: company.id)
       when CompanyMember::DRIVER
         Driver.where(company_id: company.id).joins(:driver_login).where(driver_logins: { user_id: user.id })
       else

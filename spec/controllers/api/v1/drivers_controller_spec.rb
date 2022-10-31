@@ -116,5 +116,27 @@ RSpec.describe Api::V1::DriversController, type: :controller do
         end
       end
     end
+
+    context "as APP_LOGIN" do
+      before do
+        company.add_member(user, CompanyMember::APP_LOGIN)
+        get :index, params: { format: :json }
+      end
+      let(:company) { create(:company) }
+      let(:driver) { create(:driver, user: user, company: company) }
+
+      describe "item values" do
+        subject { api_response.attributes[:items][0] }
+        it do
+          is_expected.to contain_hash_values(
+                           id:           driver.id,
+                           name:         driver.name,
+                           company_name: driver.company.name,
+                           company_id:   driver.company_id
+                         )
+        end
+      end
+    end
+
   end
 end

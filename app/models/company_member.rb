@@ -6,7 +6,9 @@ class CompanyMember < ApplicationRecord
   EMPLOYEE = "employee"
   DRIVER = "driver"
   DEMO_ACCOUNT = "demo_account"
-  ROLES = [OWNER, ADMINISTRATOR, DRIVER, DEMO_ACCOUNT].freeze
+  APP_LOGIN = "app_login"
+
+  ROLES = [OWNER, ADMINISTRATOR, DRIVER, DEMO_ACCOUNT, APP_LOGIN].freeze
 
   belongs_to :user, optional: true # set to true in order for to conditionally validate
   validates_presence_of :user, unless: :new_user?
