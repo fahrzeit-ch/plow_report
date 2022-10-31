@@ -551,6 +551,9 @@ de-CH:
       account_error:
         title: "Konto Fehler"
         description: "Es scheint ein Problem mit Ihrem Benutzerkonto zu geben. Bitte kontaktieren Sie den Support."
+      is_app_login_error:
+        description: "Das App Login ist nur für das Anmelden via App gültig. Um Fahrzeit über den Browser zu verwenden, benutzen Sie ein persönliches Login."
+        title: "Benutzung mit App Login nicht möglich"
     common:
       info:
         no_data_available: "Keine Daten verfügbar"

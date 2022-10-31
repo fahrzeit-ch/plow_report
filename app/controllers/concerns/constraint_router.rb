@@ -18,6 +18,13 @@ module ConstraintRouter
     end
   end
 
+  def check_not_app_login!
+    return unless current_user
+    if current_user.app_login?
+      redirect_to is_app_login_error_path
+    end
+  end
+
   # Redirect to company path if user has no driver.
   # This filter should be called *after* check account, otherwise
   # it may raise an error if user has no company.

@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :check_account!
   before_action :check_consents
+  before_action :check_not_app_login!
 
   layout :determine_layout
 
