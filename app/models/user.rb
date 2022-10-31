@@ -51,6 +51,16 @@ class User < ApplicationRecord
     @_company_admin_or_owner = companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER]).exists? company.id
   end
 
+  def app_login?(company = nil)
+
+    if company.nil?
+      @_company_app_login = companies_for_role([CompanyMember::APP_LOGIN]).any?
+    else
+      @_company_app_login = companies_for_role([CompanyMember::APP_LOGIN]).exists? company.id
+    end
+
+  end
+
   def company_member?(company)
     return false if company.nil?
     return @_company_member if @_company_member

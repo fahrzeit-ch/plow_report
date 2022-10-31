@@ -3,7 +3,7 @@
 class DriversService
 
   def self.driver_scope(user)
-    full_permitted_companies = user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER, CompanyMember::DEMO_ACCOUNT]).select(:id)
+    full_permitted_companies = user.companies_for_role([CompanyMember::ADMINISTRATOR, CompanyMember::OWNER, CompanyMember::DEMO_ACCOUNT, CompanyMember::APP_LOGIN]).select(:id)
     own_drivers = user.drivers.select(:id)
 
     Driver.where(id: own_drivers).or(Driver.where(company_id: full_permitted_companies))
@@ -22,6 +22,8 @@ class DriversService
       when CompanyMember::ADMINISTRATOR
         Driver.where(company_id: company.id)
       when CompanyMember::DEMO_ACCOUNT
+        Driver.where(company_id: company.id)
+      when CompanyMember::APP_LOGIN
         Driver.where(company_id: company.id)
       when CompanyMember::DRIVER
         Driver.where(company_id: company.id).joins(:driver_login).where(driver_logins: { user_id: user.id })

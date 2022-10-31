@@ -10,19 +10,19 @@ class DrivePolicy < ApplicationPolicy
   end
 
   def create?
-    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company) || is_app_login(record_company)
   end
 
   def show?
-    own_record? || company_member?(record_company) || is_demo(record_company)
+    own_record? || company_member?(record_company) || is_demo(record_company) || is_app_login(record_company)
   end
 
   def update?
-    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company) || is_app_login(record_company)
   end
 
   def destroy?
-    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company)
+    own_record? || company_admin_or_owner?(record_company) || is_demo(record_company) || is_app_login(record_company)
   end
 
   def finish?

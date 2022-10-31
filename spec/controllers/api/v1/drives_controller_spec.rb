@@ -109,6 +109,29 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       subject { api_response }
       it { is_expected.to have_attribute_values(tour_id: tour.id, vehicle_id: vehicle.id) }
     end
+
+    context "with APP_LOGIN" do
+      before do
+        sign_in_with_app_login(company)
+      end
+
+      let(:vehicle) { create(:vehicle, company: driver.company) }
+      let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
+      let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id } }
+
+      before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+
+      describe "response code" do
+        subject { response }
+
+        its(:code) { is_expected.to eq "201" }
+      end
+
+      describe "response body" do
+        subject { api_response }
+        it { is_expected.to have_attribute_values(tour_id: tour.id, vehicle_id: vehicle.id) }
+      end
+    end
   end
 
   describe "delete#destroy" do

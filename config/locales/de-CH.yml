@@ -394,6 +394,13 @@ de-CH:
     vehicle_reassignments:
       reassigned: "Neues Fahrzeug zugewiesen"
       reassignment_failed: "Fehler beim zuweisen des Fahrzeugs. Bitte prüfen sie die Angaben."
+    app_login:
+      already_activated: "Das App Login wurde bereits aktiviert"
+      failed_to_create: "Aktivierung des App Logins ist fehlgeschlagen."
+      new_password_set: "Neues Passwort wurde erfolgreich erstellt."
+      password_reset_failed: "Neues Passwort konnte nicht erstellt werden"
+      destroyed: "App Login wurde deaktiviert"
+      not_destroyed: "App Login konnte nicht deaktiviert werden"
   common:
     ok: "OK"
     create: "Erstellen"
@@ -459,6 +466,8 @@ de-CH:
           title: "Tätigkeiten"
         vehicles:
           title: "Fahrzeuge"
+        app_login:
+          title: "App Login"
       drivers:
         title: "Fahrer"
         add_new: "Neuen Fahrer hinzufügen"
@@ -513,6 +522,17 @@ de-CH:
         site_entries_entry: "Ziehe Objekte per Drag and Drop hierhin um sie der Route hinzuzufügen."
         drag_target_info: "Kunden Objekte hier hin ziehen"
         add_site: "Kundenobjekt hinzufügen"
+      app_login:
+        title: "Generelles App Login"
+        create: "App Login erstellen"
+        info: "Das App login erlaubt ein generelles Anmelden in einer App als Firma."
+        delete: "App login deaktivieren"
+        confirm_delete: "Sind sie sicher dass sie das den App Benutzer löschen möchten?"
+        login_info: "App Login Zugangsdaten"
+        password: "Passwort"
+        password_info: "Bitte bewahren Sie das passwort sicher auf, es kann nachträglich nicht mehr abgerufen werden."
+        new_password: "Neues Passwort generieren"
+        password_hidden: "(nicht sichtbar)"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"
@@ -531,6 +551,9 @@ de-CH:
       account_error:
         title: "Konto Fehler"
         description: "Es scheint ein Problem mit Ihrem Benutzerkonto zu geben. Bitte kontaktieren Sie den Support."
+      is_app_login_error:
+        description: "Das App Login ist nur für das Anmelden via App gültig. Um Fahrzeit über den Browser zu verwenden, benutzen Sie ein persönliches Login."
+        title: "Benutzung mit App Login nicht möglich"
     common:
       info:
         no_data_available: "Keine Daten verfügbar"
@@ -649,3 +672,5 @@ de-CH:
     addline:
       infotext: "Auf Karte klicken um Startpunkt und weitere Punkte der Linie zu zeichnen"
   company_or_name_required: "Firma oder Name muss ausgefüllt werden"
+  tooltip:
+    copy-to-clipboard: "In Zwischenablage kopieren"
