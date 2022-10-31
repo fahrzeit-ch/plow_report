@@ -28,6 +28,8 @@ gem "font-awesome-rails"
 gem "jquery-rails"
 gem "rails-i18n"
 gem "simple_calendar", "~> 2.0"
+gem "net-imap"
+gem "net-pop"
 gem "net-smtp"
 
 gem "memoist"

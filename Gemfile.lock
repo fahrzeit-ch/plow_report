@@ -239,6 +239,14 @@ GEM
       ruby2_keywords (~> 0.0.1)
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
+    net-imap (0.2.3)
+      digest
+      net-protocol
+      strscan
+    net-pop (0.1.1)
+      digest
+      net-protocol
+      timeout
     net-protocol (0.1.2)
       io-wait
       timeout
@@ -413,6 +421,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    strscan (3.0.1)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
@@ -486,6 +495,8 @@ DEPENDENCIES
   listen
   memoist
   money-rails (~> 1.12)
+  net-imap
+  net-pop
   net-smtp
   newrelic_rpm
   pg (~> 1.4)
