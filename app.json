@@ -53,6 +53,9 @@
     },
     "AZURE_STORAGE_KEY": {
       "required": true
+    },
+    "NEWRELIC_LICENSE_KEY": {
+      "required": true
     }
   },
   "formation": {
@@ -67,5 +70,5 @@
   "scripts": {
     "postdeploy": "&& rake demo_account:create_company"
   },
-  "stack": "heroku-20"
+  "stack": "heroku-22"
 }
