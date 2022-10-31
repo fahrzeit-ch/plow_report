@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include ConstraintRouter
-  include Pundit
+  include Pundit::Authorization
   include ConsentVerifier
   include SeasonSelection
 

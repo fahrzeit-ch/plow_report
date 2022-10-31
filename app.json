@@ -47,6 +47,12 @@
     },
     "HEROKU_APP_NAME": {
       "required": true
+    },
+    "AZURE_STORAGE_ACCOUNT": {
+      "required": true
+    },
+    "AZURE_STORAGE_KEY": {
+      "required": true
     }
   },
   "formation": {
