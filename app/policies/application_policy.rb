@@ -69,4 +69,8 @@ class ApplicationPolicy
     def is_demo(company = nil)
       auth_context.is_demo(company)
     end
+
+    def is_app_login(company = nil)
+      auth_context.app_login?(company)
+    end
 end

@@ -10,19 +10,19 @@ class TourPolicy < ApplicationPolicy
   end
 
   def create?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company) || is_app_login(company)
   end
 
   def show?
-    own_record? || company_member?(company)
+    own_record? || company_member?(company) || is_app_login(company)
   end
 
   def update?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company) || is_app_login(company)
   end
 
   def destroy?
-    own_record? || company_admin_or_owner?(company) || is_demo(company)
+    own_record? || company_admin_or_owner?(company) || is_demo(company) || is_app_login(company)
   end
 
   # Scopes:

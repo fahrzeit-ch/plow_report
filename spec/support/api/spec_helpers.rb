@@ -26,5 +26,11 @@ module Api
       expected = expected.with_indifferent_access
       expected == actual.select { |key| expected.key?(key) }
     end
+
+    def sign_in_with_app_login(company)
+      login_user = create(:user)
+      company.add_member(login_user, CompanyMember::APP_LOGIN)
+      sign_in_user login_user
+    end
   end
 end

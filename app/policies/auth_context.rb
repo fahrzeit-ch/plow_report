@@ -16,6 +16,11 @@ class AuthContext
   end
   memoize :company_admin_or_owner?
 
+  def app_login?(company = nil)
+    user.app_login?(company || self.company)
+  end
+  memoize :app_login?
+
   def company_member?(company = nil)
     user.company_member?(company || self.company)
   end

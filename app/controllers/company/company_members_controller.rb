@@ -5,7 +5,7 @@ class Company::CompanyMembersController < ApplicationController
 
   def index
     authorize current_company, :index_members?
-    @company_members = CompanyMember.where(company: current_company)
+    @company_members = CompanyMember.where(company: current_company).where.not(role: CompanyMember::APP_LOGIN)
   end
 
   def create
