@@ -9,4 +9,9 @@
       <i class="fa fa-users"></i> <%= t'views.companies.nav.users.title' %>
     <% end %>
   </li>
+  <li class="nav-item">
+    <%= link_to company_app_login_path(current_company), class: "nav-link #{(controller_name == 'app_logins') ? 'active' : ''}" do %>
+      <i class="fa fa-mobile"></i> <%= t'views.companies.nav.app_login.title' %>
+    <% end %>
+  </li>
 </ul>

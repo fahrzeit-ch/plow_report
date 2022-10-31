@@ -61,6 +61,9 @@ Rails.application.routes.draw do
 
   resources :companies do
     scope module: "company" do
+      resource :app_login, only: %i[create show destroy] do
+        patch :reset_password
+      end
       get :dashboard, to: "dashboard#index", as: "dashboard"
       resources :activities
       resources :vehicle_reassignments, only: %i[create] do

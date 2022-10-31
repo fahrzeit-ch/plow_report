@@ -13,6 +13,7 @@
 //= require jquery3
 //= require rails-ujs
 //= require turbolinks
+//= require turbolinks_csp
 //= require select2
 //= require popper
 //= require bootstrap-sprockets
@@ -29,7 +30,7 @@
 //= require bootstrap_features
 //= require print
 //= require cocoon
-//= require turbolinks_csp
+//= require copy_to_clipboard
 //= require cable
 //= require sortablejs
 //= require routes

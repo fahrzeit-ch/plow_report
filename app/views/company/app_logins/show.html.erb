@@ -1,0 +1,22 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <%= render 'navigation/company_edit_nav' %>
+  </div>
+
+  <div class="card-body">
+    <h4 class="card-title"><%= t 'views.companies.app_login.title' %></h4>
+    <div class="alert alert-info">
+      <%= I18n.t("views.companies.app_login.info") %>
+    </div>
+    <% if @app_login %>
+      <strong><%= t("activerecord.attributes.company_member.user_email") %></strong>
+      <p><%= @app_login.user.try(:email) %> <button data-copy="<%= @app_login.user.try(:email) %>" class="ml-3 btn btn-sm btn-outline-dark" data-toggle="tooltip" title="<%= t('tooltip.copy-to-clipboard') %>"><i class="fa fa-copy" ></i></button></p></p>
+      <strong><%= t("views.companies.app_login.password") %></strong>
+      <p class="text-muted"><%= t "views.companies.app_login.password_hidden" %> <%= link_to t('views.companies.app_login.new_password'), reset_password_company_app_login_path(current_company), method: :patch %></p>
+
+      <%= link_to t("views.companies.app_login.delete"), company_app_login_path(current_company), method: :delete, class: 'btn btn-danger', data: { confirm: t("views.companies.app_login.confirm_delete") } %>
+    <% else %>
+      <%= link_to t("views.companies.app_login.create"), company_app_login_path(current_company), method: :post, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
