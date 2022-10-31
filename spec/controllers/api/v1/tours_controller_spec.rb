@@ -40,6 +40,12 @@ RSpec.describe Api::V1::ToursController, type: :controller do
     end
 
     context "with changed_since filter" do
+      before do
+        login_user = create(:user)
+        company.add_member(login_user, CompanyMember::APP_LOGIN)
+        sign_in_user login_user
+      end
+
       let!(:old_tour) { create(:tour, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
       let!(:old_tour_discarded) { create(:tour, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
       before do
@@ -58,6 +64,52 @@ RSpec.describe Api::V1::ToursController, type: :controller do
         end
       end
     end
+
+    context "APP_LOGIN" do
+      describe "response code" do
+        before { get :index, params: { driver_id: driver.to_param, format: :json } }
+        subject { response }
+
+        it { is_expected.to be_successful }
+      end
+
+      describe "content" do
+        before { get :index, params: { driver_id: driver.to_param, format: :json } }
+        subject { api_response }
+
+        it { is_expected.to have_pagination }
+        it { is_expected.to have_attribute_keys :items }
+
+        describe "item values" do
+          subject { api_response.attributes[:items][0] }
+          it { is_expected.to contain_hash_values({
+                                                    id: tour.id,
+                                                    start_time: tour.start_time.as_json,
+                                                    end_time: tour.end_time.as_json }) }
+        end
+      end
+
+      context "with changed_since filter" do
+        let!(:old_tour) { create(:tour, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
+        let!(:old_tour_discarded) { create(:tour, driver: driver, updated_at: 2.days.ago, created_at: 3.days.ago) }
+        before do
+          old_tour_discarded.discard
+          get :index, params: { driver_id: driver.to_param, format: :json, changed_since: 1.day.ago }
+        end
+
+        describe "content" do
+          subject { api_response }
+
+          it { is_expected.to have_pagination }
+          it { is_expected.to have_attribute_keys :items }
+          describe "item count" do
+            subject { api_response.attributes[:items].count }
+            it { is_expected.to eq 2 }
+          end
+        end
+      end
+    end
+
   end
 
   describe "get#history" do
