@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :check_account!
   before_action :check_consents
-  before_action :check_not_app_login!
+  before_action :check_not_app_login!, unless: :devise_controller?
 
   layout :determine_layout
 
@@ -39,8 +39,6 @@ class ApplicationController < ActionController::Base
 
     @current_company = company
   end
-
-
 
   def redirect_to_referral(fallback_location: nil)
     redirect_to session.delete(:return_to) || fallback_location

@@ -52,7 +52,6 @@ class User < ApplicationRecord
   end
 
   def app_login?(company = nil)
-    return @_company_app_login if @_company_app_login
 
     if company.nil?
       @_company_app_login = companies_for_role([CompanyMember::APP_LOGIN]).any?

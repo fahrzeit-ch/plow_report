@@ -19,7 +19,7 @@ module ConstraintRouter
   end
 
   def check_not_app_login!
-    return unless current_user
+    return unless user_signed_in?
     if current_user.app_login?
       redirect_to is_app_login_error_path
     end
