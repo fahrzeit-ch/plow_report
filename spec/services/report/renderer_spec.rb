@@ -40,13 +40,15 @@ RSpec.describe Report::Renderer do
 
     context "with customers with special chars and long names" do
       let(:customer1) { create(:customer, name: "Muster ñ Gonzales", company_id: company.id ) }
-      let(:customer2) { create(:customer, name: "Muster ∑ verylongname with many specialc chars", company_id: company.id ) }
+      let(:customer2) { create(:customer, company_name: "Muster ∑ verylongname with many specialc chars", name: "Muster ∑ verylongname with many specialc chars", company_id: company.id ) }
+      let(:customer3) { create(:customer, company_name: "Ferdinand Fhn - c/o :  \\  /  ?  *  [  or  ]. ", name: "Ferdinand Fhn - c/o :  \\  /  ?  *  [  or  ]. ", company_id: company.id ) }
       let(:site1) { create(:site, customer: customer1) }
       let(:site2) { create(:site, customer: customer2)}
 
       let(:drives) {[
         create(:drive, driver: create(:driver, company_id: company.id), customer: customer1),
-        create(:drive, driver: create(:driver, company_id: company.id), customer: customer2)
+        create(:drive, driver: create(:driver, company_id: company.id), customer: customer2),
+        create(:drive, driver: create(:driver, company_id: company.id), customer: customer3)
       ]}
 
       subject { described_class.new(company, drives) }
