@@ -97,8 +97,9 @@ module Report
           :replace           => '',        # Use a blank for those replacements
         }
 
-        ascii = name.encode(Encoding.find('ASCII'), **encoding_options)
-        ascii = ascii.first(20) # Max length is 31 characters, so this leaves enough room to add some numbers behind it
+        ascii = name.encode(Encoding.find('Windows-1252'), **encoding_options)
+        ascii = ascii.gsub(/[\\\[\]:?*\/]/, '-')
+        ascii = ascii.first(25) # Max length is 31 characters, so this leaves enough room to add some numbers behind it
 
         idx = 1
         if wb.worksheets.any? { |ws| ws.name == ascii }
