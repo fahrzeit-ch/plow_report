@@ -58,7 +58,7 @@ class Drive < ApplicationRecord
   # activity execution is required.
   def missing_activity_value
     return false unless activity.try(:has_value)
-    site.requires_value_for_ids.include?(activity.id) && activity_execution.value == 0
+    site&.requires_value_for_ids&.include?(activity.id) && activity_execution.value == 0
   end
 
   def week_nr
@@ -99,7 +99,7 @@ class Drive < ApplicationRecord
   end
 
   def site_name
-    site ? site.display_name : ""
+    site ? site.display_name : I18n.t("activerecord.attributes.drive.no_site")
   end
 
   # returns the name of the activity performed on this drive
