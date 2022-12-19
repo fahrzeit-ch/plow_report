@@ -231,6 +231,7 @@ de-CH:
           salt: "Salzen"
           plow: "Räumen"
           refill_salt: "Füllen"
+        no_site: "(Kein Objekt!)"
       driver:
         discarded_at: "Deaktiviert am: "
       inactive: "Inaktiv"
