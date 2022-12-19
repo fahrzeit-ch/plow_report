@@ -67,7 +67,7 @@ class DrivePrice
     def load_activity_flat_rate
       @flat_rate = drive.site
                      &.site_activity_flat_rates
-                     &.first { |a| a.activity = drive.activity }
+                     &.find { |a| a.activity == drive.activity }
                      &.activity_fee_for_date(drive.start)
                      &.price
     end
@@ -75,7 +75,7 @@ class DrivePrice
     def load_hourly_rate
       @hourly_rate = drive.vehicle
                        &.vehicle_activity_assignments
-                       &.first { |a| a.activity = drive.activity }
+                       &.find { |a| a.activity == drive.activity }
                        &.hourly_rate_for_date(drive.start)
                        &.price
     end

@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe DrivePrice, type: :model do
   let(:company) { create(:company) }
   let(:activity) { create(:activity, company: company) }
+  let(:activity2) { create(:activity, company: company) }
   let(:vehicle) { create(:vehicle, company: company) }
   let(:driver) { create(:driver, company: company) }
   let(:customer) { create(:customer, client_of: company) }
@@ -101,6 +102,22 @@ RSpec.describe DrivePrice, type: :model do
 
       its(:price) { is_expected.to eq(Money.new("10000", "CHF")) }
       its(:price_per_hour) { is_expected.to eq(Money.new("5000", "CHF")) }
+    end
+
+    context "with multiple hourly rates" do
+      before do
+        vehicle.vehicle_activity_assignments.create(
+          activity_id: activity2.id, hourly_rate_attributes: { price: "50", valid_from: Season.current.start_date }
+        )
+        vehicle.vehicle_activity_assignments.create(
+          activity_id: activity.id, hourly_rate_attributes: { price: "60", valid_from: Season.current.start_date }
+        )
+      end
+
+      subject { described_class.new drive }
+
+      its(:price) { is_expected.to eq Money.new("12000", "CHF" ) }
+      its(:price_per_hour) { is_expected.to eq Money.new("6000", "CHF") }
     end
 
     context "with historic activity hourly rate" do
