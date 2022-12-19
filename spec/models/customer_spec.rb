@@ -48,4 +48,22 @@ RSpec.describe Customer, type: :model do
       its(:site_names) { is_expected.to eq(sites.last.display_name )}
     end
   end
+
+  describe "ordering" do
+    let(:company) { create(:company) }
+    let!(:customer1) { create(:customer, company_id: company.id, name: "A", company_name: "") }
+    let!(:customer2) { create(:customer, company_id: company.id, name: "B", company_name: "") }
+    let!(:customer3) { create(:customer, company_id: company.id, name: "C", company_name: "A") }
+    let!(:customer4) { create(:customer, company_id: company.id, name: "Z", company_name: "A") }
+    let!(:customer5) { create(:customer, company_id: company.id, name: "D", company_name: "") }
+
+    subject { described_class.order_by_name.all }
+    it "sorts alphabetically" do
+      expect(subject[0]).to eq(customer1) # A
+      expect(subject[1]).to eq(customer3)
+      expect(subject[2]).to eq(customer4)
+      expect(subject[3]).to eq(customer2)
+      expect(subject[4]).to eq(customer5)
+    end
+  end
 end

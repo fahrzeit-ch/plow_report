@@ -10,7 +10,7 @@ class Customer < ApplicationRecord
   validates :name, presence: { message: I18n.t('company_or_name_required') }, if: :company_name_blank?
   validates :company_name, presence: { message: I18n.t('company_or_name_required') }, if: :name_blank?
 
-  default_scope { order(:company_name, :name) }
+  default_scope { order_by_name }
 
   audited
 
@@ -27,6 +27,11 @@ class Customer < ApplicationRecord
 
   def as_select_value
     CustomerAssociation.new(id, nil).to_json
+  end
+
+  def self.order_by_name
+    node = arel_table[:company_name].concat(arel_table[:name])
+    order(node, arel_table[:first_name])
   end
 
   def self.with_site_names

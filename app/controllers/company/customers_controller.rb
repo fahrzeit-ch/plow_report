@@ -10,7 +10,6 @@ class Company::CustomersController < ApplicationController
     @customers = current_company.customers
                                 .search(params[:q])
                                 .with_site_names
-                                .order(:name)
                                 .page(params[:page])
                                 .per(30)
   end
