@@ -94,7 +94,7 @@ group :development, :test do
   gem "rubocop"
   gem "rubocop-performance"
   gem "rubocop-rails"
-  gem 'webdrivers'
+  gem 'webdrivers', "~> 3"
   gem "shoulda-matchers"
   gem "simplecov"
   gem "brakeman"
