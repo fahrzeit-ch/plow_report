@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <%= link_to t('dashboard.cards.last_drives.show_all'), company_drives_path(current_company), class: 'float-right' %>
+    <%= link_to t('dashboard.cards.last_drives.show_all'), company_tours_path(current_company), class: 'float-right' %>
     <h5 class="card-title"><%= t 'dashboard.cards.last_drives.title' %></h5>
     <% @last_drives.each do |drive| %>
       <%= render 'company/drives/drive', drive: drive, tools: false %>
