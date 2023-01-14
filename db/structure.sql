@@ -355,7 +355,9 @@ CREATE TABLE public.drives (
     discarded_at timestamp without time zone,
     tour_id uuid,
     vehicle_id bigint,
-    app_drive_id integer
+    app_drive_id integer,
+    first_sync_at timestamp without time zone,
+    last_sync_at timestamp without time zone
 );
 
 
@@ -371,7 +373,9 @@ CREATE TABLE public.tours (
     discarded_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    vehicle_id bigint
+    vehicle_id bigint,
+    first_sync_at timestamp without time zone,
+    last_sync_at timestamp without time zone
 );
 
 
@@ -2846,6 +2850,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211012221221'),
 ('20211020191604'),
 ('20220629185842'),
-('20230114220000');
+('20230114220000'),
+('20230114223102');
 
 

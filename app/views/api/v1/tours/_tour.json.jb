@@ -8,7 +8,9 @@ json = {
     vehicle_id: tour.vehicle_id,
     created_at: tour.created_at,
     updated_at: tour.updated_at,
-    discarded_at: tour.discarded_at
+    discarded_at: tour.discarded_at,
+    first_sync_at: tour.first_sync_at,
+    last_sync_at: tour.last_sync_at,
 }
 
 json

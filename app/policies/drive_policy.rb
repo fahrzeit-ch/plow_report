@@ -40,7 +40,7 @@ class DrivePolicy < ApplicationPolicy
     when :api_create
       [:app_drive_id, :driver_id, :start, :end, :company_id, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, :created_at, activity: [:activity_id, :value]]
     when :api_update
-      [:app_drive_id, :driver_id, :start, :end, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
+      [:driver_id, :start, :end, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
     end
   end
 

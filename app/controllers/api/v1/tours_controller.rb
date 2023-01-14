@@ -23,7 +23,7 @@ class Api::V1::ToursController < Api::V1::ApiController
     @record = Tour.where(driver_id: driver_id).find(params[:id])
     authorize @record
     if @record.discard
-      head :no_content
+      head :ok
     else
       render json: { error: @record.errors }, status: :bad_request
     end
@@ -31,9 +31,10 @@ class Api::V1::ToursController < Api::V1::ApiController
 
   def update
     @record = Tour.where(driver_id: driver_id).find(params[:id])
+    @record.last_sync_at = DateTime.current
     authorize @record
     if @record.update update_attributes
-      head :no_content
+      head :ok
     else
       render json: { error: @record.errors }, status: :bad_request
     end
@@ -41,6 +42,7 @@ class Api::V1::ToursController < Api::V1::ApiController
 
   def create
     @record = Tour.new(create_attributes)
+    @record.first_sync_at = DateTime.current
     authorize @record
     if @record.save
       render :create, status: :created

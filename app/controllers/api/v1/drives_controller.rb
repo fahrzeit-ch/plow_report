@@ -27,21 +27,24 @@ class Api::V1::DrivesController < Api::V1::ApiController
     @record = Drive.where(driver_id: driver_id).find(params[:id])
     authorize @record
     if @record.discard
-      head :no_content
+      head :ok
     else
       render json: { error: @record.errors }, status: :bad_request
     end
   end
 
   def update
-    activity = create_attributes[:activity]
-    @record = Drive.where(driver_id: driver_id).find(params[:id])
-    @record.vehicle_id = @record.tour.try(:vehicle_id)
-    authorize @record
-    if @record.update update_attributes.to_h.except(:activity).merge(activity_execution_attributes: activity)
-      head :no_content
-    else
-      render json: { error: @record.errors }, status: :bad_request
+    ActiveRecord::Base.no_touching do
+      activity = update_attributes[:activity]
+      @record = Drive.where(driver_id: driver_id).find(params[:id])
+      @record.vehicle_id = @record.tour.try(:vehicle_id)
+      @record.last_sync_at = DateTime.current
+      authorize @record
+      if @record.update update_attributes.to_h.except(:activity).merge(activity_execution_attributes: activity)
+        head :ok
+      else
+        render json: { error: @record.errors }, status: :bad_request
+      end
     end
   end
 
@@ -49,6 +52,7 @@ class Api::V1::DrivesController < Api::V1::ApiController
     activity = create_attributes[:activity]
     @record = Drive.new(create_attributes.except(:activity))
     @record.vehicle_id = @record.tour.try(:vehicle_id)
+    @record.first_sync_at = DateTime.current
     @record.activity_execution_attributes = activity || {}
     authorize @record
     if @record.save
