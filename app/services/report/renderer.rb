@@ -24,6 +24,7 @@ module Report
       def build_package
         Axlsx::Package.new do |xlsx_package|
           wb = xlsx_package.workbook
+
           styles = Styles.new(wb)
           header_builder = HeaderBuilder.new(company.activities, styles)
           row_builder = DriveRowBuilder.new(styles, header_builder.activity_index_map)
@@ -43,7 +44,7 @@ module Report
       end
 
       def build_non_customer_sheet(wb, drives_without_customers, row_builder, header_builder, styles)
-        wb.add_worksheet(name: I18n.t("reports.drives.tab_title_without_customer")) do |sheet|
+        wb.add_worksheet(name: I18n.t("reports.drives.tab_title_without_customer"), :page_setup => { fit_to_width: 1, orientation: :landscape }) do |sheet|
           table_builder = DriveTableBuilder.new(drives_without_customers, row_builder, header_builder)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_without_customer")], style: [styles.h1]
@@ -59,7 +60,7 @@ module Report
 
       def build_customer_sheet(wb, customer, drives, row_builder, header_builder, styles)
         ws_name = get_unique_worksheet_name_for_customer wb, customer
-        wb.add_worksheet(name: ws_name) do |sheet|
+        wb.add_worksheet(name: ws_name, page_setup: { fit_to_width: 1, orientation: :landscape }) do |sheet|
           table_builder = DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_with_customer")]
