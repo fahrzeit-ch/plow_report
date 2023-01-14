@@ -47,6 +47,8 @@ class Api::V1::ToursController < Api::V1::ApiController
     else
       render json: { error: @record.errors }, status: :bad_request
     end
+  rescue ActiveRecord::RecordNotUnique
+    render json: { error: "RecordNotUnique" }, status: :bad_request
   end
 
   private

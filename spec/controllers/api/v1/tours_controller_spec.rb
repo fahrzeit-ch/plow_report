@@ -119,6 +119,14 @@ RSpec.describe Api::V1::ToursController, type: :controller do
       subject { api_response.attributes }
       it { is_expected.to contain_hash_values({ vehicle_id: vehicle.id }) }
     end
+
+    describe "upload twice will return bad request" do
+      before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+      describe "response code" do
+        subject { response.code }
+        it { is_expected.to eq "400" }
+      end
+    end
   end
 
   describe "put" do

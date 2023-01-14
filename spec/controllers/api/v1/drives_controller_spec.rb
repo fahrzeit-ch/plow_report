@@ -151,7 +151,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
 
     describe "response body" do
       subject { api_response }
-      it { is_expected.to have_attribute_values(error: "drive_already_exists") }
+      it { is_expected.to have_attribute_values(error: "RecordNotUnique") }
     end
   end
 
