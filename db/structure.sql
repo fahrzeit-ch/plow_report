@@ -354,7 +354,8 @@ CREATE TABLE public.drives (
     site_id bigint,
     discarded_at timestamp without time zone,
     tour_id uuid,
-    vehicle_id bigint
+    vehicle_id bigint,
+    app_drive_id integer
 );
 
 
@@ -2117,6 +2118,13 @@ CREATE INDEX index_drives_on_tour_id ON public.drives USING btree (tour_id);
 
 
 --
+-- Name: index_drives_on_tour_id_and_app_drive_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_drives_on_tour_id_and_app_drive_id ON public.drives USING btree (tour_id, app_drive_id);
+
+
+--
 -- Name: index_drives_on_vehicle_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2837,6 +2845,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211012191503'),
 ('20211012221221'),
 ('20211020191604'),
-('20220629185842');
+('20220629185842'),
+('20230114220000');
 
 

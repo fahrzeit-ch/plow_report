@@ -56,6 +56,8 @@ class Api::V1::DrivesController < Api::V1::ApiController
     else
       render json: { error: @record.errors }, status: :bad_request
     end
+  rescue ActiveRecord::RecordNotUnique
+    render json: { error: "drive_already_exists" }, status: :bad_request
   end
 
   private

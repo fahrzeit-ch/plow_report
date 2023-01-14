@@ -36,11 +36,11 @@ class DrivePolicy < ApplicationPolicy
   def permitted_attributes(scope = :default)
     case scope
     when :default
-      [:start, :end, :distance_km, :tour_id, :vehicle_id, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
+      [:app_drive_id, :start, :end, :distance_km, :tour_id, :vehicle_id, :associated_to_as_json, activity_execution_attributes: [:activity_id, :value]]
     when :api_create
-      [:driver_id, :start, :end, :company_id, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, :created_at, activity: [:activity_id, :value]]
+      [:app_drive_id, :driver_id, :start, :end, :company_id, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, :created_at, activity: [:activity_id, :value]]
     when :api_update
-      [:driver_id, :start, :end, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
+      [:app_drive_id, :driver_id, :start, :end, :site_id, :tour_id, :vehicle_id, :customer_id, :distance_km, :updated_at, :discarded_at, activity: [:activity_id, :value]]
     end
   end
 

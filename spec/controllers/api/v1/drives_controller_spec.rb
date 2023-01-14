@@ -109,6 +109,12 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       subject { api_response }
       it { is_expected.to have_attribute_values(tour_id: tour.id, vehicle_id: vehicle.id) }
     end
+
+    describe "multiple uploads without app_drive_id" do
+      before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+      subject { response }
+      its(:code) { is_expected.to eq "201" }
+    end
   end
 
   describe "delete#destroy" do
@@ -126,4 +132,27 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       it { is_expected.to be_discarded }
     end
   end
+
+  describe "prevents upload of same drive twice" do
+    let(:vehicle) { create(:vehicle, company: driver.company) }
+    let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
+    let(:minimal_params) { { app_drive_id: 1254, start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id } }
+
+    before do
+      post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params)
+      post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) # upload second time
+    end
+
+    describe "response code" do
+      subject { response }
+
+      its(:code) { is_expected.to eq "400" }
+    end
+
+    describe "response body" do
+      subject { api_response }
+      it { is_expected.to have_attribute_values(error: "drive_already_exists") }
+    end
+  end
+
 end
