@@ -12,7 +12,9 @@ json = {
     vehicle_id: drive.vehicle_id,
     created_at: drive.created_at,
     updated_at: drive.updated_at,
-    discarded_at: drive.discarded_at
+    discarded_at: drive.discarded_at,
+    first_sync_at: drive.first_sync_at,
+    last_sync_at: drive.last_sync_at,
 }
 
 if drive.activity_execution

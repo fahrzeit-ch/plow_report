@@ -104,6 +104,12 @@ RSpec.describe Api::V1::ToursController, type: :controller do
     describe "return values" do
       subject { api_response.attributes }
       it { is_expected.to contain_hash_values(expected) }
+
+      it "has sync dates set" do
+        attributes = subject
+        time_diff = (DateTime.now.to_f - DateTime.parse(attributes[:first_sync_at]).to_f) * 1000
+        expect(time_diff).to  be < 50
+      end
     end
 
     context "with vehicle id" do
@@ -119,11 +125,19 @@ RSpec.describe Api::V1::ToursController, type: :controller do
       subject { api_response.attributes }
       it { is_expected.to contain_hash_values({ vehicle_id: vehicle.id }) }
     end
+
+    describe "upload twice will return bad request" do
+      before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+      describe "response code" do
+        subject { response.code }
+        it { is_expected.to eq "400" }
+      end
+    end
   end
 
   describe "put" do
     let!(:existing_tour) { create(:tour, start_time: 1.hour.ago, end_time: 1.minute.ago, driver: driver) }
-    let(:minimal_params) { { id: existing_tour.id, start_time: 2.hour.ago.utc.as_json, end_time: 2.minute.ago.utc.as_json, updated_at: 2.minutes.ago.utc.as_json } }
+    let(:minimal_params) { { id: existing_tour.id, start_time: 2.hour.ago.utc.as_json, end_time: 2.minute.ago.utc.as_json, updated_at: 5.minutes.ago.utc.as_json } }
 
     context "regular update" do
       before { put :update, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
@@ -131,7 +145,7 @@ RSpec.describe Api::V1::ToursController, type: :controller do
       describe "response code" do
         subject { response.code }
 
-        it { is_expected.to eq "204" }
+        it { is_expected.to eq "200" }
       end
 
       describe "return values" do
@@ -139,6 +153,11 @@ RSpec.describe Api::V1::ToursController, type: :controller do
         its(:updated_at) { is_expected.to eq(Time.parse(minimal_params[:updated_at]).localtime) }
         its(:start_time) { is_expected.to eq(Time.parse(minimal_params[:start_time]).localtime) }
         its(:end_time) { is_expected.to eq(Time.parse(minimal_params[:end_time]).localtime) }
+
+        it "has sync dates set" do
+          time_diff = (DateTime.now.to_f - subject.last_sync_at.to_f) * 1000
+          expect(time_diff).to  be < 50
+        end
       end
     end
 
@@ -148,7 +167,7 @@ RSpec.describe Api::V1::ToursController, type: :controller do
       describe "response code" do
         subject { response.code }
 
-        it { is_expected.to eq "204" }
+        it { is_expected.to eq "200" }
       end
 
       describe "return values" do

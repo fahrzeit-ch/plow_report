@@ -108,6 +108,48 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     describe "response body" do
       subject { api_response }
       it { is_expected.to have_attribute_values(tour_id: tour.id, vehicle_id: vehicle.id) }
+      it "has sync dates set" do
+        attributes = subject.parsed_response
+        time_diff = (DateTime.current.to_f - DateTime.parse(attributes[:first_sync_at]).to_f) * 1000
+        expect(time_diff).to  be < 50
+      end
+    end
+
+    describe "multiple uploads without app_drive_id" do
+      before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+      subject { response }
+      its(:code) { is_expected.to eq "201" }
+    end
+  end
+
+  describe "put" do
+    let(:tour) { create(:tour, driver: driver) }
+    let!(:existing_drive) { create(:drive, start: 1.hour.ago, end: 1.minute.ago, driver: driver, tour_id: tour.id ) }
+    let!(:updated_at) { 10.minutes.ago.utc.as_json }
+    let(:minimal_params) { { id: existing_drive.id, start: 2.hour.ago.utc.as_json, end: 2.minute.ago.utc.as_json, updated_at: updated_at} }
+
+    context "regular update" do
+      before { put :update, params: { driver_id: driver.to_param, format: :json, activity: { activity_id: Activity.first.id } }.merge(minimal_params) }
+
+      describe "response code" do
+        subject { response.code }
+
+        it { is_expected.to eq "200" }
+      end
+
+      describe "return values" do
+        subject { Drive.find(existing_drive.id) }
+        its(:updated_at) { is_expected.to eq(Time.parse(updated_at).localtime) }
+        its(:start) { is_expected.to eq(Time.parse(minimal_params[:start]).localtime) }
+        its(:end) { is_expected.to eq(Time.parse(minimal_params[:end]).localtime) }
+        its(:activity) { is_expected.to eq(Activity.first) }
+
+        it "has sync dates set" do
+
+          time_diff = (DateTime.now.to_f - subject.last_sync_at.to_f) * 1000
+          expect(time_diff).to  be < 50
+        end
+      end
     end
   end
 
@@ -117,7 +159,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     describe "response code" do
       subject { response.code }
 
-      it { is_expected.to eq "204" }
+      it { is_expected.to eq "200" }
     end
 
     describe "removed record" do
@@ -126,4 +168,27 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
       it { is_expected.to be_discarded }
     end
   end
+
+  describe "prevents upload of same drive twice" do
+    let(:vehicle) { create(:vehicle, company: driver.company) }
+    let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
+    let(:minimal_params) { { app_drive_id: 1254, start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id } }
+
+    before do
+      post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params)
+      post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) # upload second time
+    end
+
+    describe "response code" do
+      subject { response }
+
+      its(:code) { is_expected.to eq "400" }
+    end
+
+    describe "response body" do
+      subject { api_response }
+      it { is_expected.to have_attribute_values(error: "RecordNotUnique") }
+    end
+  end
+
 end
