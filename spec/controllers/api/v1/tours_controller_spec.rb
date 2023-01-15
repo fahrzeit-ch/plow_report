@@ -183,7 +183,7 @@ RSpec.describe Api::V1::ToursController, type: :controller do
     describe "response code" do
       subject { response.code }
 
-      it { is_expected.to eq "204" }
+      it { is_expected.to eq "200" }
     end
 
     describe "removed record" do
