@@ -43,7 +43,7 @@ module Report
         end
       end
 
-      DEFAULT_PAGE_SETUP = { fit_to_width: 1, fith_to_height: 999, orientation: :landscape, paper_size: 9 }
+      DEFAULT_PAGE_SETUP = { fit_to_width: 1, fit_to_height: 999, orientation: :landscape, paper_size: 9 }
 
       def build_non_customer_sheet(wb, drives_without_customers, row_builder, header_builder, styles)
         wb.add_worksheet(name: I18n.t("reports.drives.tab_title_without_customer"), :page_setup => DEFAULT_PAGE_SETUP) do |sheet|
