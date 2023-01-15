@@ -43,8 +43,10 @@ module Report
         end
       end
 
+      DEFAULT_PAGE_SETUP = { fit_to_width: 1, fith_to_height: 999, orientation: :landscape, paper_size: 9 }
+
       def build_non_customer_sheet(wb, drives_without_customers, row_builder, header_builder, styles)
-        wb.add_worksheet(name: I18n.t("reports.drives.tab_title_without_customer"), :page_setup => { fit_to: { width: 1 }, orientation: :landscape, paper_size: 9 }) do |sheet|
+        wb.add_worksheet(name: I18n.t("reports.drives.tab_title_without_customer"), :page_setup => DEFAULT_PAGE_SETUP) do |sheet|
           table_builder = DriveTableBuilder.new(drives_without_customers, row_builder, header_builder)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_without_customer")], style: [styles.h1]
@@ -60,7 +62,7 @@ module Report
 
       def build_customer_sheet(wb, customer, drives, row_builder, header_builder, styles)
         ws_name = get_unique_worksheet_name_for_customer wb, customer
-        wb.add_worksheet(name: ws_name, page_setup: { fit_to: { width: 1 }, orientation: :landscape, paper_size: 9 }) do |sheet|
+        wb.add_worksheet(name: ws_name, page_setup: DEFAULT_PAGE_SETUP) do |sheet|
           table_builder = DriveTableBuilder.new(drives, row_builder, header_builder, customer)
 
           sheet.add_row [I18n.t("reports.drives.sheet_title_with_customer")]
