@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  use_doorkeeper_openid_connect
   namespace :company do
     get 'routes/index'
     get 'routes/edit'
