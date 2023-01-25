@@ -42,6 +42,7 @@ gem "devise-i18n"
 gem "devise-bootstrap-views"
 gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper", "~> 5.5.4"
+gem 'doorkeeper-openid_connect'
 gem "pundit", "~> 2.2.0"
 gem 'newrelic_rpm'
 
