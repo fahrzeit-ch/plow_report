@@ -83,13 +83,17 @@ O6lO0lBaHn03Vae+tJakK0o=
   # expiration 600
 
   # Example claims:
-  # claims do
-  #   normal_claim :_foo_ do |resource_owner|
-  #     resource_owner.foo
-  #   end
+  claims do
+    normal_claim :name do |resource_owner|
+      resource_owner.name
+    end
 
-  #   normal_claim :_bar_ do |resource_owner|
-  #     resource_owner.bar
-  #   end
-  # end
+    normal_claim :email do |resource_owner|
+      resource_owner.email
+    end
+
+    normal_claim :companies do |resource_owner|
+      resource_owner.administrated_companies.pluck(:id).join(",")
+    end
+  end
 end
