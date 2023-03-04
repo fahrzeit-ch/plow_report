@@ -1,0 +1,12 @@
+<%= title_row t('views.reports.title') %>
+<%= toolbar_row do %>
+  <div class="col">
+  </div>
+<% end %>
+<% if @records.empty? %>
+  <%= empty_message("reports") %>
+<% else %>
+  <div class="card-deck mt-3">
+    <%= render partial: 'report', collection: @records, locals: { tools: true} %>
+  </div>
+<% end %>

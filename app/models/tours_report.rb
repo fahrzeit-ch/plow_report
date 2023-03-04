@@ -1,5 +1,7 @@
 # frozen_string_literal: true
-
+###
+# Legacy report
+###
 class ToursReport < ApplicationRecord
   DATETIME_FORMAT = "%d.%m.%Y %H:%M"
   DATETIME_FORMAT_JS = "DD.MM.YYYY HH:mm"

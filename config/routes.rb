@@ -70,6 +70,7 @@ Rails.application.routes.draw do
         end
       end
       resources :tours_reports
+      resources :dynamic_reports, only: %i[index]
       resources :customer_to_site_transitions, only: %i[new create]
       resources :customers do
         resources :sites do
