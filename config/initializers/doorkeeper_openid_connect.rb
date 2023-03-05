@@ -2,7 +2,7 @@
 
 Doorkeeper::OpenidConnect.configure do
   issuer do |resource_owner, application|
-    ENV["HOST"]
+    Rails.env.development? ? ENV["HOST"] : "https://#{ENV['HOST']}"
   end
 
   signing_key <<~KEY
@@ -76,7 +76,7 @@ O6lO0lBaHn03Vae+tJakK0o=
   # Protocol to use when generating URIs for the discovery endpoint,
   # for example if you also use HTTPS in development
   protocol do
-     :https
+    Rails.env.development? ? :https : :http
   end
 
   # Expiration time on or after which the ID Token MUST NOT be accepted for processing. (default 120 seconds).
