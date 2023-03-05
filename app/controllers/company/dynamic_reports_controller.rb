@@ -6,8 +6,9 @@ class Company::DynamicReportsController < ApplicationController
     @records = DynamicReports::ReportTemplate.where(access_scope: 0).includes(:report_parameters).order(:name)
   end
 
-  private
-    def redirect
-      redirect_to company_tours_reports_path(current_company)
-    end
+  def edit
+    template = DynamicReports::ReportTemplate.where(access_scope: 0).find(params[:id])
+    @report = DynamicReports::ReportRequest.new report_template: template, parameters: template.report_parameters
+  end
+
 end

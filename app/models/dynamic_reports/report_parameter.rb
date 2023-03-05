@@ -8,6 +8,10 @@ class DynamicReports::ReportParameter < ApplicationRecord
     value.to_query "#{key}[#{name}]"
   end
 
+  def to_param_name
+    "parameters[#{name}]"
+  end
+
   def readonly?
     true
   end
