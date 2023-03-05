@@ -2,7 +2,7 @@
 
 Doorkeeper::OpenidConnect.configure do
   issuer do |resource_owner, application|
-    Rails.env.development? ? ENV["HOST"] : "https://#{ENV['HOST']}"
+    ENV["HOST"]
   end
 
   signing_key <<~KEY
