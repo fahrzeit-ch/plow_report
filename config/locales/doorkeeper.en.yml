@@ -35,6 +35,7 @@ en:
         blank_redirect_uri: "Leave it blank if you configured your provider to use Client Credentials, Resource Owner Password Credentials or any other grant type that doesn't require redirect URI."
         native_redirect_uri: 'Use %{native_redirect_uri} if you want to add localhost URIs for development purposes'
         scopes: 'Separate scopes with spaces. Leave blank to use the default scopes.'
+        default_app: "Whether this is a default app and therefore no access grants are required"
       edit:
         title: 'Edit application'
       index:

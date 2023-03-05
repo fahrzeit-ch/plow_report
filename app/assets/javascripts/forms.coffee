@@ -73,8 +73,18 @@ $(document).on 'turbolinks:load', ->
         'Dieses Jahr': [moment().startOf('year').startOf('day'), moment().endOf('day')]
       }
     }
-    options = $.extend(true, {}, defaults, $(this).data('daterange'))
-    $(this).daterangepicker(options);
+    _self = $(this)
+    targetStart = _self.data('target-start')
+    targetEnd = _self.data('target-end')
+    options = $.extend(true, {}, defaults, _self.data('daterange'))
+
+    if(targetStart)
+      _self.daterangepicker options, (start, end) ->
+        $(targetStart).val(start.toISOString())
+        $(targetEnd).val(end.toISOString())
+        _self.find('span').html(start.format(options.locale.format) + ' - ' + end.format(options.locale.format))
+    else
+      _self.daterangepicker options
 
   forms = document.getElementsByClassName('needs-validation');
 

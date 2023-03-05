@@ -253,6 +253,9 @@ de-CH:
         vehicle_id: "Fahrzeug"
         start_time: "Start"
         end_time: "Ende"
+      dynamic_reports/report_template:
+        access_scope:
+          0: "Standard Rapport"
   dashboard:
     cards:
       standby_dates:
@@ -514,6 +517,8 @@ de-CH:
         site_entries_entry: "Ziehe Objekte per Drag and Drop hierhin um sie der Route hinzuzufügen."
         drag_target_info: "Kunden Objekte hier hin ziehen"
         add_site: "Kundenobjekt hinzufügen"
+      dynamic_reports:
+        create_report: "Rapport Erstellen"
     company_drives:
       title: "Einzelfahrten"
       edit: "Fahrt Bearbeiten"

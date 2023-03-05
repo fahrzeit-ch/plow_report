@@ -6,7 +6,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    if params["scope"].split(" ").include?("demo")
+    if !params["scope"].nil? && params["scope"].split(" ").include?("demo")
       current_user || redirect_to(demo_login_path)
     else
       current_user || warden.authenticate!(scope: :user)
@@ -166,6 +166,8 @@ Doorkeeper.configure do
   #
   # default_scopes  :public
   # optional_scopes :write, :update
+  default_scopes :openid
+  optional_scopes :profile, :email, :address, :phone
 
   # Define scopes_by_grant_type to restrict only certain scopes for grant_type
   # By default, all the scopes will be available for all the grant types.
