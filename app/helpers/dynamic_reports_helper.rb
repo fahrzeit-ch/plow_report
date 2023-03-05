@@ -1,4 +1,10 @@
 module DynamicReportsHelper
+
+  ###
+  # Generates a link to open the given report template
+  # It will directly open the report if no parameters are defined
+  # or open the edit modal, if parameters are required
+  ###
   def report_link(report_template)
     if report_template.report_parameters.empty?
       url = report_template.url
@@ -8,6 +14,9 @@ module DynamicReportsHelper
     end
   end
 
+  ###
+  # Generate the formfield for the given parameter
+  ###
   def parameters_field(form_builder, param)
     if param.is_range && param.parameter_type == "System.DateTime"
       date_range_field(form_builder, param)
