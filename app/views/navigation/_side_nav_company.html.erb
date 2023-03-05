@@ -8,7 +8,11 @@
   <% end %>
 
   <% if policy(current_company).index_reports? %>
-    <%= navbar_item("company/tours_reports", "bar-chart") %>
+    <%= navbar_item("company/dynamic_reports", "bar-chart") %>
+  <% end %>
+
+  <% if policy(current_company).index_reports? %>
+    <%= navbar_item("company/tours_reports", "fa-file-excel-o") %>
   <% end %>
 
   <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>

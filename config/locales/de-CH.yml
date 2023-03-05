@@ -17,7 +17,8 @@ de-CH:
     drivers: "Fahrer"
     driving_routes: "Routen"
     activities: "Tätigkeiten"
-    tours_reports: "Rapporte"
+    tours_reports: "Rapporte (alt)"
+    dynamic_reports: "Rapporte"
     main:
       drives: "Fahrten"
       sign_in: "Anmelden"
