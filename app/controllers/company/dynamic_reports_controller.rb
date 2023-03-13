@@ -3,11 +3,11 @@ class Company::DynamicReportsController < ApplicationController
 
   def index
     authorize current_company, :index_reports?
-    @records = DynamicReports::ReportTemplate.where(access_scope: 0).includes(:report_parameters).order(:name)
+    @records = DynamicReports::ReportTemplate.by_company(current_company.id).includes(:report_parameters).order(:name)
   end
 
   def edit
-    template = DynamicReports::ReportTemplate.where(access_scope: 0).find(params[:id])
+    template = DynamicReports::ReportTemplate.by_company(current_company.id).find(params[:id])
     @report = DynamicReports::ReportRequest.new report_template: template, parameters: template.report_parameters
   end
 
