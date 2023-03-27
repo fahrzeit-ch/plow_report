@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DynamicReports::ReportParameter < ApplicationRecord
 
   attribute :selection_list_config, DynamicReports::SelectionListConfig::Type.new

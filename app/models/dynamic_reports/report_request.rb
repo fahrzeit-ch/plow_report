@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DynamicReports::ReportRequest
   include ActiveModel::Model
 
