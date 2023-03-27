@@ -38,6 +38,16 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: __EFMigrationsHistory; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."__EFMigrationsHistory" (
+    migration_id character varying(150) NOT NULL,
+    product_version character varying(32) NOT NULL
+);
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -456,6 +466,17 @@ ALTER SEQUENCE public.company_members_id_seq OWNED BY public.company_members.id;
 
 
 --
+-- Name: company_report_assignments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_report_assignments (
+    id uuid NOT NULL,
+    report_template_id uuid NOT NULL,
+    company_id text NOT NULL
+);
+
+
+--
 -- Name: customers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -597,6 +618,208 @@ CREATE SEQUENCE public.drives_id_seq
 --
 
 ALTER SEQUENCE public.drives_id_seq OWNED BY public.drives.id;
+
+
+--
+-- Name: pricing_flat_rates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pricing_flat_rates (
+    id bigint NOT NULL,
+    flat_ratable_type character varying,
+    flat_ratable_id bigint,
+    price_cents integer DEFAULT 0 NOT NULL,
+    price_currency character varying NOT NULL,
+    valid_from date NOT NULL,
+    rate_type character varying DEFAULT 'custom'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    active boolean DEFAULT false
+);
+
+
+--
+-- Name: pricing_hourly_rates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pricing_hourly_rates (
+    id bigint NOT NULL,
+    hourly_ratable_type character varying,
+    hourly_ratable_id bigint,
+    price_cents integer DEFAULT 0 NOT NULL,
+    price_currency character varying NOT NULL,
+    valid_from date NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: site_activity_flat_rates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.site_activity_flat_rates (
+    id bigint NOT NULL,
+    site_id bigint,
+    activity_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: sites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sites (
+    id bigint NOT NULL,
+    name character varying,
+    street character varying DEFAULT ''::character varying NOT NULL,
+    nr character varying DEFAULT ''::character varying NOT NULL,
+    zip character varying DEFAULT ''::character varying NOT NULL,
+    city character varying DEFAULT ''::character varying NOT NULL,
+    customer_id bigint,
+    active boolean DEFAULT true,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    display_name character varying DEFAULT ''::character varying NOT NULL,
+    first_name character varying DEFAULT ''::character varying NOT NULL,
+    area_json json DEFAULT '{}'::json NOT NULL
+);
+
+
+--
+-- Name: vehicle_activity_assignments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.vehicle_activity_assignments (
+    id bigint NOT NULL,
+    vehicle_id bigint,
+    activity_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: vehicles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.vehicles (
+    id bigint NOT NULL,
+    name character varying,
+    discarded_at timestamp without time zone,
+    company_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    default_driving_route_id integer
+);
+
+
+--
+-- Name: drives_with_pricings; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.drives_with_pricings AS
+ SELECT drive_grouped.tour_id,
+    drive_grouped.customer_id,
+    s.display_name AS site_name,
+    drive_grouped.start,
+    drive_grouped.vehicle_id,
+    v.name AS vehicle,
+    a.name AS activity,
+    ae.value AS activitiy_value,
+    phr.price_cents AS hourly_rate,
+    pfr.price_cents AS site_flat_rate,
+    (drive_grouped."end" - drive_grouped.start) AS duration,
+    drive_grouped.total_drives_duration,
+    (t.end_time - t.start_time) AS tour_duration,
+        CASE
+            WHEN (drive_grouped.first_in_tour = 1) THEN true
+            ELSE false
+        END AS first_item,
+    date_part('epoch'::text, (drive_grouped."end" - drive_grouped.start)) AS duration_seconds,
+    v.company_id,
+    d.name AS driver_name,
+    d.id AS driver_id,
+    a.value_label AS activity_value_label,
+    a.has_value AS has_activity_value,
+    drive_grouped.num_billed_empty_drives,
+    (
+        CASE
+            WHEN ((((t.end_time - t.start_time) - drive_grouped.total_drives_duration) < '00:00:00'::interval) OR (NOT (drive_grouped.first_in_tour = 1))) THEN '00:00:00'::interval
+            ELSE ((t.end_time - t.start_time) - drive_grouped.total_drives_duration)
+        END / (drive_grouped.num_billed_empty_drives)::double precision) AS billed_empty_drive_time,
+    vphr.price_cents AS vehicle_price,
+    date_part('epoch'::text, (
+        CASE
+            WHEN ((((t.end_time - t.start_time) - drive_grouped.total_drives_duration) < '00:00:00'::interval) OR (NOT (drive_grouped.first_in_tour = 1))) THEN '00:00:00'::interval
+            ELSE ((t.end_time - t.start_time) - drive_grouped.total_drives_duration)
+        END / (drive_grouped.num_billed_empty_drives)::double precision)) AS billed_empty_drive_time_seconds,
+    vpfr.price_cents AS vehicle_flatrate_price
+   FROM ((((((((((((( SELECT sum(drive_with_tour_info.first_in_tour) OVER (PARTITION BY drive_with_tour_info.tour_id) AS num_billed_empty_drives,
+            drive_with_tour_info.id,
+            drive_with_tour_info.start,
+            drive_with_tour_info."end",
+            drive_with_tour_info.created_at,
+            drive_with_tour_info.updated_at,
+            drive_with_tour_info.driver_id,
+            drive_with_tour_info.customer_id,
+            drive_with_tour_info.site_id,
+            drive_with_tour_info.discarded_at,
+            drive_with_tour_info.tour_id,
+            drive_with_tour_info.vehicle_id,
+            drive_with_tour_info.first_in_tour,
+            drive_with_tour_info.total_drives_duration
+           FROM ( SELECT drives.id,
+                    drives.start,
+                    drives."end",
+                    drives.created_at,
+                    drives.updated_at,
+                    drives.driver_id,
+                    drives.customer_id,
+                    drives.site_id,
+                    drives.discarded_at,
+                    drives.tour_id,
+                    drives.vehicle_id,
+                        CASE
+                            WHEN (row_number() OVER (PARTITION BY drives.tour_id, drives.site_id ORDER BY drives.start) = 1) THEN 1
+                            ELSE 0
+                        END AS first_in_tour,
+                    sum((drives."end" - drives.start)) OVER (PARTITION BY drives.tour_id) AS total_drives_duration
+                   FROM public.drives
+                  WHERE (drives.discarded_at IS NULL)) drive_with_tour_info) drive_grouped
+     JOIN public.activity_executions ae ON ((ae.drive_id = drive_grouped.id)))
+     JOIN public.activities a ON ((a.id = ae.activity_id)))
+     JOIN public.tours t ON ((t.id = drive_grouped.tour_id)))
+     JOIN public.vehicles v ON ((v.id = drive_grouped.vehicle_id)))
+     JOIN public.sites s ON ((s.id = drive_grouped.site_id)))
+     JOIN public.drivers d ON ((d.id = drive_grouped.driver_id)))
+     LEFT JOIN public.site_activity_flat_rates safr ON (((safr.site_id = drive_grouped.site_id) AND (safr.activity_id = ae.activity_id))))
+     LEFT JOIN public.pricing_flat_rates pfr ON ((pfr.id = ( SELECT pricing_flat_rates.id
+           FROM public.pricing_flat_rates
+          WHERE (((pricing_flat_rates.flat_ratable_type)::text = 'SiteActivityFlatRate'::text) AND (pricing_flat_rates.flat_ratable_id = safr.id) AND ((pricing_flat_rates.rate_type)::text = 'activity_fee'::text) AND (pricing_flat_rates.valid_from < drive_grouped.start) AND (pfr.active = true))
+          ORDER BY pricing_flat_rates.valid_from DESC
+         LIMIT 1))))
+     LEFT JOIN public.vehicle_activity_assignments vaa ON (((vaa.vehicle_id = drive_grouped.vehicle_id) AND (vaa.activity_id = ae.activity_id))))
+     LEFT JOIN public.pricing_hourly_rates phr ON ((phr.id = ( SELECT pricing_hourly_rates.id
+           FROM public.pricing_hourly_rates
+          WHERE (((pricing_hourly_rates.hourly_ratable_type)::text = 'VehicleActivityAssignment'::text) AND (pricing_hourly_rates.hourly_ratable_id = vaa.id) AND (pricing_hourly_rates.valid_from < drive_grouped.start))
+          ORDER BY pricing_hourly_rates.valid_from DESC
+         LIMIT 1))))
+     LEFT JOIN public.pricing_hourly_rates vphr ON ((vphr.id = ( SELECT pricing_hourly_rates.id
+           FROM public.pricing_hourly_rates
+          WHERE (((pricing_hourly_rates.hourly_ratable_type)::text = 'Vehicle'::text) AND (pricing_hourly_rates.hourly_ratable_id = drive_grouped.vehicle_id) AND (pricing_hourly_rates.valid_from < drive_grouped.start))
+          ORDER BY pricing_hourly_rates.valid_from DESC
+         LIMIT 1))))
+     LEFT JOIN public.pricing_flat_rates vpfr ON ((vpfr.id = ( SELECT pricing_flat_rates.id
+           FROM public.pricing_flat_rates
+          WHERE (((pricing_flat_rates.flat_ratable_type)::text = 'Site'::text) AND (pricing_flat_rates.flat_ratable_id = drive_grouped.site_id) AND (pricing_flat_rates.active = true) AND ((pricing_flat_rates.rate_type)::text = 'travel_expense'::text) AND (pricing_flat_rates.valid_from <= drive_grouped.start))
+          ORDER BY pricing_flat_rates.valid_from DESC
+         LIMIT 1))))
+  WHERE (t.discarded_at IS NULL)
+  ORDER BY drive_grouped.start DESC
+  WITH NO DATA;
 
 
 --
@@ -852,24 +1075,6 @@ ALTER SEQUENCE public.policy_terms_id_seq OWNED BY public.policy_terms.id;
 
 
 --
--- Name: pricing_flat_rates; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.pricing_flat_rates (
-    id bigint NOT NULL,
-    flat_ratable_type character varying,
-    flat_ratable_id bigint,
-    price_cents integer DEFAULT 0 NOT NULL,
-    price_currency character varying NOT NULL,
-    valid_from date NOT NULL,
-    rate_type character varying DEFAULT 'custom'::character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    active boolean DEFAULT false
-);
-
-
---
 -- Name: pricing_flat_rates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -886,22 +1091,6 @@ CREATE SEQUENCE public.pricing_flat_rates_id_seq
 --
 
 ALTER SEQUENCE public.pricing_flat_rates_id_seq OWNED BY public.pricing_flat_rates.id;
-
-
---
--- Name: pricing_hourly_rates; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.pricing_hourly_rates (
-    id bigint NOT NULL,
-    hourly_ratable_type character varying,
-    hourly_ratable_id bigint,
-    price_cents integer DEFAULT 0 NOT NULL,
-    price_currency character varying NOT NULL,
-    valid_from date NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
 
 
 --
@@ -987,24 +1176,40 @@ ALTER SEQUENCE public.recordings_id_seq OWNED BY public.recordings.id;
 
 
 --
+-- Name: report_parameters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.report_parameters (
+    id uuid NOT NULL,
+    report_template_id uuid NOT NULL,
+    parameter_type text NOT NULL,
+    name text NOT NULL,
+    description text NOT NULL,
+    is_range boolean NOT NULL,
+    display_name text DEFAULT ''::text NOT NULL,
+    selection_list_config jsonb
+);
+
+
+--
+-- Name: report_templates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.report_templates (
+    id uuid NOT NULL,
+    access_scope integer NOT NULL,
+    name text NOT NULL,
+    report_definition text NOT NULL,
+    summary text DEFAULT ''::text NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
-);
-
-
---
--- Name: site_activity_flat_rates; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.site_activity_flat_rates (
-    id bigint NOT NULL,
-    site_id bigint,
-    activity_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1058,27 +1263,6 @@ CREATE SEQUENCE public.site_infos_id_seq
 --
 
 ALTER SEQUENCE public.site_infos_id_seq OWNED BY public.site_infos.id;
-
-
---
--- Name: sites; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.sites (
-    id bigint NOT NULL,
-    name character varying,
-    street character varying DEFAULT ''::character varying NOT NULL,
-    nr character varying DEFAULT ''::character varying NOT NULL,
-    zip character varying DEFAULT ''::character varying NOT NULL,
-    city character varying DEFAULT ''::character varying NOT NULL,
-    customer_id bigint,
-    active boolean DEFAULT true,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    display_name character varying DEFAULT ''::character varying NOT NULL,
-    first_name character varying DEFAULT ''::character varying NOT NULL,
-    area_json json DEFAULT '{}'::json NOT NULL
-);
 
 
 --
@@ -1285,19 +1469,6 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: vehicle_activity_assignments; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.vehicle_activity_assignments (
-    id bigint NOT NULL,
-    vehicle_id bigint,
-    activity_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
 -- Name: vehicle_activity_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1314,21 +1485,6 @@ CREATE SEQUENCE public.vehicle_activity_assignments_id_seq
 --
 
 ALTER SEQUENCE public.vehicle_activity_assignments_id_seq OWNED BY public.vehicle_activity_assignments.id;
-
-
---
--- Name: vehicles; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.vehicles (
-    id bigint NOT NULL,
-    name character varying,
-    discarded_at timestamp without time zone,
-    company_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    default_driving_route_id integer
-);
 
 
 --
@@ -1772,6 +1928,38 @@ ALTER TABLE ONLY public.oauth_openid_requests
 
 
 --
+-- Name: __EFMigrationsHistory pk___ef_migrations_history; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."__EFMigrationsHistory"
+    ADD CONSTRAINT pk___ef_migrations_history PRIMARY KEY (migration_id);
+
+
+--
+-- Name: company_report_assignments pk_company_report_assignments; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_report_assignments
+    ADD CONSTRAINT pk_company_report_assignments PRIMARY KEY (report_template_id, id);
+
+
+--
+-- Name: report_parameters pk_report_parameters; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.report_parameters
+    ADD CONSTRAINT pk_report_parameters PRIMARY KEY (report_template_id, id);
+
+
+--
+-- Name: report_templates pk_report_templates; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.report_templates
+    ADD CONSTRAINT pk_report_templates PRIMARY KEY (id);
+
+
+--
 -- Name: policy_terms policy_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2181,6 +2369,20 @@ CREATE INDEX index_drives_on_vehicle_id ON public.drives USING btree (vehicle_id
 
 
 --
+-- Name: index_drives_with_pricings_on_customer_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_drives_with_pricings_on_customer_id ON public.drives_with_pricings USING btree (customer_id);
+
+
+--
+-- Name: index_drives_with_pricings_on_start; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_drives_with_pricings_on_start ON public.drives_with_pricings USING btree (start);
+
+
+--
 -- Name: index_driving_route_site_entries_on_driving_route_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2531,6 +2733,14 @@ CREATE INDEX user_index ON public.audits USING btree (user_id, user_type);
 
 
 --
+-- Name: company_report_assignments fk_company_report_assignments_report_templates_report_template; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_report_assignments
+    ADD CONSTRAINT fk_company_report_assignments_report_templates_report_template FOREIGN KEY (report_template_id) REFERENCES public.report_templates(id) ON DELETE CASCADE;
+
+
+--
 -- Name: drives fk_drives_driver; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2819,6 +3029,14 @@ ALTER TABLE ONLY public.driving_route_site_entries
 
 
 --
+-- Name: report_parameters fk_report_parameters_report_templates_report_template_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.report_parameters
+    ADD CONSTRAINT fk_report_parameters_report_templates_report_template_id FOREIGN KEY (report_template_id) REFERENCES public.report_templates(id) ON DELETE CASCADE;
+
+
+--
 -- Name: standby_dates fk_standby_dates_driver; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2912,6 +3130,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220629185842'),
 ('20230114220000'),
 ('20230114223102'),
-('20230125230025');
+('20230125230025'),
+('20230327150059');
 
 
