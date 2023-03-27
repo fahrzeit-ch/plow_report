@@ -25,7 +25,7 @@ SELECT
     CASE WHEN (
                       t.end_time - t.start_time - drive_grouped.total_drives_duration
                   ) < '00:00:00' :: interval
-  OR NOT drive_grouped.first_in_tour = 1 THEN '00:00:00' :: interval ELSE t.end_time - t.start_time - drive_grouped.total_drives_duration END drive_grouped.num_billed_empty_drives :: DOUBLE PRECISION AS billed_empty_drive_time,
+  OR NOT drive_grouped.first_in_tour = 1 THEN '00:00:00' :: interval ELSE t.end_time - t.start_time - drive_grouped.total_drives_duration end / drive_grouped.num_billed_empty_drives :: DOUBLE PRECISION AS billed_empty_drive_time,
   vphr.price_cents AS vehicle_price,
   date_part(
     'epoch' :: text,
