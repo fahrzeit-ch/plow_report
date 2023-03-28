@@ -6,7 +6,7 @@ class Api::V1::ApiController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-  before_action :doorkeeper_authorize!
+  before_action -> { doorkeeper_authorize! :profile }
 
   def user_not_authorized
     head :unauthorized
