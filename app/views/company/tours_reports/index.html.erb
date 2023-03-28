@@ -6,6 +6,11 @@
     <%= link_to t("views.reports.create_new"), new_company_tours_report_path, class: "btn btn-primary pull-right" %>
   </div>
 <% end %>
+<% if Feature.enabled?(:dynamic_reporting) %>
+  <div class="alert alert-warning mt-3">
+    <%= t("views.reports.legacy_reports_deprecation_info") %> <%= link_to t("navbar.dynamic_reports"), company_dynamic_reports_path(current_company) %>
+  </div>
+<% end %>
 <% if @records.empty? %>
   <%= empty_message("reports") %>
 <% else %>
