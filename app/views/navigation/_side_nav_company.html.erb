@@ -7,13 +7,16 @@
     <%= navbar_item("company/tours", "truck", active: (controller_name == 'drives' || controller_name == 'tours')) %>
   <% end %>
 
-  <% if policy(current_company).index_reports? %>
-    <%= navbar_item("company/dynamic_reports", "bar-chart") %>
+  <% if Feature.enabled?(:dynamic_reporting) %>
+    <% if policy(current_company).index_reports? %>
+      <%= navbar_item("company/dynamic_reports", "star") %>
+    <% end %>
   <% end %>
 
   <% if policy(current_company).index_reports? %>
-    <%= navbar_item("company/tours_reports", "fa-file-excel-o") %>
+    <%= navbar_item("company/tours_reports", "bar-chart") %>
   <% end %>
+
 
   <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>
 
