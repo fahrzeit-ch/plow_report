@@ -14,4 +14,17 @@ class AuthorizationsController < Doorkeeper::AuthorizationsController
     def store_location!
       store_location_for(:user, request.original_url)
     end
+
+    def render_success
+      if skip_authorization? || matching_token?
+        redirect_or_render authorize_response
+        if authorize_response.redirectable?
+          warden.logout
+        end
+      elsif Doorkeeper.configuration.api_only
+        render json: pre_auth
+      else
+        render :new
+      end
+    end
 end
