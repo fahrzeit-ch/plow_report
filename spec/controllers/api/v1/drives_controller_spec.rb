@@ -146,7 +146,7 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     describe "response code" do
       subject { response }
 
-      its(:code) { is_expected.to eq "200" }
+      its(:code) { is_expected.to eq "201" }
     end
   end
 

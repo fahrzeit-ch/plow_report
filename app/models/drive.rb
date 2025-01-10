@@ -21,7 +21,11 @@ class Drive < ApplicationRecord
   belongs_to :customer, optional: true
   belongs_to :site, optional: true
 
-  validates :end, date: { after: :start }
+  validates :end, presence: true
+  validates :start, presence: true
+  validates :end, date: true
+  validates :start, date: true
+  validate :end_after_start
   validate :vehicle_same_as_tour
 
   # Allow to discard instead of destroy drives
@@ -216,6 +220,13 @@ COALESCE(SUM(distance_km), cast('0' as double precision)) as distance")[0]
   end
 
   private
+
+    def end_after_start
+      if self.end && self.start && self.start >= self.end
+        errors.add(:end, :date_after)
+      end
+    end
+
     def vehicle_same_as_tour
       if tour&.vehicle && vehicle != tour.vehicle
         errors.add(:vehicle, :vehicle_not_sames_as_tour)
