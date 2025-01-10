@@ -85,7 +85,6 @@ group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "capybara"
   gem "capybara-screenshot"
-  gem 'capybara-selenium'
   gem "factory_bot_rails"
   gem "pundit-matchers", "~> 1.6.0"
   gem "rails-controller-testing"
@@ -95,7 +94,7 @@ group :development, :test do
   gem "rubocop"
   gem "rubocop-performance"
   gem "rubocop-rails"
-  gem 'webdrivers', "~> 3"
+  gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
   gem "brakeman"

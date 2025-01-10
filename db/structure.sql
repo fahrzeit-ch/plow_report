@@ -724,7 +724,7 @@ CREATE MATERIALIZED VIEW public.drives_with_pricings AS
  SELECT DISTINCT drive_grouped.tour_id,
     drive_grouped.customer_id,
     s.display_name AS site_name,
-    timezone('CET'::text, timezone('utc'::text, drive_grouped.start)) AS start,
+    timezone('Europe/Zurich'::text, timezone('utc'::text, drive_grouped.start)) AS start,
     drive_grouped.vehicle_id,
     v.name AS vehicle,
     a.name AS activity,
@@ -818,7 +818,7 @@ CREATE MATERIALIZED VIEW public.drives_with_pricings AS
           ORDER BY pricing_flat_rates.valid_from DESC
          LIMIT 1))))
   WHERE (t.discarded_at IS NULL)
-  ORDER BY (timezone('CET'::text, timezone('utc'::text, drive_grouped.start))) DESC
+  ORDER BY (timezone('Europe/Zurich'::text, timezone('utc'::text, drive_grouped.start))) DESC
   WITH NO DATA;
 
 
@@ -3133,6 +3133,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230125230025'),
 ('20230327150059'),
 ('20231223111451'),
-('20240102232703');
+('20240102232703'),
+('20240102234431');
 
 
