@@ -40,7 +40,7 @@ gem "discard", "~> 1.0"
 gem "devise", "~> 4.8"
 gem "devise-i18n"
 gem "devise-bootstrap-views"
-gem "devise_invitable", "~> 2.0.0"
+gem "devise_invitable", "~> 2.0.9"
 gem "doorkeeper", "~> 5.5.4"
 gem 'doorkeeper-openid_connect'
 gem "pundit", "~> 2.2.0"
