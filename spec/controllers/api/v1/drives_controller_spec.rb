@@ -122,6 +122,34 @@ RSpec.describe Api::V1::DrivesController, type: :controller do
     end
   end
 
+  describe "post discarded" do
+    let(:vehicle) { create(:vehicle, company: driver.company) }
+    let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
+    let(:minimal_params) { { start: 1.hour.ago, end: 1.minute.ago, created_at: Time.current, tour_id: tour.id, discarded_at: Time.current } }
+
+    before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+
+    describe "response code" do
+      subject { response }
+
+      its(:code) { is_expected.to eq "201" }
+    end
+  end
+
+  describe "post discarded invalid drive" do
+    let(:vehicle) { create(:vehicle, company: driver.company) }
+    let(:tour) { create(:tour, driver: driver, vehicle: vehicle) }
+    let(:minimal_params) { { start: 1.hour.ago, end: 1.hour.ago, created_at: Time.current, tour_id: tour.id, discarded_at: Time.current } }
+
+    before { post :create, params: { driver_id: driver.to_param, format: :json }.merge(minimal_params) }
+
+    describe "response code" do
+      subject { response }
+
+      its(:code) { is_expected.to eq "201" }
+    end
+  end
+
   describe "put" do
     let(:tour) { create(:tour, driver: driver) }
     let!(:existing_drive) { create(:drive, start: 1.hour.ago, end: 1.minute.ago, driver: driver, tour_id: tour.id ) }

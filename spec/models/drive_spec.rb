@@ -12,6 +12,16 @@ RSpec.describe Drive, type: :model do
       subject.end = 2.hours.ago
       expect(subject).not_to be_valid
     end
+
+    it "should be valid when end time is 1ms after start" do
+      subject.end = subject.start + 0.001.seconds
+      expect(subject).to be_valid
+    end
+
+    it "should not be valid when end time is equal to start" do
+      subject.end = subject.start
+      expect(subject).not_to be_valid
+    end
   end
 
   describe "#company" do

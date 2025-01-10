@@ -57,6 +57,9 @@ class Api::V1::DrivesController < Api::V1::ApiController
     authorize @record
     if @record.save
       render :create, status: :created
+    elsif @record.discarded?
+      # This is a workaround to prevent invalid discarded drives from constantly being re uploaded
+      render :create, status: :created
     else
       render json: { error: @record.errors }, status: :bad_request
     end
