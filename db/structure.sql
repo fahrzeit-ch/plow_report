@@ -326,7 +326,8 @@ CREATE TABLE public.companies (
     zip_code character varying DEFAULT ''::character varying NOT NULL,
     city character varying DEFAULT ''::character varying NOT NULL,
     slug character varying,
-    nr character varying DEFAULT ''::character varying NOT NULL
+    nr character varying DEFAULT ''::character varying NOT NULL,
+    extended_activation boolean DEFAULT false
 );
 
 
@@ -3134,6 +3135,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230327150059'),
 ('20231223111451'),
 ('20240102232703'),
-('20240102234431');
+('20240102234431'),
+('20251104203531');
 
 

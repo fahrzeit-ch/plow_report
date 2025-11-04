@@ -106,13 +106,12 @@ Rails.application.routes.draw do
     root "companies#index", as: :authenticated_root
   end
 
-  get "/setup", to: "static_pages#setup", as: :setup
-  get "/demo_login", to: "static_pages#demo_login", as: :demo_login
   get "/account_error", to: "static_pages#account_error", as: :account_error
+  get "/discontinued", to: "static_pages#discontinued", as: :discontinued
 
   devise_scope :user do
     get "/", to: "devise/sessions#new"
   end
 
-  root to: "devise/sessions#new"
+  root to: "static_pages#discontinued"
 end

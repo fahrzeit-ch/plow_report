@@ -1,52 +1,54 @@
 <% if current_company %>
-<ul class="nav flex-column">
-  <%= navbar_item("company/dashboard", "tachometer") %>
-  <%= navbar_item("company/standby_dates", "calendar") %>
+  <% if current_company.extended_activation %>
+    <ul class="nav flex-column">
+      <%= navbar_item("company/dashboard", "tachometer") %>
+      <%= navbar_item("company/standby_dates", "calendar") %>
 
-  <% if policy(current_company).index_drives? %>
-    <%= navbar_item("company/tours", "truck", active: (controller_name == 'drives' || controller_name == 'tours')) %>
+      <% if policy(current_company).index_drives? %>
+        <%= navbar_item("company/tours", "truck", active: (controller_name == 'drives' || controller_name == 'tours')) %>
+      <% end %>
+
+      <% if Feature.enabled?(:dynamic_reporting) %>
+        <% if policy(current_company).index_reports? %>
+          <%= navbar_item("company/dynamic_reports", "star") %>
+        <% end %>
+      <% end %>
+
+      <% if policy(current_company).index_reports? %>
+        <%= navbar_item("company/tours_reports", "bar-chart") %>
+      <% end %>
+
+
+      <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>
+
+      <% if policy(current_company).index_customers? %>
+        <%= navbar_item("company/customers", "address-card") %>
+      <% end %>
+
+      <% if policy(current_company).index_drivers? %>
+        <%= navbar_item("company/drivers", "user") %>
+      <% end %>
+
+      <% if policy(current_company).index_vehicles? %>
+        <%= navbar_item("company/vehicles", "truck") %>
+      <% end %>
+
+      <% if policy(current_company).index_routes? %>
+        <%= navbar_item("company/driving_routes", "map-signs") %>
+      <% end %>
+
+      <% if policy(current_company).index_activities? %>
+        <%= navbar_item("company/activities", "hourglass-o") %>
+      <% end %>
+
+      <% if current_user.company_admin_or_owner?(current_company) %>
+        <li class="nav-section"><%= t 'sidenav.section.settings' %></li>
+        <% if policy(current_company).edit? %>
+          <%= navbar_item("company_settings", "cog", path: edit_company_path(current_company), active: (controller_name == 'companies')) %>
+        <% end %>
+      <% end %>
+    </ul>
   <% end %>
-
-  <% if Feature.enabled?(:dynamic_reporting) %>
-    <% if policy(current_company).index_reports? %>
-      <%= navbar_item("company/dynamic_reports", "star") %>
-    <% end %>
-  <% end %>
-
-  <% if policy(current_company).index_reports? %>
-    <%= navbar_item("company/tours_reports", "bar-chart") %>
-  <% end %>
-
-
-  <li class="nav-section"><%= t 'sidenav.section.master_data' %></li>
-
-  <% if policy(current_company).index_customers? %>
-    <%= navbar_item("company/customers", "address-card") %>
-  <% end %>
-
-  <% if policy(current_company).index_drivers? %>
-    <%= navbar_item("company/drivers", "user") %>
-  <% end %>
-
-  <% if policy(current_company).index_vehicles? %>
-    <%= navbar_item("company/vehicles", "truck") %>
-  <% end %>
-
-  <% if policy(current_company).index_routes? %>
-    <%= navbar_item("company/driving_routes", "map-signs") %>
-  <% end %>
-
-  <% if policy(current_company).index_activities? %>
-    <%= navbar_item("company/activities", "hourglass-o") %>
-  <% end %>
-
-  <% if current_user.company_admin_or_owner?(current_company) %>
-    <li class="nav-section"><%= t 'sidenav.section.settings' %></li>
-    <% if policy(current_company).edit? %>
-      <%= navbar_item("company_settings", "cog", path: edit_company_path(current_company), active: (controller_name == 'companies')) %>
-    <% end %>
-  <% end %>
-</ul>
 <% else %>
   <ul class="nav flex-column">
     <li class="nav-item">

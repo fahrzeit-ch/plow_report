@@ -369,6 +369,7 @@ de-CH:
     common:
       saved: "Änderungen erfolgreich gespeichert."
       deleted: "Eintrag erfolgreich gelöscht."
+      plowreport_discontinued: "Der Betrieb von Fahrzeit wurde eingestellt."
     activities:
       created: "Tätigkeit erfolgreich erstellt."
       updated: "Tätigkeit erfolgreich aktuallisiert."
@@ -587,6 +588,9 @@ de-CH:
       legacy_reports_deprecation_info: "Versuchen sie die neue Version für Rapporte mit verbesserter Übersicht und diversen export Formate."
     vehicle_reassignments:
       reassignment_required: "Nachfolgende Tätigkeiten müssen für diese Tour neu zugeordnet werden, weil das neue Fahrzeug die zugewiesenen Tätigkeiten nicht erlaubt."
+    discontinued:
+      title: "Fahrzeit wurde eingestellt"
+      explanation: "Mit Bedauern müssen wir Ihnen mitteilen, dass der Betrieb von Fahrzeit eingestellt wurde. Wir danken Ihnen herzlich für Ihr langjähriges Vertrauen und wünschen Ihnen weiterhin erfolgreiche Winter."
   forms:
     placeholders:
       driver:
