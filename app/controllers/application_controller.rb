@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :check_account!
   before_action :check_consents
+  before_action :readonly_for_nonpermitted
 
   layout :determine_layout
 
@@ -48,6 +49,15 @@ class ApplicationController < ActionController::Base
   def store_referral
     session[:return_to] ||= request.referer
   end
+
+  private
+
+    def readonly_for_nonpermitted
+      unless current_company.try(:extended_activation)
+        flash[:alert] = t("flash.common.plowreport_discontinued")
+        redirect_to discontinued_path
+      end
+    end
 
   protected
     def pundit_user

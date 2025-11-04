@@ -150,3 +150,6 @@ en:
     companies:
       sites:
         tab_label_general: "General"
+    discontinued:
+      title: ""
+      explanation: ""

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class StaticPagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :demo_login]
+  skip_before_action :authenticate_user!, only: [:demo_login, :discontinued]
+  skip_before_action :readonly_for_nonpermitted, only: [:discontinued]
   skip_before_action :check_account!
 
   def account_error
@@ -12,6 +13,9 @@ class StaticPagesController < ApplicationController
   end
 
   def demo_login
+  end
+
+  def discontinued
   end
 
   def determine_layout
