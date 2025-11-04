@@ -40,8 +40,6 @@ class ApplicationController < ActionController::Base
     @current_company = company
   end
 
-
-
   def redirect_to_referral(fallback_location: nil)
     redirect_to session.delete(:return_to) || fallback_location
   end
@@ -53,7 +51,10 @@ class ApplicationController < ActionController::Base
   private
 
     def readonly_for_nonpermitted
-      unless current_company.try(:extended_activation)
+      return unless user_signed_in?
+      return if current_company.nil?
+
+      unless current_company&.extended_activation
         flash[:alert] = t("flash.common.plowreport_discontinued")
         redirect_to discontinued_path
       end
