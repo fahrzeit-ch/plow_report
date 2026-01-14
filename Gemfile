@@ -57,7 +57,7 @@ gem "rgeo-geojson"
 gem "kaminari"
 
 gem "activerecord-import"
-gem "resque", "~> 2.0.0"
+gem "resque", "~> 2.6.0"
 
 # Excel export
 gem "caxlsx", "~> 3.1"
