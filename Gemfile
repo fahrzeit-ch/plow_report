@@ -35,7 +35,7 @@ gem "net-smtp"
 gem "memoist"
 gem "cocoon"
 
-gem "audited", "~> 4.9"
+gem "audited", "~> 5.3"
 gem "discard", "~> 1.0"
 gem "devise", "~> 4.8"
 gem "devise-i18n"

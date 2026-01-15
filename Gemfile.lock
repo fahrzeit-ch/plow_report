@@ -66,8 +66,9 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     ast (2.4.2)
-    audited (4.10.0)
-      activerecord (>= 4.2, < 6.2)
+    audited (5.3.3)
+      activerecord (>= 5.0, < 7.1)
+      request_store (~> 1.2)
     autoprefixer-rails (10.2.4.0)
       execjs
     azure-storage-blob (2.0.3)
@@ -331,6 +332,8 @@ GEM
     redis-namespace (1.8.1)
       redis (>= 3.0.4)
     regexp_parser (2.10.0)
+    request_store (1.7.0)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -477,7 +480,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
-  audited (~> 4.9)
+  audited (~> 5.3)
   azure-storage-blob (~> 2.0)
   bootsnap
   bootstrap (~> 4.3.1)
